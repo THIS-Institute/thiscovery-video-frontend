@@ -21,7 +21,7 @@ mix
     .alias(aliases)
     .setPublicPath('public')
     .browserSync(bs)
-    .js('app.js', 'dist').vue()
-    .postCss('app.css', 'dist', [
+    .js('./src/app.js', 'dist').vue()
+    .postCss('./css/app.css', 'dist', [
         require('tailwindcss'),
     ]);
