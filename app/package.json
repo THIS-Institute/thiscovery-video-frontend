@@ -1,0 +1,26 @@
+{
+    "name": "thiscovery-interviews-app",
+    "version": "1.0.0",
+    "description": "",
+    "scripts": {
+        "build": "npx mix",
+        "watch": "npx mix watch"
+    },
+    "keywords": [],
+    "author": "engageinteractive",
+    "license": "MIT",
+    "private": true,
+    "devDependencies": {
+        "@vue/compiler-sfc": "^3.0.5",
+        "autoprefixer": "^10.2.3",
+        "browser-sync": "^2.26.14",
+        "browser-sync-webpack-plugin": "^2.2.2",
+        "laravel-mix": "^6.0.10",
+        "postcss": "^8.2.4",
+        "tailwindcss": "^2.0.2",
+        "vue": "^3.0.5",
+        "vue-loader": "^16.1.2",
+        "vue-router": "^4.0.3",
+        "vuex": "^4.0.0-rc.2"
+    }
+}
