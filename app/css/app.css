@@ -7,7 +7,7 @@ html {
 }
 
 body {
-	@apply bg-white text-grey-300 text-lg leading-normal;
+	@apply bg-white text-grey-300 font-body text-lg leading-normal;
 }
 
 [disabled] {
@@ -25,24 +25,51 @@ body {
 
 @layer components {
 	.e-h1 {
-		@apply tracking-tight font-bold leading-tight text-3xl md:text-4xl xl:text-5xl;
+		@apply tracking-tight font-heading font-bold leading-tight text-3xl md:text-4xl xl:text-5xl;
 	}
 
 	.e-h2 {
-		@apply tracking-snug font-bold leading-tight text-2xl xl:text-4xl;
+		@apply tracking-snug font-heading font-bold leading-tight text-2xl xl:text-4xl;
 	}
 
 	.e-h3 {
-		@apply tracking-snug font-bold leading-snug text-xl xl:text-2xl;
+		@apply tracking-snug font-heading font-bold leading-snug text-xl xl:text-2xl;
 	}
 
 	.e-h4 {
-		@apply tracking-snug font-bold leading-snug text-base xl:text-lg;
+		@apply tracking-snug font-heading font-bold leading-snug text-base xl:text-lg;
 	}
 
 	.e-container {
 		@apply max-w-container mx-auto px-5 sm:px-10 xl:px-margin;
 	}
+}
+
+@font-face {
+	font-family: 'Brown';
+	src: url('/static/fonts/lineto-brown/lineto-brown-bold.woff2') format('woff2'),
+		 url('/static/fonts/lineto-brown/lineto-brown-bold.woff') format('woff');
+	font-display: swap;
+	font-style: normal;
+	font-weight: 700;
+}
+
+@font-face {
+	font-family: 'Brown';
+	src: url('/static/fonts/lineto-brown/lineto-brown-light.woff2') format('woff2'),
+		 url('/static/fonts/lineto-brown/lineto-brown-light.woff') format('woff');
+	font-display: swap;
+	font-style: normal;
+	font-weight: 300;
+}
+
+@font-face {
+	font-family: 'Brown';
+	src: url('/static/fonts/lineto-brown/lineto-brown-regular.woff2') format('woff2'),
+		 url('/static/fonts/lineto-brown/lineto-brown-regular.woff') format('woff');
+	font-display: swap;
+	font-style: normal;
+	font-weight: 400;
 }
 
 @tailwind utilities;

@@ -40,6 +40,11 @@ module.exports = {
 			normal: 400,
 			bold: 700,
 		},
+		fontFamily: {
+			body: ['Brown', 'Helvetica', 'sans-serif'],
+			heading: ['Brown', 'Georgia', 'serif'],
+			system: ['system-ui', 'sans-serif'],
+		},
 		letterSpacing: {
 			tight: '-1px',
 			snug: '-0.66px',
