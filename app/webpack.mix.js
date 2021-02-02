@@ -30,11 +30,11 @@ mix.webpackConfig((webpack) => {
     };
 });
 
-const postCssPlugins = [
+const postcssPlugins = [
     require('tailwindcss'),
 ];
 
 mix.js('./src/app.js', 'dist')
     .vue()
-    .postCss('./css/app.css', 'dist', postCssPlugins)
+    .postCss('./css/app.css', 'dist', postcssPlugins)
     .setPublicPath('public');

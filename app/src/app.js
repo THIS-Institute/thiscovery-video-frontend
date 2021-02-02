@@ -1,6 +1,6 @@
 import { createApp } from 'vue';
-import { router } from '@/router';
-import { store } from '@/store';
+import { router } from './core/routing';
+import { store } from './store';
 
 const RootComponent = {};
 
