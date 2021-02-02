@@ -1,0 +1,33 @@
+{
+	"browser-default-font-size": 16,
+	"breakpoints": {
+		"xs": 375,
+		"sm": 560,
+		"md": 768,
+		"lg": 960,
+		"xl": 1248
+	},
+	"colors": {
+		"yellow": "#ffd85a",
+		"red": "#dd0934",
+		"pink": "#f3a4b8",
+		"aubergine": "#680f38",
+		"black": "#000",
+		"white": "#fff",
+		"grey": {
+			"100": "#efeff0",
+			"200": "#d4d6d5",
+			"300": "#393b42"
+		}
+	},
+	"columns": 24,
+	"z-indexes": [
+		"accessibility-skip-links",
+		"outdated-browser",
+		"site-header",
+		"site-content",
+		"site-footer",
+		"2",
+		"1"
+	]
+}
