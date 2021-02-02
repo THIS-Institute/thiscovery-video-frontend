@@ -51,6 +51,7 @@ module.exports = {
 			normal: 0,
 		},
 		lineHeight: {
+			reduced: 0.95,
 			none: 1,
 			tight: 1.12,
 			snug: 1.4,
@@ -72,6 +73,8 @@ module.exports = {
 			spacing: {
 				em: '1em',
 				'1/2em': '.5em',
+				'1/3em': '.33em',
+				'3.5': relative(14),
 
 				gutter: relative(20),
 				margin: relative(60),
