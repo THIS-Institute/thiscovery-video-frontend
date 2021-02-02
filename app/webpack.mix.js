@@ -1,13 +1,11 @@
 const path = require('path');
 let mix = require('laravel-mix');
 
-const aliases = {
+mix.alias({
     '@': path.join(__dirname, 'src')
-};
+});
 
-mix.alias(aliases);
-
-const browserSync = {
+mix.browserSync({
     files: [
         './public/dist/',
         './public/index.html',
@@ -17,9 +15,7 @@ const browserSync = {
     open: false,
     notify: false,
     ui: false,
-};
-
-mix.browserSync(browserSync);
+});
 
 const flags = {
     '__VUE_OPTIONS_API__': JSON.stringify(true),
