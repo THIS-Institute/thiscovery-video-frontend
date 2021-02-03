@@ -11,11 +11,7 @@
 		<div class="flex space-x-2 mt-10 items-center">
 			<e-button
 				title="Get involved"
-				:class="[
-					'bg-red text-white ring-red',
-					'hover:bg-white hover:text-red hover:ring-white',
-					'focus:bg-white focus:text-red focus:ring-white',
-				]"
+				class="e-button--red"
 				pill
 				:small="small"
 			/>
@@ -23,11 +19,7 @@
 			<e-button
 				title="Get involved"
 				icon="chevron-right"
-				:class="[
-					'bg-red text-white ring-red',
-					'hover:bg-white hover:text-red hover:ring-white',
-					'focus:bg-white focus:text-red focus:ring-white',
-				]"
+				class="e-button--red"
 				pill
 				:small="small"
 			/>
@@ -35,11 +27,7 @@
 			<e-button
 				title="Get involved"
 				icon="chevron-left"
-				:class="[
-					'bg-red text-white ring-red',
-					'hover:bg-white hover:text-red hover:ring-white',
-					'focus:bg-white focus:text-red focus:ring-white',
-				]"
+				class="e-button--red"
 				flipped
 				pill
 				:small="small"
@@ -48,11 +36,7 @@
 			<e-button
 				title="Get involved"
 				icon="chevron-left"
-				:class="[
-					'text-red',
-					'hover:text-black',
-					'focus:text-black',
-				]"
+				class="text-red hover:text-black focus:text-black"
 				flipped
 				:small="small"
 			/>
@@ -61,11 +45,7 @@
 		<div class="flex space-x-2 mt-10 items-center">
 			<e-button
 				title="Get involved"
-				:class="[
-					'bg-white text-red ring-red',
-					'hover:bg-red hover:text-white',
-					'focus:bg-red focus:text-white',
-				]"
+				class="e-button--red-outline"
 				pill
 				:small="small"
 			/>
@@ -73,11 +53,7 @@
 			<e-button
 				title="Get involved"
 				icon="chevron-right"
-				:class="[
-					'bg-white text-red ring-red',
-					'hover:bg-red hover:text-white',
-					'focus:bg-red focus:text-white',
-				]"
+				class="e-button--red-outline"
 				pill
 				:small="small"
 			/>
@@ -85,11 +61,7 @@
 			<e-button
 				title="Get involved"
 				icon="chevron-left"
-				:class="[
-					'bg-white text-red ring-red',
-					'hover:bg-red hover:text-white',
-					'focus:bg-red focus:text-white',
-				]"
+				class="e-button--red-outline"
 				flipped
 				pill
 				:small="small"
@@ -99,12 +71,7 @@
 		<div class="flex space-x-2 mt-10 items-center">
 			<e-button
 				title="Get involved"
-				class="bg-green text-white"
-				:class="[
-					'bg-green text-white ring-green',
-					'hover:bg-white hover:text-green',
-					'focus:bg-white focus:text-green',
-				]"
+				class="e-button--green"
 				pill
 				:small="small"
 			/>
@@ -112,11 +79,7 @@
 			<e-button
 				title="Get involved"
 				icon="chevron-right"
-				:class="[
-					'bg-green text-white ring-green',
-					'hover:bg-white hover:text-green',
-					'focus:bg-white focus:text-green',
-				]"
+				class="e-button--green"
 				pill
 				:small="small"
 			/>
@@ -124,11 +87,7 @@
 			<e-button
 				title="Get involved"
 				icon="chevron-left"
-				:class="[
-					'bg-green text-white ring-green',
-					'hover:bg-white hover:text-green',
-					'focus:bg-white focus:text-green',
-				]"
+				class="e-button--green"
 				flipped
 				pill
 				:small="small"
@@ -137,11 +96,7 @@
 			<e-button
 				title="Get involved"
 				icon="chevron-left"
-				:class="[
-					'text-green',
-					'hover:text-black',
-					'focus:text-black',
-				]"
+				class="text-green hover:text-black focus:text-black"
 				flipped
 				:small="small"
 			/>
@@ -150,11 +105,7 @@
 		<div class="flex space-x-2 mt-10 items-center">
 			<e-button
 				title="Get involved"
-				:class="[
-					'bg-white text-green ring-green',
-					'hover:bg-green hover:text-white',
-					'focus:bg-green focus:text-white',
-				]"
+				class="e-button--green-outline"
 				pill
 				:small="small"
 			/>
@@ -162,11 +113,7 @@
 			<e-button
 				title="Get involved"
 				icon="chevron-right"
-				:class="[
-					'bg-white text-green ring-green',
-					'hover:bg-green hover:text-white',
-					'focus:bg-green focus:text-white',
-				]"
+				class="e-button--green-outline"
 				pill
 				:small="small"
 			/>
@@ -174,11 +121,7 @@
 			<e-button
 				title="Get involved"
 				icon="chevron-left"
-				:class="[
-					'bg-white text-green ring-green',
-					'hover:bg-green hover:text-white',
-					'focus:bg-green focus:text-white',
-				]"
+				class="e-button--green-outline"
 				flipped
 				pill
 				:small="small"
@@ -188,11 +131,7 @@
 		<div class="flex space-x-2 mt-10 items-center">
 			<e-button
 				title="Get involved"
-				:class="[
-					'bg-transparent text-white ring-white',
-					'hover:bg-white hover:text-black',
-					'focus:bg-white focus:text-black',
-				]"
+				class="e-button--white-outline"
 				pill
 				:small="small"
 			/>
@@ -200,11 +139,7 @@
 			<e-button
 				title="Get involved"
 				icon="chevron-right"
-				:class="[
-					'bg-transparent text-white ring-white',
-					'hover:bg-white hover:text-black',
-					'focus:bg-white focus:text-black',
-				]"
+				class="e-button--white-outline"
 				pill
 				:small="small"
 			/>
@@ -212,11 +147,7 @@
 			<e-button
 				title="Get involved"
 				icon="chevron-left"
-				:class="[
-					'bg-transparent text-white ring-white',
-					'hover:bg-white hover:text-black',
-					'focus:bg-white focus:text-black',
-				]"
+				class="e-button--white-outline"
 				flipped
 				pill
 				:small="small"
@@ -225,11 +156,7 @@
 			<e-button
 				title="Get involved"
 				icon="chevron-left"
-				:class="[
-					'text-white',
-					'hover:text-black',
-					'focus:text-black',
-				]"
+				class="text-white hover:text-black focus:text-black"
 				flipped
 				:small="small"
 			/>
@@ -238,12 +165,7 @@
 		<div class="flex space-x-2 mt-10 items-center">
 			<e-button
 				title="Get involved"
-				class="bg-white text-red"
-				:class="[
-					'bg-white text-red ring-white',
-					'hover:bg-transparent hover:text-white',
-					'focus:bg-transparent focus:text-white',
-				]"
+				class="e-button--white"
 				pill
 				:small="small"
 			/>
@@ -251,11 +173,7 @@
 			<e-button
 				title="Get involved"
 				icon="chevron-right"
-				:class="[
-					'bg-white text-red ring-white',
-					'hover:bg-transparent hover:text-white',
-					'focus:bg-transparent focus:text-white',
-				]"
+				class="e-button--white"
 				pill
 				:small="small"
 			/>
@@ -263,11 +181,7 @@
 			<e-button
 				title="Get involved"
 				icon="chevron-left"
-				:class="[
-					'bg-white text-red ring-white',
-					'hover:bg-transparent hover:text-white',
-					'focus:bg-transparent focus:text-white',
-				]"
+				class="e-button--white"
 				flipped
 				pill
 				:small="small"
@@ -277,11 +191,7 @@
 		<div class="flex space-x-2 mt-10 items-center">
 			<e-button
 				title="Get involved"
-				:class="[
-					'bg-transparent text-black ring-black',
-					'hover:bg-black hover:text-white',
-					'focus:bg-black focus:text-white',
-				]"
+				class="e-button--black-outline"
 				pill
 				:small="small"
 			/>
@@ -289,11 +199,7 @@
 			<e-button
 				title="Get involved"
 				icon="chevron-right"
-				:class="[
-					'bg-transparent text-black ring-black',
-					'hover:bg-black hover:text-white',
-					'focus:bg-black focus:text-white',
-				]"
+				class="e-button--black-outline"
 				pill
 				:small="small"
 			/>
@@ -301,11 +207,7 @@
 			<e-button
 				title="Get involved"
 				icon="chevron-left"
-				:class="[
-					'bg-transparent text-black ring-black',
-					'hover:bg-black hover:text-white',
-					'focus:bg-black focus:text-white',
-				]"
+				class="e-button--black-outline"
 				flipped
 				pill
 				:small="small"
@@ -314,11 +216,7 @@
 			<e-button
 				title="Get involved"
 				icon="chevron-left"
-				:class="[
-					'text-black',
-					'hover:text-white',
-					'focus:text-white',
-				]"
+				class="text-black hover:text-red focus:text-red"
 				flipped
 				:small="small"
 			/>

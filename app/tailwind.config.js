@@ -85,9 +85,16 @@ module.exports = {
 			width: {
 				...widths,
 			},
+			ringColor: {
+				white: colors.white,
+			},
 		},
 	},
-	variants: {},
+	variants: {
+		extend: {
+			ringColor: ['hover', 'focus'],
+		},
+	},
 	corePlugins: {
 		container: false,
 	},
