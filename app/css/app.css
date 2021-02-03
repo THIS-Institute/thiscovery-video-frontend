@@ -2,6 +2,7 @@
 @tailwind components;
 
 @import 'block/_container.css';
+@import 'block/_placeholder.css';
 
 @import 'core/_document.css';
 @import 'core/_button.css';

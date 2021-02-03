@@ -75,12 +75,17 @@ module.exports = {
 				'1/2em': '.5em',
 				'1/3em': '.33em',
 				'3.5': relative(14),
+				'7.5': relative(30),
 
 				gutter: relative(20),
 				margin: relative(60),
 			},
+			padding: {
+				logo: ratio(495, 103),
+			},
 			maxWidth: {
 				container: relative(1440),
+				logo: relative(145),
 			},
 			width: {
 				...widths,

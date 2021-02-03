@@ -1,12 +1,32 @@
 <template>
 	<div class="e-container bg-grey-200 min-h-screen h-full">
-		<component
-			:is="`h${index + 1}`"
-			v-for="(title, index) in 4"
-			:key="index"
-			:class="`e-h${index + 1}`"
-			v-text="message"
-		/>
+		<div class="max-w-logo">
+			<placeholder ratio="pt-logo">
+				<icon
+					class="text-red"
+					size="w-full h-full"
+					name="logo"
+				/>
+			</placeholder>
+
+			<placeholder ratio="pt-logo">
+				<icon
+					class="text-white"
+					size="w-full h-full"
+					name="logo"
+				/>
+			</placeholder>
+		</div>
+
+		<div class="mt-10">
+			<component
+				:is="`h${index + 1}`"
+				v-for="(title, index) in 4"
+				:key="index"
+				:class="`e-h${index + 1}`"
+				v-text="message"
+			/>
+		</div>
 
 		<div class="flex space-x-2 mt-10 items-center">
 			<e-button

@@ -1,0 +1,7 @@
+.e-placeholder {
+	@apply relative w-full;
+}
+
+.e-placeholder > * {
+	@apply absolute inset-0 w-full h-full;
+}
