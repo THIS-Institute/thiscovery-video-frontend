@@ -1,48 +1,48 @@
 .e-button--red {
 	@apply
-		bg-red text-white ring-red
-		hover:bg-white hover:text-red hover:ring-white
-		focus:bg-white focus:text-red focus:ring-white;
+		bg-red text-white border-red
+		hover:bg-white hover:text-red hover:border-white
+		focus:bg-white focus:text-red focus:border-white;
 }
 
 .e-button--red-outline {
 	@apply
-		bg-white text-red ring-red
+		bg-white text-red border-red
 		hover:bg-red hover:text-white
 		focus:bg-red focus:text-white;
 }
 
 .e-button--green {
 	@apply
-		bg-green text-white ring-green
+		bg-green text-white border-green
 		hover:bg-white hover:text-green
 		focus:bg-white focus:text-green;
 }
 
 .e-button--green-outline {
 	@apply
-		bg-white text-green ring-green
+		bg-white text-green border-green
 		hover:bg-green hover:text-white
 		focus:bg-green focus:text-white;
 }
 
 .e-button--white-outline {
 	@apply
-		bg-transparent text-white ring-white
+		bg-transparent text-white border-white
 		hover:bg-white hover:text-black
 		focus:bg-white focus:text-black;
 }
 
 .e-button--white {
 	@apply
-		bg-white text-red ring-white
+		bg-white text-red border-white
 		hover:bg-transparent hover:text-white
 		focus:bg-transparent focus:text-white;
 }
 
 .e-button--black-outline {
 	@apply
-		bg-transparent text-black ring-black
+		bg-transparent text-black border-black
 		hover:bg-black hover:text-white
 		focus:bg-black focus:text-white;
 }
