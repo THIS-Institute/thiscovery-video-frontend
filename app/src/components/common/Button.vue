@@ -4,7 +4,7 @@
 		:to="$props.url"
 		:class="[
 			'inline-flex items-center leading-reduced',
-			'transition-colours duration-300',
+			'transition-all duration-300',
 			'focus:outline-none',
 			$props.pill ? 'space-x-1/2em' : 'space-x-1/3em',
 			{
