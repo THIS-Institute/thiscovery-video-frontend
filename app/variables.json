@@ -11,14 +11,14 @@
 		"yellow": "#ffd85a",
 		"red": "#dd0031",
 		"green": "#34af7c",
-		"pink": "#f3a4b8",
-		"aubergine": "#680f38",
+		"pink": "#f3a5b9",
+		"aubergine": "#680436",
 		"black": "#000",
 		"white": "#fff",
 		"grey": {
 			"100": "#efeff0",
-			"200": "#d4d6d5",
-			"300": "#393b42"
+			"200": "#d2d4d3",
+			"300": "#3a3c42"
 		}
 	},
 	"columns": 24,

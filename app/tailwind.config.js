@@ -85,14 +85,22 @@ module.exports = {
 			},
 			maxWidth: {
 				container: relative(1440),
-				logo: relative(145),
+				logo: relative(100),
+				'logo-xl': relative(150),
 			},
 			width: {
 				...widths,
 			},
 		},
 	},
-	variants: {},
+	variants: {
+		extend: {
+			backgroundColor: ['hover', 'disabled', 'focus'],
+			borderColor: ['hover', 'disabled', 'focus'],
+			textColor: ['hover', 'disabled', 'focus'],
+			opacity: ['hover', 'disabled', 'focus'],
+		},
+	},
 	corePlugins: {
 		container: false,
 	},

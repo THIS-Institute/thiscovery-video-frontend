@@ -1,6 +1,9 @@
 <template>
-	<div class="e-container bg-grey-200 min-h-screen h-full">
-		<div class="max-w-logo">
+	<div
+		class="e-container min-h-screen h-full"
+		:class="disabled ? 'bg-white' : 'bg-grey-200'"
+	>
+		<div class="max-w-logo xl:max-w-logo-xl">
 			<placeholder ratio="pt-logo">
 				<icon
 					class="text-red"
@@ -34,6 +37,7 @@
 				class="e-button--red"
 				pill
 				:small="small"
+				:disabled="disabled"
 			/>
 
 			<e-button
@@ -42,6 +46,7 @@
 				class="e-button--red"
 				pill
 				:small="small"
+				:disabled="disabled"
 			/>
 
 			<e-button
@@ -51,6 +56,7 @@
 				flipped
 				pill
 				:small="small"
+				:disabled="disabled"
 			/>
 
 			<e-button
@@ -59,6 +65,7 @@
 				class="text-red hover:text-black focus:text-black"
 				flipped
 				:small="small"
+				:disabled="disabled"
 			/>
 		</div>
 
@@ -68,6 +75,7 @@
 				class="e-button--red-outline"
 				pill
 				:small="small"
+				:disabled="disabled"
 			/>
 
 			<e-button
@@ -76,6 +84,7 @@
 				class="e-button--red-outline"
 				pill
 				:small="small"
+				:disabled="disabled"
 			/>
 
 			<e-button
@@ -85,6 +94,7 @@
 				flipped
 				pill
 				:small="small"
+				:disabled="disabled"
 			/>
 		</div>
 
@@ -94,6 +104,7 @@
 				class="e-button--green"
 				pill
 				:small="small"
+				:disabled="disabled"
 			/>
 
 			<e-button
@@ -102,6 +113,7 @@
 				class="e-button--green"
 				pill
 				:small="small"
+				:disabled="disabled"
 			/>
 
 			<e-button
@@ -111,6 +123,7 @@
 				flipped
 				pill
 				:small="small"
+				:disabled="disabled"
 			/>
 
 			<e-button
@@ -119,6 +132,7 @@
 				class="text-green hover:text-black focus:text-black"
 				flipped
 				:small="small"
+				:disabled="disabled"
 			/>
 		</div>
 
@@ -128,6 +142,7 @@
 				class="e-button--green-outline"
 				pill
 				:small="small"
+				:disabled="disabled"
 			/>
 
 			<e-button
@@ -136,6 +151,7 @@
 				class="e-button--green-outline"
 				pill
 				:small="small"
+				:disabled="disabled"
 			/>
 
 			<e-button
@@ -145,6 +161,7 @@
 				flipped
 				pill
 				:small="small"
+				:disabled="disabled"
 			/>
 		</div>
 
@@ -154,6 +171,7 @@
 				class="e-button--white-outline"
 				pill
 				:small="small"
+				:disabled="disabled"
 			/>
 
 			<e-button
@@ -162,6 +180,7 @@
 				class="e-button--white-outline"
 				pill
 				:small="small"
+				:disabled="disabled"
 			/>
 
 			<e-button
@@ -171,6 +190,7 @@
 				flipped
 				pill
 				:small="small"
+				:disabled="disabled"
 			/>
 
 			<e-button
@@ -179,6 +199,7 @@
 				class="text-white hover:text-black focus:text-black"
 				flipped
 				:small="small"
+				:disabled="disabled"
 			/>
 		</div>
 
@@ -188,6 +209,7 @@
 				class="e-button--white"
 				pill
 				:small="small"
+				:disabled="disabled"
 			/>
 
 			<e-button
@@ -196,6 +218,7 @@
 				class="e-button--white"
 				pill
 				:small="small"
+				:disabled="disabled"
 			/>
 
 			<e-button
@@ -205,6 +228,7 @@
 				flipped
 				pill
 				:small="small"
+				:disabled="disabled"
 			/>
 		</div>
 
@@ -214,6 +238,7 @@
 				class="e-button--black-outline"
 				pill
 				:small="small"
+				:disabled="disabled"
 			/>
 
 			<e-button
@@ -222,6 +247,7 @@
 				class="e-button--black-outline"
 				pill
 				:small="small"
+				:disabled="disabled"
 			/>
 
 			<e-button
@@ -231,6 +257,7 @@
 				flipped
 				pill
 				:small="small"
+				:disabled="disabled"
 			/>
 
 			<e-button
@@ -239,6 +266,7 @@
 				class="text-black hover:text-red focus:text-red"
 				flipped
 				:small="small"
+				:disabled="disabled"
 			/>
 		</div>
 
@@ -249,6 +277,16 @@
 				type="checkbox"
 				name="small"
 				v-model="small"
+			>
+		</div>
+
+		<div class="flex items-center space-x-2 mt-2">
+			<label for="disabled">Disabled buttons</label>
+
+			<input
+				type="checkbox"
+				name="disabled"
+				v-model="disabled"
 			>
 		</div>
 	</div>
@@ -262,6 +300,7 @@
 			const state = reactive({
 				message: "This is a new way of doing research",
 				small: false,
+				disabled: false,
 			});
 		
 			return {

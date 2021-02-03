@@ -8,7 +8,7 @@ body {
 }
 
 [disabled] {
-	@apply opacity-25 cursor-not-allowed select-none;
+	@apply cursor-not-allowed select-none;
 }
 
 ::selection {
