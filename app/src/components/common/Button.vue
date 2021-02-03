@@ -10,7 +10,7 @@
 			{
 				'flex-row-reverse space-x-reverse': $props.flipped,
 				'text-sm': $props.small,
-				'rounded-full ring-2 ring-inset': $props.pill,
+				'rounded-full border-2': $props.pill,
 				'px-5 py-3.5': $props.pill && $props.small,
 				'px-6 py-4': $props.pill && !$props.small,
 			},
