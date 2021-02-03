@@ -14,8 +14,10 @@
 				:class="[
 					'bg-red text-white ring-red',
 					'hover:bg-white hover:text-red hover:ring-white',
+					'focus:bg-white focus:text-red focus:ring-white',
 				]"
 				pill
+				:small="small"
 			/>
 
 			<e-button
@@ -24,8 +26,10 @@
 				:class="[
 					'bg-red text-white ring-red',
 					'hover:bg-white hover:text-red hover:ring-white',
+					'focus:bg-white focus:text-red focus:ring-white',
 				]"
 				pill
+				:small="small"
 			/>
 
 			<e-button
@@ -34,9 +38,11 @@
 				:class="[
 					'bg-red text-white ring-red',
 					'hover:bg-white hover:text-red hover:ring-white',
+					'focus:bg-white focus:text-red focus:ring-white',
 				]"
 				flipped
 				pill
+				:small="small"
 			/>
 
 			<e-button
@@ -45,8 +51,10 @@
 				:class="[
 					'text-red',
 					'hover:text-black',
+					'focus:text-black',
 				]"
 				flipped
+				:small="small"
 			/>
 		</div>
 
@@ -56,8 +64,10 @@
 				:class="[
 					'bg-white text-red ring-red',
 					'hover:bg-red hover:text-white',
+					'focus:bg-red focus:text-white',
 				]"
 				pill
+				:small="small"
 			/>
 
 			<e-button
@@ -66,8 +76,10 @@
 				:class="[
 					'bg-white text-red ring-red',
 					'hover:bg-red hover:text-white',
+					'focus:bg-red focus:text-white',
 				]"
 				pill
+				:small="small"
 			/>
 
 			<e-button
@@ -76,9 +88,11 @@
 				:class="[
 					'bg-white text-red ring-red',
 					'hover:bg-red hover:text-white',
+					'focus:bg-red focus:text-white',
 				]"
 				flipped
 				pill
+				:small="small"
 			/>
 		</div>
 
@@ -89,8 +103,10 @@
 				:class="[
 					'bg-green text-white ring-green',
 					'hover:bg-white hover:text-green',
+					'focus:bg-white focus:text-green',
 				]"
 				pill
+				:small="small"
 			/>
 
 			<e-button
@@ -99,8 +115,10 @@
 				:class="[
 					'bg-green text-white ring-green',
 					'hover:bg-white hover:text-green',
+					'focus:bg-white focus:text-green',
 				]"
 				pill
+				:small="small"
 			/>
 
 			<e-button
@@ -109,9 +127,11 @@
 				:class="[
 					'bg-green text-white ring-green',
 					'hover:bg-white hover:text-green',
+					'focus:bg-white focus:text-green',
 				]"
 				flipped
 				pill
+				:small="small"
 			/>
 
 			<e-button
@@ -120,8 +140,10 @@
 				:class="[
 					'text-green',
 					'hover:text-black',
+					'focus:text-black',
 				]"
 				flipped
+				:small="small"
 			/>
 		</div>
 
@@ -131,8 +153,10 @@
 				:class="[
 					'bg-white text-green ring-green',
 					'hover:bg-green hover:text-white',
+					'focus:bg-green focus:text-white',
 				]"
 				pill
+				:small="small"
 			/>
 
 			<e-button
@@ -141,8 +165,10 @@
 				:class="[
 					'bg-white text-green ring-green',
 					'hover:bg-green hover:text-white',
+					'focus:bg-green focus:text-white',
 				]"
 				pill
+				:small="small"
 			/>
 
 			<e-button
@@ -151,9 +177,11 @@
 				:class="[
 					'bg-white text-green ring-green',
 					'hover:bg-green hover:text-white',
+					'focus:bg-green focus:text-white',
 				]"
 				flipped
 				pill
+				:small="small"
 			/>
 		</div>
 
@@ -163,8 +191,10 @@
 				:class="[
 					'bg-transparent text-white ring-white',
 					'hover:bg-white hover:text-black',
+					'focus:bg-white focus:text-black',
 				]"
 				pill
+				:small="small"
 			/>
 
 			<e-button
@@ -173,8 +203,10 @@
 				:class="[
 					'bg-transparent text-white ring-white',
 					'hover:bg-white hover:text-black',
+					'focus:bg-white focus:text-black',
 				]"
 				pill
+				:small="small"
 			/>
 
 			<e-button
@@ -183,9 +215,11 @@
 				:class="[
 					'bg-transparent text-white ring-white',
 					'hover:bg-white hover:text-black',
+					'focus:bg-white focus:text-black',
 				]"
 				flipped
 				pill
+				:small="small"
 			/>
 
 			<e-button
@@ -194,8 +228,10 @@
 				:class="[
 					'text-white',
 					'hover:text-black',
+					'focus:text-black',
 				]"
 				flipped
+				:small="small"
 			/>
 		</div>
 
@@ -206,8 +242,10 @@
 				:class="[
 					'bg-white text-red ring-white',
 					'hover:bg-transparent hover:text-white',
+					'focus:bg-transparent focus:text-white',
 				]"
 				pill
+				:small="small"
 			/>
 
 			<e-button
@@ -216,8 +254,10 @@
 				:class="[
 					'bg-white text-red ring-white',
 					'hover:bg-transparent hover:text-white',
+					'focus:bg-transparent focus:text-white',
 				]"
 				pill
+				:small="small"
 			/>
 
 			<e-button
@@ -226,9 +266,11 @@
 				:class="[
 					'bg-white text-red ring-white',
 					'hover:bg-transparent hover:text-white',
+					'focus:bg-transparent focus:text-white',
 				]"
 				flipped
 				pill
+				:small="small"
 			/>
 		</div>
 
@@ -238,8 +280,10 @@
 				:class="[
 					'bg-transparent text-black ring-black',
 					'hover:bg-black hover:text-white',
+					'focus:bg-black focus:text-white',
 				]"
 				pill
+				:small="small"
 			/>
 
 			<e-button
@@ -248,8 +292,10 @@
 				:class="[
 					'bg-transparent text-black ring-black',
 					'hover:bg-black hover:text-white',
+					'focus:bg-black focus:text-white',
 				]"
 				pill
+				:small="small"
 			/>
 
 			<e-button
@@ -258,9 +304,11 @@
 				:class="[
 					'bg-transparent text-black ring-black',
 					'hover:bg-black hover:text-white',
+					'focus:bg-black focus:text-white',
 				]"
 				flipped
 				pill
+				:small="small"
 			/>
 
 			<e-button
@@ -269,9 +317,21 @@
 				:class="[
 					'text-black',
 					'hover:text-white',
+					'focus:text-white',
 				]"
 				flipped
+				:small="small"
 			/>
+		</div>
+
+		<div class="flex items-center space-x-2 mt-5">
+			<label for="small">Small buttons</label>
+
+			<input
+				type="checkbox"
+				name="small"
+				v-model="small"
+			>
 		</div>
 	</div>
 </template>
@@ -283,6 +343,7 @@
 		setup () {
 			const state = reactive({
 				message: "This is a new way of doing research",
+				small: false,
 			});
 		
 			return {
