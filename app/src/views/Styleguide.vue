@@ -22,7 +22,7 @@
 			</placeholder>
 		</div>
 
-		<!-- Headings -->
+		<!-- Typography -->
 		<div class="mt-10">
 			<component
 				:is="`h${index + 1}`"
@@ -31,6 +31,8 @@
 				:class="`e-h${index + 1}`"
 				v-text="message"
 			/>
+
+			<p class="mt-5">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Animi harum doloremque, cumque quas accusantium blanditiis officia saepe fugiat reprehenderit sunt cum dignissimos natus! Quae facere molestias illum non cumque ex!</p>
 		</div>
 
 		<!-- Buttons -->
