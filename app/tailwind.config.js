@@ -78,14 +78,21 @@ module.exports = {
 
 				gutter: relative(20),
 				margin: relative(60),
+				'1/2-screen': '50vw',
 			},
 			padding: {
+				full: ratio(1, 1),
 				logo: ratio(495, 103),
 			},
 			maxWidth: {
 				container: relative(1440),
 				logo: relative(100),
 				'logo-xl': relative(150),
+			},
+			backgroundSize: {
+				'100': relative(400),
+				'200': relative(800),
+				'300': relative(1200),
 			},
 			width: {
 				...widths,
