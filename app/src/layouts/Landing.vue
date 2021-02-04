@@ -3,7 +3,7 @@
 		<div class="e-background e-background--waves" />
 
 		<main class="relative">
-			<slot />
+			<router-view />
 		</main>
 	</div>
 </template>

@@ -8,17 +8,17 @@ import LayoutAppointment from './layouts/Appointment';
 export const routes = [
 	{
 		path: '/',
-		component: PathSelectionView,
-		meta: {
-			layout: LayoutLanding,
-		},
+		component: LayoutLanding,
+		children: [
+			{ path: '', component: PathSelectionView }
+		],
 	},
 	{
 		path: '/appointment',
-		component: Appointment,
-		meta: {
-			layout: LayoutAppointment,
-		},
+		component: LayoutAppointment,
+		children: [
+			{ path: '', component: Appointment }
+		],
 	},
 	{
 		path: '/styleguide',
