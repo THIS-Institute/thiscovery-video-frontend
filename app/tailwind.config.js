@@ -41,8 +41,7 @@ module.exports = {
 			bold: 700,
 		},
 		fontFamily: {
-			body: ['Brown', 'Helvetica', 'sans-serif'],
-			heading: ['Brown', 'Georgia', 'serif'],
+			sans: ['Brown', 'Helvetica', 'sans-serif'],
 			system: ['system-ui', 'sans-serif'],
 		},
 		letterSpacing: {
