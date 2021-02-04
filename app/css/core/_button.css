@@ -46,3 +46,11 @@
 		hover:bg-black hover:text-white
 		focus:bg-black focus:text-white;
 }
+
+.e-button--time {
+	@apply
+		bg-white text-red border-red border-2
+		hover:bg-red hover:text-white
+		focus:bg-red focus:text-white
+		disabled:border-transparent;
+}

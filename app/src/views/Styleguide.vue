@@ -276,6 +276,33 @@
 				/>
 			</div>
 
+			<div class="flex space-x-2 mt-10 items-center">
+				<e-button
+					title="07:45am"
+					class="e-button--time"
+					time
+					:small="button.small"
+					:disabled="button.disabled"
+				/>
+
+				<e-button
+					title="07:45am"
+					class="e-button--time"
+					time
+					:small="button.small"
+					:disabled="button.disabled"
+				/>
+
+				<e-button
+					title="07:45am"
+					class="e-button--time"
+					flipped
+					time
+					:small="button.small"
+					:disabled="button.disabled"
+				/>
+			</div>
+
 			<div class="flex items-center space-x-2 mt-5">
 				<label for="small">Small buttons</label>
 
