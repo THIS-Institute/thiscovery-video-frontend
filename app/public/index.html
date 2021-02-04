@@ -10,7 +10,9 @@
 </head>
 <body>
     <div id="app">
-        <router-view></router-view>
+        <component :is="$route.meta.layout">
+            <router-view></router-view>
+        </component>
     </div>
     <script src="/dist/app.js"></script>
 </body>
