@@ -1,0 +1,18 @@
+.e-background {
+	@apply absolute inset-0 bg-repeat bg-100 md:bg-200 xl:bg-300;
+}
+
+.e-background--waves {
+	@apply bg-yellow;
+	background-image: url('/static/img/background/waves.svg');
+}
+
+.e-background--scratches {
+	@apply bg-pink;
+	background-image: url('/static/img/background/scratches.svg');
+}
+
+.e-background--curls {
+	@apply bg-pink;
+	background-image: url('/static/img/background/curls.svg');
+}

@@ -1,7 +1,14 @@
 export const user = {
-    namespaced: true,
-    state: () => ({}),
-    mutations: {},
-    actions: {},
-    getters: {},
+	namespaced: true,
+
+	state: () => ({
+		profile: {
+			initials: 'EP',
+			name: 'Elanor',
+		},
+	}),
+
+	mutations: {},
+	actions: {},
+	getters: {},
 };

@@ -6,12 +6,12 @@
 			'inline-flex items-center leading-reduced',
 			'transition-all duration-300',
 			'focus:outline-none',
-			$props.pill ? 'space-x-1/2em' : 'space-x-1/3em',
 			{
 				'flex-row-reverse space-x-reverse': $props.flipped,
 				'text-sm': $props.small,
-				'rounded-full border-2 disabled:bg-grey-200 disabled:text-white disabled:border-grey-200': $props.pill,
-				'disabled:text-black disabled:opacity-50': !$props.pill,
+				'space-x-1/2em rounded-full border-2 disabled:bg-grey-200 disabled:text-white disabled:border-grey-200': $props.pill,
+				'rounded-lg py-4 px-3.5': $props.time,
+				'space-x-1/3em disabled:text-black disabled:opacity-25': !$props.pill,
 				'px-5 py-3.5': $props.pill && $props.small,
 				'px-6 py-4': $props.pill && !$props.small,
 			},
@@ -53,6 +53,7 @@
 			flipped: Boolean,
 			small: Boolean,
 			pill: Boolean,
+			time: Boolean,
 		},
 	};
 </script>

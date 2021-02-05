@@ -4,7 +4,7 @@ html {
 }
 
 body {
-	@apply bg-white text-grey-300 font-body text-lg leading-normal;
+	@apply bg-white text-grey-300 font-sans text-lg leading-normal antialiased;
 }
 
 [disabled] {
@@ -12,7 +12,7 @@ body {
 }
 
 ::selection {
-	@apply bg-black text-white;
+	@apply bg-grey-300 text-white;
 	text-shadow: none;
 }
 

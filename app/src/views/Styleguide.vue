@@ -22,7 +22,7 @@
 			</placeholder>
 		</div>
 
-		<!-- Headings -->
+		<!-- Typography -->
 		<div class="mt-10">
 			<component
 				:is="`h${index + 1}`"
@@ -31,6 +31,8 @@
 				:class="`e-h${index + 1}`"
 				v-text="message"
 			/>
+
+			<p class="mt-5">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Animi harum doloremque, cumque quas accusantium blanditiis officia saepe fugiat reprehenderit sunt cum dignissimos natus! Quae facere molestias illum non cumque ex!</p>
 		</div>
 
 		<!-- Buttons -->
@@ -269,6 +271,33 @@
 					icon="chevron-left"
 					class="text-black hover:text-red focus:text-red"
 					flipped
+					:small="button.small"
+					:disabled="button.disabled"
+				/>
+			</div>
+
+			<div class="flex space-x-2 mt-10 items-center">
+				<e-button
+					title="07:45am"
+					class="e-button--time"
+					time
+					:small="button.small"
+					:disabled="button.disabled"
+				/>
+
+				<e-button
+					title="07:45am"
+					class="e-button--time"
+					time
+					:small="button.small"
+					:disabled="button.disabled"
+				/>
+
+				<e-button
+					title="07:45am"
+					class="e-button--time"
+					flipped
+					time
 					:small="button.small"
 					:disabled="button.disabled"
 				/>

@@ -4,9 +4,9 @@ import { task } from './task';
 import { user } from './user';
 
 export const store = createStore({
-    modules: {
-        app,
-        task,
-        user,
-    },
+	modules: {
+		app,
+		task,
+		user,
+	},
 });

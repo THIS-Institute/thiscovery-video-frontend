@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 
+@import 'block/_background.css';
 @import 'block/_container.css';
 @import 'block/_placeholder.css';
 
