@@ -73,7 +73,10 @@ module.exports = {
 				em: '1em',
 				'1/2em': '.5em',
 				'1/3em': '.33em',
+				'1.5': relative(6),
+				'2.5': relative(10),
 				'3.5': relative(14),
+				'4.5': relative(18),
 				'7.5': relative(30),
 
 				gutter: relative(20),
@@ -86,8 +89,7 @@ module.exports = {
 			},
 			maxWidth: {
 				container: relative(1440),
-				logo: relative(100),
-				'logo-xl': relative(150),
+				logo: relative(150),
 			},
 			backgroundSize: {
 				'100': relative(400),
