@@ -3,15 +3,15 @@
 		<div class="e-background e-background--curls h-1/3" />
 
 		<e-header
-			:nav="cNav"
-			:nav-active="cNavActive"
-			:profile="cProfile"
+			:nav="nav"
+			:nav-active="navActive"
+			:profile="profile"
 		/>
 
 		<e-navigation
-			v-if="cNavActive"
-			:nav="cNav"
-			:profile="cProfile"
+			v-if="navActive"
+			:nav="nav"
+			:profile="profile"
 		/>
 
 		<main class="relative z-site-content">
@@ -34,14 +34,14 @@
 		},
 
 		setup() {
-			const cNavActive = computed(() => store.state.app.navActive);
-			const cProfile = computed(() => store.state.user.profile);
-			const cNav = computed(() => store.state.app.nav);
+			const navActive = computed(() => store.state.app.navActive);
+			const profile = computed(() => store.state.user.profile);
+			const nav = computed(() => store.state.app.nav);
 
 			return {
-				cNavActive,
-				cProfile,
-				cNav,
+				navActive,
+				profile,
+				nav,
 			};
 		},
 	};

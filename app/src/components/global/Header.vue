@@ -80,9 +80,9 @@
 </template>
 
 <script>
-	import NavLink from '../common/NavLink';
+	import NavLink from '@/components/common/NavLink';
 
-	import { store } from '../../store/index';
+	import { store } from '@/store/index';
 
 	export default {
 		components: {
