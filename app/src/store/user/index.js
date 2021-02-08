@@ -4,7 +4,7 @@ export const user = {
 	state: () => ({
 		profile: {
 			initials: 'EP',
-			name: 'Elanor',
+			name: 'Eleanor',
 		},
 	}),
 
