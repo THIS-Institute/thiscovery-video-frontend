@@ -23,13 +23,12 @@
 </template>
 
 <script>
-	import EHeader from '../components/global/Header';
-	import ENavigation from '../components/global/Navigation';
-
-	import { store } from '../store/index';
 	import { computed } from 'vue';
+	import { store } from '@/store/index';
+	import { useViewport } from '@/composables/useViewport';
 
-	import viewport from '@/mixins/viewport';
+	import EHeader from '@/components/global/Header';
+	import ENavigation from '@/components/global/Navigation';
 
 	export default {
 		components: {
@@ -42,7 +41,12 @@
 			const profile = computed(() => store.state.user.profile);
 			const nav = computed(() => store.state.app.nav);
 
-			const { onResize } = viewport;
+			const onViewportResized = () => {
+				console.log('resized');
+				console.log(getMediaQuery('md'));
+			};
+
+			const { getMediaQuery } = useViewport(onViewportResized);
 
 			return {
 				navActive,

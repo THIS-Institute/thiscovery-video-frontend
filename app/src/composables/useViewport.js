@@ -1,12 +1,13 @@
 import debounce from 'lodash/debounce';
-import variables from '../../variables.json';
-
+import variables from '@/../variables.json';
 import { onBeforeMount, onMounted, onBeforeUnmount } from 'vue';
 
-export default function () {
+export function useViewport(onViewportResized) {
 	let onDebouncedResize;
 
-	const relative = (px, unit = 'rem', base = variables['browser-default-font-size']) => `${px / base}${unit}`;
+	function relative(px, unit = 'rem', base = variables.defaultFontSize) {
+		return `${px / base}${unit}`;
+	}
 
 	function sort(breakpoint) {
 		['width', 'height']
@@ -15,15 +16,12 @@ export default function () {
 			.join(' and ');
 	};
 
-	function onResize() {};
-
-	function mq(name) {
+	function getMediaQuery(name) {
 		if (!window.matchMedia) {
 			return false;
 		}
 
 		const { breakpoints } = variables;
-
 		const breakpoint = breakpoints[name];
 
 		if (!breakpoint) {
@@ -34,12 +32,11 @@ export default function () {
 	};
 
 	onBeforeMount(() => {
-		onDebouncedResize = debounce(() => onResize(), 300);
+		onDebouncedResize = debounce(() => onViewportResized(), 300);
 	});
 
 	onMounted(() => {
-		onResize();
-
+		onViewportResized();
 		window.addEventListener('resize', onDebouncedResize);
 	});
 
@@ -48,7 +45,6 @@ export default function () {
 	});
 
 	return {
-		onResize,
-		mq,
+		getMediaQuery,
 	};
 };
