@@ -1,8 +1,8 @@
 .e-button--red {
 	@apply
 		bg-red text-white border-red
-		hover:bg-white hover:text-red hover:border-white
-		focus:bg-white focus:text-red focus:border-white;
+		hover:bg-white hover:text-red
+		focus:bg-white focus:text-red;
 }
 
 .e-button--red-outline {
