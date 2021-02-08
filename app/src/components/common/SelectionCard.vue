@@ -5,7 +5,10 @@
 				<div
 					:class="[
 						'flex items-center justify-center',
-						'rounded-full bg-pink p-4',
+						'rounded-full p-4',
+						$props.unavailable
+							? 'bg-grey-200'
+							: 'bg-pink',
 					]"
 				>
 					<icon
@@ -25,7 +28,10 @@
 				v-text="$props.content"
 			/>
 
-			<ul class="flex flex-col mt-7 space-y-2.5">
+			<ul
+				v-if="!$props.unavailable"
+				class="flex flex-col mt-7 space-y-2.5"
+			>
 				<li
 					v-for="(item, index) in $props.items"
 					:key="index"
@@ -51,7 +57,7 @@
 			</ul>
 
 			<e-button
-				v-if="$props.cta"
+				v-if="$props.cta && !$props.unavailable"
 				v-bind="$props.cta"
 				icon="chevron-right"
 				class="e-button--red mt-12"
@@ -60,7 +66,7 @@
 		</div>
 
 		<div
-			v-if="$props.tutorial"
+			v-if="$props.tutorial && !$props.unavailable"
 			class="mt-10 p-2.5 pt-0"
 		>
 			<div class="bg-grey-100 rounded-md">
@@ -110,6 +116,8 @@
 				type: Object,
 				default: null,
 			},
+
+			unavailable: Boolean,
 		},
 	};
 </script>

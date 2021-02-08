@@ -30,24 +30,30 @@
 				{
 					icon: 'camera',
 					title: 'Live interview',
-					content: 'Book an online meeting with a member of the online reasearch team',
-					items: [
-						'Speak directly with a researcher',
-						'At a time that suits you',
-						'Video or audio-only call',
-					],
-					cta: {
-						title: 'Make an appointment',
-						url: '#',
-					},
-					tutorial: {
-						title: 'Want to know more?',
-						cta: {
-							title: 'See how an appointment works',
-							url: '#',
-						},
-					},
+					content: 'We\'re sorry, but a live interview is not available for this task.',
+					unavailable: true,
 				},
+				// {
+				// 	icon: 'camera',
+				// 	title: 'Live interview',
+				// 	content: 'Book an online meeting with a member of the online reasearch team',
+				// 	items: [
+				// 		'Speak directly with a researcher',
+				// 		'At a time that suits you',
+				// 		'Video or audio-only call',
+				// 	],
+				// 	cta: {
+				// 		title: 'Make an appointment',
+				// 		url: '#',
+				// 	},
+				// 	tutorial: {
+				// 		title: 'Want to know more?',
+				// 		cta: {
+				// 			title: 'See how an appointment works',
+				// 			url: '#',
+				// 		},
+				// 	},
+				// },
 				{
 					icon: 'video',
 					title: 'Self record',
