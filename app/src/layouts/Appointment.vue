@@ -1,6 +1,8 @@
 <template>
 	<div class="relative min-h-screen h-full">
-		<div class="e-background e-background--curls h-1/3" />
+		<div
+			class="e-background e-background--curls"
+		/>
 
 		<e-header
 			:nav="nav"
@@ -27,6 +29,8 @@
 	import { store } from '../store/index';
 	import { computed } from 'vue';
 
+	import viewport from '@/mixins/viewport';
+
 	export default {
 		components: {
 			EHeader,
@@ -37,6 +41,8 @@
 			const navActive = computed(() => store.state.app.navActive);
 			const profile = computed(() => store.state.user.profile);
 			const nav = computed(() => store.state.app.nav);
+
+			const { onResize } = viewport;
 
 			return {
 				navActive,

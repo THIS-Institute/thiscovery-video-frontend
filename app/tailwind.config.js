@@ -25,6 +25,9 @@ module.exports = {
 			inherit: 'inherit',
 			...colors,
 		},
+		boxShadow: {
+			sticky: '0px 4px 50px rgba(0, 0, 0, 0.25)',
+		},
 		fontSize: {
 			sm: relative(14),
 			base: relative(16),
@@ -79,6 +82,7 @@ module.exports = {
 				'4.5': relative(18),
 				'7.5': relative(30),
 				'11.25': relative(45),
+				'18': relative(72),
 
 				gutter: relative(20),
 				margin: relative(60),
