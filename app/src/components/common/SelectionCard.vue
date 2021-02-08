@@ -1,5 +1,5 @@
 <template>
-	<aside class="bg-white rounded-lg flex flex-col justify-between">
+	<section class="bg-white rounded-lg flex flex-col justify-between">
 		<div class="pt-10 px-11.25">
 			<div class="flex items-center space-x-4">
 				<div
@@ -81,7 +81,7 @@
 				</p>
 			</div>
 		</div>
-	</aside>
+	</section>
 </template>
 
 <script>
