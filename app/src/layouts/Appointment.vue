@@ -44,9 +44,21 @@
 				offset: null,
 			});
 
+			const getCoords = (elem) => {
+				const box = elem.getBoundingClientRect();
+
+				const docEl = document.documentElement;
+				const scrollTop = window.pageYOffset || docEl.scrollTop || document.body.scrollTop;
+				const clientTop = docEl.clientTop || document.body.clientTop || 0;
+
+				const top  = box.top +  scrollTop - clientTop;
+
+				return Math.round(top);
+			};
+
 			const onViewportResized = () => {
 				const target = document.querySelector(getMediaQuery('xl') ? '.e-content' : '.e-divider');
-				const value = target.getBoundingClientRect().top + (getMediaQuery('xl') ? 40 : 0);
+				const value = getCoords(target) + (getMediaQuery('xl') ? 40 : 0);
 
 				state.offset = value;
 			};
