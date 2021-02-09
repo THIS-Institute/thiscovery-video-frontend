@@ -1,34 +1,40 @@
 import debounce from 'lodash/debounce';
-import variables from '@/../variables.json';
+import variables from '../../variables.json';
 import { onBeforeMount, onMounted, onBeforeUnmount } from 'vue';
+
+const breakpoints = {};
+
+Object.keys(variables.breakpoints).forEach((name) => {
+	let value = variables.breakpoints[name];
+
+	if (variables['em-media-queries']) {
+		value /= variables.defaultFontSize || 16;
+	}
+
+	breakpoints[name] = value;
+});
 
 export function useViewport(onViewportResized) {
 	let onDebouncedResize;
 
-	function relative(px, unit = 'rem', base = variables.defaultFontSize) {
-		return `${px / base}${unit}`;
-	}
-
-	function sort(breakpoint) {
-		['width', 'height']
-			.filter(dimension => breakpoint[dimension])
-			.map(dimension => `(min-${dimension}: ${relative(breakpoint[dimension], 'em')})`)
-			.join(' and ');
-	};
-
-	function getMediaQuery(name) {
+	function getMediaQuery(name, extremum = 'min', property = 'width') {
 		if (!window.matchMedia) {
 			return false;
 		}
 
-		const { breakpoints } = variables;
-		const breakpoint = breakpoints[name];
+		let value = breakpoints[name];
 
-		if (!breakpoint) {
+		if (!value) {
 			throw new Error(`Unkown breakpoint: ${name} is not defined`);
 		}
 
-		return window.matchMedia(sort(breakpoint)).matches;
+		if (extremum === 'max') {
+			value -= variables['em-media-queries'] ? 0.01 : 1;
+		}
+
+		const unit = variables['em-media-queries'] ? 'em' : 'px';
+
+		return window.matchMedia(`only screen and (${extremum}-${property}: ${value}${unit})`).matches;
 	};
 
 	onBeforeMount(() => {

@@ -92,8 +92,8 @@ module.exports = {
 				logo: ratio(495, 103),
 			},
 			maxWidth: {
-				container: relative(1440),
 				logo: relative(150),
+				container: relative(1440),
 			},
 			backgroundSize: {
 				'100': relative(400),
