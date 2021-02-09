@@ -51,6 +51,8 @@
 </template>
 
 <script>
+	import { store } from '@/store/index';
+
 	import { reactive, toRefs, computed } from 'vue';
 	import { useViewport } from '@/composables/useViewport';
 
@@ -302,11 +304,7 @@
 			});
 
 			const select = (date, slot) => {
-				state.selected = {
-					date: date.title,
-					slot: slot.time,
-					meridiem: slot.meridiem,
-				};
+				store.commit('task/select', { date, slot });
 			};
 
 			const onViewportResized = () => {

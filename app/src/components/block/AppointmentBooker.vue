@@ -21,17 +21,13 @@
 
 			<h1 class="e-h2 mt-6">Suggest recommendations for good practice</h1>
 
-			<div class="mt-5 py-7 px-7.5 border border-grey-200 rounded-lg">
-				<h1 class="font-bold text-red">Choose a fixed start</h1>
-
-				<p class="text-sm mt-1">Appointments have no duration and last as long as you need them to.</p>
-			</div>
+			<selected-slot :date="date" />
 
 			<e-button
 				title="Book appointment"
 				icon="chevron-right"
 				class="e-button--red mt-5 hidden md:inline-block"
-				:disabled="true"
+				:disabled="!date"
 				pill
 			/>
 		</div>
@@ -46,18 +42,35 @@
 			title="Book appointment"
 			icon="chevron-right"
 			class="e-button--red"
-			:disabled="true"
+			:disabled="!date"
 			pill
 		/>
 	</div>
 </template>
 
 <script>
+	import { store } from '@/store/index';
+	import { computed } from 'vue';
+
 	import DatePicker from '@/components/block/DatePicker';
+	import SelectedSlot from '@/components/block/SelectedSlot';
 
 	export default {
 		components: {
 			DatePicker,
+			SelectedSlot,
+		},
+
+		setup() {
+			const date = computed(() => {
+				if (!store.state.task.timeslot) return;
+
+				return store.state.task.timeslot;
+			});
+
+			return {
+				date,
+			};
 		},
 	};
 </script>
