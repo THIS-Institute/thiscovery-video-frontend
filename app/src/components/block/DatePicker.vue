@@ -15,7 +15,7 @@
 		:class="[
 			'grid grid-cols-3 mt-4',
 			'max-h-date-picker overflow-y-scroll',
-			'border border-grey-100 rounded-lg px-5',
+			'border border-grey-100 rounded-lg',
 			'xl:grid-cols-4',
 		]"
 	>
@@ -23,10 +23,10 @@
 			v-for="(date, index) in dates"
 			:key="index"
 			:class="{
-				'bg-grey-200 bg-opacity-20': index % 2 === 1,
+				'bg-grey-200 bg-opacity-10': index % 2 === 1,
 			}"
 		>
-			<ol class="flex flex-col space-y-4 py-2.5">
+			<ol class="flex flex-col space-y-4 py-2.5 px-2">
 				<li
 					v-for="slot in date.timeslots"
 					:key="slot.time"
@@ -35,12 +35,13 @@
 					<e-button
 						:title="`${slot.time}${slot.meridiem}`"
 						:class="[
-							'e-button--time',
+							'e-button--time justify-center',
 							{
 								'hover:bg-transparent': !slot.available,
 							},
 						]"
 						time
+						:small="length <= 3"
 						:disabled="!slot.available"
 						@click.native="select(date, slot)"
 					/>
