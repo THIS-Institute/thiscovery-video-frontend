@@ -95,6 +95,9 @@ module.exports = {
 				logo: relative(150),
 				container: relative(1440),
 			},
+			maxHeight: {
+				'date-picker': relative(445),
+			},
 			backgroundSize: {
 				'100': relative(400),
 				'200': relative(800),

@@ -1,5 +1,6 @@
 html {
 	@apply text-full;
+	scroll-behavior: smooth;
 	-webkit-text-size-adjust: none;
 }
 

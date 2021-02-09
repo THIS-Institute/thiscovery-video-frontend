@@ -36,7 +36,9 @@
 			/>
 		</div>
 
-		<div class="col-span-10 md:col-span-6 md:col-start-5 bg-black h-64 md:h-full" />
+		<div class="col-span-10 md:col-span-6 md:col-start-5">
+			<date-picker />
+		</div>
 	</section>
 
 	<div class="sticky bottom-0 bg-white p-5 -mx-gutter shadow-sticky md:hidden">
@@ -51,6 +53,11 @@
 </template>
 
 <script>
+	import DatePicker from '@/components/block/DatePicker';
+
 	export default {
+		components: {
+			DatePicker,
+		},
 	};
 </script>
