@@ -1,5 +1,5 @@
 <template>
-	<div class="grid grid-cols-4 px-5">
+	<div class="grid grid-cols-3 px-5 xl:grid-cols-4">
 		<div
 			v-for="(date, index) in dates"
 			:key="index"
@@ -13,9 +13,10 @@
 
 	<div
 		:class="[
-			'grid grid-cols-4 mt-4',
+			'grid grid-cols-3 mt-4',
 			'max-h-date-picker overflow-y-scroll',
 			'border border-grey-100 rounded-lg px-5',
+			'xl:grid-cols-4',
 		]"
 	>
 		<div
@@ -51,9 +52,10 @@
 
 <script>
 	import { reactive, toRefs, computed } from 'vue';
+	import { useViewport } from '@/composables/useViewport';
 
 	export default {
-		setup () {
+		setup() {
 			const data = [
 				{
 					title: 'Tue 30 Nov',
@@ -306,6 +308,12 @@
 					meridiem: slot.meridiem,
 				};
 			};
+
+			const onViewportResized = () => {
+				state.length = getMediaQuery('xl') ? 4 : 3;
+			};
+
+			const { getMediaQuery } = useViewport(onViewportResized);
 
 			return {
 				select,

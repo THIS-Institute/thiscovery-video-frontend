@@ -1,7 +1,7 @@
 <template>
 	<section
 		:class="[
-			'grid grid-cols-10 gap-5 items-center pb-16',
+			'grid grid-cols-10 gap-y-7.5 gap-x-5 items-center pb-16',
 			'md:pb-0',
 			'xl:rounded-lg xl:bg-white',
 			'xl:px-18 xl:py-8',
