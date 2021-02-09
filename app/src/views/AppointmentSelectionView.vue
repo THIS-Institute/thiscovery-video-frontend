@@ -5,9 +5,9 @@
 
 			<p class="mt-2">Pick from the available dates and times</p>
 
-			<hr class="divider mt-5 border-0">
+			<hr class="e-divider mt-5 border-0 xl:hidden">
 
-			<div class="relative mt-12">
+			<div class="e-content relative mt-12 xl:mt-7">
 				<appointment-booker />
 			</div>
 		</div>

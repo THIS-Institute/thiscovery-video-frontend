@@ -5,7 +5,7 @@ html {
 }
 
 body {
-	@apply bg-white text-grey-300 font-sans text-lg leading-normal antialiased;
+	@apply bg-white text-grey-300 font-sans text-lg leading-normal antialiased xl:bg-grey-100;
 }
 
 [disabled] {

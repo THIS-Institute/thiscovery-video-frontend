@@ -2,6 +2,9 @@
 	<div class="relative min-h-screen h-full">
 		<div
 			class="e-background e-background--curls"
+			:style="{
+				height: `${offset}px`,
+			}"
 		/>
 
 		<e-header
@@ -23,7 +26,7 @@
 </template>
 
 <script>
-	import { computed } from 'vue';
+	import { computed, reactive, toRefs } from 'vue';
 	import { store } from '@/store/index';
 	import { useViewport } from '@/composables/useViewport';
 
@@ -37,18 +40,25 @@
 		},
 
 		setup() {
-			const navActive = computed(() => store.state.app.navActive);
-			const profile = computed(() => store.state.user.profile);
-			const nav = computed(() => store.state.app.nav);
+			const state = reactive({
+				offset: null,
+			});
 
 			const onViewportResized = () => {
-				console.log('resized');
-				console.log(getMediaQuery('md'));
+				const target = document.querySelector(getMediaQuery('xl') ? '.e-content' : '.e-divider');
+				const value = target.getBoundingClientRect().top + (getMediaQuery('xl') ? 40 : 0);
+
+				state.offset = value;
 			};
 
 			const { getMediaQuery } = useViewport(onViewportResized);
 
+			const navActive = computed(() => store.state.app.navActive);
+			const profile = computed(() => store.state.user.profile);
+			const nav = computed(() => store.state.app.nav);
+
 			return {
+				...toRefs(state),
 				navActive,
 				profile,
 				nav,

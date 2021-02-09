@@ -41,7 +41,7 @@
 		</div>
 	</section>
 
-	<div class="sticky bottom-0 bg-white p-5 -mx-gutter shadow-sticky md:hidden">
+	<div class="sticky bottom-0 bg-white p-5 -mx-5 sm:-mx-10 shadow-sticky md:hidden">
 		<e-button
 			title="Book appointment"
 			icon="chevron-right"
