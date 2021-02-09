@@ -5,16 +5,15 @@ const range = require('lodash/range');
 const variables = require('./variables.json');
 
 // converters and calculators
-const relative = (px, unit = 'rem', base = variables['browser-default-font-size']) => `${px / base}${unit}`;
+const relative = (px, unit = 'rem', base = variables.defaultFontSize) => `${px / base}${unit}`;
 const ratio = (x, y) => `${y / x * 100}%`;
 
 // Values
 const screens = mapValues(variables.breakpoints, px => relative(px, 'em'));
-const colors = variables['colors'];
 const columns = variables.columns;
 const widths = mapKeys(mapValues(range(0, columns), (v) => ratio(columns, v + 1)), (v, k) => `${parseInt(k, 10) + 1}/${columns}`);
-const z = variables['z-indexes'];
-const zIndex = z.reduce((v, name, i) => ({ ...v, [name]: z.length - i }), {});
+const zIndexes = variables.zIndexes;
+const zIndex = zIndexes.reduce((v, name, i) => ({ ...v, [name]: zIndexes.length - i }), {});
 
 module.exports = {
 	theme: {
@@ -23,7 +22,10 @@ module.exports = {
 			transparent: 'transparent',
 			current: 'currentColor',
 			inherit: 'inherit',
-			...colors,
+			...variables.colors,
+		},
+		boxShadow: {
+			sticky: '0px 4px 50px rgba(0, 0, 0, 0.25)',
 		},
 		fontSize: {
 			sm: relative(14),
@@ -79,6 +81,7 @@ module.exports = {
 				'4.5': relative(18),
 				'7.5': relative(30),
 				'11.25': relative(45),
+				'18': relative(72),
 
 				gutter: relative(20),
 				margin: relative(60),
@@ -89,8 +92,11 @@ module.exports = {
 				logo: ratio(495, 103),
 			},
 			maxWidth: {
-				container: relative(1440),
 				logo: relative(150),
+				container: relative(1440),
+			},
+			maxHeight: {
+				'date-picker': relative(445),
 			},
 			backgroundSize: {
 				'100': relative(400),

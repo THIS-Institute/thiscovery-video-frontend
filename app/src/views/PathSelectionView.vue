@@ -18,7 +18,7 @@
 </template>
 
 <script>
-	import SelectionCard from '@/components/common/SelectionCard';
+	import SelectionCard from '@/components/block/SelectionCard';
 
 	export default {
 		components: {

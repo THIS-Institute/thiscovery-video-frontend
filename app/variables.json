@@ -1,5 +1,5 @@
 {
-	"browser-default-font-size": 16,
+	"defaultFontSize": 16,
 	"breakpoints": {
 		"xs": 375,
 		"sm": 560,
@@ -22,7 +22,7 @@
 		}
 	},
 	"columns": 24,
-	"z-indexes": [
+	"zIndexes": [
 		"accessibility-skip-links",
 		"outdated-browser",
 		"site-header",
