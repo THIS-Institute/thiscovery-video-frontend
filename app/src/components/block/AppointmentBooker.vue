@@ -3,20 +3,20 @@
 		:class="[
 			'grid grid-cols-10 gap-y-7.5 gap-x-5 items-center',
 			'xl:rounded-lg xl:bg-white',
-			'xl:px-18 xl:py-8',
+			'xl:px-17 xl:py-8',
 			{
 				'pb-16 md:pb-0': !confirmed,
 			},
 		]"
 	>
-		<div class="col-span-10 space-y-5 md:col-span-4 xl:max-w-85">
+		<div class="col-span-10 space-y-5 md:col-span-4 xl:max-w-83">
 			<icon-text
 				icon="camera"
 				text="Live Interview"
 				class="font-bold"
 			/>
 
-			<h1 class="e-h3">Suggest recommendation for good practice</h1>
+			<h1 class="e-h-interview">Suggest recommendation for good practice</h1>
 
 			<booking-status
 				v-if="confirmed"

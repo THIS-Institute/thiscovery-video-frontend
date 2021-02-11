@@ -32,10 +32,12 @@ module.exports = {
 			base: relative(16),
 			lg: relative(18),
 			xl: relative(20),
-			'2xl': relative(24),
-			'3xl': relative(32),
-			'4xl': relative(38),
-			'5xl': relative(58),
+			'2xl': relative(22),
+			'3xl': relative(24),
+			'4xl': relative(28),
+			'5xl': relative(32),
+			'6xl': relative(38),
+			'7xl': relative(58),
 			full: '100%',
 		},
 		fontWeight: {
@@ -81,6 +83,7 @@ module.exports = {
 				'4.5': relative(18),
 				'7.5': relative(30),
 				'11.25': relative(45),
+				'17': relative(68),
 				'18': relative(72),
 
 				gutter: relative(20),
@@ -93,7 +96,7 @@ module.exports = {
 			},
 			maxWidth: {
 				logo: relative(150),
-				'85': relative(340),
+				'83': relative(332),
 				container: relative(1440),
 			},
 			maxHeight: {

@@ -1,15 +1,19 @@
 .e-h1 {
-	@apply tracking-tight font-sans font-bold leading-tight text-3xl md:text-4xl xl:text-5xl;
+	@apply tracking-tight font-sans font-bold leading-tight text-5xl md:text-6xl xl:text-7xl;
 }
 
 .e-h2 {
-	@apply tracking-snug font-sans font-bold leading-tight text-2xl xl:text-4xl;
+	@apply tracking-snug font-sans font-bold leading-tight text-3xl xl:text-6xl;
 }
 
 .e-h3 {
-	@apply tracking-snug font-sans font-bold leading-snug text-xl xl:text-2xl;
+	@apply tracking-snug font-sans font-bold leading-snug text-xl xl:text-3xl;
 }
 
 .e-h4 {
 	@apply tracking-snug font-sans font-bold leading-snug text-base xl:text-lg;
+}
+
+.e-h-interview {
+	@apply tracking-snug font-sans font-bold leading-tight text-2xl xl:text-4xl;
 }
