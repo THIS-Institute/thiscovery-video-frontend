@@ -1,19 +1,41 @@
 <template>
-	<div class="grid grid-cols-3 px-5 xl:grid-cols-4">
+	<div class="grid grid-cols-3 px-5 relative xl:grid-cols-4">
 		<div
 			v-for="(date, index) in dates"
 			:key="index"
+			class="px-2"
 		>
 			<p
 				class="text-center"
 				v-text="date.title"
 			/>
 		</div>
+
+		<div
+			:class="[
+				'absolute inset-0 w-full h-full',
+				'flex items-center justify-between',
+				'pointer-events-none',
+			]"
+		>
+			<button
+				v-for="next in [false, true]"
+				:key="next"
+				:class="[
+					'inline-flex items-center pointer-events-auto',
+					'text-red disabled:opacity-25',
+				]"
+				:disabled="next ? upperLimit : lowerLimit"
+				@click="cycleDates(next)"
+			>
+				<icon :name="next ? 'chevron-right' : 'chevron-left'" />
+			</button>
+		</div>
 	</div>
 
 	<div
 		:class="[
-			'grid grid-cols-3 mt-4',
+			'grid grid-cols-3 mt-4 px-5',
 			'max-h-date-picker overflow-y-scroll',
 			'border border-grey-100 rounded-lg',
 			'xl:grid-cols-4',
@@ -41,7 +63,7 @@
 							},
 						]"
 						time
-						:small="length <= 3"
+						:small="total <= 3"
 						:disabled="!slot.available"
 						@click.native="select(date, slot)"
 					/>
@@ -104,6 +126,7 @@
 							available: true,
 						},
 					],
+					limit: true,
 				},
 				{
 					title: 'Wed 1 Dec',
@@ -149,6 +172,7 @@
 							available: true,
 						},
 					],
+					limit: false,
 				},
 				{
 					title: 'Thu 2 Dec',
@@ -194,6 +218,7 @@
 							available: false,
 						},
 					],
+					limit: false,
 				},
 				{
 					title: 'Fri 3 Dec',
@@ -239,6 +264,7 @@
 							available: false,
 						},
 					],
+					limit: false,
 				},
 				{
 					title: 'Mon 5 Dec',
@@ -284,13 +310,13 @@
 							available: true,
 						},
 					],
-					last: true,
+					limit: true,
 				},
 			];
 
 			const state = reactive({
 				start: 0,
-				length: 4,
+				total: 4,
 				selected: null,
 			});
 
@@ -301,20 +327,31 @@
 			});
 
 			const dates = computed(() => {
-				return data.slice(state.start, (state.start + state.length));
+				return data.slice(state.start, (state.start + state.total));
 			});
+
+			const lowerLimit = computed(() => data[state.start].limit);
+
+			const upperLimit = computed(() => data[(state.start + state.total) - 1].limit);
 
 			const select = (date, slot) => {
 				store.commit('task/select', { date, slot });
 			};
 
 			const onViewportResized = () => {
-				state.length = getMediaQuery('xl') ? 4 : 3;
+				state.total = getMediaQuery('xl') ? 4 : 3;
+			};
+
+			const cycleDates = (forward) => {
+				state.start += forward ? 1 : -1;
 			};
 
 			const { getMediaQuery } = useViewport(onViewportResized);
 
 			return {
+				lowerLimit,
+				upperLimit,
+				cycleDates,
 				select,
 				selected,
 				dates,
