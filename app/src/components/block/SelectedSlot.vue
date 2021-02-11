@@ -14,7 +14,7 @@
 				/>
 
 				<p
-					class="font-bold"
+					class="font-bold whitespace-nowrap"
 					v-text="$props.date.date"
 				/>
 			</div>
@@ -26,7 +26,7 @@
 				/>
 
 				<p
-					class="font-bold"
+					class="font-bold whitespace-nowrap"
 					v-text="`${$props.date.slot}${$props.date.meridiem}`"
 				/>
 			</div>
