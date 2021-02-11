@@ -20,6 +20,16 @@
 		/>
 
 		<main class="md:pb-10 relative z-site-content">
+			<div class="e-container mt-6">
+				<e-button
+					title="Back"
+					icon="chevron-left"
+					class="text-red hover:text-black active:text-black"
+					flipped
+					@click.native="back"
+				/>
+			</div>
+
 			<router-view />
 		</main>
 	</div>
@@ -27,6 +37,7 @@
 
 <script>
 	import { computed, reactive, toRefs } from 'vue';
+	import { useRouter } from 'vue-router';
 	import { store } from '@/store/index';
 	import { useViewport } from '@/composables/useViewport';
 
@@ -39,10 +50,14 @@
 			ENavigation,
 		},
 
-		setup() {
+		setup($router) {
+			const router = useRouter();
+
 			const state = reactive({
 				offset: null,
 			});
+
+			const back = () => window.history.length > 1 ? router.go(-1) : router.push('/');
 
 			const getCoords = (elem) => {
 				const box = elem.getBoundingClientRect();
@@ -73,6 +88,7 @@
 				...toRefs(state),
 				navActive,
 				profile,
+				back,
 				nav,
 			};
 		},
