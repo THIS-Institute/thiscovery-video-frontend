@@ -3,6 +3,8 @@ export const task = {
 
 	state: () => ({
 		timeslot: null,
+		confirmed: false,
+		isSubmitting: false,
 	}),
 
 	mutations: {
@@ -12,6 +14,16 @@ export const task = {
 				slot: slot.time,
 				meridiem: slot.meridiem,
 			};
+		},
+
+		confirmSlot(state) {
+			state.isSubmitting = true;
+
+			setTimeout(() => {
+				state.confirmed = true;
+
+				state.isSubmitting = false;
+			}, 2000);
 		},
 
 		clear(state) {

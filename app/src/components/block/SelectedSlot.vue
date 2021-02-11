@@ -1,9 +1,9 @@
 <template>
-	<template v-if="$props.date">
+	<template v-if="date && !confirmed">
 		<div
 			:class="[
 				'grid grid-cols-2 items-center justify-around',
-				'mt-5 border border-grey-200 rounded-lg',
+				'border border-grey-200 rounded-lg',
 				'text-sm lg:text-lg',
 			]"
 		>
@@ -15,7 +15,7 @@
 
 				<p
 					class="font-bold whitespace-nowrap"
-					v-text="$props.date.date"
+					v-text="date.date"
 				/>
 			</div>
 
@@ -27,7 +27,7 @@
 
 				<p
 					class="font-bold whitespace-nowrap"
-					v-text="`${$props.date.slot}${$props.date.meridiem}`"
+					v-text="`${date.slot}${date.meridiem}`"
 				/>
 			</div>
 		</div>
@@ -36,12 +36,32 @@
 	</template>
 
 	<div
-		v-else
-		class="mt-5 py-7 px-7.5 border border-grey-200 rounded-lg"
+		v-else-if="!date"
+		class="py-7 px-7.5 border border-grey-200 rounded-lg"
 	>
 		<h1 class="font-bold text-red">Choose a fixed start</h1>
 
 		<p class="text-sm mt-1">Appointments have no duration and last as long as you need them to.</p>
+	</div>
+
+	<div
+		v-else
+		class="py-7 px-7.5 border border-grey-200 rounded-lg"
+	>
+		<p class="text-sm">Your interview is booked for</p>
+
+		<p
+			class="font-bold mt-1"
+			v-text="`${date.date}, ${date.slot}${date.meridiem}`"
+		/>
+
+		<e-button
+			title="Add to calendar"
+			icon="calendar"
+			class="e-button--red-outline mt-2.5"
+			flipped
+			pill
+		/>
 	</div>
 </template>
 
@@ -52,6 +72,8 @@
 				type: Object,
 				default: null,
 			},
+
+			confirmed: Boolean,
 		},
 	};
 </script>

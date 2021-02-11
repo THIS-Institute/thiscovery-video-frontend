@@ -93,7 +93,7 @@ module.exports = {
 			},
 			maxWidth: {
 				logo: relative(150),
-				foo: relative(118),
+				'85': relative(340),
 				container: relative(1440),
 			},
 			maxHeight: {

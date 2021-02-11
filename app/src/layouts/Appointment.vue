@@ -19,7 +19,7 @@
 			:profile="profile"
 		/>
 
-		<main class="pb-10 relative z-site-content">
+		<main class="md:pb-10 relative z-site-content">
 			<router-view />
 		</main>
 	</div>
