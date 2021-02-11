@@ -1,6 +1,13 @@
 <template>
 	<section class="bg-white rounded-lg flex flex-col justify-between">
-		<div class="pt-10 px-11.25">
+		<div
+			:class="[
+				'px-11.25',
+				!$props.tutorial || $props.unavailable
+					? 'py-10'
+					: 'pt-10',
+			]"
+		>
 			<div class="flex items-center space-x-4">
 				<div
 					:class="[
