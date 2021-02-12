@@ -93,6 +93,7 @@ module.exports = {
 			padding: {
 				full: ratio(1, 1),
 				logo: ratio(495, 103),
+				instruction: ratio(275, 428),
 			},
 			maxWidth: {
 				logo: relative(150),
