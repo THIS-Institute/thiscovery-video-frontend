@@ -1,9 +1,13 @@
 <template>
 	<div class="e-container mt-20 xl:mt-24">
 		<div class="relative xl:w-20/24 xl:left-2/24">
-			<h1 class="e-h2">Choose how to take part</h1>
+			<h1 class="e-h2">
+				Choose how to take part
+			</h1>
 
-			<p class="mt-2">Would you like to have a conversation or record yourself?</p>
+			<p class="mt-2">
+				Would you like to have a conversation or record yourself?
+			</p>
 
 			<div class="relative grid grid-cols-10 gap-4 mt-7">
 				<selection-card

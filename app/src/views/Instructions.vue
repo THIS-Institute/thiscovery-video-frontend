@@ -42,7 +42,7 @@
 						ratio="pt-instruction"
 						class="rounded-lg overflow-hidden"
 					>
-						<img v-bind="active.img" >
+						<img v-bind="active.img">
 					</placeholder>
 				</div>
 			</div>

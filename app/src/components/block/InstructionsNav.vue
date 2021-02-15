@@ -5,9 +5,9 @@
 			title="Back"
 			icon="chevron-left"
 			class="e-button--red-outline"
-			@click.native="moveTo(index - 1)"
 			flipped
 			pill
+			@click="moveTo(index - 1)"
 		/>
 
 		<e-button
@@ -15,8 +15,8 @@
 			title="Next"
 			icon="chevron-right"
 			class="e-button--red-outline"
-			@click.native="moveTo(index + 1)"
 			pill
+			@click="moveTo(index + 1)"
 		/>
 
 		<e-button
@@ -49,7 +49,7 @@
 </template>
 
 <script>
-	import { computed, reactive, toRefs } from 'vue';
+	import { computed } from 'vue';
 
 	export default {
 		props: {

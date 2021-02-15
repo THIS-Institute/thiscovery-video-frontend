@@ -32,7 +32,9 @@
 				v-text="message"
 			/>
 
-			<p class="mt-5">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Animi harum doloremque, cumque quas accusantium blanditiis officia saepe fugiat reprehenderit sunt cum dignissimos natus! Quae facere molestias illum non cumque ex!</p>
+			<p class="mt-5">
+				Lorem ipsum dolor sit amet consectetur, adipisicing elit. Animi harum doloremque, cumque quas accusantium blanditiis officia saepe fugiat reprehenderit sunt cum dignissimos natus! Quae facere molestias illum non cumque ex!
+			</p>
 		</div>
 
 		<!-- Buttons -->
@@ -307,9 +309,9 @@
 				<label for="small">Small buttons</label>
 
 				<input
+					v-model="button.small"
 					type="checkbox"
 					name="small"
-					v-model="button.small"
 				>
 			</div>
 
@@ -317,9 +319,9 @@
 				<label for="disabled">Disabled buttons</label>
 
 				<input
+					v-model="button.disabled"
 					type="checkbox"
 					name="disabled"
-					v-model="button.disabled"
 				>
 			</div>
 		</div>

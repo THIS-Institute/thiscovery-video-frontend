@@ -26,7 +26,7 @@
 					icon="chevron-left"
 					class="text-red hover:text-black active:text-black"
 					flipped
-					@click.native="back"
+					@click="back"
 				/>
 			</div>
 
@@ -50,7 +50,7 @@
 			ENavigation,
 		},
 
-		setup($router) {
+		setup() {
 			const router = useRouter();
 
 			const state = reactive({

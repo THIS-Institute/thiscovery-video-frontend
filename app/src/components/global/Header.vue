@@ -68,8 +68,8 @@
 						mode="out-in"
 					>
 						<icon
-							class="text-white"
 							:key="navActive"
+							class="text-white"
 							:name="navActive ? 'nav-close' : 'burger'"
 						/>
 					</transition>

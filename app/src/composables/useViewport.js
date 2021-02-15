@@ -35,7 +35,7 @@ export function useViewport(onViewportResized) {
 		const unit = variables['em-media-queries'] ? 'em' : 'px';
 
 		return window.matchMedia(`only screen and (${extremum}-${property}: ${value}${unit})`).matches;
-	};
+	}
 
 	onBeforeMount(() => {
 		onDebouncedResize = debounce(() => onViewportResized(), 300);
@@ -53,4 +53,4 @@ export function useViewport(onViewportResized) {
 	return {
 		getMediaQuery,
 	};
-};
+}

@@ -16,7 +16,9 @@
 				class="font-bold"
 			/>
 
-			<h1 class="e-h-interview">Suggest recommendation for good practice</h1>
+			<h1 class="e-h-interview">
+				Suggest recommendation for good practice
+			</h1>
 
 			<booking-status
 				v-if="confirmed"
@@ -34,8 +36,8 @@
 				:icon="isSubmitting ? 'loading' : 'chevron-right'"
 				class="e-button--red hidden md:inline-block"
 				:disabled="!date"
-				@click.native="confirmSlot"
 				pill
+				@click="confirmSlot"
 			/>
 		</div>
 
@@ -69,8 +71,8 @@
 			:icon="isSubmitting ? 'loading' : 'chevron-right'"
 			class="e-button--red"
 			:disabled="!date"
-			@click.native="confirmSlot"
 			pill
+			@click="confirmSlot"
 		/>
 	</div>
 </template>

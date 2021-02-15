@@ -6,9 +6,9 @@
 		]"
 	>
 		<use
-			v-for="name in cNames"
-			:key="name"
-			:xlink:href="`${$props.sprite}#${name}`"
+			v-for="iconName in cNames"
+			:key="iconName"
+			:xlink:href="`${$props.sprite}#${iconName}`"
 			v-bind="$props.use"
 		/>
 	</svg>

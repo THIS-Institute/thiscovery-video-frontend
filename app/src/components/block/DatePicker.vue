@@ -72,7 +72,7 @@
 							time
 							:small="total <= 3"
 							:disabled="!slot.available"
-							@click.native="select(date, slot)"
+							@click="select(date, slot)"
 						/>
 					</li>
 				</ol>

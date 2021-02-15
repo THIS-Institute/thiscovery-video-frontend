@@ -32,23 +32,31 @@
 			</div>
 		</div>
 
-		<p class="text-sm mt-4.5">You can change or cancel this slot later if you need to.</p>
+		<p class="text-sm mt-4.5">
+			You can change or cancel this slot later if you need to.
+		</p>
 	</template>
 
 	<div
 		v-else-if="!date"
 		class="py-7 px-7.5 border border-grey-200 rounded-lg"
 	>
-		<h1 class="font-bold text-red">Choose a fixed start</h1>
+		<h1 class="font-bold text-red">
+			Choose a fixed start
+		</h1>
 
-		<p class="text-sm mt-1">Appointments have no duration and last as long as you need them to.</p>
+		<p class="text-sm mt-1">
+			Appointments have no duration and last as long as you need them to.
+		</p>
 	</div>
 
 	<div
 		v-else
 		class="py-7 px-7.5 border border-grey-200 rounded-lg"
 	>
-		<p class="text-sm">Your interview is booked for</p>
+		<p class="text-sm">
+			Your interview is booked for
+		</p>
 
 		<p
 			class="font-bold mt-1"

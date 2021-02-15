@@ -1,8 +1,12 @@
 <template>
 	<div class="bg-grey-100 rounded-lg px-12 py-14">
-		<h1 class="e-h3">What happens next?</h1>
+		<h1 class="e-h3">
+			What happens next?
+		</h1>
 
-		<p class="mt-5">You will receive confirmation and reminder emails. When it's nearly time for your appointment, click the link in your email to enter the meeting room.</p>
+		<p class="mt-5">
+			You will receive confirmation and reminder emails. When it's nearly time for your appointment, click the link in your email to enter the meeting room.
+		</p>
 
 		<div class="flex flex-col items-start space-y-5 mt-10">
 			<e-button
