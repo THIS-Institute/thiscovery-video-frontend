@@ -1,5 +1,7 @@
+/* eslint-env node */
 const path = require('path');
 let mix = require('laravel-mix');
+const ESLintPlugin = require('eslint-webpack-plugin');
 
 mix.alias({
     '@': path.join(__dirname, 'src')
@@ -22,10 +24,18 @@ const flags = {
     '__VUE_PROD_DEVTOOLS__': JSON.stringify(false),
 };
 
+const eslint = {
+    extensions: [
+        'js',
+        'vue',
+    ],
+};
+
 mix.webpackConfig((webpack) => {
     return {
         plugins: [
             new webpack.DefinePlugin(flags),
+            new ESLintPlugin(eslint),
         ],
     };
 });

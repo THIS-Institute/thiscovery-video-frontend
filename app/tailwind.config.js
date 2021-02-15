@@ -1,3 +1,4 @@
+/* eslint-env node */
 const mapKeys = require('lodash/mapKeys');
 const mapValues = require('lodash/mapValues');
 const range = require('lodash/range');
