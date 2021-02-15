@@ -33,9 +33,10 @@
 
 				<div
 					:class="[
-						'row-end-1 col-span-6 px-4 pt-4',
-						'sm:py-3 sm:-ml-14',
-						'sm:col-span-2 sm:col-start-1 sm:row-end-1',
+						'row-end-1 col-span-6 pt-4 px-4',
+						'sm:px-0 py-4',
+						'sm:col-span-2 sm:col-start-1 sm:row-end-1 sm:-ml-8',
+						'md:-ml-14',
 					]"
 				>
 					<placeholder
