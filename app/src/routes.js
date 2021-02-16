@@ -2,8 +2,8 @@
 import Styleguide from './views/Styleguide';
 
 // Pages
-import PathSelectionView from './views/PathSelectionView';
-import AppointmentSelectionView from './views/AppointmentSelectionView';
+import PathSelection from './views/PathSelection';
+import AppointmentSelection from './views/AppointmentSelection';
 import Instructions from './views/Instructions';
 import DressingRoom from './views/DressingRoom';
 import SelfRecord from './views/SelfRecord';
@@ -20,7 +20,7 @@ export const routes = [
 		children: [
 			{
 				path: '',
-				component: PathSelectionView,
+				component: PathSelection,
 			},
 		],
 	},
@@ -30,7 +30,7 @@ export const routes = [
 		children: [
 			{
 				path: '',
-				component: AppointmentSelectionView,
+				component: AppointmentSelection,
 			},
 		],
 	},

@@ -3,9 +3,7 @@
 		<div
 			:class="[
 				'px-11.25',
-				!$props.tutorial || $props.unavailable
-					? 'py-10'
-					: 'pt-10',
+				!tutorial || !available ? 'py-10' : 'pt-10',
 			]"
 		>
 			<div class="flex items-center space-x-4">
@@ -13,34 +11,32 @@
 					:class="[
 						'flex items-center justify-center',
 						'rounded-full p-4',
-						$props.unavailable
-							? 'bg-grey-200'
-							: 'bg-pink',
+						available ? 'bg-pink' : 'bg-grey-200',
 					]"
 				>
 					<icon
-						:name="$props.icon"
+						:name="icon"
 						class="e-h2"
 					/>
 				</div>
 
 				<h1
 					class="e-h3"
-					v-text="$props.title"
+					v-text="title"
 				/>
 			</div>
 
 			<p
 				class="mt-5"
-				v-text="$props.content"
+				v-text="content"
 			/>
 
 			<ul
-				v-if="!$props.unavailable"
+				v-if="available"
 				class="flex flex-col mt-7 space-y-2.5"
 			>
 				<li
-					v-for="(item, index) in $props.items"
+					v-for="(item, index) in items"
 					:key="index"
 					class="inline-flex items-center space-x-3.5"
 				>
@@ -64,8 +60,8 @@
 			</ul>
 
 			<e-button
-				v-if="$props.cta && !$props.unavailable"
-				v-bind="$props.cta"
+				v-if="cta && available"
+				v-bind="cta"
 				icon="chevron-right"
 				class="e-button--red mt-12"
 				pill
@@ -73,17 +69,17 @@
 		</div>
 
 		<div
-			v-if="$props.tutorial && !$props.unavailable"
+			v-if="tutorial && available"
 			class="mt-10 p-2.5 pt-0"
 		>
 			<div class="bg-grey-100 rounded-md">
 				<p class="flex flex-wrap justify-center gap-x-2 p-4 text-sm">
-					<span v-text="$props.tutorial.title" />
+					<span v-text="tutorial.title" />
 
 					<router-link
-						class="text-red"
-						:to="$props.tutorial.cta.url"
-						v-text="$props.tutorial.cta.title"
+						class="text-red hover:text-black"
+						:to="tutorial.cta.url"
+						v-text="tutorial.cta.title"
 					/>
 				</p>
 			</div>
@@ -124,7 +120,7 @@
 				default: null,
 			},
 
-			unavailable: Boolean,
+			available: Boolean,
 		},
 	};
 </script>
