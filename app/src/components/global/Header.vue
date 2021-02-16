@@ -17,7 +17,7 @@
 				<nav class="flex-shrink-0 ml-16 hidden lg:block">
 					<ul class="inline-flex items-center space-x-12">
 						<li
-							v-for="(link, index) in $props.nav"
+							v-for="(link, index) in nav"
 							:key="index"
 						>
 							<nav-link v-bind="link" />
@@ -27,7 +27,7 @@
 			</div>
 
 			<a
-				v-if="$props.profile"
+				v-if="profile"
 				class="bg-white rounded-full border-2 border-red p-1 pr-5 hidden lg:block"
 				href="#"
 			>
@@ -38,12 +38,12 @@
 							'w-8 h-8 text-sm',
 							'rounded-full bg-red text-white',
 						]"
-						v-text="$props.profile.initials"
+						v-text="profile.initials"
 					/>
 
 					<span
 						class="text-red"
-						v-text="$props.profile.name"
+						v-text="profile.name"
 					/>
 				</div>
 			</a>

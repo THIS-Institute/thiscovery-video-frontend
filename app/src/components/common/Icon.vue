@@ -2,14 +2,14 @@
 	<svg
 		:class="[
 			'inline-block fill-current align-top',
-			$props.size,
+			size,
 		]"
 	>
 		<use
 			v-for="iconName in cNames"
 			:key="iconName"
-			:xlink:href="`${$props.sprite}#${iconName}`"
-			v-bind="$props.use"
+			:xlink:href="`${sprite}#${iconName}`"
+			v-bind="use"
 		/>
 	</svg>
 </template>

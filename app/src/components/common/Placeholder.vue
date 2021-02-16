@@ -1,8 +1,8 @@
 <template>
 	<component
-		:is="$props.tag"
+		:is="tag"
 		class="e-placeholder"
-		:class="$props.ratio ? $props.ratio : 'pt-9/16'"
+		:class="ratio ? ratio : 'pt-9/16'"
 	>
 		<slot />
 	</component>

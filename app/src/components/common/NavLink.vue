@@ -10,8 +10,8 @@
 
 		<a
 			class="transition-color duration-300 group-hover:text-red"
-			:href="$props.url"
-			v-text="$props.title"
+			:href="url"
+			v-text="title"
 		/>
 	</div>
 </template>

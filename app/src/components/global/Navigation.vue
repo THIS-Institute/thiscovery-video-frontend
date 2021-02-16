@@ -4,7 +4,7 @@
 			<nav>
 				<ul class="inline-flex flex-col space-y-12">
 					<li
-						v-for="(link, index) in $props.nav"
+						v-for="(link, index) in nav"
 						:key="index"
 					>
 						<nav-link
