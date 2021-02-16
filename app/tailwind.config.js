@@ -95,6 +95,8 @@ module.exports = {
 				full: ratio(1, 1),
 				logo: ratio(495, 103),
 				instruction: ratio(275, 428),
+
+				'9/16': ratio(16, 9),
 			},
 			maxWidth: {
 				logo: relative(150),
