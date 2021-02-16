@@ -14,7 +14,7 @@
 						class="font-bold"
 					/>
 
-					<h1
+					<h2
 						class="e-h3 mt-5"
 						v-text="active.title"
 					/>

@@ -20,7 +20,7 @@
 					/>
 				</div>
 
-				<h1
+				<h2
 					class="e-h3"
 					v-text="title"
 				/>

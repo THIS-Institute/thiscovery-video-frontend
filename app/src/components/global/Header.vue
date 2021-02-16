@@ -4,7 +4,10 @@
 			<div class="inline-flex items-center w-full">
 				<div class="flex-shrink-0 w-full max-w-logo">
 					<router-link to="/">
-						<placeholder ratio="pt-logo">
+						<placeholder
+							ratio="pt-logo"
+							tag="span"
+						>
 							<icon
 								class="text-red"
 								size="w-full h-full"
@@ -59,20 +62,12 @@
 				<placeholder
 					ratio="pt-full"
 					class="w-4.5 h-4.5"
+					tag="span"
 				>
-					<transition
-						enter-active-class="transition-opacity duration-150"
-						leave-active-class="transition-opacity duration-150"
-						enter-class="opacity-0"
-						leave-to-class="opacity-0"
-						mode="out-in"
-					>
-						<icon
-							:key="navActive"
-							class="text-white"
-							:name="navActive ? 'nav-close' : 'burger'"
-						/>
-					</transition>
+					<icon
+						class="text-white"
+						:name="navActive ? 'nav-close' : 'burger'"
+					/>
 				</placeholder>
 			</button>
 		</div>

@@ -9,9 +9,9 @@
 						</placeholder>
 
 						<div class="flex flex-col items-center mt-12">
-							<h1 class="e-h3 text-center">
+							<h2 class="e-h3 text-center">
 								All set to begin?
-							</h1>
+							</h2>
 
 							<p class="text-sm text-center mt-1.5">
 								Access to your microphone is required. Video access is encouraged but you can disable your camera using the controls above if you wish.

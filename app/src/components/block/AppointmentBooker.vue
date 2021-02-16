@@ -16,9 +16,9 @@
 				class="font-bold"
 			/>
 
-			<h1 class="e-h-interview">
+			<h2 class="e-h-interview">
 				Suggest recommendation for good practice
-			</h1>
+			</h2>
 
 			<booking-status
 				v-if="confirmed"

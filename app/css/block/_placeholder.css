@@ -1,5 +1,5 @@
 .e-placeholder {
-	@apply relative w-full;
+	@apply relative block w-full;
 }
 
 .e-placeholder > * {
