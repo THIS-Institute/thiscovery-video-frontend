@@ -3,19 +3,23 @@
 		<div class="e-background e-background--scratches" />
 
 		<e-header
+			v-if="!hideNav"
 			:nav="nav"
 			:nav-active="navActive"
 			:profile="profile"
 		/>
 
 		<e-navigation
-			v-if="navActive"
+			v-if="navActive && !hideNav"
 			:nav="nav"
 			:profile="profile"
 		/>
 
 		<main class="md:pb-10 relative z-site-content">
-			<div class="e-container mt-6">
+			<div
+				v-if="!hideNav"
+				class="e-container mt-6"
+			>
 				<e-button
 					title="Back"
 					icon="chevron-left"
@@ -42,6 +46,10 @@
 		components: {
 			EHeader,
 			ENavigation,
+		},
+
+		props: {
+			hideNav: Boolean,
 		},
 
 		setup() {
