@@ -24,7 +24,7 @@
 			title="Continue"
 			icon="chevron-right"
 			class="e-button--red"
-			url="/"
+			url="/on-demand/dressing-room"
 			pill
 		/>
 	</div>

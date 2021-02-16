@@ -69,13 +69,13 @@
 					],
 					cta: {
 						title: 'Record responses',
-						url: '#',
+						url: '/on-demand/dressing-room',
 					},
 					tutorial: {
 						title: 'Want to know more?',
 						cta: {
 							title: 'See how self-record works',
-							url: '#',
+							url: '/on-demand/instructions',
 						},
 					},
 				},
