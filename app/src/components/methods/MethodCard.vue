@@ -2,8 +2,8 @@
 	<section class="bg-white rounded-lg flex flex-col justify-between">
 		<div
 			:class="[
-				'px-11.25',
-				!tutorial || !available ? 'py-10' : 'pt-10',
+				'px-5 md:px-11.25',
+				!tutorial || !available ? 'py-6 md:py-10' : 'pt-6 md:pt-10',
 			]"
 		>
 			<div class="flex items-center space-x-4">
