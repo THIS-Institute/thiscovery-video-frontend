@@ -1,5 +1,5 @@
 <template>
-	<div class="relative min-h-screen h-full">
+	<div class="relative flex flex-col min-h-screen h-full">
 		<div
 			:class="[
 				'e-background',
@@ -22,7 +22,7 @@
 			:profile="profile"
 		/>
 
-		<main class="md:pb-10 relative z-site-content">
+		<main class="relative flex-auto z-site-content md:pb-10">
 			<div class="e-container mt-6">
 				<e-button
 					title="Back"
