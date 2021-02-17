@@ -24,7 +24,7 @@
 			title="Continue"
 			icon="chevron-right"
 			class="e-button--red"
-			url="/on-demand/dressing-room"
+			:url="{ name: 'self_settings' }"
 			pill
 		/>
 	</div>
