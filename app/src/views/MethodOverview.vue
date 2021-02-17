@@ -1,5 +1,5 @@
 <template>
-	<section class="e-container mt-20 xl:mt-24">
+	<section class="e-container my-12 md:my-18 xl:my-24">
 		<div class="relative md:w-18/24 md:left-3/24 lg:w-16/24 lg:left-4/24 xl:w-12/24 xl:left-6/24">
 			<div
 				:class="[

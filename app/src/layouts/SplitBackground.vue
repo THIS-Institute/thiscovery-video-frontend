@@ -22,7 +22,7 @@
 			:profile="profile"
 		/>
 
-		<main class="relative flex-auto z-site-content md:pb-10">
+		<main class="relative flex-auto z-site-content">
 			<div class="e-container mt-6">
 				<e-button
 					title="Back"

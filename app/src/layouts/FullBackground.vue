@@ -20,7 +20,7 @@
 			:profile="profile"
 		/>
 
-		<main class="relative flex-auto z-site-content md:pb-10">
+		<main class="relative flex-auto z-site-content">
 			<div
 				v-if="hasBack"
 				class="e-container mt-6"

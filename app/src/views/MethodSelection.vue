@@ -1,5 +1,5 @@
 <template>
-	<div class="e-container mt-20 xl:mt-24">
+	<section class="e-container my-12 md:my-18 xl:my-24">
 		<div class="relative xl:w-20/24 xl:left-2/24">
 			<h1 class="e-h2">
 				Choose how to take part
@@ -18,7 +18,7 @@
 				/>
 			</div>
 		</div>
-	</div>
+	</section>
 </template>
 
 <script>

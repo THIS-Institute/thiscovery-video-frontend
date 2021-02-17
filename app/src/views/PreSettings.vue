@@ -1,5 +1,5 @@
 <template>
-	<div class="e-container mt-12 xl:mt-16">
+	<section class="e-container my-12 md:my-18 xl:my-24">
 		<div class="grid grid-cols-12 gap-5 w-full">
 			<div class="col-span-12 sm:col-span-8 sm:col-start-3 lg:col-span-4 lg:col-start-5">
 				<div class="bg-white rounded-lg w-full">
@@ -29,5 +29,5 @@
 				</div>
 			</div>
 		</div>
-	</div>
+	</section>
 </template>
