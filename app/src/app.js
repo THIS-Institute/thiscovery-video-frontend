@@ -2,10 +2,10 @@ import { createApp } from 'vue';
 import { router } from './core/routing';
 import { store } from './store';
 
-import EButton from './components/common/Button.vue';
-import Icon from './components/common/Icon.vue';
-import Placeholder from './components/common/Placeholder.vue';
-import IconText from './components/common/IconText.vue';
+import EButton from './components/ui/Button.vue';
+import Icon from './components/ui/Icon.vue';
+import Placeholder from './components/ui/Placeholder.vue';
+import IconText from './components/ui/IconText.vue';
 
 const RootComponent = {};
 

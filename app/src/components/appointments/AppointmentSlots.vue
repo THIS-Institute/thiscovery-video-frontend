@@ -81,10 +81,10 @@
 	import { store } from '@/store/index';
 	import { computed } from 'vue';
 
-	import DatePicker from '@/components/block/DatePicker';
-	import SelectedSlot from '@/components/block/SelectedSlot';
-	import BookingStatus from '@/components/block/BookingStatus';
-	import AppointmentInfo from '@/components/block/AppointmentInfo';
+	import DatePicker from '@/components/appointments/DatePicker';
+	import SelectedSlot from '@/components/appointments/SelectedSlot';
+	import BookingStatus from '@/components/appointments/BookingStatus';
+	import AppointmentInfo from '@/components/appointments/AppointmentInfo';
 
 	export default {
 		components: {

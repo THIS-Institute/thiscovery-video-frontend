@@ -12,18 +12,18 @@
 			<hr class="e-divider mt-5 border-0 xl:hidden">
 
 			<div class="e-content relative mt-12 xl:mt-7">
-				<appointment-booker />
+				<appointment-slots />
 			</div>
 		</div>
 	</div>
 </template>
 
 <script>
-	import AppointmentBooker from '@/components/block/AppointmentBooker';
+	import AppointmentSlots from '@/components/appointments/AppointmentSlots';
 
 	export default {
 		components: {
-			AppointmentBooker,
+			AppointmentSlots,
 		},
 	};
 </script>

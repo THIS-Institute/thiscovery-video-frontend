@@ -10,7 +10,7 @@
 			</p>
 
 			<div class="relative grid grid-cols-10 gap-4 mt-7">
-				<selection-card
+				<method-card
 					v-for="(path, index) in paths"
 					:key="index"
 					class="col-span-10 sm:col-span-8 md:col-span-5 xl:col-span-4"
@@ -22,11 +22,11 @@
 </template>
 
 <script>
-	import SelectionCard from '@/components/block/SelectionCard';
+	import MethodCard from '@/components/methods/MethodCard';
 
 	export default {
 		components: {
-			SelectionCard,
+			MethodCard,
 		},
 
 		setup () {

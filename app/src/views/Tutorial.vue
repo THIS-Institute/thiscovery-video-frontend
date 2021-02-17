@@ -24,7 +24,7 @@
 						v-text="active.content"
 					/>
 
-					<instructions-nav
+					<tutorial-nav
 						:total="instructions.length"
 						:index="index"
 						@move="setInstruction"
@@ -52,13 +52,13 @@
 </template>
 
 <script>
-	import InstructionsNav from '@/components/block/InstructionsNav';
+	import TutorialNav from '@/components/tutorials/TutorialNav';
 
 	import { computed, reactive, toRefs } from 'vue';
 
 	export default {
 		components: {
-			InstructionsNav,
+			TutorialNav,
 		},
 
 		setup() {

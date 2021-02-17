@@ -75,7 +75,7 @@
 </template>
 
 <script>
-	import NavLink from '@/components/common/NavLink';
+	import NavLink from '@/components/ui/NavLink';
 
 	import { store } from '@/store/index';
 

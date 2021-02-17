@@ -2,12 +2,12 @@
 import Styleguide from './views/Styleguide';
 
 // Pages
-import PathSelection from './views/PathSelection';
-import AppointmentSelection from './views/AppointmentSelection';
-import Instructions from './views/Instructions';
-import DressingRoom from './views/DressingRoom';
-import SelfRecord from './views/SelfRecord';
-import LiveRoom from './views/LiveRoom';
+import MethodSelectionView from './views/MethodSelection';
+import AppointmentsView from './views/Appointments';
+import TutorialView from './views/Tutorial';
+import PreSettingsView from './views/PreSettings';
+import SelfRecordView from './views/SelfRecord';
+import LiveRoomView from './views/LiveRoom';
 
 // Layouts
 import LayoutFullBackground from './layouts/FullBackground';
@@ -22,7 +22,7 @@ export const routes = [
 			{
 				path: '',
 				name: 'home',
-				component: PathSelection,
+				component: MethodSelectionView,
 			},
 		],
 	},
@@ -34,7 +34,7 @@ export const routes = [
 			{
 				path: '',
 				name: 'appointments',
-				component: AppointmentSelection,
+				component: AppointmentsView,
 			},
 		],
 	},
@@ -46,17 +46,17 @@ export const routes = [
 			{
 				path: '',
 				name: 'self_howto',
-				component: Instructions,
+				component: TutorialView,
 			},
 			{
 				path: 'settings',
 				name: 'self_settings',
-				component: DressingRoom,
+				component: PreSettingsView,
 			},
 			{
 				path: 'interview',
 				name: 'self_interview',
-				component: SelfRecord,
+				component: SelfRecordView,
 				props: { hideNav: true },
 			},
 		],
@@ -73,7 +73,7 @@ export const routes = [
 			{
 				path: 'interview',
 				name: 'self_interview',
-				component: SelfRecord,
+				component: SelfRecordView,
 			},
 		],
 	},
@@ -85,18 +85,18 @@ export const routes = [
 			{
 				path: '',
 				name: 'live_home',
-				component: Instructions,
+				component: TutorialView,
 			},
 			{
 				path: 'settings',
 				name: 'live_settings',
-				component: DressingRoom,
+				component: PreSettingsView,
 			},
 		],
 	},
 	{
 		path: '/live/room',
-		component: LiveRoom,
+		component: LiveRoomView,
 		name: 'live_room',
 	},
 	{
