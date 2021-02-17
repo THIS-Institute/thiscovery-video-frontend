@@ -14,6 +14,9 @@ import FullBackgroundLayout from './layouts/FullBackground';
 import SplitBackgroundLayout from './layouts/SplitBackground';
 
 export const routes = [
+	/**
+	 * Method selection
+	 */
 	{
 		path: '/',
 		component: FullBackgroundLayout,
@@ -26,6 +29,10 @@ export const routes = [
 			},
 		],
 	},
+
+	/**
+	 * Appointment booking
+	 */
 	{
 		path: '/appointments',
 		component: SplitBackgroundLayout,
@@ -38,6 +45,10 @@ export const routes = [
 			},
 		],
 	},
+
+	/**
+	 * Self-record interviews
+	 */
 	{
 		path: '/self-record',
 		component: FullBackgroundLayout,
@@ -71,6 +82,10 @@ export const routes = [
 			},
 		],
 	},
+
+	/**
+	 * Live interviews
+	 */
 	{
 		path: '/live',
 		component: FullBackgroundLayout,
@@ -93,6 +108,10 @@ export const routes = [
 		component: LiveRoomView,
 		name: 'live_room',
 	},
+
+	/**
+	 * Styleguide
+	 */
 	{
 		path: '/styleguide',
 		component: Styleguide,
