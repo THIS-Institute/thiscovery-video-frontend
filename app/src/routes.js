@@ -7,59 +7,97 @@ import AppointmentSelection from './views/AppointmentSelection';
 import Instructions from './views/Instructions';
 import DressingRoom from './views/DressingRoom';
 import SelfRecord from './views/SelfRecord';
+import LiveRoom from './views/LiveRoom';
 
 // Layouts
-import LayoutLanding from './layouts/Landing';
-import LayoutAppointment from './layouts/Appointment';
-import LayoutOnDemand from './layouts/OnDemand';
+import LayoutFullBackground from './layouts/FullBackground';
+import LayoutSplitBackground from './layouts/SplitBackground';
 
 export const routes = [
 	{
 		path: '/',
-		component: LayoutLanding,
+		component: LayoutFullBackground,
+		props: { backgroundType: 'waves', hasBack: false },
 		children: [
 			{
 				path: '',
+				name: 'home',
 				component: PathSelection,
 			},
 		],
 	},
 	{
-		path: '/appointment',
-		component: LayoutAppointment,
+		path: '/appointments',
+		component: LayoutSplitBackground,
+		props: { backgroundType: 'curls' },
 		children: [
 			{
 				path: '',
+				name: 'appointments',
 				component: AppointmentSelection,
 			},
 		],
 	},
 	{
-		path: '/on-demand',
-		component: LayoutOnDemand,
+		path: '/self-record',
+		component: LayoutFullBackground,
+		props: { backgroundType: 'scratches' },
 		children: [
 			{
-				path: 'instructions',
+				path: '',
+				name: 'self_howto',
 				component: Instructions,
 			},
 			{
-				path: 'dressing-room',
+				path: 'settings',
+				name: 'self_settings',
+				component: DressingRoom,
+			},
+			{
+				path: 'interview',
+				name: 'self_interview',
+				component: SelfRecord,
+				props: { hideNav: true },
+			},
+		],
+	},
+	{
+		path: '/self-record',
+		component: LayoutFullBackground,
+		props: {
+			backgroundType: 'scratches',
+			hasNav: false,
+			hasBack: false
+		},
+		children: [
+			{
+				path: 'interview',
+				name: 'self_interview',
+				component: SelfRecord,
+			},
+		],
+	},
+	{
+		path: '/live',
+		component: LayoutFullBackground,
+		props: { backgroundType: 'curls' },
+		children: [
+			{
+				path: '',
+				name: 'live_home',
+				component: Instructions,
+			},
+			{
+				path: 'settings',
+				name: 'live_settings',
 				component: DressingRoom,
 			},
 		],
 	},
 	{
-		path: '/on-demand',
-		component: LayoutOnDemand,
-		children: [
-			{
-				path: 'interview',
-				component: SelfRecord,
-			},
-		],
-		props: {
-			hideNav: true,
-		},
+		path: '/live/room',
+		component: LiveRoom,
+		name: 'live_room',
 	},
 	{
 		path: '/styleguide',

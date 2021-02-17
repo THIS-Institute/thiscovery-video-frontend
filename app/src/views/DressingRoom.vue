@@ -21,7 +21,7 @@
 								title="See the first question"
 								icon="chevron-right"
 								class="e-button--red mt-5"
-								url="/on-demand/interview"
+								:url="{ name: 'self_interview' }"
 								pill
 							/>
 						</div>

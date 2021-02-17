@@ -61,7 +61,8 @@
 
 			<e-button
 				v-if="cta && available"
-				v-bind="cta"
+				:title="cta.title"
+				:url="{ name: cta.route }"
 				icon="chevron-right"
 				class="e-button--red mt-12"
 				pill
@@ -78,7 +79,7 @@
 
 					<router-link
 						class="text-red hover:text-black"
-						:to="tutorial.cta.url"
+						:to="{ name: tutorial.cta.route }"
 						v-text="tutorial.cta.title"
 					/>
 				</p>

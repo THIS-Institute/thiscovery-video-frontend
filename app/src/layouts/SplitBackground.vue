@@ -1,7 +1,10 @@
 <template>
 	<div class="relative min-h-screen h-full">
 		<div
-			class="e-background e-background--curls"
+			:class="[
+				'e-background',
+				`e-background--${backgroundType}`,
+			]"
 			:style="{
 				height: `${offset}px`,
 			}"
@@ -48,6 +51,13 @@
 		components: {
 			EHeader,
 			ENavigation,
+		},
+
+		props: {
+			backgroundType: {
+				type: String,
+				default: 'curls',
+			},
 		},
 
 		setup() {

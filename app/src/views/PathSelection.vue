@@ -48,13 +48,13 @@
 					],
 					cta: {
 						title: 'Make an appointment',
-						url: '/appointment',
+						route: 'appointments',
 					},
 					tutorial: {
 						title: 'Want to know more?',
 						cta: {
 							title: 'See how an appointment works',
-							url: '#',
+							route: 'home',
 						},
 					},
 					available: true,
@@ -70,13 +70,13 @@
 					],
 					cta: {
 						title: 'Record responses',
-						url: '/on-demand/dressing-room',
+						route: 'self_settings',
 					},
 					tutorial: {
 						title: 'Want to know more?',
 						cta: {
 							title: 'See how self-record works',
-							url: '/on-demand/instructions',
+							route: 'self_howto',
 						},
 					},
 					available: true,

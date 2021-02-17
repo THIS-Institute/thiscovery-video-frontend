@@ -1,23 +1,28 @@
 <template>
 	<div class="relative min-h-screen h-full">
-		<div class="e-background e-background--scratches" />
+		<div
+			:class="[
+				'e-background',
+				`e-background--${backgroundType}`,
+			]"
+		/>
 
 		<e-header
-			v-if="!hideNav"
+			v-if="hasNav"
 			:nav="nav"
 			:nav-active="navActive"
 			:profile="profile"
 		/>
 
 		<e-navigation
-			v-if="navActive && !hideNav"
+			v-if="navActive && hasNav"
 			:nav="nav"
 			:profile="profile"
 		/>
 
 		<main class="md:pb-10 relative z-site-content">
 			<div
-				v-if="!hideNav"
+				v-if="hasBack"
 				class="e-container mt-6"
 			>
 				<e-button
@@ -35,9 +40,9 @@
 </template>
 
 <script>
-	import { computed } from 'vue';
 	import { useRouter } from 'vue-router';
-	import { store } from '@/store/index';
+	import { store } from '../store/index';
+	import { computed } from 'vue';
 
 	import EHeader from '@/components/global/Header';
 	import ENavigation from '@/components/global/Navigation';
@@ -49,7 +54,18 @@
 		},
 
 		props: {
-			hideNav: Boolean,
+			backgroundType: {
+				type: String,
+				default: 'waves',
+			},
+			hasNav: {
+				type: Boolean,
+				default: true,
+			},
+			hasBack: {
+				type: Boolean,
+				default: true,
+			},
 		},
 
 		setup() {
