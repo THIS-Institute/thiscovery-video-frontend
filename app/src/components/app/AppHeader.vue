@@ -75,9 +75,9 @@
 </template>
 
 <script>
-	import NavLink from '@/components/ui/NavLink';
+	import { useStore } from 'vuex'
 
-	import { store } from '@/store/index';
+	import NavLink from '@/components/ui/NavLink';
 
 	export default {
 		components: {
@@ -99,6 +99,7 @@
 		},
 
 		setup() {
+			const store = useStore();
 			const toggle = () => store.commit('app/toggle');
 
 			return {
