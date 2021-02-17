@@ -100,12 +100,10 @@
 
 	export default {
 		props: {
-			submitting: Boolean,
-		},
-		
-		setup() {
-			const data = [
-				{
+			calendar: {
+				type: Array,
+				default: () => [
+					{
 					title: 'Tue 30 Nov',
 					timeslots: [
 						{
@@ -335,8 +333,13 @@
 					],
 					limit: true,
 				},
-			];
+				],
+			},
 
+			submitting: Boolean,
+		},
+		
+		setup(props) {
 			const state = reactive({
 				start: 0,
 				total: 4,
@@ -350,12 +353,12 @@
 			});
 
 			const dates = computed(() => {
-				return data.slice(state.start, (state.start + state.total));
+				return props.calendar.slice(state.start, (state.start + state.total));
 			});
 
-			const lowerLimit = computed(() => data[state.start].limit);
+			const lowerLimit = computed(() => props.calendar[state.start].limit);
 
-			const upperLimit = computed(() => data[(state.start + state.total) - 1].limit);
+			const upperLimit = computed(() => props.calendar[(state.start + state.total) - 1].limit);
 
 			const select = (date, slot) => {
 				store.commit('task/select', { date, slot });

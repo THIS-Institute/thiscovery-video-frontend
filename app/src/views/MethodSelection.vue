@@ -29,63 +29,62 @@
 			MethodCard,
 		},
 
-		setup () {
-			const paths = [
-				// {
-				// 	icon: 'camera',
-				// 	title: 'Live interview',
-				// 	content: 'We\'re sorry, but a live interview is not available for this task.',
-				// 	available: false,
-				// },
-				{
-					icon: 'camera',
-					title: 'Live interview',
-					content: 'Book an online meeting with a member of the online reasearch team',
-					items: [
-						'Speak directly with a researcher',
-						'At a time that suits you',
-						'Video or audio-only call',
-					],
-					cta: {
-						title: 'Make an appointment',
-						route: 'appointments',
-					},
-					tutorial: {
-						title: 'Want to know more?',
+		props: {
+			paths: {
+				type: Array,
+				default: () => [
+					// {
+					// 	icon: 'camera',
+					// 	title: 'Live interview',
+					// 	content: 'We\'re sorry, but a live interview is not available for this task.',
+					// 	available: false,
+					// },
+					{
+						icon: 'camera',
+						title: 'Live interview',
+						content: 'Book an online meeting with a member of the online reasearch team',
+						items: [
+							'Speak directly with a researcher',
+							'At a time that suits you',
+							'Video or audio-only call',
+						],
 						cta: {
-							title: 'See how an appointment works',
-							route: 'home',
+							title: 'Make an appointment',
+							route: 'appointments',
 						},
+						tutorial: {
+							title: 'Want to know more?',
+							cta: {
+								title: 'See how an appointment works',
+								route: 'home',
+							},
+						},
+						available: true,
 					},
-					available: true,
-				},
-				{
-					icon: 'video',
-					title: 'Self record',
-					content: 'Record your responses privately and in your own time',
-					items: [
-						'Start right away or whenever you like',
-						'Read and respond at your leisure',
-						'Pause and resume on any device',
-					],
-					cta: {
-						title: 'Record responses',
-						route: 'self_settings',
-					},
-					tutorial: {
-						title: 'Want to know more?',
+					{
+						icon: 'video',
+						title: 'Self record',
+						content: 'Record your responses privately and in your own time',
+						items: [
+							'Start right away or whenever you like',
+							'Read and respond at your leisure',
+							'Pause and resume on any device',
+						],
 						cta: {
-							title: 'See how self-record works',
-							route: 'self_howto',
+							title: 'Record responses',
+							route: 'self_settings',
 						},
+						tutorial: {
+							title: 'Want to know more?',
+							cta: {
+								title: 'See how self-record works',
+								route: 'self_howto',
+							},
+						},
+						available: true,
 					},
-					available: true,
-				},
-			];
-		
-			return {
-				paths,
-			};
+				],
+			},
 		},
 	};
 </script>

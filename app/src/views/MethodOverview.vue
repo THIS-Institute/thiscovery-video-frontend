@@ -61,39 +61,44 @@
 			InstructionsNav,
 		},
 
-		setup() {
-			const instructions = [
-				{
-					title: "You'll be asked a series of questions",
-					content: "Nullam quis risus eget urna mollis ornare vel eu leo. Macenas faucibus mollis interdum",
-					img: {
-						src: "//placehold.it/275x428?text=1",
-						alt: "Placeholder image",
+		props: {
+			instructions: {
+				type: Array,
+				default: () => [
+					{
+						title: "You'll be asked a series of questions",
+						content: "Nullam quis risus eget urna mollis ornare vel eu leo. Macenas faucibus mollis interdum",
+						img: {
+							src: "//placehold.it/275x428?text=1",
+							alt: "Placeholder image",
+						},
 					},
-				},
-				{
-					title: "Title 2",
-					content: "Nullam quis risus eget urna mollis ornare vel eu leo. Macenas faucibus mollis interdum",
-					img: {
-						src: "//placehold.it/275x428?text=2",
-						alt: "Placeholder image",
+					{
+						title: "Title 2",
+						content: "Nullam quis risus eget urna mollis ornare vel eu leo. Macenas faucibus mollis interdum",
+						img: {
+							src: "//placehold.it/275x428?text=2",
+							alt: "Placeholder image",
+						},
 					},
-				},
-				{
-					title: "Title 3",
-					content: "Nullam quis risus eget urna mollis ornare vel eu leo. Macenas faucibus mollis interdum",
-					img: {
-						src: "//placehold.it/275x428?text=3",
-						alt: "Placeholder image",
+					{
+						title: "Title 3",
+						content: "Nullam quis risus eget urna mollis ornare vel eu leo. Macenas faucibus mollis interdum",
+						img: {
+							src: "//placehold.it/275x428?text=3",
+							alt: "Placeholder image",
+						},
 					},
-				},
-			];
+				],
+			},
+		},
 
+		setup(props) {
 			const state = reactive({
 				index: 0,
 			});
 
-			const active = computed(() => instructions[state.index]);
+			const active = computed(() => props.instructions[state.index]);
 
 			const setInstruction = (index) => state.index = index;
 
@@ -101,7 +106,6 @@
 				...toRefs(state),
 				setInstruction,
 				active,
-				instructions,
 			};
 		},
 	};
