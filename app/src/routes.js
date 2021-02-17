@@ -10,13 +10,13 @@ import SelfRecordView from './views/SelfRecord';
 import LiveRoomView from './views/LiveRoom';
 
 // Layouts
-import LayoutFullBackground from './layouts/FullBackground';
-import LayoutSplitBackground from './layouts/SplitBackground';
+import FullBackgroundLayout from './layouts/FullBackground';
+import SplitBackgroundLayout from './layouts/SplitBackground';
 
 export const routes = [
 	{
 		path: '/',
-		component: LayoutFullBackground,
+		component: FullBackgroundLayout,
 		props: { backgroundType: 'waves', hasBack: false },
 		children: [
 			{
@@ -28,7 +28,7 @@ export const routes = [
 	},
 	{
 		path: '/appointments',
-		component: LayoutSplitBackground,
+		component: SplitBackgroundLayout,
 		props: { backgroundType: 'curls' },
 		children: [
 			{
@@ -40,7 +40,7 @@ export const routes = [
 	},
 	{
 		path: '/self-record',
-		component: LayoutFullBackground,
+		component: FullBackgroundLayout,
 		props: { backgroundType: 'scratches' },
 		children: [
 			{
@@ -57,7 +57,7 @@ export const routes = [
 	},
 	{
 		path: '/self-record',
-		component: LayoutFullBackground,
+		component: FullBackgroundLayout,
 		props: {
 			backgroundType: 'scratches',
 			hasNav: false,
@@ -73,7 +73,7 @@ export const routes = [
 	},
 	{
 		path: '/live',
-		component: LayoutFullBackground,
+		component: FullBackgroundLayout,
 		props: { backgroundType: 'curls' },
 		children: [
 			{
