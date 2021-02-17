@@ -75,7 +75,7 @@
 </template>
 
 <script>
-	import { useStore } from 'vuex'
+	import { useStore } from 'vuex';
 
 	import NavLink from '@/components/ui/NavLink';
 
