@@ -10,13 +10,13 @@
 			}"
 		/>
 
-		<e-header
+		<app-header
 			:nav="nav"
 			:nav-active="navActive"
 			:profile="profile"
 		/>
 
-		<e-navigation
+		<app-navigation
 			v-if="navActive"
 			:nav="nav"
 			:profile="profile"
@@ -44,13 +44,13 @@
 	import { useStore } from 'vuex';
 	import { useViewport } from '@/composables/useViewport';
 
-	import EHeader from '@/components/global/Header';
-	import ENavigation from '@/components/global/Navigation';
+	import AppHeader from '@/components/global/Header';
+	import AppNavigation from '@/components/global/Navigation';
 
 	export default {
 		components: {
-			EHeader,
-			ENavigation,
+			AppHeader,
+			AppNavigation,
 		},
 
 		props: {

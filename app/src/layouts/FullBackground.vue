@@ -7,14 +7,14 @@
 			]"
 		/>
 
-		<e-header
+		<app-header
 			v-if="hasNav"
 			:nav="nav"
 			:nav-active="navActive"
 			:profile="profile"
 		/>
 
-		<e-navigation
+		<app-navigation
 			v-if="navActive && hasNav"
 			:nav="nav"
 			:profile="profile"
@@ -44,13 +44,13 @@
 	import { useStore } from 'vuex';
 	import { useRouter } from 'vue-router';
 
-	import EHeader from '@/components/global/Header';
-	import ENavigation from '@/components/global/Navigation';
+	import AppHeader from '@/components/global/Header';
+	import AppNavigation from '@/components/global/Navigation';
 
 	export default {
 		components: {
-			EHeader,
-			ENavigation,
+			AppHeader,
+			AppNavigation,
 		},
 
 		props: {
