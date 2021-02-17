@@ -53,12 +53,6 @@ export const routes = [
 				name: 'self_settings',
 				component: PreSettingsView,
 			},
-			{
-				path: 'interview',
-				name: 'self_interview',
-				component: SelfRecordView,
-				props: { hideNav: true },
-			},
 		],
 	},
 	{
