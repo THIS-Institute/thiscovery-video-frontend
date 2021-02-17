@@ -69,11 +69,34 @@ module.exports = {
 			'-1': -1,
 		},
 		extend: {
+			backgroundSize: {
+				'100': relative(400),
+				'200': relative(800),
+				'300': relative(1200),
+			},
 			inset: (theme, { negative }) => ({
 				'1/2': '50%',
 				...widths,
 				...(negative(widths)),
 			}),
+			maxHeight: {
+				'date-picker': relative(445),
+			},
+			maxWidth: {
+				logo: relative(150),
+				'83': relative(332),
+				container: relative(1440),
+			},
+			padding: {
+				full: ratio(1, 1),
+				logo: ratio(495, 103),
+				instruction: ratio(275, 428),
+
+				'9/16': ratio(16, 9),
+			},
+			scale: {
+				'-100': '-1',
+			},
 			spacing: {
 				em: '1em',
 				'1/2em': '.5em',
@@ -90,26 +113,6 @@ module.exports = {
 				gutter: relative(20),
 				margin: relative(60),
 				'1/2-screen': '50vw',
-			},
-			padding: {
-				full: ratio(1, 1),
-				logo: ratio(495, 103),
-				instruction: ratio(275, 428),
-
-				'9/16': ratio(16, 9),
-			},
-			maxWidth: {
-				logo: relative(150),
-				'83': relative(332),
-				container: relative(1440),
-			},
-			maxHeight: {
-				'date-picker': relative(445),
-			},
-			backgroundSize: {
-				'100': relative(400),
-				'200': relative(800),
-				'300': relative(1200),
 			},
 			width: {
 				...widths,
