@@ -1,5 +1,5 @@
 import { createApp } from 'vue';
-import { router } from './core/routing';
+import { router } from './routing';
 import { store } from './store';
 
 import EButton from './components/ui/Button.vue';
