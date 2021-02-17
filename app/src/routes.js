@@ -3,8 +3,8 @@ import Styleguide from './views/Styleguide';
 
 // Pages
 import MethodSelectionView from './views/MethodSelection';
-import AppointmentsView from './views/Appointments';
-import TutorialView from './views/Tutorial';
+import MethodOverviewView from './views/MethodOverview';
+import BookAppointmentView from './views/BookAppointment';
 import PreSettingsView from './views/PreSettings';
 import SelfRecordView from './views/SelfRecord';
 import LiveRoomView from './views/LiveRoom';
@@ -34,7 +34,7 @@ export const routes = [
 			{
 				path: '',
 				name: 'appointments',
-				component: AppointmentsView,
+				component: BookAppointmentView,
 			},
 		],
 	},
@@ -46,7 +46,7 @@ export const routes = [
 			{
 				path: '',
 				name: 'self_howto',
-				component: TutorialView,
+				component: MethodOverviewView,
 			},
 			{
 				path: 'settings',
@@ -79,7 +79,7 @@ export const routes = [
 			{
 				path: '',
 				name: 'live_home',
-				component: TutorialView,
+				component: MethodOverviewView,
 			},
 			{
 				path: 'settings',
