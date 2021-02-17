@@ -33,7 +33,7 @@
 </template>
 
 <script>
-	import VideoPreview from '@/components/interviews/VideoPreview';
+	import VideoPreview from '@/components/interviews/settings/VideoPreview';
 
 	export default {
 		components: {
