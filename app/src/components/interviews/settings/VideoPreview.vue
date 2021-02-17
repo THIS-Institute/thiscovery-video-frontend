@@ -1,7 +1,7 @@
 <template>
 	<div class="bg-black">
 		<video
-			ref="localVideo"
+			ref="localVideoElement"
 			autoplay
 			playsinline
 			class="transform -scale-x-100"
