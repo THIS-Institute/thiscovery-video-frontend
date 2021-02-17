@@ -40,9 +40,9 @@
 </template>
 
 <script>
-	import { useRouter } from 'vue-router';
-	import { store } from '../store/index';
 	import { computed } from 'vue';
+	import { useStore } from 'vuex';
+	import { useRouter } from 'vue-router';
 
 	import EHeader from '@/components/global/Header';
 	import ENavigation from '@/components/global/Navigation';
@@ -69,6 +69,7 @@
 		},
 
 		setup() {
+			const store = useStore();
 			const router = useRouter();
 			const back = () => window.history.length > 1 ? router.go(-1) : router.push('/');
 

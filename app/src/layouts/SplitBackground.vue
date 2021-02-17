@@ -41,7 +41,7 @@
 <script>
 	import { computed, reactive, toRefs } from 'vue';
 	import { useRouter } from 'vue-router';
-	import { store } from '@/store/index';
+	import { useStore } from 'vuex';
 	import { useViewport } from '@/composables/useViewport';
 
 	import EHeader from '@/components/global/Header';
@@ -62,6 +62,7 @@
 
 		setup() {
 			const router = useRouter();
+			const store = useStore();
 
 			const state = reactive({
 				offset: null,
