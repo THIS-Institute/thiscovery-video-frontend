@@ -69,27 +69,28 @@
 			/>
 		</div>
 
-		<div
+		<helper
 			v-if="tutorial && available"
 			class="mt-10 p-2.5 pt-0"
-		>
-			<div class="bg-grey-100 rounded-md">
-				<p class="flex flex-wrap justify-center gap-x-2 p-4 text-sm">
-					<span v-text="tutorial.title" />
-
-					<router-link
-						class="text-red hover:text-black"
-						:to="{ name: tutorial.cta.route }"
-						v-text="tutorial.cta.title"
-					/>
-				</p>
-			</div>
-		</div>
+			:title="tutorial.title"
+			:cta="{
+				title: tutorial.cta.title,
+				url: {
+					name: tutorial.cta.route,
+				},
+			}"
+		/>
 	</section>
 </template>
 
 <script>
+	import Helper from '@/components/ui/Helper';
+
 	export default {
+		components: {
+			Helper,
+		},
+
 		props: {
 			title: {
 				type: String,

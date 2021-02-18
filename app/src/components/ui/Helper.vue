@@ -1,0 +1,31 @@
+<template>
+	<aside>
+		<div class="bg-grey-100 rounded-md">
+			<p class="flex flex-wrap justify-center gap-x-2 p-4 text-sm">
+				<span v-text="title" />
+
+				<router-link
+					class="text-red hover:text-black"
+					:to="cta.url"
+					v-text="cta.title"
+				/>
+			</p>
+		</div>
+	</aside>
+</template>
+
+<script>
+	export default {
+		props: {
+			title: {
+				type: String,
+				required: true,
+			},
+
+			cta: {
+				type: Object,
+				required: true,
+			},
+		},
+	};
+</script>
