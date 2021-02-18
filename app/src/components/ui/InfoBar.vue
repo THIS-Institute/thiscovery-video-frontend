@@ -5,7 +5,7 @@
 				<span v-text="title" />
 
 				<router-link
-					class="text-red hover:text-black"
+					class="transition-colors duration-200 text-red hover:text-black"
 					:to="cta.url"
 					v-text="cta.title"
 				/>

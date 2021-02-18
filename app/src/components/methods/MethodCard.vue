@@ -69,7 +69,7 @@
 			/>
 		</div>
 
-		<helper
+		<info-bar
 			v-if="tutorial && available"
 			class="mt-10 p-2.5 pt-0"
 			:title="tutorial.title"
@@ -84,11 +84,11 @@
 </template>
 
 <script>
-	import Helper from '@/components/ui/Helper';
+	import InfoBar from '@/components/ui/InfoBar';
 
 	export default {
 		components: {
-			Helper,
+			InfoBar,
 		},
 
 		props: {
