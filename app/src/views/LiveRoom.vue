@@ -1,5 +1,11 @@
 <template>
-	<section class="e-container my-12 md:my-18 xl:my-24">
-		The live room
-	</section>
+	<interview-room />
 </template>
+
+<script>
+	import InterviewRoom from '@/components/interviews/live/InterviewRoom';
+
+	export default {
+		components: { InterviewRoom },
+	}
+</script>
