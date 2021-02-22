@@ -21,8 +21,8 @@ Resources:
       Description: !Sub
         - Stack ${StackTagName} Environment ${EnvironmentTagName} Function ${ResourceName}
         - ResourceName: RoomCreateToken
-      CodeUri: src/room
-      Handler: token.lambda_handler
+      CodeUri: src
+      Handler: room_token.lambda_handler
       Runtime: python3.8
       MemorySize: 3008
       Timeout: 30
