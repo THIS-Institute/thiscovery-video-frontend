@@ -17,3 +17,21 @@ services:
       - ../app:/app
     ports:
       - 5757:5757
+
+  lambda:
+    build:
+      context: ../
+      dockerfile: docker/lambda.Dockerfile
+    volumes:
+      - ../src:/var/task
+
+  awslocal:
+    image: localstack/localstack
+    ports:
+      - 4566:4566
+    environment:
+      - SERVICES=secretsmanager
+      - DEFAULT_REGION=eu-west-1
+      - DEBUG=1
+    volumes:
+      - "${TMPDIR:-/tmp/localstack}:/tmp/localstack"

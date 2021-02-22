@@ -1,0 +1,47 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Resources:
+  BackendHttpApi:
+    Type: AWS::Serverless::HttpApi
+    Properties:
+      DefinitionBody:
+        openapi: '3.0'
+        info:
+          title: !Sub ${AWS::StackName}-BackendHttpApi
+          version: '1.0'
+        paths:
+          /v1/room/token:
+            post:
+              responses: {}
+      FailOnWarnings: true
+  RoomCreateToken:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub ${AWS::StackName}-RoomCreateToken
+      Description: !Sub
+        - Stack ${StackTagName} Environment ${EnvironmentTagName} Function ${ResourceName}
+        - ResourceName: RoomCreateToken
+      CodeUri: src/room
+      Handler: token.lambda_handler
+      Runtime: python3.8
+      MemorySize: 3008
+      Timeout: 30
+      Tracing: Active
+      Policies:
+        - AWSXrayWriteOnlyAccess
+      Events:
+        BackendHttpApiPOSTv1roomtoken:
+          Type: HttpApi
+          Properties:
+            Path: /v1/room/token
+            Method: POST
+            ApiId: !Ref BackendHttpApi
+            PayloadFormatVersion: '2.0'
+            TimeoutInMillis: 10000
+Parameters:
+  StackTagName:
+    Type: String
+    Description: Stack Name (injected by Stackery at deployment time)
+  EnvironmentTagName:
+    Type: String
+    Description: Environment Name (injected by Stackery at deployment time)
