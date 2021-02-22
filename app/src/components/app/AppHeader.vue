@@ -100,7 +100,7 @@
 
 		setup() {
 			const store = useStore();
-			const toggle = () => store.commit('app/toggle');
+			const toggle = () => store.commit('app/toggleNav');
 
 			return {
 				toggle,

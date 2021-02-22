@@ -25,6 +25,7 @@
 	"zIndexes": [
 		"accessibility-skip-links",
 		"outdated-browser",
+		"site-modal",
 		"site-header",
 		"site-navigation",
 		"site-content",
