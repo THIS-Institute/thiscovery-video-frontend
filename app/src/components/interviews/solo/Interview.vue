@@ -84,30 +84,23 @@
 						pill
 						@click="nextQuestion()"
 					/>
-
-					<e-button
-						title="Retake"
-						class="e-button--green"
-						small
-						pill
-						@click="toggle()"
-					/>
 				</div>
 			</div>
 
 			<modal>
-				<confirm v-if="false" />
+				<confirm v-if="true" />
 
 				<comment v-else />
 			</modal>
 
 			<info-bar
 				class="mt-2.5"
-				title="Having trouble recording?"
+				title="Not happy with your answer?"
 				:cta="{
-					title: 'See how to fix this',
-					url: '#',
+					title: 'Click here to retake it',
 				}"
+				modal
+				@open-modal="toggle"
 			/>
 		</div>
 	</div>
