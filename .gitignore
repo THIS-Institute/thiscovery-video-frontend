@@ -1,5 +1,13 @@
+# General
 .DS_Store
+
+# App
 .env
+
+# Frontend
 /app/node_modules
 /app/public/dist/*
 /app/public/mix-manifest.json
+
+# Lambda
+src/__pycache__
