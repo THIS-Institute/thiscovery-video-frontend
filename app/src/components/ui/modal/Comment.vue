@@ -14,7 +14,7 @@
 				:class="[
 					'rounded-md p-7',
 					'border border-black border-opacity-20',
-					'focus:outline-none focus:border-grey-300',
+					'focus:outline-none focus:border-grey-400',
 				]"
 			/>
 
