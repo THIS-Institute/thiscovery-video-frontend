@@ -21,6 +21,7 @@
 			icon="save"
 			class="e-button--red-outline ml-auto"
 			flipped
+			small
 			pill
 		/>
 	</div>
@@ -68,22 +69,47 @@
 				'lg:col-span-6 lg:col-start-7',
 			]"
 		>
-			<div class="rounded-lg bg-black h-64" />
+			<div class="rounded-lg overflow-hidden bg-grey-300">
+				<placeholder ratio="pt-9/16">
+					<video-preview />
+				</placeholder>
 
-			<button
-				class="my-10"
-				@click="nextQuestion()"
-			>
-				Next Q
-			</button>
+				<div class="flex flex-wrap items-center justify-between gap-y-5 px-5 my-5">
+					<e-button
+						title="Add more"
+						icon="record"
+						class="e-button--white-outline"
+						flipped
+						small
+						pill
+					/>
+
+					<e-button
+						title="Next question"
+						icon="check"
+						class="e-button--green"
+						flipped
+						small
+						pill
+						@click="nextQuestion()"
+					/>
+				</div>
+			</div>
+
+			<modal>
+				<confirm v-if="true" />
+
+				<comment v-else />
+			</modal>
 
 			<info-bar
 				class="mt-2.5"
-				title="Having trouble recording?"
+				title="Not happy with your answer?"
 				:cta="{
-					title: 'See how to fix this',
-					url: '#',
+					title: 'Click here to retake it',
 				}"
+				modal
+				@open-modal="toggle"
 			/>
 		</div>
 	</div>
@@ -93,14 +119,24 @@
 	import { useQuestions } from '@/composables/useQuestions';
 
 	import { computed } from 'vue';
+	import { useStore } from 'vuex';
 
+	import VideoPreview from '@/components/interviews/settings/VideoPreview';
 	import Question from '@/components/interviews/solo/Question';
+
 	import InfoBar from '@/components/ui/InfoBar';
+	import Modal from '@/components/ui/modal/Modal';
+	import Confirm from '@/components/ui/modal/Confirm';
+	import Comment from '@/components/ui/modal/Comment';
 
 	export default {
 		components: {
+			VideoPreview,
 			Question,
 			InfoBar,
+			Modal,
+			Confirm,
+			Comment,
 		},
 
 		props: {
@@ -133,6 +169,9 @@
 				};
 			});
 
+			const store = useStore();
+			const toggle = () => store.commit('app/toggleModal');
+
 			return {
 				toReadableValue,
 				activeSection,
@@ -140,6 +179,7 @@
 				readQuestion,
 				readSection,
 				progress,
+				toggle,
 			};
 		},
 	};

@@ -3,5 +3,5 @@
 }
 
 .e-placeholder > * {
-	@apply absolute inset-0 w-full h-full;
+	@apply absolute inset-0 w-full h-full object-cover;
 }

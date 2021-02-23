@@ -1,9 +1,9 @@
 <template>
 	<div class="flex items-center space-x-4">
-		<div class="flex items-center justify-center rounded-full p-2 bg-pink">
+		<div class="flex items-center justify-center rounded-full p-3 bg-pink">
 			<icon
 				:name="icon"
-				size="w-8 h-8"
+				size="w-6 h-6"
 			/>
 		</div>
 

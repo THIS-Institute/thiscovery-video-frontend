@@ -2,6 +2,7 @@ export const app = {
 	namespaced: true,
 
 	state: () => ({
+		modalActive: false,
 		navActive: false,
 		nav: [
 			{
@@ -20,8 +21,12 @@ export const app = {
 	}),
 
 	mutations: {
-		toggle(state) {
+		toggleNav(state) {
 			state.navActive = !state.navActive;
+		},
+
+		toggleModal(state) {
+			state.modalActive = !state.modalActive;
 		},
 	},
 
