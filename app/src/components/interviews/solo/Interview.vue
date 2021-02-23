@@ -69,10 +69,8 @@
 				'lg:col-span-6 lg:col-start-7',
 			]"
 		>
-			<div class="rounded-lg overflow-hidden bg-grey-300">
-				<placeholder ratio="pt-9/16">
-					<video-preview />
-				</placeholder>
+			<div class="rounded-lg overflow-hidden bg-grey-400">
+				<video-wrapper />
 
 				<div class="flex flex-wrap items-center justify-between gap-y-5 px-5 my-5">
 					<!-- 1 -->
@@ -163,7 +161,7 @@
 	import { computed } from 'vue';
 	import { useStore } from 'vuex';
 
-	import VideoPreview from '@/components/interviews/settings/VideoPreview';
+	import VideoWrapper from '@/components/interviews/settings/VideoWrapper';
 	import Question from '@/components/interviews/solo/Question';
 
 	import InfoBar from '@/components/ui/InfoBar';
@@ -173,7 +171,7 @@
 
 	export default {
 		components: {
-			VideoPreview,
+			VideoWrapper,
 			Question,
 			InfoBar,
 			Modal,
