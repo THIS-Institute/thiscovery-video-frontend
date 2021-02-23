@@ -14,15 +14,20 @@
 				'space-x-1/3em disabled:text-black disabled:opacity-25': !pill,
 				'px-5 py-3.5': pill && small,
 				'px-6 py-4': pill && !small,
+				'rounded-full p-4': (icon || icons) && !title,
 			},
 		]"
 		:disabled="$attrs.disabled"
 	>
-		<span v-text="title" />
+		<span
+			v-if="title"
+			v-text="title"
+		/>
 
 		<icon
-			v-if="icon"
+			v-if="icon || icons"
 			:name="icon"
+			:names="icons"
 		/>
 	</component>
 </template>
@@ -42,6 +47,11 @@
 
 			icon: {
 				type: String,
+				default: null,
+			},
+
+			icons: {
+				type: Array,
 				default: null,
 			},
 
