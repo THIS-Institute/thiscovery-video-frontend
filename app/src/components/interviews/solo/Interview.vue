@@ -70,11 +70,20 @@
 			]"
 		>
 			<div class="rounded-lg overflow-hidden bg-grey-300">
-				<placeholder ratio="pt-3/4">
-					<div class="bg-black" />
+				<placeholder ratio="pt-9/16">
+					<video-preview />
 				</placeholder>
 
-				<div class="px-5 my-5">
+				<div class="flex flex-wrap items-center justify-between gap-y-5 px-5 my-5">
+					<e-button
+						title="Add more"
+						icon="record"
+						class="e-button--white-outline"
+						flipped
+						small
+						pill
+					/>
+
 					<e-button
 						title="Next question"
 						icon="check"
@@ -112,7 +121,9 @@
 	import { computed } from 'vue';
 	import { useStore } from 'vuex';
 
+	import VideoPreview from '@/components/interviews/settings/VideoPreview';
 	import Question from '@/components/interviews/solo/Question';
+
 	import InfoBar from '@/components/ui/InfoBar';
 	import Modal from '@/components/ui/modal/Modal';
 	import Confirm from '@/components/ui/modal/Confirm';
@@ -120,6 +131,7 @@
 
 	export default {
 		components: {
+			VideoPreview,
 			Question,
 			InfoBar,
 			Modal,

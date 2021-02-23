@@ -1,12 +1,10 @@
 <template>
-	<div class="bg-black">
-		<video
-			ref="localVideoElement"
-			autoplay
-			playsinline
-			class="transform -scale-x-100"
-		/>
-	</div>
+	<video
+		ref="localVideoElement"
+		autoplay
+		playsinline
+		class="transform -scale-x-100"
+	/>
 </template>
 
 <script>
