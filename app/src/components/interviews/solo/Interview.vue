@@ -70,7 +70,7 @@
 			]"
 		>
 			<div class="rounded-lg overflow-hidden bg-grey-300">
-				<placeholder>
+				<placeholder ratio="pt-3/4">
 					<div class="bg-black" />
 				</placeholder>
 

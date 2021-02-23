@@ -93,6 +93,7 @@ module.exports = {
 				instruction: ratio(275, 428),
 
 				'9/16': ratio(16, 9),
+				'3/4': ratio(4, 3),
 			},
 			scale: {
 				'-100': '-1',
