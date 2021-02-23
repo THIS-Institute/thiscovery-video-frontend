@@ -75,7 +75,36 @@
 				</placeholder>
 
 				<div class="flex flex-wrap items-center justify-between gap-y-5 px-5 my-5">
+					<!-- 1 -->
 					<e-button
+						title="Click to record your answer"
+						icon="record"
+						class="e-button--red mx-auto"
+						flipped
+						small
+						pill
+					/>
+
+					<!-- 2 -->
+					<!-- <e-button
+						title="Cancel"
+						class="e-button--white-outline mx-auto"
+						small
+						pill
+					/> -->
+
+					<!-- 3 -->
+					<!-- <e-button
+						title="Stop recording"
+						icon="stop"
+						class="e-button--white-outline mx-auto"
+						flipped
+						small
+						pill
+					/> -->
+
+					<!-- 4 -->
+					<!-- <e-button
 						title="Add more"
 						icon="record"
 						class="e-button--white-outline"
@@ -92,17 +121,30 @@
 						small
 						pill
 						@click="nextQuestion()"
-					/>
+					/> -->
 				</div>
 			</div>
 
 			<modal>
-				<confirm v-if="true" />
+				<!-- Are you sure you want to retake? -->
+				<confirm />
 
-				<comment v-else />
+				<!-- Add a comment -->
+				<!-- <comment /> -->
 			</modal>
 
+			<!-- Before/During recording -->
 			<info-bar
+				class="mt-2.5"
+				title="Having trouble recording?"
+				:cta="{
+					title: 'See how to fix this',
+					url: '#',
+				}"
+			/>
+
+			<!-- After recording -->
+			<!-- <info-bar
 				class="mt-2.5"
 				title="Not happy with your answer?"
 				:cta="{
@@ -110,7 +152,7 @@
 				}"
 				modal
 				@open-modal="toggle"
-			/>
+			/> -->
 		</div>
 	</div>
 </template>
@@ -127,7 +169,7 @@
 	import InfoBar from '@/components/ui/InfoBar';
 	import Modal from '@/components/ui/modal/Modal';
 	import Confirm from '@/components/ui/modal/Confirm';
-	import Comment from '@/components/ui/modal/Comment';
+	// import Comment from '@/components/ui/modal/Comment';
 
 	export default {
 		components: {
@@ -136,7 +178,7 @@
 			InfoBar,
 			Modal,
 			Confirm,
-			Comment,
+			// Comment,
 		},
 
 		props: {
