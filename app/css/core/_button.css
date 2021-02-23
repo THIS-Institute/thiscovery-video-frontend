@@ -36,8 +36,8 @@
 .e-button--white {
 	@apply
 		bg-white text-red border-white
-		hover:bg-transparent hover:text-white
-		focus:bg-transparent focus:text-white;
+		hover:bg-red hover:text-white
+		focus:bg-red focus:text-white;
 }
 
 .e-button--black-outline {
