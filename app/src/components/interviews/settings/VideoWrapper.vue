@@ -42,7 +42,7 @@
 
 		<template v-if="!hideControls">
 			<div class="flex items-end justify-center p-4 space-x-2">
-				<!-- <e-button
+				<e-button
 					:icons="[
 						'camera',
 						hidden ? 'camera-strike' : null
@@ -58,9 +58,9 @@
 					]"
 					:class="muted ? 'e-button--red' : 'e-button--white'"
 					@click="toggle('muted')"
-				/> -->
+				/>
 
-				<tooltip text="Watch answer">
+				<!-- <tooltip text="Watch answer">
 					<e-button
 						icon="play"
 						class="e-button--white"
@@ -72,7 +72,7 @@
 						icon="scribe"
 						class="e-button--white"
 					/>
-				</tooltip>
+				</tooltip> -->
 			</div>
 		</template>
 	</placeholder>
@@ -95,9 +95,9 @@
 
 		setup() {
 			const state = reactive({
-				muted: true,
+				muted: false,
 				hidden: false,
-				recording: true,
+				recording: false,
 			});
 
 			const store = useStore();
