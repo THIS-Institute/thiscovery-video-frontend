@@ -31,9 +31,7 @@
 						'bg-red text-white text-sm',
 					]"
 				>
-					<icon
-						name="record"
-					/>
+					<icon name="record" />
 
 					<span>Rec</span>
 				</div>
@@ -42,23 +40,27 @@
 
 		<template v-if="!hideControls">
 			<div class="flex items-end justify-center p-4 space-x-2">
-				<e-button
-					:icons="[
-						'camera',
-						hidden ? 'camera-strike' : null
-					]"
-					:class="hidden ? 'e-button--red' : 'e-button--white'"
-					@click="toggle('hidden')"
-				/>
+				<tooltip :text="hidden ? 'Enable camera' : 'Disable Camera'">
+					<e-button
+						:icons="[
+							'camera',
+							hidden ? 'camera-strike' : null
+						]"
+						:class="hidden ? 'e-button--red' : 'e-button--white'"
+						@click="toggle('hidden')"
+					/>
+				</tooltip>
 
-				<e-button
-					:icons="[
-						'audio-base',
-						muted ? 'audio-off' : 'audio-sound'
-					]"
-					:class="muted ? 'e-button--red' : 'e-button--white'"
-					@click="toggle('muted')"
-				/>
+				<tooltip :text="muted ? 'Unmute microphone' : 'Mute microphone'">
+					<e-button
+						:icons="[
+							'audio-base',
+							muted ? 'audio-off' : 'audio-sound'
+						]"
+						:class="muted ? 'e-button--red' : 'e-button--white'"
+						@click="toggle('muted')"
+					/>
+				</tooltip>
 
 				<!-- <tooltip text="Watch answer">
 					<e-button
