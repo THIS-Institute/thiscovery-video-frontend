@@ -3,6 +3,7 @@
 
 # App
 .env
+.lambda.env
 
 # Frontend
 /app/node_modules

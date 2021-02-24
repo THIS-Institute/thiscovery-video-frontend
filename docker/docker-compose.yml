@@ -22,7 +22,7 @@ services:
     build:
       context: ../
       dockerfile: docker/lambda.Dockerfile
-    env_file: ../.env
+    env_file: ../.lambda.env
     volumes:
       - ../src:/var/task
 
