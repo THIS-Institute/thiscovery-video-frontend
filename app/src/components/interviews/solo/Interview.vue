@@ -69,13 +69,40 @@
 				'lg:col-span-6 lg:col-start-7',
 			]"
 		>
-			<div class="rounded-lg overflow-hidden bg-grey-300">
-				<placeholder ratio="pt-9/16">
-					<video-preview />
-				</placeholder>
+			<div class="rounded-lg overflow-hidden bg-grey-400">
+				<video-wrapper />
 
 				<div class="flex flex-wrap items-center justify-between gap-y-5 px-5 my-5">
+					<!-- 1 -->
 					<e-button
+						title="Click to record your answer"
+						icon="record"
+						class="e-button--red mx-auto"
+						flipped
+						small
+						pill
+					/>
+
+					<!-- 2 -->
+					<!-- <e-button
+						title="Cancel"
+						class="e-button--white-outline mx-auto"
+						small
+						pill
+					/> -->
+
+					<!-- 3 -->
+					<!-- <e-button
+						title="Stop recording"
+						icon="stop"
+						class="e-button--white-outline mx-auto"
+						flipped
+						small
+						pill
+					/> -->
+
+					<!-- 4 -->
+					<!-- <e-button
 						title="Add more"
 						icon="record"
 						class="e-button--white-outline"
@@ -92,17 +119,33 @@
 						small
 						pill
 						@click="nextQuestion()"
-					/>
+					/> -->
+
+					<!-- 5 -->
+					<!-- <scrubber class="w-full" /> -->
 				</div>
 			</div>
 
 			<modal>
-				<confirm v-if="true" />
+				<!-- Are you sure you want to retake? -->
+				<confirm />
 
-				<comment v-else />
+				<!-- Add a comment -->
+				<!-- <comment /> -->
 			</modal>
 
+			<!-- Before/During recording -->
 			<info-bar
+				class="mt-2.5"
+				title="Having trouble recording?"
+				:cta="{
+					title: 'See how to fix this',
+					url: '#',
+				}"
+			/>
+
+			<!-- After recording -->
+			<!-- <info-bar
 				class="mt-2.5"
 				title="Not happy with your answer?"
 				:cta="{
@@ -110,7 +153,7 @@
 				}"
 				modal
 				@open-modal="toggle"
-			/>
+			/> -->
 		</div>
 	</div>
 </template>
@@ -121,22 +164,24 @@
 	import { computed } from 'vue';
 	import { useStore } from 'vuex';
 
-	import VideoPreview from '@/components/interviews/settings/VideoPreview';
+	import VideoWrapper from '@/components/interviews/settings/VideoWrapper';
 	import Question from '@/components/interviews/solo/Question';
 
 	import InfoBar from '@/components/ui/InfoBar';
 	import Modal from '@/components/ui/modal/Modal';
 	import Confirm from '@/components/ui/modal/Confirm';
-	import Comment from '@/components/ui/modal/Comment';
+	// import Comment from '@/components/ui/modal/Comment';
+	// import Scrubber from '@/components/ui/Scrubber';
 
 	export default {
 		components: {
-			VideoPreview,
+			VideoWrapper,
 			Question,
 			InfoBar,
 			Modal,
 			Confirm,
-			Comment,
+			// Comment,
+			// Scrubber,
 		},
 
 		props: {

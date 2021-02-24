@@ -126,6 +126,7 @@ module.exports = {
 			borderColor: ['hover', 'disabled', 'focus'],
 			textColor: ['hover', 'disabled', 'focus'],
 			opacity: ['hover', 'disabled', 'focus'],
+			display: ['hover', 'disabled', 'focus', 'group-hover'],
 		},
 	},
 	corePlugins: {

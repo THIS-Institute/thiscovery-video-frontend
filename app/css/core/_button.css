@@ -28,7 +28,7 @@
 
 .e-button--white-outline {
 	@apply
-		bg-transparent text-white border-white
+		bg-transparent text-white border-white border-opacity-50
 		hover:bg-white hover:text-black
 		focus:bg-white focus:text-black;
 }
@@ -36,8 +36,8 @@
 .e-button--white {
 	@apply
 		bg-white text-red border-white
-		hover:bg-transparent hover:text-white
-		focus:bg-transparent focus:text-white;
+		hover:bg-red hover:text-white
+		focus:bg-red focus:text-white;
 }
 
 .e-button--black-outline {
