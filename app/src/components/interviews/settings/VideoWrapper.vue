@@ -73,6 +73,13 @@
 						class="e-button--white"
 					/>
 				</tooltip> -->
+
+				<!-- <template v-if="watching">
+					<e-button
+						:icon="isPlaying ? 'pause' : 'play'"
+						class="e-button--white"
+					/>
+				</template> -->
 			</div>
 		</template>
 	</placeholder>
@@ -96,8 +103,10 @@
 		setup() {
 			const state = reactive({
 				muted: false,
-				hidden: false,
+				hidden: true,
 				recording: false,
+				watching: false,
+				isPlaying: false,
 			});
 
 			const store = useStore();
