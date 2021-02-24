@@ -83,6 +83,9 @@ if [ ! -f .env ]; then
     echo "Copying .env.template file to .env"
     cp .env.template .env
 fi
+if [ ! -f .lambda.env ]; then
+    touch .lambda.env
+fi
 
 # Extract the project environment file into bash vars.
 export $(grep COMPOSE_FILE .env)
