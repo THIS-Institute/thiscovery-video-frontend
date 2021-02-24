@@ -31,7 +31,7 @@ def get_error_response(message):
 
 def get_token_response(token):
     response = {
-        'access_token': str(token)
+        'access_token': token.decode('utf-8')
     }
 
     return {
