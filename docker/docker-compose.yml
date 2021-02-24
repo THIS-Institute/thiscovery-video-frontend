@@ -22,6 +22,7 @@ services:
     build:
       context: ../
       dockerfile: docker/lambda.Dockerfile
+    env_file: ../.env
     volumes:
       - ../src:/var/task
 
@@ -32,6 +33,5 @@ services:
     environment:
       - SERVICES=secretsmanager
       - DEFAULT_REGION=eu-west-1
-      - DEBUG=1
     volumes:
       - "${TMPDIR:-/tmp/localstack}:/tmp/localstack"
