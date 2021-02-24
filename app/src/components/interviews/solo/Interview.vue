@@ -120,6 +120,9 @@
 						pill
 						@click="nextQuestion()"
 					/> -->
+
+					<!-- 5 -->
+					<!-- <scrubber class="w-full" /> -->
 				</div>
 			</div>
 
@@ -168,6 +171,7 @@
 	import Modal from '@/components/ui/modal/Modal';
 	import Confirm from '@/components/ui/modal/Confirm';
 	// import Comment from '@/components/ui/modal/Comment';
+	// import Scrubber from '@/components/ui/Scrubber';
 
 	export default {
 		components: {
@@ -177,6 +181,7 @@
 			Modal,
 			Confirm,
 			// Comment,
+			// Scrubber,
 		},
 
 		props: {
