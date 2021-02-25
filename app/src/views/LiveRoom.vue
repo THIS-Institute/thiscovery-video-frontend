@@ -4,15 +4,10 @@
 			:class="[
 				'absolute top-0 w-full',
 				'bg-gradient-to-b from-black-25',
-				'py-2.5',
+				'p-2.5 pl-4 z-site-header',
 			]"
 		>
-			<div
-				:class="[
-					'flex items-center justify-between',
-					'max-w-container-xl mx-auto px-2.5',
-				]"
-			>
+			<div class="flex items-center justify-between">
 				<e-button
 					title="Leave interview"
 					icon="chevron-left"
@@ -27,13 +22,10 @@
 			</div>
 		</header>
 
-		<main
-			:class="[
-				'flex items-center justify-center flex-auto',
-				'max-w-container-xl mx-auto px-5',
-			]"
-		>
-			<only-caller />
+		<main class="flex items-center justify-center flex-auto z-site-content">
+			<only-caller v-if="false" />
+
+			<participant v-else />
 		</main>
 	</div>
 </template>
@@ -44,11 +36,13 @@
 	import { useRouter } from 'vue-router';
 
 	import OnlyCaller from '@/components/interviews/live/OnlyCaller';
+	import Participant from '@/components/interviews/live/Participant';
 	import UserControls from '@/components/interviews/live/UserControls';
 
 	export default {
 		components: {
 			OnlyCaller,
+			Participant,
 			UserControls,
 		},
 
