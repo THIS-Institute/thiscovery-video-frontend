@@ -4,35 +4,36 @@
 			:class="[
 				'absolute top-0 w-full',
 				'bg-gradient-to-b from-black-25',
-				'py-2 md:py-4 xl:py-8',
+				'py-2.5',
 			]"
 		>
-			<div class="e-container flex items-center justify-between">
+			<div
+				:class="[
+					'flex items-center justify-between',
+					'max-w-container-xl mx-auto px-2.5',
+				]"
+			>
 				<e-button
 					title="Leave interview"
 					icon="chevron-left"
 					class="e-button--white-outline"
 					flipped
+					small
 					pill
 					@click="back"
 				/>
+
+				<user-controls />
 			</div>
 		</header>
 
-		<main class="e-container flex items-center justify-center flex-auto">
-			<section class="rounded-lg bg-white px-8 py-16">
-				<div class="flex flex-col items-center justify-center text-center max-w-xs">
-					<div class="w-32 h-32 rounded-full bg-yellow" />
-
-					<h2 class="e-h3 mt-7">
-						You're the first here
-					</h2>
-
-					<p class="mt-1">
-						Please wait a moment while others join the call…
-					</p>
-				</div>
-			</section>
+		<main
+			:class="[
+				'flex items-center justify-center flex-auto',
+				'max-w-container-xl mx-auto px-5',
+			]"
+		>
+			<only-caller />
 		</main>
 	</div>
 </template>
@@ -42,7 +43,15 @@
 	import { useStore } from 'vuex';
 	import { useRouter } from 'vue-router';
 
+	import OnlyCaller from '@/components/interviews/live/OnlyCaller';
+	import UserControls from '@/components/interviews/live/UserControls';
+
 	export default {
+		components: {
+			OnlyCaller,
+			UserControls,
+		},
+
 		setup() {
 			const router = useRouter();
 			const back = () => window.history.length > 1 ? router.go(-1) : router.push('/');

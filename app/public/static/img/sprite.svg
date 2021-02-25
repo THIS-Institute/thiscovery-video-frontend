@@ -1,5 +1,17 @@
 <svg xmlns:xlink="http://www.w3.org/1999/xlink">
 	<symbol
+		id="options"
+		xmlns="http://www.w3.org/2000/svg"
+		viewBox="0 0 20 6"
+		fill="none"
+	>
+		<circle cx="2.66682" cy="2.66682" r="2.66682" fill="currentColor"/>
+
+		<circle cx="10.0008" cy="2.66673" r="2.66682" fill="currentColor"/>
+
+		<circle cx="17.3328" cy="2.66673" r="2.66682" fill="currentColor"/>
+	</symbol>
+	<symbol
 		id="stop"
 		xmlns="http://www.w3.org/2000/svg"
 		viewBox="0 0 16 17"

@@ -86,6 +86,7 @@ module.exports = {
 				logo: relative(150),
 				'83': relative(332),
 				container: relative(1440),
+				'container-xl': relative(1600),
 			},
 			padding: {
 				full: ratio(1, 1),
