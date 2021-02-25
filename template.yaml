@@ -43,6 +43,30 @@ Resources:
             ApiId: !Ref BackendHttpApi
             PayloadFormatVersion: '2.0'
             TimeoutInMillis: 10000
+    DefaultResponse:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub ${AWS::StackName}-DefaultResponse
+      Description: !Sub
+        - Stack ${StackTagName} Environment ${EnvironmentTagName} Function ${ResourceName}
+        - ResourceName: DefaultResponse
+      CodeUri: src
+      Handler: default_response.lambda_handler
+      Runtime: python3.8
+      MemorySize: 3008
+      Timeout: 30
+      Tracing: Active
+      Policies:
+        - AWSXrayWriteOnlyAccess
+      Events:
+        BackendHttpApiOPTIONSroomtoken:
+          Type: HttpApi
+          Properties:
+            Path: /v1/room/token
+            Method: OPTIONS
+            ApiId: !Ref BackendHttpApi
+            PayloadFormatVersion: '2.0'
+            TimeoutInMillis: 10000
 Parameters:
   StackTagName:
     Type: String
