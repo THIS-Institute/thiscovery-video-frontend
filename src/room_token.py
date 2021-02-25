@@ -35,6 +35,9 @@ def get_token_response(token):
     }
 
     return {
+        'headers': {
+            'Content-Type': 'application/json'
+        },
         'statusCode': 200,
         'body': json.dumps(response)
     }
