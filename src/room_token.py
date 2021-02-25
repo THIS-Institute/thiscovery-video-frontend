@@ -36,7 +36,6 @@ def get_token_response(token):
 
     return {
         'headers': {
-            'Access-Control-Allow-Origin': '*',
             'Content-Type': 'application/json'
         },
         'statusCode': 200,

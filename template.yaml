@@ -14,6 +14,11 @@ Resources:
             post:
               responses: {}
       FailOnWarnings: true
+      CorsConfiguration:
+        AllowOrigins:
+          - '*'
+        AllowMethods:
+          - '*'
   RoomCreateToken:
     Type: AWS::Serverless::Function
     Properties:
