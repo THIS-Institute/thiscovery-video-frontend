@@ -43,7 +43,7 @@ Resources:
             ApiId: !Ref BackendHttpApi
             PayloadFormatVersion: '2.0'
             TimeoutInMillis: 10000
-    DefaultResponse:
+  DefaultResponse:
     Type: AWS::Serverless::Function
     Properties:
       FunctionName: !Sub ${AWS::StackName}-DefaultResponse
