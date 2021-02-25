@@ -8,6 +8,7 @@ import BookAppointmentView from './views/BookAppointment';
 import PreSettingsView from './views/PreSettings';
 import SelfRecordView from './views/SelfRecord';
 import LiveRoomView from './views/LiveRoom';
+import LiveLandingView from './views/LiveLanding';
 
 // Layouts
 import FullBackgroundLayout from './layouts/FullBackground';
@@ -63,6 +64,7 @@ export const routes = [
 				path: 'settings',
 				name: 'self_settings',
 				component: PreSettingsView,
+				props: { domain: 'solo', nextRoute: 'self_interview' },
 			},
 		],
 	},
@@ -87,24 +89,25 @@ export const routes = [
 	 * Live interviews
 	 */
 	{
-		path: '/live',
+		path: '/live/:id',
 		component: FullBackgroundLayout,
 		props: { backgroundType: 'curls' },
 		children: [
 			{
 				path: '',
-				name: 'live_home',
-				component: MethodOverviewView,
+				name: 'live_landing',
+				component: LiveLandingView,
 			},
 			{
-				path: 'settings',
+				path: '',
 				name: 'live_settings',
 				component: PreSettingsView,
+				props: { domain: 'live', nextRoute: 'live_room' },
 			},
 		],
 	},
 	{
-		path: '/live/room',
+		path: '/live/:id/room',
 		component: LiveRoomView,
 		name: 'live_room',
 	},

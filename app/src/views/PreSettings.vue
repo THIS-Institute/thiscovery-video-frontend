@@ -19,7 +19,7 @@
 								title="See the first question"
 								icon="chevron-right"
 								class="e-button--red mt-5"
-								:url="{ name: 'self_interview' }"
+								:url="{ name: nextRoute }"
 								pill
 							/>
 						</div>
@@ -34,8 +34,17 @@
 	import VideoWrapper from '@/components/interviews/settings/VideoWrapper';
 
 	export default {
-		components: {
-			VideoWrapper
+		components: { VideoWrapper },
+
+		props: {
+			domain: {
+				type: String,
+				required: true,
+			},
+			nextRoute: {
+				type: String,
+				required: true,
+			},
 		},
 	};
 </script>

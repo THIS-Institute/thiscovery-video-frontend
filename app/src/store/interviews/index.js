@@ -1,7 +1,10 @@
+import config from '@/app.config';
+
 export const interviews = {
 	namespaced: true,
 
 	state: () => ({
+		token: null,
 		availableCameras: [],
 		availableAudioInput: [],
 		availableAudioOutput: [],
@@ -17,31 +20,50 @@ export const interviews = {
 		setAvailableAudioOutput: (state, data) => {
 			state.availableAudioOutput = data.devices;
 		},
+		setAccessToken: (state, token) => {
+			state.token = token;
+		},
 	},
 
 	actions: {
-		updateMediaDevices: (context) => {
+		updateMediaDevices: ({ commit }) => {
 			if (!navigator.mediaDevices || !navigator.mediaDevices.enumerateDevices) {
 				return;
 			}
 
 			navigator.mediaDevices.enumerateDevices()
 				.then(function(devices) {
-					context.commit('interviews/setAvailableCameras', {
+					commit('setAvailableCameras', {
 						devices: devices.filter(device => device.kind === 'videoinput'),
 					});
 
-					context.commit('interviews/setAvailableAudioInput', {
+					commit('setAvailableAudioInput', {
 						devices: devices.filter(device => device.kind === 'audioinput'),
 					});
 
-					context.commit('interviews/setAvailableAudioOutput', {
+					commit('setAvailableAudioOutput', {
 						devices: devices.filter(device => device.kind === 'audiooutput'),
 					});
 				})
 				.catch(function(error) {
 					console.error(`${error.name}: ${error.message}`);
 				});
+		},
+
+		getAccessToken: async ({ commit }, data) => {
+			await fetch(config.backendApiHost + '/v1/room/token', {
+					method: 'POST',
+					mode: 'no-cors',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify(data)
+				})
+				.then((response) => {
+					const responseData = response.json();
+					commit('setAccessToken', responseData.access_token);
+				})
+				.catch((error) => console.error(error));
 		},
 	},
 
