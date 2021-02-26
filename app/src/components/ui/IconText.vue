@@ -1,13 +1,18 @@
 <template>
-	<div class="flex items-center space-x-4">
-		<div class="flex items-center justify-center rounded-full p-3 bg-pink">
-			<icon
-				:name="icon"
-				size="w-6 h-6"
-			/>
+	<div class="inline-flex items-center space-x-1/2em">
+		<div
+			:class="[
+				'flex items-center justify-center rounded-full p-1/2em',
+				icon.bg ? icon.bg : 'bg-pink',
+			]"
+		>
+			<icon v-bind="icon" />
 		</div>
 
-		<p v-text="text" />
+		<component
+			:is="tag"
+			v-text="text"
+		/>
 	</div>
 </template>
 
@@ -20,8 +25,13 @@
 			},
 
 			icon: {
-				type: String,
+				type: Object,
 				required: true,
+			},
+
+			tag: {
+				type: String,
+				default: 'p',
 			},
 		},
 	};

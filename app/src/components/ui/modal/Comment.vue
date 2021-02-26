@@ -1,7 +1,10 @@
 <template>
 	<icon-text
+		tag="h2"
 		text="Add comments"
-		icon="scribe"
+		:icon="{
+			name: 'scribe',
+		}"
 		class="e-h3"
 	/>
 

@@ -6,25 +6,16 @@
 				!tutorial || !available ? 'py-6 md:py-10' : 'pt-6 md:pt-10',
 			]"
 		>
-			<div class="flex items-center space-x-4">
-				<div
-					:class="[
-						'flex items-center justify-center',
-						'rounded-full p-4',
-						available ? 'bg-pink' : 'bg-grey-200',
-					]"
-				>
-					<icon
-						:name="icon"
-						class="e-h2"
-					/>
-				</div>
-
-				<h2
-					class="e-h3"
-					v-text="title"
-				/>
-			</div>
+			<icon-text
+				tag="h2"
+				class="e-h3"
+				:text="title"
+				:icon="{
+					name: icon,
+					size: 'w-10 h-10',
+					bg: available ? 'bg-pink' : 'bg-grey-200',
+				}"
+			/>
 
 			<p
 				class="mt-5"

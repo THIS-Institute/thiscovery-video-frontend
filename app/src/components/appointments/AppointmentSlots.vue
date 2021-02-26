@@ -11,9 +11,12 @@
 	>
 		<div class="col-span-10 space-y-5 md:col-span-4 xl:max-w-83">
 			<icon-text
-				icon="camera"
+				class="e-h4"
+				:icon="{
+					name: 'camera',
+					size: 'w-6 h-6',
+				}"
 				text="Live Interview"
-				class="font-bold"
 			/>
 
 			<h2 class="e-h-interview">

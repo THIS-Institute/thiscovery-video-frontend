@@ -9,9 +9,13 @@
 			>
 				<div class="col-span-6 p-4 sm:col-span-4 sm:pl-6 sm:pr-9">
 					<icon-text
-						icon="video"
+						tag="h2"
+						class="e-h4"
 						text="Self record"
-						class="font-bold"
+						:icon="{
+							name: 'video',
+							size: 'w-6 h-6',
+						}"
 					/>
 
 					<h2
