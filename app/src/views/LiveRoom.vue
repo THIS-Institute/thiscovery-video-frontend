@@ -1,37 +1,68 @@
 <template>
 	<div class="flex flex-col min-h-screen h-full bg-grey-400">
-		<header
-			:class="[
-				'absolute top-0 w-full',
-				'bg-gradient-to-b from-black-25',
-				'p-2.5 pl-4 z-site-header',
-			]"
-		>
-			<div class="flex items-center justify-between">
-				<e-button
-					title="Leave interview"
-					icon="chevron-left"
-					class="e-button--white-outline"
-					flipped
-					small
-					pill
-					@click="back"
-				/>
-
-				<user-controls />
-			</div>
-		</header>
-
 		<main class="flex items-center justify-center flex-auto z-site-content">
-			<only-caller v-if="false" />
+			<participant v-if="interviewer" />
 
-			<participant v-else />
+			<only-caller v-else />
+
+			<div class="flex flex-col absolute inset-0 w-full h-full">
+				<div class="p-2.5 pl-4 w-full bg-gradient-to-b from-black-25">
+					<div class="flex items-center justify-between">
+						<e-button
+							title="Leave interview"
+							icon="chevron-left"
+							class="e-button--white-outline"
+							flipped
+							small
+							pill
+							@click="back"
+						/>
+
+						<user-controls />
+					</div>
+				</div>
+
+				<div
+					v-if="interviewer"
+					class="flex items-end justify-between mt-auto p-2.5 pl-4"
+				>
+					<p
+						class="e-h4"
+						v-text="interviewer.name"
+					/>
+
+					<div
+						v-if="showQuestions"
+						class="ml-auto p-8 bg-white rounded-lg max-w-xs"
+					>
+						<div class="flex items-center justify-between space-x-4">
+							<icon-text
+								text="Current question"
+								:icon="{
+									name: 'question',
+									size: 'w-6 h-6',
+								}"
+							/>
+
+							<icon
+								name="chevron-right"
+								class="transform rotate-90 text-red"
+							/>
+						</div>
+
+						<p
+							class="mt-7"
+							v-text="question"
+						/>
+					</div>
+				</div>
+			</div>
 		</main>
 	</div>
 </template>
 
 <script>
-	import { computed } from 'vue';
+	import { reactive, toRefs, computed } from 'vue';
 	import { useStore } from 'vuex';
 	import { useRouter } from 'vue-router';
 
@@ -53,7 +84,16 @@
 			const store = useStore();
 			const profile = computed(() => store.state.user.profile);
 
+			const state = reactive({
+				interviewer: {
+					name: "Cameron Williamson",
+				},
+				showQuestions: true,
+				question: 'Please spend a couple of minutes describing your professional experience in the field of obstetrics.',
+			});
+
 			return {
+				...toRefs(state),
 				profile,
 				back,
 			};
