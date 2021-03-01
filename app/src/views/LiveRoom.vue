@@ -31,30 +31,10 @@
 						v-text="interviewer.name"
 					/>
 
-					<div
-						v-if="showQuestions"
-						class="ml-auto p-8 bg-white rounded-lg max-w-xs"
-					>
-						<div class="flex items-center justify-between space-x-4">
-							<icon-text
-								text="Current question"
-								:icon="{
-									name: 'question',
-									size: 'w-6 h-6',
-								}"
-							/>
-
-							<icon
-								name="chevron-right"
-								class="transform rotate-90 text-red"
-							/>
-						</div>
-
-						<p
-							class="mt-7"
-							v-text="question"
-						/>
-					</div>
+					<question-wrapper
+						:questions="questions"
+						:participant="false"
+					/>
 				</div>
 			</div>
 		</main>
@@ -69,12 +49,37 @@
 	import OnlyCaller from '@/components/interviews/live/OnlyCaller';
 	import Participant from '@/components/interviews/live/Participant';
 	import UserControls from '@/components/interviews/live/UserControls';
+	import QuestionWrapper from '@/components/interviews/live/QuestionWrapper';
 
 	export default {
 		components: {
 			OnlyCaller,
 			Participant,
 			UserControls,
+			QuestionWrapper,
+		},
+
+		props: {
+			questions: {
+				type: Array,
+				default: () => [
+					{
+						text: '1 Please spend a couple of minutes describing your professional experience in the field of obstetrics.',
+					},
+					{
+						text: '2 Please spend a couple of minutes describing your professional experience in the field of obstetrics.',
+					},
+					{
+						text: '3 Please spend a couple of minutes describing your professional experience in the field of obstetrics.',
+					},
+					{
+						text: '4 Please spend a couple of minutes describing your professional experience in the field of obstetrics.',
+					},
+					{
+						text: '5 Please spend a couple of minutes describing your professional experience in the field of obstetrics.',
+					},
+				],
+			},
 		},
 
 		setup() {
@@ -88,8 +93,6 @@
 				interviewer: {
 					name: "Cameron Williamson",
 				},
-				showQuestions: true,
-				question: 'Please spend a couple of minutes describing your professional experience in the field of obstetrics.',
 			});
 
 			return {

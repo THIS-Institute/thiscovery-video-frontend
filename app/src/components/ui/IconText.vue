@@ -11,6 +11,7 @@
 
 		<component
 			:is="tag"
+			v-if="text"
 			v-text="text"
 		/>
 	</div>
@@ -21,7 +22,7 @@
 		props: {
 			text: {
 				type: String,
-				required: true,
+				default: null,
 			},
 
 			icon: {
