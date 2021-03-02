@@ -1,7 +1,8 @@
 <template>
-	<div class="flex items-center justify-between space-x-12">
+	<div class="flex items-center justify-between space-x-6 sm:space-x-12">
 		<icon-text
 			:text="title"
+			:text-class="hidden ? 'hidden sm:block' : ''"
 			:icon="{
 				name: 'question',
 				size: 'w-6 h-6',
