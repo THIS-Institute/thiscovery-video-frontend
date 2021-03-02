@@ -349,6 +349,42 @@
 				</div>
 			</div>
 		</div>
+
+		<!-- Icon text -->
+		<div class="flex flex-col mt-10 space-y-4">
+			<icon-text
+				text="Current question"
+				:icon="{
+					name: 'question',
+					size: 'w-6 h-6',
+					bg: false ? 'bg-pink' : 'bg-grey-200',
+				}"
+			/>
+
+			<icon-text
+				class="e-h4"
+				text="Self record"
+				:icon="{
+					name: 'video',
+				}"
+			/>
+
+			<icon-text
+				class="e-h2"
+				text="Self record"
+				:icon="{
+					name: 'video',
+				}"
+			/>
+
+			<icon-text
+				class="e-h3"
+				text="Live interview"
+				:icon="{
+					name: 'camera',
+				}"
+			/>
+		</div>
 	</div>
 </template>
 

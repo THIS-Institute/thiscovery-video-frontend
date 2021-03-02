@@ -14,6 +14,7 @@
 		"pink": "#f3a5b9",
 		"aubergine": "#680436",
 		"black": "#000",
+		"black-25": "rgba(0, 0, 0, .25)",
 		"white": "#fff",
 		"grey": {
 			"100": "#efeff0",

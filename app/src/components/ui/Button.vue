@@ -14,7 +14,7 @@
 				'space-x-1/3em disabled:text-black disabled:opacity-25': !pill,
 				'px-5 py-3.5': pill && small,
 				'px-6 py-4': pill && !small,
-				'rounded-full p-4': (icon || icons) && !title,
+				'rounded-full p-4 border': (icon || icons) && !title,
 			},
 		]"
 		:disabled="$attrs.disabled"

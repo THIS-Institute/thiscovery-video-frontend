@@ -1,6 +1,10 @@
 <template>
 	<icon-text
-		icon="question"
+		tag="h2"
+		:icon="{
+			name: 'question',
+			size: 'w-6 h-6',
+		}"
 		:text="`Question ${number}`"
 		class="e-h4"
 	/>

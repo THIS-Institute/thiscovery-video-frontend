@@ -105,7 +105,7 @@
 		setup() {
 			const state = reactive({
 				muted: false,
-				hidden: true,
+				hidden: false,
 				recording: false,
 				watching: false,
 				isPlaying: false,
