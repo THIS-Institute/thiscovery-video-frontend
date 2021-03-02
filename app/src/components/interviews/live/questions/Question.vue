@@ -1,5 +1,5 @@
 <template>
-	<div class="flex items-center justify-between space-x-5">
+	<div class="flex items-center justify-between space-x-12">
 		<icon-text
 			:text="title"
 			:icon="{
@@ -15,6 +15,7 @@
 			<icon
 				name="chevron-right"
 				class="transform text-red"
+				size="w-4 h-4"
 				:class="hidden ? '-rotate-90' : 'rotate-90'"
 			/>
 		</button>
@@ -22,7 +23,7 @@
 
 	<p
 		v-if="!hidden"
-		class="mt-7"
+		class="mt-7 text-black"
 		v-text="question"
 	/>
 </template>
