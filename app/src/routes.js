@@ -45,6 +45,11 @@ export const routes = [
 				path: '',
 				name: 'appointments',
 				component: BookAppointmentView,
+				props: {
+					title: content.appointments.title,
+					content: content.appointments.content,
+					slots: content.appointments.slots,
+				},
 			},
 		],
 	},
