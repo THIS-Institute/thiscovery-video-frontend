@@ -12,6 +12,7 @@
 		<component
 			:is="tag"
 			v-if="text"
+			:class="textClass"
 			v-text="text"
 		/>
 	</div>
@@ -21,6 +22,11 @@
 	export default {
 		props: {
 			text: {
+				type: String,
+				default: null,
+			},
+
+			textClass: {
 				type: String,
 				default: null,
 			},

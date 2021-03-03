@@ -13,6 +13,9 @@ import LiveRoomView from './views/LiveRoom';
 import FullBackgroundLayout from './layouts/FullBackground';
 import SplitBackgroundLayout from './layouts/SplitBackground';
 
+/* eslint-env node */
+const content = require('../content.json');
+
 export const routes = [
 	/**
 	 * Method selection
@@ -107,6 +110,9 @@ export const routes = [
 		path: '/live/room',
 		component: LiveRoomView,
 		name: 'live_room',
+		props: {
+			questions: content.liveRoom.questions,
+		},
 	},
 
 	/**

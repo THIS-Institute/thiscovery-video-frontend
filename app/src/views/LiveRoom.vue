@@ -7,7 +7,7 @@
 
 			<div class="flex flex-col absolute inset-0 w-full h-full">
 				<div class="p-2.5 pl-4 w-full bg-gradient-to-b from-black-25">
-					<div class="flex items-center justify-between">
+					<div class="flex flex-wrap-reverse items-center justify-between gap-5">
 						<e-button
 							title="Leave interview"
 							icon="chevron-left"
@@ -24,14 +24,15 @@
 
 				<div
 					v-if="interviewer"
-					class="flex items-end justify-between mt-auto p-2.5 pl-4"
+					class="flex items-end mt-auto p-2.5 pl-4"
 				>
 					<p
-						class="e-h4"
+						class="absolute e-h4 my-6"
 						v-text="interviewer.name"
 					/>
 
 					<question-wrapper
+						class="ml-auto z-1"
 						:questions="questions"
 						:participant="false"
 					/>
@@ -62,23 +63,7 @@
 		props: {
 			questions: {
 				type: Array,
-				default: () => [
-					{
-						text: '1 Please spend a couple of minutes describing your professional experience in the field of obstetrics.',
-					},
-					{
-						text: '2 Please spend a couple of minutes describing your professional experience in the field of obstetrics.',
-					},
-					{
-						text: '3 Please spend a couple of minutes describing your professional experience in the field of obstetrics.',
-					},
-					{
-						text: '4 Please spend a couple of minutes describing your professional experience in the field of obstetrics.',
-					},
-					{
-						text: '5 Please spend a couple of minutes describing your professional experience in the field of obstetrics.',
-					},
-				],
+				default: null,
 			},
 		},
 
