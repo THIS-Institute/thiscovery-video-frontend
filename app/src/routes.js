@@ -29,6 +29,11 @@ export const routes = [
 				path: '',
 				name: 'home',
 				component: MethodSelectionView,
+				props: {
+					title: content.methodSelection.title,
+					content: content.methodSelection.content,
+					paths: content.methodSelection.paths,
+				},
 			},
 		],
 	},

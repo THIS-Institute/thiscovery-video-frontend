@@ -1,5 +1,55 @@
 
 {
+	"methodSelection": {
+		"title": "Choose how to take part",
+		"content": "Would you like to have a conversation or record yourself?",
+		"paths": [
+			{
+				"icon": "camera",
+				"title": "Live interview",
+				"content": "Book an online meeting with a member of the online research team",
+				"items": [
+					"Speak directly with a reasearcher",
+					"At a time that suits you",
+					"Video or audio-only call"
+				],
+				"cta": {
+					"title": "Make an appointment",
+					"route": "appointments"
+				},
+				"tutorial": {
+					"title": "Want to know more?",
+					"cta": {
+						"title": "See how an appointment works",
+						"route": "home"
+					}
+				},
+				"available": true
+			},
+			{
+				"icon": "video",
+				"title": "Self record",
+				"content": "Record your responses privately and in your own time",
+				"items": [
+					"Start right away or whenever you like",
+					"Read and respond at your leisure",
+					"Pause and resume on any device"
+				],
+				"cta": {
+					"title": "Record responses",
+					"route": "self_settings"
+				},
+				"tutorial": {
+					"title": "Want to know more?",
+					"cta": {
+						"title": "See how self-record works",
+						"route": "self_howto"
+					}
+				},
+				"available": true
+			}
+		]
+	},
 	"appointments": {
 		"title": "Book a live interview",
 		"content": "Pick from the available dates and times",
