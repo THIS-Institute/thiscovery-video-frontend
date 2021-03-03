@@ -63,23 +63,7 @@
 		props: {
 			questions: {
 				type: Array,
-				default: () => [
-					{
-						text: '1 Please spend a couple of minutes describing your professional experience in the field of obstetrics.',
-					},
-					{
-						text: '2 Please spend a couple of minutes describing your professional experience in the field of obstetrics.',
-					},
-					{
-						text: '3 Please spend a couple of minutes describing your professional experience in the field of obstetrics.',
-					},
-					{
-						text: '4 Please spend a couple of minutes describing your professional experience in the field of obstetrics.',
-					},
-					{
-						text: '5 Please spend a couple of minutes describing your professional experience in the field of obstetrics.',
-					},
-				],
+				default: null,
 			},
 		},
 

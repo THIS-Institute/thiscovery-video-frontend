@@ -68,7 +68,7 @@
 		setup(props) {
 			const state = reactive({
 				index: 0,
-				active: 1,
+				active: null,
 				hidden: true,
 			});
 
