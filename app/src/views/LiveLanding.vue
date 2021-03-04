@@ -33,7 +33,7 @@
 <script>
 	import { ref } from 'vue';
 	import { useStore } from 'vuex';
-	import { useRoute } from 'vue-router'
+	import { useRouter, useRoute } from 'vue-router'
 
 	export default {
 		setup() {
@@ -41,12 +41,18 @@
 			const identity = ref(null);
 			const store = useStore();
 			const route = useRoute();
+			const router = useRouter();
 
 			const initLive = () => {
 				console.info(`Loading with indentity: ${identity.value}`);
 				store.dispatch('interviews/getAccessToken', {
 					identity: identity.value,
 					room: route.params.id,
+				}).then(() => {
+					router.push({
+						name: 'live_room',
+						params: { ...route.params },
+					});
 				});
 			};
 

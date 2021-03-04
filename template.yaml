@@ -13,6 +13,8 @@ Resources:
           /v1/room/token:
             post:
               responses: {}
+            options:
+              responses: {}
       FailOnWarnings: true
   RoomCreateToken:
     Type: AWS::Serverless::Function

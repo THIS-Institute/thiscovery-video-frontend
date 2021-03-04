@@ -51,17 +51,18 @@ export const interviews = {
 		},
 
 		getAccessToken: async ({ commit }, data) => {
-			await fetch(config.backendApiHost + '/v1/room/token', {
+			await fetch(`${config.backendApiHost}/v1/room/token`, {
 					method: 'POST',
-					mode: 'no-cors',
 					headers: {
 						'Content-Type': 'application/json',
 					},
 					body: JSON.stringify(data)
 				})
+				.then(response => response.json())
 				.then((response) => {
-					const responseData = response.json();
-					commit('setAccessToken', responseData.access_token);
+					if (response && response.access_token) {
+						commit('setAccessToken', response.access_token);
+					}
 				})
 				.catch((error) => console.error(error));
 		},
