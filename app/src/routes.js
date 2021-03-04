@@ -71,6 +71,9 @@ export const routes = [
 				path: '',
 				name: 'self_howto',
 				component: MethodOverviewView,
+				props: {
+					instructions: content.methodOverview.instructions,
+				},
 			},
 			{
 				path: 'settings',
