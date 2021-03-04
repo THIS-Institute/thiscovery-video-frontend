@@ -8,7 +8,14 @@
 					'xl:col-span-8 xl:col-start-3',
 				]"
 			>
-				<interview :sections="sections" />
+				<interview
+					:sections="sections"
+					:pre-record="false"
+					:loading="false"
+					:recording="false"
+					:stopped="true"
+					:reviewing="false"
+				/>
 			</div>
 		</div>
 	</section>
@@ -25,42 +32,7 @@
 		props: {
 			sections: {
 				type: Array,
-				default: () => [
-					{
-						title: "Introductory questions",
-						questions: [
-							{
-								title: "Please spend a couple of minutes describing your professional experience in the field of obstetrics.",
-								description: "Think about your past experiences in relevant roles you duis mollis, est non commando luctus, nisi erat prttitor ligula, egat lacinia odio sem nec elit. Nulla vitae elit livero, a pharetra augue.",
-							},
-							{
-								title: "Please spend a couple of minutes describing your professional experience in the field of question 2.",
-								description: "Think about your past experiences in relevant roles you duis mollis, est non commando luctus, nisi erat prttitor ligula, egat lacinia odio sem nec elit. Nulla vitae elit livero, a pharetra augue.",
-							},
-							{
-								title: "Please spend a couple of minutes describing your professional experience in the field of question 3.",
-								description: "Think about your past experiences in relevant roles you duis mollis, est non commando luctus, nisi erat prttitor ligula, egat lacinia odio sem nec elit. Nulla vitae elit livero, a pharetra augue.",
-							},
-						],
-					},
-					{
-						title: "Secondary questions",
-						questions: [
-							{
-								title: "Please spend a couple of minutes describing your professional experience in the field of obstetrics.",
-								description: "Think about your past experiences in relevant roles you duis mollis, est non commando luctus, nisi erat prttitor ligula, egat lacinia odio sem nec elit. Nulla vitae elit livero, a pharetra augue.",
-							},
-							{
-								title: "Please spend a couple of minutes describing your professional experience in the field of question 2.",
-								description: "Think about your past experiences in relevant roles you duis mollis, est non commando luctus, nisi erat prttitor ligula, egat lacinia odio sem nec elit. Nulla vitae elit livero, a pharetra augue.",
-							},
-							{
-								title: "Please spend a couple of minutes describing your professional experience in the field of question 3.",
-								description: "Think about your past experiences in relevant roles you duis mollis, est non commando luctus, nisi erat prttitor ligula, egat lacinia odio sem nec elit. Nulla vitae elit livero, a pharetra augue.",
-							},
-						],
-					},
-				],
+				required: true,
 			},
 		},
 	};
