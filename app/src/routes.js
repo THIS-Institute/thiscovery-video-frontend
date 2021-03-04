@@ -30,9 +30,9 @@ export const routes = [
 				name: 'home',
 				component: MethodSelectionView,
 				props: {
-					title: content.methodSelection.title,
-					content: content.methodSelection.content,
-					paths: content.methodSelection.paths,
+					title: content.landing.title,
+					content: content.landing.content,
+					paths: content.landing.paths,
 				},
 			},
 		],
@@ -51,9 +51,9 @@ export const routes = [
 				name: 'appointments',
 				component: BookAppointmentView,
 				props: {
-					title: content.appointments.title,
-					content: content.appointments.content,
-					slots: content.appointments.slots,
+					title: content.live.appointments.title,
+					content: content.live.appointments.content,
+					slots: content.live.appointments.slots,
 				},
 			},
 		],
@@ -72,13 +72,18 @@ export const routes = [
 				name: 'self_howto',
 				component: MethodOverviewView,
 				props: {
-					instructions: content.methodOverview.instructions,
+					instructions: content.selfRecord.methodOverview.instructions,
 				},
 			},
 			{
 				path: 'settings',
 				name: 'self_settings',
 				component: PreSettingsView,
+				props: {
+					title: content.selfRecord.preSettings.title,
+					content: content.selfRecord.preSettings.content,
+					cta: content.selfRecord.preSettings.cta,
+				},
 			},
 		],
 	},
@@ -95,6 +100,9 @@ export const routes = [
 				path: 'interview',
 				name: 'self_interview',
 				component: SelfRecordView,
+				props: {
+					sections: content.selfRecord.interview.sections,
+				},
 			},
 		],
 	},
@@ -116,6 +124,11 @@ export const routes = [
 				path: 'settings',
 				name: 'live_settings',
 				component: PreSettingsView,
+				props: {
+					title: content.live.preSettings.title,
+					content: content.live.preSettings.content,
+					cta: content.live.preSettings.cta,
+				},
 			},
 		],
 	},
@@ -124,7 +137,7 @@ export const routes = [
 		component: LiveRoomView,
 		name: 'live_room',
 		props: {
-			questions: content.liveRoom.questions,
+			questions: content.live.room.questions,
 		},
 	},
 
