@@ -39,7 +39,6 @@
 			const setMediaTrack = (track) => {
 				console.log(track);
 				if (track.kind === 'video') {
-					console.log('knows vid');
 					setVideoTrack(track);
 				}
 
@@ -49,7 +48,6 @@
 			};
 
 			const setVideoTrack = (track) => {
-				console.log('should attach');
 				track.attach(videoFeed.value);
 			};
 
