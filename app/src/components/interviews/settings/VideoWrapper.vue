@@ -38,50 +38,66 @@
 			</div>
 		</template>
 
+		<template v-if="loading">
+			<div class="flex flex-col items-center justify-center text-white p-4 bg-black bg-opacity-50">
+				<h1 class="e-h2">
+					3
+				</h1>
+
+				<h2 class="e-h3 mt-4">
+					Get ready to answer
+				</h2>
+			</div>
+		</template>
+
 		<template v-if="!hideControls">
 			<div class="flex items-end justify-center p-4 space-x-2">
-				<tooltip :text="hidden ? 'Enable camera' : 'Disable Camera'">
-					<e-button
-						:icons="[
-							'camera',
-							hidden ? 'camera-strike' : null
-						]"
-						:class="hidden ? 'e-button--red' : 'e-button--white'"
-						@click="toggle('hidden')"
-					/>
-				</tooltip>
+				<template v-if="preRecord || recording">
+					<tooltip :text="hidden ? 'Enable camera' : 'Disable Camera'">
+						<e-button
+							:icons="[
+								'camera',
+								hidden ? 'camera-strike' : null
+							]"
+							:class="hidden ? 'e-button--red' : 'e-button--white'"
+							@click="toggle('hidden')"
+						/>
+					</tooltip>
 
-				<tooltip :text="muted ? 'Unmute microphone' : 'Mute microphone'">
-					<e-button
-						:icons="[
-							'audio-base',
-							muted ? 'audio-off' : 'audio-sound'
-						]"
-						:class="muted ? 'e-button--red' : 'e-button--white'"
-						@click="toggle('muted')"
-					/>
-				</tooltip>
+					<tooltip :text="muted ? 'Unmute microphone' : 'Mute microphone'">
+						<e-button
+							:icons="[
+								'audio-base',
+								muted ? 'audio-off' : 'audio-sound'
+							]"
+							:class="muted ? 'e-button--red' : 'e-button--white'"
+							@click="toggle('muted')"
+						/>
+					</tooltip>
+				</template>
 
-				<!-- <tooltip text="Watch answer">
-					<e-button
-						icon="play"
-						class="e-button--white"
-					/>
-				</tooltip>
+				<template v-else-if="stopped">
+					<tooltip text="Watch answer">
+						<e-button
+							icon="play"
+							class="e-button--white"
+						/>
+					</tooltip>
 
-				<tooltip text="Add comments">
-					<e-button
-						icon="scribe"
-						class="e-button--white"
-					/>
-				</tooltip> -->
+					<tooltip text="Add comments">
+						<e-button
+							icon="scribe"
+							class="e-button--white"
+						/>
+					</tooltip>
+				</template>
 
-				<!-- <template v-if="watching">
+				<template v-else-if="reviewing">
 					<e-button
 						:icon="isPlaying ? 'pause' : 'play'"
 						class="e-button--white"
 					/>
-				</template> -->
+				</template>
 			</div>
 		</template>
 	</placeholder>
@@ -99,6 +115,22 @@
 		},
 
 		props: {
+			// User has not yet started recording
+			preRecord: Boolean,
+
+			// User has clicked record and is loading
+			loading: Boolean,
+
+			// User is now recording their answer
+			recording: Boolean,
+
+			// User has stopped the recording
+			stopped: Boolean,
+
+			// User is rewatching their answer
+			reviewing: Boolean,
+
+			// Hides controls altogether
 			hideControls: Boolean,
 		},
 
@@ -106,8 +138,6 @@
 			const state = reactive({
 				muted: false,
 				hidden: false,
-				recording: false,
-				watching: false,
 				isPlaying: false,
 			});
 

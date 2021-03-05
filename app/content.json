@@ -1,21 +1,431 @@
 {
-	"liveRoom": {
-		"questions": [
+	"landing": {
+		"title": "Choose how to take part",
+		"content": "Would you like to have a conversation or record yourself?",
+		"paths": [
 			{
-				"text": "1 Please spend a couple of minutes describing your professional experience in the field of obstetrics."
+				"icon": "camera",
+				"title": "Live interview",
+				"content": "Book an online meeting with a member of the online research team",
+				"items": [
+					"Speak directly with a reasearcher",
+					"At a time that suits you",
+					"Video or audio-only call"
+				],
+				"cta": {
+					"title": "Make an appointment",
+					"route": "appointments"
+				},
+				"tutorial": {
+					"title": "Want to know more?",
+					"cta": {
+						"title": "See how an appointment works",
+						"route": "home"
+					}
+				},
+				"available": true
 			},
 			{
-				"text": "2 Please spend a couple of minutes describing your professional experience in the field of obstetrics."
-			},
-			{
-				"text": "3 Please spend a couple of minutes describing your professional experience in the field of obstetrics."
-			},
-			{
-				"text": "4 Please spend a couple of minutes describing your professional experience in the field of obstetrics."
-			},
-			{
-				"text": "5 Please spend a couple of minutes describing your professional experience in the field of obstetrics."
+				"icon": "video",
+				"title": "Self record",
+				"content": "Record your responses privately and in your own time",
+				"items": [
+					"Start right away or whenever you like",
+					"Read and respond at your leisure",
+					"Pause and resume on any device"
+				],
+				"cta": {
+					"title": "Record responses",
+					"route": "self_settings"
+				},
+				"tutorial": {
+					"title": "Want to know more?",
+					"cta": {
+						"title": "See how self-record works",
+						"route": "self_howto"
+					}
+				},
+				"available": true
 			}
 		]
+	},
+	"live": {
+		"appointments": {
+			"title": "Book a live interview",
+			"content": "Pick from the available dates and times",
+			"slots": {
+				"title": "Suggest recommendation for good practice",
+				"calendar": [
+					{
+						"title": "Tue 30 Nov",
+						"timeslots": [
+							{
+								"time": "07:30",
+								"meridiem": "am",
+								"available": false
+							},
+							{
+								"time": "07:45",
+								"meridiem": "am",
+								"available": true
+							},
+							{
+								"time": "08:00",
+								"meridiem": "am",
+								"available": true
+							},
+							{
+								"time": "08:15",
+								"meridiem": "am",
+								"available": true
+							},
+							{
+								"time": "08:30",
+								"meridiem": "am",
+								"available": true
+							},
+							{
+								"time": "08:45",
+								"meridiem": "am",
+								"available": true
+							},
+							{
+								"time": "09:00",
+								"meridiem": "am",
+								"available": false
+							},
+							{
+								"time": "09:15",
+								"meridiem": "am",
+								"available": true
+							}
+						],
+						"limit": true
+					},
+					{
+						"title": "Wed 1 Dec",
+						"timeslots": [
+							{
+								"time": "07:30",
+								"meridiem": "am",
+								"available": true
+							},
+							{
+								"time": "07:45",
+								"meridiem": "am",
+								"available": true
+							},
+							{
+								"time": "08:00",
+								"meridiem": "am",
+								"available": false
+							},
+							{
+								"time": "08:15",
+								"meridiem": "am",
+								"available": true
+							},
+							{
+								"time": "08:30",
+								"meridiem": "am",
+								"available": true
+							},
+							{
+								"time": "08:45",
+								"meridiem": "am",
+								"available": false
+							},
+							{
+								"time": "09:00",
+								"meridiem": "am",
+								"available": false
+							},
+							{
+								"time": "09:15",
+								"meridiem": "am",
+								"available": true
+							}
+						],
+						"limit": false
+					},
+					{
+						"title": "Thu 2 Dec",
+						"timeslots": [
+							{
+								"time": "07:30",
+								"meridiem": "am",
+								"available": false
+							},
+							{
+								"time": "07:45",
+								"meridiem": "am",
+								"available": true
+							},
+							{
+								"time": "08:00",
+								"meridiem": "am",
+								"available": true
+							},
+							{
+								"time": "08:15",
+								"meridiem": "am",
+								"available": true
+							},
+							{
+								"time": "08:30",
+								"meridiem": "am",
+								"available": true
+							},
+							{
+								"time": "08:45",
+								"meridiem": "am",
+								"available": false
+							},
+							{
+								"time": "09:00",
+								"meridiem": "am",
+								"available": true
+							},
+							{
+								"time": "09:15",
+								"meridiem": "am",
+								"available": false
+							}
+						],
+						"limit": false
+					},
+					{
+						"title": "Fri 3 Dec",
+						"timeslots": [
+							{
+								"time": "07:30",
+								"meridiem": "am",
+								"available": true
+							},
+							{
+								"time": "07:45",
+								"meridiem": "am",
+								"available": false
+							},
+							{
+								"time": "08:00",
+								"meridiem": "am",
+								"available": true
+							},
+							{
+								"time": "08:15",
+								"meridiem": "am",
+								"available": true
+							},
+							{
+								"time": "08:30",
+								"meridiem": "am",
+								"available": true
+							},
+							{
+								"time": "08:45",
+								"meridiem": "am",
+								"available": true
+							},
+							{
+								"time": "09:00",
+								"meridiem": "am",
+								"available": false
+							},
+							{
+								"time": "09:15",
+								"meridiem": "am",
+								"available": false
+							}
+						],
+						"limit": false
+					},
+					{
+						"title": "Mon 5 Dec",
+						"timeslots": [
+							{
+								"time": "07:30",
+								"meridiem": "am",
+								"available": false
+							},
+							{
+								"time": "07:45",
+								"meridiem": "am",
+								"available": true
+							},
+							{
+								"time": "08:00",
+								"meridiem": "am",
+								"available": true
+							},
+							{
+								"time": "08:15",
+								"meridiem": "am",
+								"available": false
+							},
+							{
+								"time": "08:30",
+								"meridiem": "am",
+								"available": false
+							},
+							{
+								"time": "08:45",
+								"meridiem": "am",
+								"available": true
+							},
+							{
+								"time": "09:00",
+								"meridiem": "am",
+								"available": true
+							},
+							{
+								"time": "09:15",
+								"meridiem": "am",
+								"available": true
+							}
+						],
+						"limit": true
+					}
+				],
+				"info": {
+					"title": "What happens next?",
+					"content": "You will receive confirmation and reminder emails. When it's nearly time for your appointment, click the link in your email to enter the meeting room."
+				}
+			}
+		},
+		"room": {
+			"questions": [
+				{
+					"text": "1 Please spend a couple of minutes describing your professional experience in the field of obstetrics."
+				},
+				{
+					"text": "2 Please spend a couple of minutes describing your professional experience in the field of obstetrics."
+				},
+				{
+					"text": "3 Please spend a couple of minutes describing your professional experience in the field of obstetrics."
+				},
+				{
+					"text": "4 Please spend a couple of minutes describing your professional experience in the field of obstetrics."
+				},
+				{
+					"text": "5 Please spend a couple of minutes describing your professional experience in the field of obstetrics."
+				}
+			]
+		},
+		"bookingStatus": {
+			"success": "Appointment confirmed",
+			"failed": "Something went wrong"
+		},
+		"selectedSlot": {
+			"title": "Choose a fixed start",
+			"content": "Appointments have no duration and last as long as you need them to.",
+			"change": "You can change or cancel this slot later if you need to.",
+			"confirmation": "Your interview is booked for…"
+		},
+		"preSettings": {
+			"title": "All set to begin?",
+			"content": "You can disable your camera using the controls above if you would like to. Access to your microphone is required.",
+			"cta": {
+				"title": "Join live interview",
+				"url": {
+					"name": "live_room"
+				}
+			},
+			"devices": {
+				"camera": {
+					"title": "Camera [FaceTimeHD] is enabled",
+					"enabled": true
+				},
+				"microphone": {
+					"title": "No microphone detected",
+					"enabled": false
+				}
+			},
+			"infoBar": {
+				"title": "Having trouble?",
+				"cta": {
+					"title": "Join by phone",
+					"url": "#"
+				}
+			}
+		}
+	},
+	"selfRecord": {
+		"methodOverview": {
+			"instructions": [
+				{
+					"title": "You'll be asked a series of questions",
+					"content": "Nullam quis risus eget urna mollis ornare vel eu leo. Macenas faucibus mollis interdum",
+					"img": {
+						"src": "//placehold.it/275x428?text=1",
+						"alt": "Placeholder image"
+					}
+				},
+				{
+					"title": "Mollis ornare vel eu leo",
+					"content": "Doloremque tenetur nobis quas optio! Assumenda esse iure, dolorum porro ex eum doloribus itaque fugit soluta architecto quae.",
+					"img": {
+						"src": "//placehold.it/275x428?text=2",
+						"alt": "Placeholder image"
+					}
+				},
+				{
+					"title": "Doloribus itaque fugit soluta architecto",
+					"content": "Repellendus suscipit in quam recusandae architecto illum mollitia molestias, excepturi dolore sunt, hic totam ab quod id ut numquam ad quibusdam.",
+					"img": {
+						"src": "//placehold.it/275x428?text=3",
+						"alt": "Placeholder image"
+					}
+				}
+			]
+		},
+		"preSettings": {
+			"title": "All set to begin?",
+			"content": "Access to your microphone is required. Video access is encouraged but you can disable your camera using the controls above if you wish.",
+			"cta": {
+				"title": "See the first question",
+				"url": {
+					"name": "self_interview"
+				}
+			}
+		},
+		"interview": {
+			"sections": [
+				{
+					"title": "Introductory questions",
+					"questions": [
+						{
+							"title": "Please spend a couple of minutes describing your professional experience in the field of obstetrics.",
+							"content": "Think about your past experiences in relevant roles you duis mollis, est non commando luctus, nisi erat prttitor ligula, egat lacinia odio sem nec elit. Nulla vitae elit livero, a pharetra augue."
+						},
+						{
+							"title": "Please spend a couple of minutes describing your professional experience in the field of question 2.",
+							"content": "Think about your past experiences in relevant roles you duis mollis, est non commando luctus, nisi erat prttitor ligula, egat lacinia odio sem nec elit. Nulla vitae elit livero, a pharetra augue."
+						},
+						{
+							"title": "Please spend a couple of minutes describing your professional experience in the field of question 3.",
+							"content": "Think about your past experiences in relevant roles you duis mollis, est non commando luctus, nisi erat prttitor ligula, egat lacinia odio sem nec elit. Nulla vitae elit livero, a pharetra augue."
+						}
+					]
+				},
+				{
+					"title": "Secondary questions",
+					"questions": [
+						{
+							"title": "Please spend a couple of minutes describing your professional experience in the field of obstetrics.",
+							"content": "Think about your past experiences in relevant roles you duis mollis, est non commando luctus, nisi erat prttitor ligula, egat lacinia odio sem nec elit. Nulla vitae elit livero, a pharetra augue."
+						},
+						{
+							"title": "Please spend a couple of minutes describing your professional experience in the field of question 2.",
+							"content": "Think about your past experiences in relevant roles you duis mollis, est non commando luctus, nisi erat prttitor ligula, egat lacinia odio sem nec elit. Nulla vitae elit livero, a pharetra augue."
+						},
+						{
+							"title": "Please spend a couple of minutes describing your professional experience in the field of question 3.",
+							"content": "Think about your past experiences in relevant roles you duis mollis, est non commando luctus, nisi erat prttitor ligula, egat lacinia odio sem nec elit. Nulla vitae elit livero, a pharetra augue."
+						}
+					]
+				}
+			]
+		}
 	}
 }

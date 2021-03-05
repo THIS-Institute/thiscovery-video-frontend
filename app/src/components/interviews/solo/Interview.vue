@@ -70,11 +70,17 @@
 			]"
 		>
 			<div class="rounded-lg overflow-hidden bg-grey-400">
-				<video-wrapper />
+				<video-wrapper
+					:pre-record="preRecord"
+					:recording="recording"
+					:loading="loading"
+					:stopped="stopped"
+					:reviewing="reviewing"
+				/>
 
 				<div class="flex flex-wrap items-center justify-between gap-y-5 px-5 my-5">
-					<!-- 1 -->
 					<e-button
+						v-if="preRecord"
 						title="Click to record your answer"
 						icon="record"
 						class="e-button--red mx-auto"
@@ -83,46 +89,49 @@
 						pill
 					/>
 
-					<!-- 2 -->
-					<!-- <e-button
+					<e-button
+						v-else-if="loading"
 						title="Cancel"
 						class="e-button--white-outline mx-auto"
 						small
 						pill
-					/> -->
+					/>
 
-					<!-- 3 -->
-					<!-- <e-button
+					<e-button
+						v-else-if="recording"
 						title="Stop recording"
 						icon="stop"
 						class="e-button--white-outline mx-auto"
 						flipped
 						small
 						pill
-					/> -->
-
-					<!-- 4 -->
-					<!-- <e-button
-						title="Add more"
-						icon="record"
-						class="e-button--white-outline"
-						flipped
-						small
-						pill
 					/>
 
-					<e-button
-						title="Next question"
-						icon="check"
-						class="e-button--green"
-						flipped
-						small
-						pill
-						@click="nextQuestion()"
-					/> -->
+					<template v-else-if="stopped">
+						<e-button
+							title="Add more"
+							icon="record"
+							class="e-button--white-outline"
+							flipped
+							small
+							pill
+						/>
 
-					<!-- 5 -->
-					<!-- <scrubber class="w-full" /> -->
+						<e-button
+							title="Next question"
+							icon="check"
+							class="e-button--green"
+							flipped
+							small
+							pill
+							@click="nextQuestion()"
+						/>
+					</template>
+
+					<scrubber
+						v-else-if="reviewing"
+						class="w-full"
+					/>
 				</div>
 			</div>
 
@@ -134,8 +143,8 @@
 				<!-- <comment /> -->
 			</modal>
 
-			<!-- Before/During recording -->
 			<info-bar
+				v-if="preRecord || loading || recording"
 				class="mt-2.5"
 				title="Having trouble recording?"
 				:cta="{
@@ -144,8 +153,8 @@
 				}"
 			/>
 
-			<!-- After recording -->
-			<!-- <info-bar
+			<info-bar
+				v-if="stopped || reviewing"
 				class="mt-2.5"
 				title="Not happy with your answer?"
 				:cta="{
@@ -153,7 +162,7 @@
 				}"
 				modal
 				@open-modal="toggle"
-			/> -->
+			/>
 		</div>
 	</div>
 </template>
@@ -170,8 +179,8 @@
 	import InfoBar from '@/components/ui/InfoBar';
 	import Modal from '@/components/ui/modal/Modal';
 	import Confirm from '@/components/ui/modal/Confirm';
+	import Scrubber from '@/components/ui/Scrubber';
 	// import Comment from '@/components/ui/modal/Comment';
-	// import Scrubber from '@/components/ui/Scrubber';
 
 	export default {
 		components: {
@@ -180,8 +189,8 @@
 			InfoBar,
 			Modal,
 			Confirm,
+			Scrubber,
 			// Comment,
-			// Scrubber,
 		},
 
 		props: {
@@ -189,6 +198,21 @@
 				type: Array,
 				required: true,
 			},
+
+			// User has not yet started recording
+			preRecord: Boolean,
+
+			// User has clicked record and is loading
+			loading: Boolean,
+
+			// User is now recording their answer
+			recording: Boolean,
+
+			// User has stopped the recording
+			stopped: Boolean,
+
+			// User is rewatching their answer
+			reviewing: Boolean,
 		},
 
 		setup(props) {
