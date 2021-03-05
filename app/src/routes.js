@@ -128,6 +128,8 @@ export const routes = [
 					title: content.live.preSettings.title,
 					content: content.live.preSettings.content,
 					cta: content.live.preSettings.cta,
+					devices: content.live.preSettings.devices,
+					infoBar: content.live.preSettings.infoBar,
 				},
 			},
 		],

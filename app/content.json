@@ -330,6 +330,23 @@
 				"url": {
 					"name": "live_room"
 				}
+			},
+			"devices": {
+				"camera": {
+					"title": "Camera [FaceTimeHD] is enabled",
+					"enabled": true
+				},
+				"microphone": {
+					"title": "No microphone detected",
+					"enabled": false
+				}
+			},
+			"infoBar": {
+				"title": "Having trouble?",
+				"cta": {
+					"title": "Join by phone",
+					"url": "#"
+				}
 			}
 		}
 	},
