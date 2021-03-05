@@ -19,9 +19,10 @@
 				text="Live Interview"
 			/>
 
-			<h2 class="e-h-interview">
-				Suggest recommendation for good practice
-			</h2>
+			<h2
+				class="e-h-interview"
+				v-text="title"
+			/>
 
 			<booking-status
 				v-if="confirmed"
@@ -53,14 +54,16 @@
 			]"
 		>
 			<appointment-info
-				v-if="confirmed"
+				v-if="confirmed && info"
 				class="h-full"
+				v-bind="info"
 			/>
 
 			<date-picker
 				v-else
 				class="h-full"
 				:submitting="isSubmitting"
+				:calendar="calendar"
 			/>
 		</div>
 	</section>
@@ -95,6 +98,23 @@
 			SelectedSlot,
 			BookingStatus,
 			AppointmentInfo,
+		},
+
+		props: {
+			title: {
+				type: String,
+				required: true,
+			},
+
+			calendar: {
+				type: Array,
+				required: true,
+			},
+
+			info: {
+				type: Object,
+				required: true,
+			},
 		},
 
 		setup() {

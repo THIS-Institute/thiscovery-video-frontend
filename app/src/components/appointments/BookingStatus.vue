@@ -24,9 +24,25 @@
 </template>
 
 <script>
+	import { computed } from 'vue';
+
+	import content from '@/../content.json';
+
 	export default {
 		props: {
 			confirmed: Boolean,
+		},
+
+		setup(props) {
+			const status = computed(() => {
+				return props.confirmed
+					? content.live.bookingStatus.success
+					: content.live.bookingStatus.failed;
+			});
+
+			return {
+				status,
+			};
 		},
 	};
 </script>
