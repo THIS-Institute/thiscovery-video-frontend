@@ -1,7 +1,7 @@
 <template>
 	<div class="bg-black">
 		<video
-			ref="localVideoElement"
+			ref="videoFeed"
 			autoplay
 			playsinline
 			class="transform -scale-x-100"
@@ -21,10 +21,10 @@
 		},
 
 		setup (props) {
-			const localVideoElement = ref(null);
+			const videoFeed = ref(null);
 
 			const setVideoTrack = (publication) => {
-				publication.track.attach(localVideoElement.value);
+				publication.track.attach(videoFeed.value);
 			};
 
 			const setupLocalVideoTrack = () => {
@@ -35,7 +35,7 @@
 
 			onMounted(setupLocalVideoTrack);
 
-			return { localVideoElement }
+			return { videoFeed }
 		},
 	};
 </script>
