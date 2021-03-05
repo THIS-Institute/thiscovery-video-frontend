@@ -34,7 +34,7 @@
 									:title="cta.title"
 									icon="chevron-right"
 									class="e-button--red mt-5"
-									:url="cta.url"
+									:url="{ name: nextRoute }"
 									pill
 								/>
 							</div>
@@ -94,6 +94,16 @@
 			infoBar: {
 				type: Object,
 				default: null,
+			},
+
+			domain: {
+				type: String,
+				required: true,
+			},
+
+			nextRoute: {
+				type: String,
+				required: true,
 			},
 		},
 	};
