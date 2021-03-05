@@ -97,7 +97,7 @@
 
 		setup() {
 			return {
-				...content.selectedSlot,
+				...content.live.selectedSlot,
 			};
 		},
 	};

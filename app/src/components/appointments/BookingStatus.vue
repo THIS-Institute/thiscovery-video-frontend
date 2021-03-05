@@ -36,8 +36,8 @@
 		setup(props) {
 			const status = computed(() => {
 				return props.confirmed
-					? content.bookingStatus.success
-					: content.bookingStatus.failed;
+					? content.live.bookingStatus.success
+					: content.live.bookingStatus.failed;
 			});
 
 			return {
