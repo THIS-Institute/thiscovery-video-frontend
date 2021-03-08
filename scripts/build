@@ -9,5 +9,12 @@ set -e
 
 cd "$(dirname "$0")/.."
 
-# Pass any arguments as command into the build container 
-docker-compose run --service-ports --rm build $@
+if [ $1 == "build" ]; then
+    docker-compose run --service-ports --rm build npm run build
+
+elif [ $1 == "watch" ]; then
+    docker-compose run --service-ports --rm build npm run watch
+
+else
+    docker-compose run --service-ports --rm build $@
+fi
