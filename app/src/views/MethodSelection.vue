@@ -3,12 +3,12 @@
 		<div class="relative xl:w-20/24 xl:left-2/24">
 			<h1
 				class="e-h2"
-				v-text="title"
+				v-text="message('landing.title')"
 			/>
 
 			<p
 				class="mt-2"
-				v-text="content"
+				v-text="message('landing.content')"
 			/>
 
 			<div class="relative grid grid-cols-10 gap-4 mt-7">
@@ -24,28 +24,22 @@
 </template>
 
 <script>
+	import messages from '@/messages';
+	import { useMessages } from '@/composables/useMessages';
 	import MethodCard from '@/components/methods/MethodCard';
 
 	export default {
-		components: {
-			MethodCard,
-		},
+		components: { MethodCard },
 
-		props: {
-			title: {
-				type: String,
-				default: null,
-			},
+		setup() {
+			const { message } = useMessages(messages);
 
-			content: {
-				type: String,
-				default: null,
-			},
+			let paths = message('landing.paths');
+			if (!paths || !Array.isArray(paths)) {
+				paths = [];
+			}
 
-			paths: {
-				type: Array,
-				default: null,
-			},
+			return { message, paths }
 		},
 	};
 </script>

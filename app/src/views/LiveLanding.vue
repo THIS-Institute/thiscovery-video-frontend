@@ -19,7 +19,7 @@
 							title="Continue"
 							icon="chevron-right"
 							class="e-button--red mt-5"
-							:url="{ name: 'live_settings' }"
+							:url="{ name: ROUTE_LIVE_SETTINGS }"
 							pill
 							@click.prevent="initLive"
 						/>
@@ -34,6 +34,7 @@
 	import { ref } from 'vue';
 	import { useStore } from 'vuex';
 	import { useRouter, useRoute } from 'vue-router'
+	import { ROUTE_LIVE_ROOM, ROUTE_LIVE_SETTINGS } from '@/routeConstants';
 
 	export default {
 		setup() {
@@ -50,13 +51,17 @@
 					room: route.params.id,
 				}).then(() => {
 					router.push({
-						name: 'live_room',
+						name: ROUTE_LIVE_ROOM,
 						params: { ...route.params },
 					});
 				});
 			};
 
-			return { identity, initLive }
+			return {
+				ROUTE_LIVE_SETTINGS,
+				identity,
+				initLive,
+			}
 		},
 	};
 </script>

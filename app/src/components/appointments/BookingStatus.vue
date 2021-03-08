@@ -25,8 +25,8 @@
 
 <script>
 	import { computed } from 'vue';
-
-	import content from '@/../content.json';
+	import messages from '@/messages';
+	import { useMessages } from '@/composables/useMessages';
 
 	export default {
 		props: {
@@ -34,10 +34,12 @@
 		},
 
 		setup(props) {
+			const { message } = useMessages(messages);
+
 			const status = computed(() => {
 				return props.confirmed
-					? content.live.bookingStatus.success
-					: content.live.bookingStatus.failed;
+					? message('live.bookingStatus.success')
+					: message('live.bookingStatus.failed');
 			});
 
 			return {

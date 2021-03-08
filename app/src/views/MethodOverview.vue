@@ -29,7 +29,7 @@
 					/>
 
 					<instructions-nav
-						:total="instructions.length"
+						:total="instructionsLength"
 						:index="index"
 						@move="setInstruction"
 					/>
@@ -56,33 +56,31 @@
 </template>
 
 <script>
+	import { computed, reactive, toRefs } from 'vue';
+	import messages from '@/messages';
+	import { useMessages } from '@/composables/useMessages';
 	import InstructionsNav from '@/components/methods/InstructionsNav';
 
-	import { computed, reactive, toRefs } from 'vue';
-
 	export default {
-		components: {
-			InstructionsNav,
-		},
+		components: { InstructionsNav },
 
-		props: {
-			instructions: {
-				type: Array,
-				required: true,
-			},
-		},
+		setup() {
+			const { message } = useMessages(messages);
 
-		setup(props) {
 			const state = reactive({
 				index: 0,
 			});
 
-			const active = computed(() => props.instructions[state.index]);
+			const instructions = message('selfRecord.methodOverview.instructions');
+			const instructionsLength = instructions.length;
+
+			const active = computed(() => instructions[state.index]);
 
 			const setInstruction = (index) => state.index = index;
 
 			return {
 				...toRefs(state),
+				instructionsLength,
 				setInstruction,
 				active,
 			};

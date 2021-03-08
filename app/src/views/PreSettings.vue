@@ -7,7 +7,7 @@
 						:class="[
 							'flex flex-col p-2.5 w-full',
 							{
-								'pb-16': !infoBar,
+								'pb-16': !msgs.infoBar,
 							},
 						]"
 					>
@@ -20,18 +20,18 @@
 							<div class="flex flex-col items-center mt-12">
 								<h2
 									class="e-h3 text-center"
-									v-text="title"
+									v-text="msgs.title"
 								/>
 
 								<p
-									v-if="content"
+									v-if="msgs.content"
 									class="text-sm text-center mt-1.5"
-									v-text="content"
+									v-text="msgs.content"
 								/>
 
 								<e-button
-									v-if="cta"
-									:title="cta.title"
+									v-if="msgs.cta"
+									:title="msgs.cta.title"
 									icon="chevron-right"
 									class="e-button--red mt-5"
 									:url="{ name: nextRoute }"
@@ -40,16 +40,16 @@
 							</div>
 
 							<devices
-								v-if="devices"
+								v-if="msgs.devices"
 								class="mt-5"
-								v-bind="devices"
+								v-bind="msgs.devices"
 							/>
 						</div>
 
 						<info-bar
-							v-if="infoBar"
+							v-if="msgs.infoBar"
 							class="mt-12"
-							v-bind="infoBar"
+							v-bind="msgs.infoBar"
 						/>
 					</div>
 				</div>
@@ -59,6 +59,9 @@
 </template>
 
 <script>
+	import messages from '@/messages';
+	import { useMessages } from '@/composables/useMessages';
+
 	import VideoWrapper from '@/components/interviews/settings/VideoWrapper';
 	import InfoBar from '@/components/ui/InfoBar';
 	import Devices from '@/components/ui/Devices';
@@ -71,31 +74,6 @@
 		},
 
 		props: {
-			title: {
-				type: String,
-				required: true,
-			},
-
-			content: {
-				type: String,
-				default: null,
-			},
-
-			cta: {
-				type: Object,
-				default: null,
-			},
-
-			devices: {
-				type: Object,
-				default: null,
-			},
-
-			infoBar: {
-				type: Object,
-				default: null,
-			},
-
 			domain: {
 				type: String,
 				required: true,
@@ -105,6 +83,14 @@
 				type: String,
 				required: true,
 			},
+		},
+
+		setup(props) {
+			const { message } = useMessages(messages);
+
+			const msgs = message(`${props.domain}.preSettings`);
+
+			return { msgs }
 		},
 	};
 </script>

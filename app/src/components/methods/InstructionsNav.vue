@@ -24,7 +24,7 @@
 			title="Continue"
 			icon="chevron-right"
 			class="e-button--red"
-			:url="{ name: 'self_settings' }"
+			:url="{ name: ROUTE_SELF_SETTINGS }"
 			pill
 		/>
 	</div>
@@ -50,6 +50,7 @@
 
 <script>
 	import { computed } from 'vue';
+	import { ROUTE_SELF_SETTINGS } from '@/routeConstants';
 
 	export default {
 		props: {
@@ -80,6 +81,7 @@
 			const moveTo = (value) => emit('move', value);
 		
 			return {
+				ROUTE_SELF_SETTINGS,
 				lowerLimit,
 				upperLimit,
 				moveTo,

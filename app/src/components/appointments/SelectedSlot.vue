@@ -79,7 +79,8 @@
 </template>
 
 <script>
-	import content from '@/../content.json';
+	import messages from '@/messages';
+	import { useMessages } from '@/composables/useMessages';
 
 	export default {
 		props: {
@@ -96,9 +97,9 @@
 		],
 
 		setup() {
-			return {
-				...content.live.selectedSlot,
-			};
+			const { message } = useMessages(messages);
+
+			return { ...message('live.selectedSlot') };
 		},
 	};
 </script>

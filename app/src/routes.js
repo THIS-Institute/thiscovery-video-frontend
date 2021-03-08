@@ -1,3 +1,5 @@
+import * as constant from './routeConstants';
+
 // Tools
 import Styleguide from './views/Styleguide';
 
@@ -28,13 +30,8 @@ export const routes = [
 		children: [
 			{
 				path: '',
-				name: 'home',
+				name: constant.ROUTE_HOME,
 				component: MethodSelectionView,
-				props: {
-					title: content.landing.title,
-					content: content.landing.content,
-					paths: content.landing.paths,
-				},
 			},
 		],
 	},
@@ -49,11 +46,9 @@ export const routes = [
 		children: [
 			{
 				path: '',
-				name: 'appointments',
+				name: constant.ROUTE_APPOINTMENTS,
 				component: BookAppointmentView,
 				props: {
-					title: content.live.appointments.title,
-					content: content.live.appointments.content,
 					slots: content.live.appointments.slots,
 				},
 			},
@@ -70,22 +65,16 @@ export const routes = [
 		children: [
 			{
 				path: '',
-				name: 'self_howto',
+				name: constant.ROUTE_SELF_HOWTO,
 				component: MethodOverviewView,
-				props: {
-					instructions: content.selfRecord.methodOverview.instructions,
-				},
 			},
 			{
 				path: 'settings',
-				name: 'self_settings',
+				name: constant.ROUTE_SELF_SETTINGS,
 				component: PreSettingsView,
 				props: {
-					title: content.selfRecord.preSettings.title,
-					content: content.selfRecord.preSettings.content,
-					cta: content.selfRecord.preSettings.cta,
 					domain: 'solo',
-					nextRoute: 'self_interview',
+					nextRoute: constant.ROUTE_SELF_INTERVIEW,
 				},
 			},
 		],
@@ -101,7 +90,7 @@ export const routes = [
 		children: [
 			{
 				path: 'interview',
-				name: 'self_interview',
+				name: constant.ROUTE_SELF_INTERVIEW,
 				component: SelfRecordView,
 				props: {
 					sections: content.selfRecord.interview.sections,
@@ -120,21 +109,16 @@ export const routes = [
 		children: [
 			{
 				path: '',
-				name: 'live_landing',
+				name: constant.ROUTE_LIVE_LANDING,
 				component: LiveLandingView,
 			},
 			{
 				path: '',
-				name: 'live_settings',
+				name: constant.ROUTE_LIVE_SETTINGS,
 				component: PreSettingsView,
 				props: {
-					title: content.live.preSettings.title,
-					content: content.live.preSettings.content,
-					cta: content.live.preSettings.cta,
-					devices: content.live.preSettings.devices,
-					infoBar: content.live.preSettings.infoBar,
 					domain: 'live',
-					nextRoute: 'live_room',
+					nextRoute: constant.ROUTE_LIVE_ROOM,
 				},
 			},
 		],
@@ -142,7 +126,7 @@ export const routes = [
 	{
 		path: '/live/:id/room',
 		component: LiveRoomView,
-		name: 'live_room',
+		name: constant.ROUTE_LIVE_ROOM,
 		props: {
 			questions: content.live.room.questions,
 		},
