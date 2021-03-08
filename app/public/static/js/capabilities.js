@@ -7,8 +7,8 @@ function detectBrowserRtcCapabilities() {
     navigator.msGetUserMedia ||
     window.RTCPeerConnection;
 
-    if (window.navigator.userAgent.indexOf("Edge") > -1) {
-        return UNSUPPORTED_URL;
+    if (window.navigator.userAgent.indexOf('Edge') > -1) {
+        window.location.href = UNSUPPORTED_URL;
     }
 
     if (isWebRTCSupported) {
@@ -16,8 +16,8 @@ function detectBrowserRtcCapabilities() {
     }
 
     else {
-        return UNSUPPORTED_URL;
+        window.location.href = UNSUPPORTED_URL;
     }
 }
 
-window.location = detectBrowserRtcCapabilities();
+detectBrowserRtcCapabilities();
