@@ -83,6 +83,7 @@ module.exports = {
 				'date-picker': relative(445),
 			},
 			maxWidth: {
+				'36': relative(144),
 				logo: relative(150),
 				'83': relative(332),
 				'86': relative(344),

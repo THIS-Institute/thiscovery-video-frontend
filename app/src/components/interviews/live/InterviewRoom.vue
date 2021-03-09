@@ -13,15 +13,21 @@
 
 			<div class="flex flex-col absolute inset-0 w-full h-full">
 				<div class="p-2.5 pl-4 w-full bg-gradient-to-b from-black-25">
-					<div class="flex flex-wrap-reverse items-center justify-between gap-5">
-						<e-button
-							title="Leave interview"
-							icon="chevron-left"
-							class="e-button--white-outline"
-							flipped
-							small
-							pill
-						/>
+					<div class="flex flex-wrap-reverse gap-5">
+						<div class="flex flex-wrap flex-auto justify-between gap-5">
+							<e-button
+								title="Leave interview"
+								icon="chevron-left"
+								class="e-button--white-outline self-center"
+								flipped
+								small
+								pill
+							/>
+
+							<timer
+								from="01:56"
+							/>
+						</div>
 
 						<div
 							:class="[
@@ -32,10 +38,15 @@
 							<user-controls />
 
 							<div class="rounded-r-lg overflow-hidden w-36">
-								<local-video
-									v-if="hasLocalFeed"
-									:participant="localParticipant"
-								/>
+								<placeholder
+									ratio="pt-3/4"
+									class="bg-black-25"
+								>
+									<local-video
+										v-if="hasLocalFeed"
+										:participant="localParticipant"
+									/>
+								</placeholder>
 							</div>
 						</div>
 					</div>
@@ -71,6 +82,7 @@
 	import RemoteVideo from './RemoteVideo';
 	import OnlyCaller from './OnlyCaller';
 	import UserControls from './UserControls';
+	import Timer from '@/components/ui/Timer';
 	// import QuestionWrapper from './QuestionWrapper';
 
 	export default {
@@ -79,6 +91,7 @@
 			RemoteVideo,
 			OnlyCaller,
 			UserControls,
+			Timer,
 			// QuestionWrapper,
 		},
 

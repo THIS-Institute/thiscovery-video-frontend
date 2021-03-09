@@ -1,9 +1,9 @@
 <template>
-	<section class="rounded-lg bg-white px-8 py-16">
-		<div class="flex flex-col items-center justify-center text-center max-w-xs">
+	<section class="rounded-lg bg-white px-6 py-8 max-w-xs md:max-w-sm md:px-8 md:py-16">
+		<div class="flex flex-col items-center justify-center text-center">
 			<icon
 				name="wave"
-				size="w-32 h-32"
+				size="w-20 h-20 md:w-32 md:h-32"
 				class="rounded-full"
 			/>
 
@@ -11,7 +11,7 @@
 				You're the first here
 			</h2>
 
-			<p class="mt-1">
+			<p class="mt-1 text-sm md:text-lg">
 				Please wait a moment while others join the call…
 			</p>
 		</div>
