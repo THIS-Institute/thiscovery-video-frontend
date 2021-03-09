@@ -2,10 +2,7 @@
     "name": "thiscovery-interviews-app",
     "version": "1.0.0",
     "description": "",
-    "scripts": {
-        "build": "npx mix",
-        "watch": "npx mix watch"
-    },
+    "scripts": {},
     "keywords": [],
     "author": "engageinteractive",
     "license": "MIT",

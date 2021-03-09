@@ -9,12 +9,16 @@ set -e
 
 cd "$(dirname "$0")/.."
 
-if [ $1 == "build" ]; then
-    docker-compose run --service-ports --rm build npm run build
+if [ $1 == "dev" ]; then
+    docker-compose run --service-ports --rm build npx mix
+
+elif [ $1 == "prod" ]; then
+    docker-compose run --service-ports --rm build npx mix --production
 
 elif [ $1 == "watch" ]; then
-    docker-compose run --service-ports --rm build npm run watch
+    docker-compose run --service-ports --rm build npx mix watch
 
 else
     docker-compose run --service-ports --rm build $@
+
 fi
