@@ -54,9 +54,8 @@
 			]"
 		>
 			<appointment-info
-				v-if="confirmed && info"
+				v-if="confirmed"
 				class="h-full"
-				v-bind="info"
 			/>
 
 			<date-picker
@@ -108,11 +107,6 @@
 
 			calendar: {
 				type: Array,
-				required: true,
-			},
-
-			info: {
-				type: Object,
 				required: true,
 			},
 		},

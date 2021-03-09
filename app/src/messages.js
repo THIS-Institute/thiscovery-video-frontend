@@ -117,6 +117,10 @@ export default Object.freeze({
 		appointments: {
 			title: 'Book a live interview',
 			content: 'Pick from the available dates and times',
+			info: {
+				title: 'What happens next?',
+				content: 'You will receive confirmation and reminder emails. When it\'s nearly time for your appointment, click the link in your email to enter the meeting room.',
+			},
 		},
 
 		bookingStatus: {

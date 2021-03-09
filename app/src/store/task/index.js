@@ -1,7 +1,11 @@
+import config from '@/app.config';
+import { fetchInitialAppointmentSlots } from '@/api/appointments';
+
 export const task = {
 	namespaced: true,
 
 	state: () => ({
+		appointmentSlots: [],
 		timeslot: null,
 		confirmed: false,
 		isSubmitting: false,
@@ -23,14 +27,24 @@ export const task = {
 				state.confirmed = true;
 
 				state.isSubmitting = false;
-			}, 2000);
+			}, config.inducedBackendLag);
 		},
 
 		clear(state) {
 			state.timeslot = null;
 		},
+
+		setAppointmentSlots(state, slots) {
+			state.appointmentSlots = slots;
+		},
 	},
 
-	actions: {},
+	actions: {
+		initAppointmentSlots: async ({ commit }) => {
+			const slots = await fetchInitialAppointmentSlots();
+			commit('setAppointmentSlots', slots);
+		},
+	},
+
 	getters: {},
 };

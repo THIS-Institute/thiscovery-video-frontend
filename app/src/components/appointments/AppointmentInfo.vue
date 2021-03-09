@@ -2,12 +2,12 @@
 	<div class="bg-grey-100 rounded-lg px-12 py-14">
 		<h3
 			class="e-h3"
-			v-text="title"
+			v-text="message('live.appointments.info.title')"
 		/>
 
 		<p
 			class="mt-5"
-			v-text="content"
+			v-text="message('live.appointments.info.content')"
 		/>
 
 		<div class="flex flex-col items-start space-y-5 mt-10">
@@ -38,22 +38,18 @@
 </template>
 
 <script>
+	import messages from '@/messages';
+	import { useMessages } from '@/composables/useMessages';
+
 	export default {
-		props: {
-			title: {
-				type: String,
-				required: true,
-			},
-
-			content: {
-				type: String,
-				required: true,
-			},
-		},
-
 		emits: [
 			'reschedule',
 			'cancel',
 		],
+
+		setup() {
+			const { message } = useMessages(messages);
+			return { message }
+		},
 	};
 </script>

@@ -14,33 +14,48 @@
 			<hr class="e-divider mt-5 border-0 xl:hidden">
 
 			<div class="e-content relative mt-12 xl:mt-7">
-				<appointment-slots v-bind="slots" />
+				<appointment-slots
+					v-if="!isLoading"
+					v-bind="slots"
+				/>
 			</div>
 		</div>
 	</section>
 </template>
 
 <script>
+	import { ref, computed } from 'vue';
+	import { useStore } from 'vuex';
 	import messages from '@/messages';
 	import { useMessages } from '@/composables/useMessages';
 	import AppointmentSlots from '@/components/appointments/AppointmentSlots';
 
 	export default {
-		components: {
-			AppointmentSlots,
-		},
-
-		props: {
-			slots: {
-				type: Object,
-				default: null,
-			},
-		},
+		components: { AppointmentSlots },
 
 		setup() {
+			const store = useStore();
 			const { message } = useMessages(messages);
+			const isLoading = ref(false);
+			const slots = computed(() => store.state.task.appointmentSlots);
 
-			return { message }
+			const onSlotsInitialised = () => {
+				isLoading.value = false;
+			};
+
+			if (slots.value && slots.value.length == 0) {
+				isLoading.value = true;
+
+				store
+					.dispatch('task/initAppointmentSlots')
+					.then(onSlotsInitialised);
+			}
+
+			return {
+				message,
+				isLoading,
+				slots,
+			}
 		},
 	};
 </script>

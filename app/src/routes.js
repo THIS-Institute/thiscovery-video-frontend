@@ -48,9 +48,6 @@ export const routes = [
 				path: '',
 				name: constant.ROUTE_APPOINTMENTS,
 				component: BookAppointmentView,
-				props: {
-					slots: content.live.appointments.slots,
-				},
 			},
 		],
 	},
