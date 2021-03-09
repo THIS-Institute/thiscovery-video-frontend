@@ -1,4 +1,4 @@
-import config from '@/app.config';
+import env from '@/app.env';
 import { fetchInitialAppointmentSlots } from '@/api/appointments';
 
 export const task = {
@@ -27,7 +27,7 @@ export const task = {
 				state.confirmed = true;
 
 				state.isSubmitting = false;
-			}, config.inducedBackendLag);
+			}, env.inducedBackendLag);
 		},
 
 		clear(state) {

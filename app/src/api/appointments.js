@@ -1,4 +1,4 @@
-import config from '@/app.config';
+import env from '@/app.env';
 
 const chanceAvailable = () => {
 	const chance = Math.floor(Math.random() * 5);
@@ -55,7 +55,7 @@ export async function fetchInitialAppointmentSlots () {
 	const date = new Date();
 	const daysToGenerate = 5;
 
-	await sleep(config.inducedBackendLag);
+	await sleep(env.inducedBackendLag);
 
 	const data = getMockSlots(date, daysToGenerate);
 

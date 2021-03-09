@@ -1,4 +1,4 @@
-import config from '@/app.config';
+import env from '@/app.env';
 
 export const interviews = {
 	namespaced: true,
@@ -51,7 +51,7 @@ export const interviews = {
 		},
 
 		getAccessToken: async ({ commit }, data) => {
-			await fetch(`${config.backendApiHost}/v1/room/token`, {
+			await fetch(`${env.backendApiHost}/v1/room/token`, {
 					method: 'POST',
 					headers: {
 						'Content-Type': 'application/json',
