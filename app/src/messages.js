@@ -123,6 +123,12 @@ export default Object.freeze({
 			},
 		},
 
+		landing: {
+			title: 'Live Interview',
+			content: 'Suggestion recommendations for good practice',
+			cancel: 'No longer able to make this appointment?',
+		},
+
 		bookingStatus: {
 			success: 'Appointment confirmed',
 			failed: 'Something went wrong',
