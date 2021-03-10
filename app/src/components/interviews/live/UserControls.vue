@@ -69,7 +69,7 @@
 							title="Join by phone"
 							icon="phone"
 							flipped
-							url="/"
+							@click="phone"
 						/>
 					</li>
 				</ul>
@@ -91,6 +91,7 @@
 
 <script>
 	import { reactive, toRefs } from 'vue';
+	import { useStore } from 'vuex';
 
 	export default {
 		setup() {
@@ -102,9 +103,13 @@
 
 			const toggle = (option) => state[option] = !state[option];
 
+			const store = useStore();
+			const phone = () => store.commit('app/toggleModal');
+
 			return {
 				...toRefs(state),
 				toggle,
+				phone,
 			};
 		},
 	};

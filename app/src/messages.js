@@ -123,6 +123,18 @@ export default Object.freeze({
 			},
 		},
 
+		joinByPhone: {
+			title: 'Join by phone',
+			number: {
+				title: 'Enter this PIN when prompted:',
+				value: '+44 20 3956 7834',
+			},
+			pin: {
+				title: 'Enter this PIN when prompted:',
+				value: '456 666 554#',
+			}
+		},
+
 		landing: {
 			title: 'Live Interview',
 			content: 'Suggestion recommendations for good practice',
