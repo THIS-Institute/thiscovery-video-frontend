@@ -85,7 +85,7 @@
 		>
 			<icon
 				name="loading"
-				class="text-red"
+				class="text-red animate-spin"
 				size="w-10 h-10"
 			/>
 		</div>
@@ -155,4 +155,3 @@
 		},
 	};
 </script>
-

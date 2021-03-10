@@ -37,7 +37,7 @@
 			<e-button
 				v-if="!confirmed"
 				title="Book appointment"
-				:icon="isSubmitting ? 'loading' : 'chevron-right'"
+				icon="chevron-right"
 				class="e-button--red hidden md:inline-block"
 				:disabled="!date"
 				pill
@@ -73,7 +73,7 @@
 	>
 		<e-button
 			title="Book appointment"
-			:icon="isSubmitting ? 'loading' : 'chevron-right'"
+			icon="chevron-right"
 			class="e-button--red"
 			:disabled="!date"
 			pill
