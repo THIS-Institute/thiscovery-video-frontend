@@ -19,16 +19,17 @@
 								v-text="message('live.landing.content')"
 							/>
 
-							<!-- TODO: Set additional state -->
-							<selected-slot
-								class="mt-7.5"
-								:date="{
-									date: '18th March',
-									slot: '09:30',
-									meridiem: 'am',
-								}"
-								:confirmed="true"
-							/>
+							<aside class="py-7 px-7 5 border border-grey-200 rounded-lg mt-5">
+								<h1
+									class="text-red text-sm"
+									v-text="message('live.landing.due')"
+								/>
+
+								<p
+									class="text-lg font-bold mt-2.5"
+									v-text="message('live.landing.date')"
+								/>
+							</aside>
 
 							<e-button
 								title="Continue"
@@ -95,13 +96,7 @@
 	import messages from '@/messages';
 	import { useMessages } from '@/composables/useMessages';
 
-	import SelectedSlot from '@/components/appointments/SelectedSlot';
-
 	export default {
-		components: {
-			SelectedSlot,
-		},
-
 		props: {
 			earlyReturn: Boolean,
 		},

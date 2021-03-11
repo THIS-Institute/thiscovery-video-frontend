@@ -138,6 +138,8 @@ export default Object.freeze({
 		landing: {
 			title: 'Live Interview',
 			content: 'Suggestion recommendations for good practice',
+			due: 'Your appointment is due to start…',
+			date: 'Thu 02 Dec 2020, 08:15am',
 			cancel: 'No longer able to make this appointment?',
 		},
 
