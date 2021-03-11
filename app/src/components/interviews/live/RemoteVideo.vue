@@ -4,7 +4,7 @@
 			ref="videoFeed"
 			autoplay
 			playsinline
-			class="transform -scale-x-100 absolute inset-0 w-full h-full object-cover max-h-screen"
+			class="absolute inset-0 w-full h-full object-cover max-h-screen"
 		/>
 	</div>
 
