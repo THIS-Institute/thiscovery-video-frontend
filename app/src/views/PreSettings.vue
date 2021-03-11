@@ -30,13 +30,26 @@
 								/>
 
 								<e-button
-									v-if="msgs.cta"
+									v-if="false"
 									:title="msgs.cta.title"
 									icon="chevron-right"
 									class="e-button--red mt-5"
 									:url="{ name: nextRoute }"
 									pill
 								/>
+
+								<e-button
+									v-else
+									title="How to fix this"
+									icon="chevron-right"
+									class="e-button--red mt-5"
+									pill
+									@click="troubleShoot"
+								/>
+
+								<modal wrapper-class="max-w-xl">
+									<trouble-shooting />
+								</modal>
 							</div>
 
 							<devices
@@ -61,16 +74,21 @@
 <script>
 	import messages from '@/messages';
 	import { useMessages } from '@/composables/useMessages';
+	import { useStore } from 'vuex';
 
 	import VideoWrapper from '@/components/interviews/settings/VideoWrapper';
 	import InfoBar from '@/components/ui/InfoBar';
 	import Devices from '@/components/ui/Devices';
+	import Modal from '@/components/ui/modal/Modal';
+	import TroubleShooting from '@/components/ui/modal/TroubleShooting';
 
 	export default {
 		components: {
 			VideoWrapper,
 			InfoBar,
 			Devices,
+			Modal,
+			TroubleShooting,
 		},
 
 		props: {
@@ -87,10 +105,15 @@
 
 		setup(props) {
 			const { message } = useMessages(messages);
-
 			const msgs = message(`${props.domain}.preSettings`);
 
-			return { msgs }
+			const store = useStore();
+			const troubleShoot = () => store.commit('app/toggleModal');
+
+			return {
+				msgs,
+				troubleShoot,
+			};
 		},
 	};
 </script>

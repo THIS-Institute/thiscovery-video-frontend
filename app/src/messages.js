@@ -158,7 +158,9 @@ export default Object.freeze({
 
 	preSettings: {
 		title: 'All set to begin?',
+		fix: 'Fixing camera and microphone issues',
 		content: 'You can disable your camera using the controls above if you would like to. Access to your microphone is required.',
+		lorem: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Minus voluptates deleniti, et voluptatem modi atque esse ipsa ex nostrum corporis eveniet repudiandae animi blanditiis quae. Necessitatibus nemo a doloribus perferendis.',
 		cta: {
 			title: 'Join live interview',
 			url: {
