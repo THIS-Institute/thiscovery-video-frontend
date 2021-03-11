@@ -123,6 +123,26 @@ export default Object.freeze({
 			},
 		},
 
+		joinByPhone: {
+			title: 'Join by phone',
+			number: {
+				title: 'Enter this PIN when prompted:',
+				value: '+44 20 3956 7834',
+			},
+			pin: {
+				title: 'Enter this PIN when prompted:',
+				value: '456 666 554#',
+			}
+		},
+
+		landing: {
+			title: 'Live Interview',
+			content: 'Suggestion recommendations for good practice',
+			due: 'Your appointment is due to start…',
+			date: 'Thu 02 Dec 2020, 08:15am',
+			cancel: 'No longer able to make this appointment?',
+		},
+
 		bookingStatus: {
 			success: 'Appointment confirmed',
 			failed: 'Something went wrong',
@@ -138,7 +158,9 @@ export default Object.freeze({
 
 	preSettings: {
 		title: 'All set to begin?',
+		fix: 'Fixing camera and microphone issues',
 		content: 'You can disable your camera using the controls above if you would like to. Access to your microphone is required.',
+		lorem: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Minus voluptates deleniti, et voluptatem modi atque esse ipsa ex nostrum corporis eveniet repudiandae animi blanditiis quae. Necessitatibus nemo a doloribus perferendis.',
 		cta: {
 			title: 'Join live interview',
 			url: {

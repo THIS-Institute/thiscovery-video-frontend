@@ -10,7 +10,10 @@
 				'bg-black bg-opacity-40 z-site-modal',
 			]"
 		>
-			<div class="bg-white rounded-lg p-5 md:p-12">
+			<div
+				class="bg-white rounded-lg p-5 md:p-12"
+				:class="$props.wrapperClass"
+			>
 				<slot />
 			</div>
 		</div>
@@ -22,6 +25,13 @@
 	import { useStore } from 'vuex';
 
 	export default {
+		props: {
+			wrapperClass: {
+				type: String,
+				default: null,
+			},
+		},
+
 		setup() {
 			const store = useStore();
 			const active = computed(() => store.state.app.modalActive);
