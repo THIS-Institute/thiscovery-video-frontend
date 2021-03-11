@@ -109,7 +109,7 @@ export const routes = [
 				name: constant.ROUTE_LIVE_LANDING,
 				component: LiveLandingView,
 				props: {
-					earlyReturn: true,
+					earlyReturn: false,
 				},
 			},
 			{
