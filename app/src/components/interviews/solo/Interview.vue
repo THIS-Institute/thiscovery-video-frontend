@@ -76,9 +76,23 @@
 					:loading="loading"
 					:stopped="stopped"
 					:reviewing="reviewing"
-				/>
+					:is-playing="isPlaying"
+					@toggle-playback="togglePlayback()"
+				>
+					<video
+						ref="video"
+						class="absolute inset-0 w-full h-full object-cover"
+						src="/static/img/big-buck-bunny.mp4"
+					/>
+				</video-wrapper>
 
 				<div class="flex flex-wrap items-center justify-between gap-y-5 px-5 my-5">
+					<pre
+						v-if="video"
+						class="text-white"
+						v-text="video.duration"
+					/>
+
 					<e-button
 						v-if="preRecord"
 						title="Click to record your answer"
@@ -129,7 +143,7 @@
 					</template>
 
 					<scrubber
-						v-else-if="reviewing"
+						v-else-if="reviewing && video"
 						class="w-full"
 					/>
 				</div>
@@ -161,7 +175,7 @@
 					title: 'Click here to retake it',
 				}"
 				modal
-				@open-modal="toggle"
+				@open-modal="confirmRetake"
 			/>
 		</div>
 	</div>
@@ -170,7 +184,7 @@
 <script>
 	import { useQuestions } from '@/composables/useQuestions';
 
-	import { computed } from 'vue';
+	import { computed, ref, reactive, toRefs } from 'vue';
 	import { useStore } from 'vuex';
 
 	import VideoWrapper from '@/components/interviews/settings/VideoWrapper';
@@ -239,7 +253,23 @@
 			});
 
 			const store = useStore();
-			const toggle = () => store.commit('app/toggleModal');
+			const confirmRetake = () => store.commit('app/toggleModal');
+
+			const video = ref(null);
+			const state = reactive({
+				isPlaying: false,
+			});
+
+			const togglePlayback = () => {
+				if (!video.value) {
+					return
+				}
+
+				const v = video.value;
+				state.isPlaying = !v.paused;
+
+				v.paused ? v.play() : v.pause();
+			};
 
 			return {
 				toReadableValue,
@@ -248,7 +278,10 @@
 				readQuestion,
 				readSection,
 				progress,
-				toggle,
+				confirmRetake,
+				togglePlayback,
+				video,
+				...toRefs(state),
 			};
 		},
 	};

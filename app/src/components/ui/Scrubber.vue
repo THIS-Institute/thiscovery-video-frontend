@@ -8,12 +8,12 @@
 	>
 		<p
 			class="w-16 text-center"
-			v-text="toTime(position)"
+			v-text="toTime(currentTime)"
 		/>
 
 		<div class="relative w-full h-1 bg-white rounded-full">
 			<input
-				v-model="position"
+				v-model="currentTime"
 				type="range"
 				min="0"
 				:max="duration"
@@ -46,17 +46,21 @@
 
 			duration: {
 				type: Number,
-				default: 192000,
+				default: 10000,
 			},
 		},
 
-		setup(props) {
+		emits: [
+			'newTime',
+		],
+
+		setup(props, { $emit }) {
 			const state = reactive({
-				position: props.start,
+				currentTime: props.start,
 			});
 
 			const progress = computed(() => {
-				const asPercentage = state.position / props.duration;
+				const asPercentage = state.currentTime / props.duration;
 
 				return {
 					transform: `scaleX(${asPercentage.toFixed(3)})`,
@@ -70,7 +74,7 @@
 				return `${minutes}:${(seconds < 10 ? '0': '')}${seconds}`;
 			};
 
-			const onScrub = () => console.log('Scrubbed!');
+			const onScrub = () => $emit('');
 
 			return {
 				...toRefs(state),
