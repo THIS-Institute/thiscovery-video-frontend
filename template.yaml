@@ -15,16 +15,6 @@ Resources:
               responses: {}
             options:
               responses: {}
-          /v1/appointments:
-            head:
-              responses: {}
-            post:
-              responses: {}
-          /v1/appointments/:id:
-            put:
-              responses: {}
-            delete:
-              responses: {}
       FailOnWarnings: true
       CorsConfiguration:
         AllowOrigins:
@@ -109,9 +99,9 @@ Resources:
       Description: !Sub
         - Stack ${StackTagName} Environment ${EnvironmentTagName} Function ${ResourceName}
         - ResourceName: GetTest
-      CodeUri: src/Function
-      Handler: index.handler
-      Runtime: nodejs14.x
+      CodeUri: src
+      Handler: test.lambda_handler
+      Runtime: python3.8
       MemorySize: 3008
       Timeout: 30
       Tracing: Active
@@ -131,6 +121,3 @@ Parameters:
   EnvironmentTagName:
     Type: String
     Description: Environment Name (injected by Stackery at deployment time)
-  EnvironmentAPIGatewayStageName:
-    Type: String
-    Description: Environment name used for API Gateway Stage names (injected by Stackery at deployment time)
