@@ -83,16 +83,11 @@
 						ref="video"
 						class="absolute inset-0 w-full h-full object-cover"
 						src="/static/img/big-buck-bunny.mp4"
+						@timeupdate="updateProgress"
 					/>
 				</video-wrapper>
 
 				<div class="flex flex-wrap items-center justify-between gap-y-5 px-5 my-5">
-					<pre
-						v-if="video"
-						class="text-white"
-						v-text="video.duration"
-					/>
-
 					<e-button
 						v-if="preRecord"
 						title="Click to record your answer"
@@ -144,7 +139,9 @@
 
 					<scrubber
 						v-else-if="reviewing && video"
+						ref="videoScrubber"
 						class="w-full"
+						@scrub="onScrub"
 					/>
 				</div>
 			</div>
@@ -256,19 +253,26 @@
 			const confirmRetake = () => store.commit('app/toggleModal');
 
 			const video = ref(null);
+			const videoScrubber = ref(null);
+
 			const state = reactive({
 				isPlaying: false,
 			});
 
 			const togglePlayback = () => {
-				if (!video.value) {
-					return
-				}
-
 				const v = video.value;
-				state.isPlaying = !v.paused;
 
 				v.paused ? v.play() : v.pause();
+				state.isPlaying = !v.paused;
+			};
+
+			const onScrub = (time) => {
+				video.value.currentTime = (time / 1000);
+			};
+
+			const updateProgress = () => {
+				const current = video.value.currentTime;
+				videoScrubber.value.currentTime = (current * 1000);
 			};
 
 			return {
@@ -281,6 +285,9 @@
 				confirmRetake,
 				togglePlayback,
 				video,
+				onScrub,
+				videoScrubber,
+				updateProgress,
 				...toRefs(state),
 			};
 		},

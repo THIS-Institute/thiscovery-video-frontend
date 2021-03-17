@@ -18,7 +18,7 @@
 				min="0"
 				:max="duration"
 				class="scrubber"
-				@change="onScrub"
+				@input="$emit('scrub', currentTime)"
 			>
 
 			<span
@@ -51,10 +51,10 @@
 		},
 
 		emits: [
-			'newTime',
+			'scrub',
 		],
 
-		setup(props, { $emit }) {
+		setup(props) {
 			const state = reactive({
 				currentTime: props.start,
 			});
@@ -74,12 +74,9 @@
 				return `${minutes}:${(seconds < 10 ? '0': '')}${seconds}`;
 			};
 
-			const onScrub = () => $emit('');
-
 			return {
 				...toRefs(state),
 				progress,
-				onScrub,
 				toTime,
 			};
 		},
