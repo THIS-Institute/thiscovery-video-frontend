@@ -95,6 +95,7 @@ module.exports = {
 				logo: ratio(495, 103),
 				instruction: ratio(275, 428),
 
+				'doctor': ratio(191, 526),
 				'9/16': ratio(16, 9),
 				'3/4': ratio(4, 3),
 			},
