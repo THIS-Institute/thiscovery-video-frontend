@@ -1,6 +1,54 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 Resources:
+  BackendApi:
+    Type: AWS::Serverless::Api
+    Properties:
+      Name: BackendApi
+      StageName: !Ref EnvironmentAPIGatewayStageName
+      DefinitionBody:
+        swagger: '2.0'
+        info: {}
+        paths:
+          /v1/room/token:
+            post:
+              x-amazon-apigateway-integration:
+                httpMethod: POST
+                type: aws_proxy
+                uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${RoomCreateToken.Arn}/invocations
+              responses: {}
+          /v1/appointments/{id}:
+            patch:
+              x-amazon-apigateway-integration:
+                httpMethod: POST
+                type: aws_proxy
+                uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${RescheduleAppointmentById.Arn}/invocations
+              responses: {}
+            delete:
+              x-amazon-apigateway-integration:
+                httpMethod: POST
+                type: aws_proxy
+                uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${CancelAppointmentById.Arn}/invocations
+              responses: {}
+          /v1/appointments/{id}/slots:
+            get:
+              x-amazon-apigateway-integration:
+                httpMethod: POST
+                type: aws_proxy
+                uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${GetAppointmentSlots.Arn}/invocations
+              responses: {}
+          /v1/appointments/:
+            post:
+              x-amazon-apigateway-integration:
+                httpMethod: POST
+                type: aws_proxy
+                uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${CreateAppointment.Arn}/invocations
+              responses: {}
+      EndpointConfiguration: REGIONAL
+      TracingEnabled: true
+      Cors:
+        AllowHeaders: '''*'''
+        AllowOrigin: '''*'''
   RoomCreateToken:
     Type: AWS::Serverless::Function
     Properties:
@@ -23,13 +71,13 @@ Resources:
             Path: /v1/room/token
             Method: POST
             RestApiId: !Ref BackendApi
-  LogFunction:
+  GetAppointmentSlots:
     Type: AWS::Serverless::Function
     Properties:
-      FunctionName: !Sub ${AWS::StackName}-LogFunction
+      FunctionName: !Sub ${AWS::StackName}-GetAppointmentSlots
       Description: !Sub
         - Stack ${StackTagName} Environment ${EnvironmentTagName} Function ${ResourceName}
-        - ResourceName: LogFunction
+        - ResourceName: GetAppointmentSlots
       CodeUri: src
       Handler: log.lambda_handler
       Runtime: python3.8
@@ -39,40 +87,78 @@ Resources:
       Policies:
         - AWSXrayWriteOnlyAccess
       Events:
-        BackendApiGETv1appointmentsid:
+        BackendApiGETv1appointmentsidslots:
+          Type: Api
+          Properties:
+            Path: /v1/appointments/{id}/slots
+            Method: GET
+            RestApiId: !Ref BackendApi
+  CancelAppointmentById:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub ${AWS::StackName}-CancelAppointmentById
+      Description: !Sub
+        - Stack ${StackTagName} Environment ${EnvironmentTagName} Function ${ResourceName}
+        - ResourceName: CancelAppointmentById
+      CodeUri: src
+      Handler: log.lambda_handler
+      Runtime: python3.8
+      MemorySize: 3008
+      Timeout: 30
+      Tracing: Active
+      Policies:
+        - AWSXrayWriteOnlyAccess
+      Events:
+        BackendApiDELETEv1appointmentsid:
           Type: Api
           Properties:
             Path: /v1/appointments/{id}
-            Method: GET
+            Method: DELETE
             RestApiId: !Ref BackendApi
-  BackendApi:
-    Type: AWS::Serverless::Api
+  RescheduleAppointmentById:
+    Type: AWS::Serverless::Function
     Properties:
-      Name: BackendApi
-      StageName: !Ref EnvironmentAPIGatewayStageName
-      DefinitionBody:
-        swagger: '2.0'
-        info: {}
-        paths:
-          /v1/room/token:
-            post:
-              x-amazon-apigateway-integration:
-                httpMethod: POST
-                type: aws_proxy
-                uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${RoomCreateToken.Arn}/invocations
-              responses: {}
-          /v1/appointments/{id}:
-            get:
-              x-amazon-apigateway-integration:
-                httpMethod: POST
-                type: aws_proxy
-                uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${LogFunction.Arn}/invocations
-              responses: {}
-      EndpointConfiguration: REGIONAL
-      TracingEnabled: true
-      Cors:
-        AllowHeaders: '''*'''
-        AllowOrigin: '''*'''
+      FunctionName: !Sub ${AWS::StackName}-RescheduleAppointmentBy
+      Description: !Sub
+        - Stack ${StackTagName} Environment ${EnvironmentTagName} Function ${ResourceName}
+        - ResourceName: RescheduleAppointmentById
+      CodeUri: src
+      Handler: log.lambda_handler
+      Runtime: python3.8
+      MemorySize: 3008
+      Timeout: 30
+      Tracing: Active
+      Policies:
+        - AWSXrayWriteOnlyAccess
+      Events:
+        BackendApiPATCHv1appointmentsid:
+          Type: Api
+          Properties:
+            Path: /v1/appointments/{id}
+            Method: PATCH
+            RestApiId: !Ref BackendApi
+  CreateAppointment:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub ${AWS::StackName}-CreateAppointment
+      Description: !Sub
+        - Stack ${StackTagName} Environment ${EnvironmentTagName} Function ${ResourceName}
+        - ResourceName: CreateAppointment
+      CodeUri: src
+      Handler: log.lambda_handler
+      Runtime: python3.8
+      MemorySize: 3008
+      Timeout: 30
+      Tracing: Active
+      Policies:
+        - AWSXrayWriteOnlyAccess
+      Events:
+        BackendApiPOSTv1appointments:
+          Type: Api
+          Properties:
+            Path: /v1/appointments/
+            Method: POST
+            RestApiId: !Ref BackendApi
 Parameters:
   StackTagName:
     Type: String
