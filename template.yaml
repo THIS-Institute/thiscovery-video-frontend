@@ -45,6 +45,12 @@ Resources:
             ApiId: !Ref BackendHttpApi
             PayloadFormatVersion: '2.0'
             TimeoutInMillis: 10000
+        BackendApiPOSTv1roomtoken:
+          Type: Api
+          Properties:
+            Path: /v1/room/token
+            Method: POST
+            RestApiId: !Ref BackendApi
   DefaultResponse:
     Type: AWS::Serverless::Function
     Properties:
@@ -69,51 +75,27 @@ Resources:
             ApiId: !Ref BackendHttpApi
             PayloadFormatVersion: '2.0'
             TimeoutInMillis: 10000
-  TestApi:
+  BackendApi:
     Type: AWS::Serverless::Api
     Properties:
-      Name: !Sub
-        - ${ResourceName} From Stack ${StackTagName} Environment ${EnvironmentTagName}
-        - ResourceName: TestApi
+      Name: BackendApi
       StageName: !Ref EnvironmentAPIGatewayStageName
       DefinitionBody:
         swagger: '2.0'
         info: {}
         paths:
-          /:
+          /v1/room/token:
             post:
               x-amazon-apigateway-integration:
                 httpMethod: POST
                 type: aws_proxy
-                uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${GetTest.Arn}/invocations
+                uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${RoomCreateToken.Arn}/invocations
               responses: {}
       EndpointConfiguration: REGIONAL
       TracingEnabled: true
       Cors:
         AllowHeaders: '''Authorization,Content-Type'''
         AllowOrigin: '''*'''
-  GetTest:
-    Type: AWS::Serverless::Function
-    Properties:
-      FunctionName: !Sub ${AWS::StackName}-GetTest
-      Description: !Sub
-        - Stack ${StackTagName} Environment ${EnvironmentTagName} Function ${ResourceName}
-        - ResourceName: GetTest
-      CodeUri: src
-      Handler: test.lambda_handler
-      Runtime: python3.8
-      MemorySize: 3008
-      Timeout: 30
-      Tracing: Active
-      Policies:
-        - AWSXrayWriteOnlyAccess
-      Events:
-        TestApiPOST:
-          Type: Api
-          Properties:
-            Path: /
-            Method: POST
-            RestApiId: !Ref TestApi
 Parameters:
   StackTagName:
     Type: String
