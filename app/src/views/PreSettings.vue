@@ -1,6 +1,15 @@
 <template>
 	<section class="e-container my-12 md:my-18 xl:my-24">
 		<div class="grid grid-cols-12 gap-5 w-full">
+			<div class="col-span-3 hidden items-end relative transform translate-y-24 xl:flex">
+				<placeholder ratio="pt-surgeon">
+					<img
+						src="/static/img/decorations/surgeon.svg"
+						alt="Medical professional at work"
+					>
+				</placeholder>
+			</div>
+
 			<div class="col-span-12 sm:col-span-8 sm:col-start-3 lg:col-span-4 lg:col-start-5">
 				<div class="bg-white rounded-lg w-full">
 					<div

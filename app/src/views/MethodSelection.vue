@@ -1,23 +1,34 @@
 <template>
 	<section class="e-container my-12 md:my-18 xl:my-24">
-		<div class="relative xl:w-20/24 xl:left-2/24">
-			<h1
-				class="e-h2"
-				v-text="message('landing.title')"
-			/>
+		<div class="relative grid grid-cols-12 gap-5">
+			<div class="col-span-12 xl:col-span-10 xl:col-start-2">
+				<h1
+					class="e-h2"
+					v-text="message('landing.title')"
+				/>
 
-			<p
-				class="mt-2"
-				v-text="message('landing.content')"
-			/>
+				<p
+					class="mt-2"
+					v-text="message('landing.content')"
+				/>
+			</div>
 
-			<div class="relative grid grid-cols-10 gap-4 mt-7">
+			<div class="relative grid grid-cols-8 gap-5 mt-7 col-span-12 xl:col-start-2 xl:col-span-8">
 				<method-card
 					v-for="(path, index) in paths"
 					:key="index"
-					class="col-span-10 sm:col-span-8 md:col-span-5 xl:col-span-4"
+					class="col-span-8 sm:col-span-8 md:col-span-5 xl:col-span-4"
 					v-bind="path"
 				/>
+			</div>
+
+			<div class="hidden col-start-11 col-span-2 items-end relative transform translate-y-24 xl:flex">
+				<placeholder ratio="pt-doctor">
+					<img
+						src="/static/img/decorations/doctor.svg"
+						alt="Doctor holding a clipboard"
+					>
+				</placeholder>
 			</div>
 		</div>
 	</section>
