@@ -97,6 +97,7 @@ module.exports = {
 
 				'doctor': ratio(191, 526),
 				'paramedic': ratio(355, 344),
+				'nurse': ratio(344, 526),
 
 				'9/16': ratio(16, 9),
 				'3/4': ratio(4, 3),
