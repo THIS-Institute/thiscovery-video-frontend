@@ -23,6 +23,28 @@ Resources:
             Path: /v1/room/token
             Method: POST
             RestApiId: !Ref BackendApi
+  LogFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub ${AWS::StackName}-LogFunction
+      Description: !Sub
+        - Stack ${StackTagName} Environment ${EnvironmentTagName} Function ${ResourceName}
+        - ResourceName: LogFunction
+      CodeUri: src
+      Handler: log.lambda_handler
+      Runtime: python3.8
+      MemorySize: 3008
+      Timeout: 30
+      Tracing: Active
+      Policies:
+        - AWSXrayWriteOnlyAccess
+      Events:
+        BackendApiGETv1appointmentsid:
+          Type: Api
+          Properties:
+            Path: /v1/appointments/{id}
+            Method: GET
+            RestApiId: !Ref BackendApi
   BackendApi:
     Type: AWS::Serverless::Api
     Properties:
@@ -38,6 +60,13 @@ Resources:
                 httpMethod: POST
                 type: aws_proxy
                 uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${RoomCreateToken.Arn}/invocations
+              responses: {}
+          /v1/appointments/{id}:
+            get:
+              x-amazon-apigateway-integration:
+                httpMethod: POST
+                type: aws_proxy
+                uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${LogFunction.Arn}/invocations
               responses: {}
       EndpointConfiguration: REGIONAL
       TracingEnabled: true
