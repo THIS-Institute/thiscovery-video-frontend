@@ -3,10 +3,6 @@ def lambda_handler(event, context):
     print(event)
 
     return {
-        'headers': {
-            'Access-Control-Allow-Origin': '*',
-            'Content-Type': 'application/json'
-        },
         'statusCode': 200,
-        'body': '\{\}'
+        'body': '{}'
     }
