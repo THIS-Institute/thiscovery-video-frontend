@@ -1,5 +1,6 @@
 # General
 .DS_Store
+.vscode
 
 # App
 .env
@@ -12,5 +13,5 @@
 /app/src/app.env.js
 
 # Lambda
-src/__pycache__
+__pycache__
 local

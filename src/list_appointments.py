@@ -4,7 +4,7 @@ import requests
 from datetime import datetime
 
 def list_available_events():
-    appointment_id = os.environ['ACUITY_APPOINTMENT_ID']
+    appointment_id = os.environ['ACUITY_APPOINTMENT_TYPE_ID']
     date = datetime.now()
     response = list_appointment_dates(appointment_id=appointment_id, date=date)
     dates_response = response.json()

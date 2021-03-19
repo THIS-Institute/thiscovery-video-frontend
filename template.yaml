@@ -79,7 +79,7 @@ Resources:
         - Stack ${StackTagName} Environment ${EnvironmentTagName} Function ${ResourceName}
         - ResourceName: GetAppointmentSlots
       CodeUri: src
-      Handler: log.lambda_handler
+      Handler: get_appointment_slots.lambda_handler
       Runtime: python3.8
       MemorySize: 3008
       Timeout: 30
