@@ -20,6 +20,10 @@
 			</div>
 		</template>
 
+		<template v-else-if="reviewing">
+			<slot />
+		</template>
+
 		<video-preview v-else />
 
 		<template v-if="recording">
@@ -96,6 +100,7 @@
 					<e-button
 						:icon="isPlaying ? 'pause' : 'play'"
 						class="e-button--white"
+						@click="$emit('toggle-playback')"
 					/>
 				</template>
 			</div>
@@ -132,13 +137,18 @@
 
 			// Hides controls altogether
 			hideControls: Boolean,
+
+			isPlaying: Boolean,
 		},
+
+		emits: [
+			'toggle-playback',
+		],
 
 		setup() {
 			const state = reactive({
 				muted: false,
 				hidden: false,
-				isPlaying: false,
 			});
 
 			const store = useStore();

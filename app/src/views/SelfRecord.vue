@@ -13,8 +13,8 @@
 					:pre-record="false"
 					:loading="false"
 					:recording="false"
-					:stopped="true"
-					:reviewing="false"
+					:stopped="false"
+					:reviewing="true"
 				/>
 			</div>
 		</div>

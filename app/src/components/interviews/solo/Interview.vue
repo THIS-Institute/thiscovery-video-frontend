@@ -76,7 +76,16 @@
 					:loading="loading"
 					:stopped="stopped"
 					:reviewing="reviewing"
-				/>
+					:is-playing="isPlaying"
+					@toggle-playback="togglePlayback()"
+				>
+					<video
+						ref="video"
+						class="absolute inset-0 w-full h-full object-cover"
+						src="/static/img/big-buck-bunny.mp4"
+						@timeupdate="updateProgress"
+					/>
+				</video-wrapper>
 
 				<div class="flex flex-wrap items-center justify-between gap-y-5 px-5 my-5">
 					<e-button
@@ -129,8 +138,10 @@
 					</template>
 
 					<scrubber
-						v-else-if="reviewing"
+						v-else-if="reviewing && video"
+						ref="videoScrubber"
 						class="w-full"
+						@scrub="onScrub"
 					/>
 				</div>
 			</div>
@@ -161,7 +172,7 @@
 					title: 'Click here to retake it',
 				}"
 				modal
-				@open-modal="toggle"
+				@open-modal="confirmRetake"
 			/>
 		</div>
 	</div>
@@ -170,7 +181,7 @@
 <script>
 	import { useQuestions } from '@/composables/useQuestions';
 
-	import { computed } from 'vue';
+	import { computed, ref, reactive, toRefs } from 'vue';
 	import { useStore } from 'vuex';
 
 	import VideoWrapper from '@/components/interviews/settings/VideoWrapper';
@@ -239,7 +250,30 @@
 			});
 
 			const store = useStore();
-			const toggle = () => store.commit('app/toggleModal');
+			const confirmRetake = () => store.commit('app/toggleModal');
+
+			const video = ref(null);
+			const videoScrubber = ref(null);
+
+			const state = reactive({
+				isPlaying: false,
+			});
+
+			const togglePlayback = () => {
+				const v = video.value;
+
+				v.paused ? v.play() : v.pause();
+				state.isPlaying = !v.paused;
+			};
+
+			const onScrub = (time) => {
+				video.value.currentTime = (time / 1000);
+			};
+
+			const updateProgress = () => {
+				const current = video.value.currentTime;
+				videoScrubber.value.currentTime = (current * 1000);
+			};
 
 			return {
 				toReadableValue,
@@ -248,7 +282,13 @@
 				readQuestion,
 				readSection,
 				progress,
-				toggle,
+				confirmRetake,
+				togglePlayback,
+				video,
+				onScrub,
+				videoScrubber,
+				updateProgress,
+				...toRefs(state),
 			};
 		},
 	};
