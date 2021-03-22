@@ -32,7 +32,7 @@ def fetch_initial_timeslots(days, start_date):
     for key in sorted_keys:
         sorted_dates[key] = dates[key]
 
-    return sorted_dates
+    return list(sorted_dates.values())
 
 def format_date_response(date, timeslots_result):
     timeslots = []
@@ -66,9 +66,13 @@ def fetch_date(acuity, date):
 
 def lambda_handler(event, context):
     today = datetime.today()
-    dates = fetch_initial_timeslots(days=5, start_date=today)
+    timeslots = fetch_initial_timeslots(days=5, start_date=today)
+
+    response = {
+        'calendar': timeslots
+    }
 
     return {
         'statusCode': 200,
-        'body': json.dumps(dates)
+        'body': json.dumps(response)
     }
