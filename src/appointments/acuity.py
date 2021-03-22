@@ -6,6 +6,7 @@ class Acuity:
     def __init__(self):
         self._base_uri = os.environ['ACUITY_BASE_URI']
         self._auth = HTTPBasicAuth(os.environ['ACUITY_UID'], os.environ['ACUITY_API_KEY'])
+        self._session = Session()
 
     def get_availability_dates(self, appointment_type_id, month):
         params = {
@@ -34,7 +35,6 @@ class Acuity:
         return response
 
     def _send_request(self, endpoint, method='GET', data=None, params=None):
-        session = Session()
         request = Request(
             method=method,
             url=self._base_uri + endpoint,
@@ -43,7 +43,7 @@ class Acuity:
             auth=self._auth
         )
 
-        prepared_request = session.prepare_request(request)
-        response = session.send(prepared_request)
+        prepared_request = self._session.prepare_request(request)
+        response = self._session.send(prepared_request)
 
         return response
