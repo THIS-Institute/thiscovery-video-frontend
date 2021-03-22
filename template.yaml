@@ -46,7 +46,7 @@ Resources:
               responses: {}
       EndpointConfiguration: REGIONAL
       TracingEnabled: true
-      MinimumCompressionSize: 10
+      MinimumCompressionSize: 1000
       Cors:
         AllowHeaders: '''*'''
         AllowOrigin: '''*'''
