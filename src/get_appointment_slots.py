@@ -17,7 +17,9 @@ def fetch_initial_timeslots(days, start_date):
         next_date = get_next_date(next_date)
 
     acuity = Acuity()
-    dates = dict()
+    dates = {}
+
+    acuity.head_availability_times()
 
     with concurrent.futures.ThreadPoolExecutor(max_workers=5) as executor:
         date_futures = { executor.submit(fetch_date, acuity, date): date for date in check_dates }
@@ -26,26 +28,32 @@ def fetch_initial_timeslots(days, start_date):
             response = format_date_response(date=date, timeslots_result=future.result())
             dates[date.strftime('%Y%m%d')] = response
 
-    sorted_keys = sorted(dates.keys())
-    sorted_dates = dict()
+    sorted_dates = sort_dictionary_by_date(dates)
+    timeslots = list(sorted_dates.values())
+
+    return timeslots
+
+def sort_dictionary_by_date(dates_dict):
+    sorted_keys = sorted(dates_dict.keys())
+    sorted_dictionary = {}
     
     for key in sorted_keys:
-        sorted_dates[key] = dates[key]
+        sorted_dictionary[key] = dates_dict[key]
 
-    return list(sorted_dates.values())
+    return sorted_dictionary
 
 def format_date_response(date, timeslots_result):
     timeslots = []
 
     for timeslot_result in timeslots_result:
-        timeslots.append(format_slot_response(timeslot_result=timeslot_result))
+        timeslots.append(format_timeslot_response(timeslot_result=timeslot_result))
 
     return {
         'date': date.strftime('%Y-%m-%d'),
         'timeslots': timeslots,
     }
 
-def format_slot_response(timeslot_result):
+def format_timeslot_response(timeslot_result):
     time = parse_time(timeslot_result['time'])
 
     return {
@@ -69,7 +77,7 @@ def lambda_handler(event, context):
     timeslots = fetch_initial_timeslots(days=5, start_date=today)
 
     response = {
-        'calendar': timeslots
+        'slots': timeslots
     }
 
     return {

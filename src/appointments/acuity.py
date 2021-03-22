@@ -34,6 +34,12 @@ class Acuity:
         
         return response
 
+    def head_availability_times(self):
+        return self._session.head(
+            url=self._base_uri + 'availability/times',
+            auth=self._auth
+        )
+
     def _send_request(self, endpoint, method='GET', data=None, params=None):
         request = Request(
             method=method,
