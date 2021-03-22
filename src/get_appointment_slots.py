@@ -19,8 +19,6 @@ def fetch_initial_timeslots(days, start_date):
     acuity = Acuity()
     dates = {}
 
-    acuity.head_availability_times()
-
     with concurrent.futures.ThreadPoolExecutor(max_workers=5) as executor:
         date_futures = { executor.submit(fetch_date, acuity, date): date for date in check_dates }
         for future in concurrent.futures.as_completed(date_futures):
