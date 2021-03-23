@@ -211,7 +211,7 @@ Resources:
             phases:
               install:
                 runtime-versions:
-                  nodejs: latest
+                  nodejs: 14
                 commands:
                   - |
                     _SOURCE_LOCATION="${SourceLocation}"
