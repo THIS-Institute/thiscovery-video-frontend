@@ -2,26 +2,28 @@
 <html lang="en-GB">
 <head>
     <meta charset="utf-8">
-    <title></title>
+    <title>Thiscovery: Remote Interview</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="preload" href="/dist/app.css" as="style">
+    <link rel="preload" href="/dist/app.js" as="script">
+    <link rel="preload" href="/static/fonts/lineto-brown/lineto-brown-regular.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/static/fonts/lineto-brown/lineto-brown-bold.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="/dist/app.css">
 
     <!--[if IE]>
         <script type="text/javascript">
             window.location.href = '/unsupported.html';
         </script>
     <![endif]-->
-
-    <link rel="stylesheet" href="/dist/app.css">
-
-    <link rel="preload" as="font" type="font/woff2" href="/static/fonts/lineto-brown/lineto-brown-regular.woff2">
-    <link rel="preload" as="font" type="font/woff2" href="/static/fonts/lineto-brown/lineto-brown-bold.woff2">
 </head>
 <body class="relative">
     <div id="app">
         <router-view></router-view>
     </div>
-    <script type="text/javascript" src="/static/js/capabilities.js" async></script>
+
     <script type="text/javascript" src="/dist/app.js" async></script>
+    <script type="text/javascript" src="/dist/capabilities.js" async></script>
 </body>
 </html>
