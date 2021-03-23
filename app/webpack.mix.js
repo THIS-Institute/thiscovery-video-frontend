@@ -48,6 +48,7 @@ const postcssPlugins = [
 ];
 
 mix.js('./src/app.js', 'dist')
+    .js('./src/capabilities.js', 'dist')
     .vue()
     .postCss('./css/app.css', 'dist', postcssPlugins)
     .setPublicPath('public');
