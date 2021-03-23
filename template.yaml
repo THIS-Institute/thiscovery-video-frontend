@@ -164,17 +164,19 @@ Resources:
     Type: AWS::CloudFront::Distribution
     Properties:
       DistributionConfig:
+        Comment: Serves Thiscovery frontend
         DefaultCacheBehavior:
           CachePolicyId: 658327ea-f89d-4fab-a63d-7e88639e58f6
           Compress: true
-          TargetOriginId: StackeryCDN
+          TargetOriginId: FrontendAssetsS3
           ViewerProtocolPolicy: redirect-to-https
         Enabled: true
         DefaultRootObject: index.html
         PriceClass: PriceClass_100
+        HttpVersion: http2
         Origins:
           - DomainName: !GetAtt FrontendAssets.RegionalDomainName
-            Id: StackeryCDN
+            Id: FrontendAssetsS3
             S3OriginConfig:
               OriginAccessIdentity: !Sub
                 - origin-access-identity/cloudfront/${OriginAccessIdentity}
@@ -183,7 +185,7 @@ Resources:
     Type: AWS::CloudFront::CloudFrontOriginAccessIdentity
     Properties:
       CloudFrontOriginAccessIdentityConfig:
-        Comment: Stackery
+        Comment: FrontendAssetsIdentity
   BuildFrontend:
     Type: AWS::CodeBuild::Project
     Metadata:
