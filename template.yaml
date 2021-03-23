@@ -222,7 +222,7 @@ Resources:
                   - cd ${SourceDirectory}
               pre_build:
                 commands:
-                  - npm install --production
+                  - npm install
               build:
                 commands:
                   - ${BuildCommand}
