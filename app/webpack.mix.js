@@ -32,11 +32,15 @@ const eslint = {
 };
 
 mix.webpackConfig((webpack) => {
+    console.log(webpack);
     return {
         plugins: [
             new webpack.DefinePlugin(flags),
             new ESLintPlugin(eslint),
         ],
+        output: {
+            chunkFilename: 'dist/[chunkhash].js',
+        },
     };
 });
 

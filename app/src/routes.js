@@ -1,16 +1,16 @@
 import * as constant from './routeConstants';
 
 // Tools
-import Styleguide from './views/Styleguide';
+const Styleguide = () => import('./views/Styleguide');
 
 // Pages
-import MethodSelectionView from './views/MethodSelection';
-import MethodOverviewView from './views/MethodOverview';
-import BookAppointmentView from './views/BookAppointment';
-import PreSettingsView from './views/PreSettings';
-import SelfRecordView from './views/SelfRecord';
-import LiveRoomView from './views/LiveRoom';
-import LiveLandingView from './views/LiveLanding';
+const MethodSelectionView = () => import('./views/MethodSelection');
+const MethodOverviewView = () => import('./views/MethodOverview');
+const BookAppointmentView = () => import('./views/BookAppointment');
+const PreSettingsView = () => import('./views/PreSettings');
+const SelfRecordView = () => import('./views/SelfRecord');
+const LiveRoomView = () => import('./views/LiveRoom');
+const LiveLandingView = () => import('./views/LiveLanding');
 
 // Layouts
 import FullBackgroundLayout from './layouts/FullBackground';
