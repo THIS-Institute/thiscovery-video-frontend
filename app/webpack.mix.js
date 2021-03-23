@@ -32,7 +32,6 @@ const eslint = {
 };
 
 mix.webpackConfig((webpack) => {
-    console.log(webpack);
     return {
         plugins: [
             new webpack.DefinePlugin(flags),
