@@ -1,5 +1,14 @@
 @font-face {
 	font-family: 'Brown';
+	src: url('/static/fonts/lineto-brown/lineto-brown-regular.woff2') format('woff2'),
+		 url('/static/fonts/lineto-brown/lineto-brown-regular.woff') format('woff');
+	font-display: swap;
+	font-style: normal;
+	font-weight: 400;
+}
+
+@font-face {
+	font-family: 'Brown';
 	src: url('/static/fonts/lineto-brown/lineto-brown-bold.woff2') format('woff2'),
 		 url('/static/fonts/lineto-brown/lineto-brown-bold.woff') format('woff');
 	font-display: swap;
@@ -14,13 +23,4 @@
 	font-display: swap;
 	font-style: normal;
 	font-weight: 300;
-}
-
-@font-face {
-	font-family: 'Brown';
-	src: url('/static/fonts/lineto-brown/lineto-brown-regular.woff2') format('woff2'),
-		 url('/static/fonts/lineto-brown/lineto-brown-regular.woff') format('woff');
-	font-display: swap;
-	font-style: normal;
-	font-weight: 400;
 }

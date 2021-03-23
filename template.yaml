@@ -160,6 +160,177 @@ Resources:
             Path: /v1/appointments/
             Method: POST
             RestApiId: !Ref BackendApi
+  Cdn:
+    Type: AWS::CloudFront::Distribution
+    Properties:
+      DistributionConfig:
+        DefaultCacheBehavior:
+          CachePolicyId: 658327ea-f89d-4fab-a63d-7e88639e58f6
+          Compress: true
+          TargetOriginId: StackeryCDN
+          ViewerProtocolPolicy: redirect-to-https
+        Enabled: true
+        DefaultRootObject: index.html
+        PriceClass: PriceClass_100
+        Origins:
+          - DomainName: !GetAtt FrontendAssets.RegionalDomainName
+            Id: StackeryCDN
+            S3OriginConfig:
+              OriginAccessIdentity: !Sub
+                - origin-access-identity/cloudfront/${OriginAccessIdentity}
+                - OriginAccessIdentity: !Ref CdnOriginAccessIdentity
+  CdnOriginAccessIdentity:
+    Type: AWS::CloudFront::CloudFrontOriginAccessIdentity
+    Properties:
+      CloudFrontOriginAccessIdentityConfig:
+        Comment: Stackery
+  BuildFrontend:
+    Type: AWS::CodeBuild::Project
+    Metadata:
+      StackeryType: website
+    DependsOn: BuildFrontendRole
+    Properties:
+      Name: !Sub ${AWS::StackName}-BuildFrontend
+      Artifacts:
+        Type: NO_ARTIFACTS
+      Environment:
+        ComputeType: BUILD_GENERAL1_SMALL
+        Image: aws/codebuild/amazonlinux2-x86_64-standard:3.0
+        Type: LINUX_CONTAINER
+        EnvironmentVariables: []
+      ServiceRole: !GetAtt BuildFrontendRole.Arn
+      Source:
+        Type: NO_SOURCE
+        BuildSpec: !Sub
+          - |-
+            version: 0.2
+            phases:
+              install:
+                runtime-versions:
+                  nodejs: latest
+                commands:
+                  - |
+                    _SOURCE_LOCATION="${SourceLocation}"
+                    if [ s3 != "${!_SOURCE_LOCATION%%:*}" ]; then
+                      git clone "${SourceLocation}" repo
+                      cd repo
+                      git checkout "${SourceVersion}"
+                    else
+                      aws s3 cp "${SourceLocation}" repo.tgz
+                      tar --strip-components 1 -xvvzf repo.tgz
+                    fi
+                  - cd ${SourceDirectory}
+              pre_build:
+                commands:
+                  - npm install --production
+              build:
+                commands:
+                  - ${BuildCommand}
+              post_build:
+                commands:
+                  - if [ $CODEBUILD_BUILD_SUCCEEDING == 0 ]; then exit 1; fi
+                  - |
+                    _SOURCE_LOCATION=${SourceLocation}
+                    if [ s3 != "${!_SOURCE_LOCATION%%:*}" ]; then
+                      cd "${!CODEBUILD_SRC_DIR}/repo"
+                    else
+                      cd "${!CODEBUILD_SRC_DIR}"
+                    fi
+                  - aws s3 sync '${PublishDirectory}' 's3://${DestinationBucketName}' --acl public-read --cache-control 'max-age=0, must-revalidate, public' --no-progress --delete
+          - PublishDirectory: app/public
+            BuildCommand: npx mix --production
+            SourceDirectory: app
+            DestinationBucketName: !Ref FrontendAssets
+      Tags:
+        - Key: Stackery Project Type
+          Value: Website Builder
+  BuildFrontendEvents:
+    Type: AWS::Events::Rule
+    Properties:
+      EventPattern:
+        source:
+          - aws.codebuild
+        detail-type:
+          - CodeBuild Build State Change
+        detail:
+          build-status:
+            - SUCCEEDED
+            - FAILED
+            - FAULT
+            - STOPPPED
+            - TIMED_OUT
+          project-name:
+            - !Ref BuildFrontend
+      Targets:
+        - Arn: !Sub arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:stackery-agent-commander
+          Id: StackeryAgentCommander
+  BuildFrontendEventsPermission:
+    Type: AWS::Lambda::Permission
+    DependsOn: BuildFrontendEvents
+    Properties:
+      Action: lambda:InvokeFunction
+      FunctionName: !Sub arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:stackery-agent-commander
+      Principal: events.amazonaws.com
+      SourceArn: !GetAtt BuildFrontendEvents.Arn
+  BuildFrontendRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Sub ${AWS::StackName}-BuildFrontend
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          Effect: Allow
+          Principal:
+            Service: codebuild.amazonaws.com
+          Action: sts:AssumeRole
+      Policies:
+        - PolicyName: Logs
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - logs:CreateLogGroup
+                  - logs:CreateLogStream
+                  - logs:PutLogEvents
+                Resource:
+                  - !Sub arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/codebuild/${AWS::StackName}-BuildFrontend:log-stream:*
+        - PolicyName: DownloadSourceFromStackeryAssetsBucket
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action: s3:GetObject
+                Resource: arn:aws:s3:::stackery-assetsbucket-*/*
+        - PolicyName: UploadToDestinationObjectStore
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - s3:DeleteObject
+                  - s3:GetBucketLocation
+                  - s3:GetObject
+                  - s3:ListBucket
+                  - s3:PutObject
+                  - s3:PutObjectAcl
+                Resource:
+                  - !Sub ${FrontendAssets.Arn}/*
+                  - !Sub ${FrontendAssets.Arn}
+  BuildFrontendBuildTrigger:
+    Type: Custom::StackeryWebsiteBuildTrigger
+    DependsOn: BuildFrontendEvents
+    Properties:
+      ServiceToken: !Sub arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:stackery-agent-commander
+      Type: website
+      ProjectName: !Ref BuildFrontend
+      SourceVersion: !Ref SourceVersion
+  FrontendAssets:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub ${AWS::StackName}-frontenda-${AWS::AccountId}
+      WebsiteConfiguration:
+        IndexDocument: index.html
 Parameters:
   StackTagName:
     Type: String
@@ -170,3 +341,9 @@ Parameters:
   EnvironmentAPIGatewayStageName:
     Type: String
     Description: Environment name used for API Gateway Stage names (injected by Stackery at deployment time)
+  SourceLocation:
+    Type: String
+    Description: Location of source code for deployment (injected by Stackery at deployment time)
+  SourceVersion:
+    Type: String
+    Description: Source version for deployment (injected by Stackery at deployment time)

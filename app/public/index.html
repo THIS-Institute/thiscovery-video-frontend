@@ -5,18 +5,23 @@
     <title></title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <!--[if IE]>
         <script type="text/javascript">
             window.location.href = '/unsupported.html';
         </script>
     <![endif]-->
-    <script type="text/javascript" src="/static/js/capabilities.js"></script>
+
     <link rel="stylesheet" href="/dist/app.css">
+
+    <link rel="preload" as="font" type="font/woff2" href="/static/fonts/lineto-brown/lineto-brown-regular.woff2">
+    <link rel="preload" as="font" type="font/woff2" href="/static/fonts/lineto-brown/lineto-brown-bold.woff2">
 </head>
 <body class="relative">
     <div id="app">
         <router-view></router-view>
     </div>
-    <script src="/dist/app.js"></script>
+    <script type="text/javascript" src="/static/js/capabilities.js" async></script>
+    <script type="text/javascript" src="/dist/app.js" async></script>
 </body>
 </html>
