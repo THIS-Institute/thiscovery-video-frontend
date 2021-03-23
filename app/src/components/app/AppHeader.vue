@@ -3,7 +3,10 @@
 		<div class="e-container w-full flex items-center justify-between">
 			<div class="inline-flex items-center w-full">
 				<div class="flex-shrink-0 w-full max-w-logo">
-					<router-link to="/">
+					<router-link
+						to="/"
+						aria-label="Thiscovery.org"
+					>
 						<placeholder
 							ratio="pt-logo"
 							tag="span"
@@ -57,6 +60,7 @@
 					'rounded-full bg-red p-3 focus:outline-none',
 					'lg:hidden',
 				]"
+				aria-label="Main menu"
 				@click="toggle"
 			>
 				<placeholder
