@@ -79,16 +79,7 @@
 			</div>
 		</div>
 
-		<div
-			v-if="submitting"
-			class="absolute inset-0 w-full h-full flex items-center justify-center"
-		>
-			<icon
-				name="loading"
-				class="text-red animate-spin"
-				size="w-10 h-10"
-			/>
-		</div>
+		<loading-spinner v-if="submitting" />
 	</div>
 </template>
 
@@ -97,8 +88,11 @@
 
 	import { reactive, toRefs, computed } from 'vue';
 	import { useViewport } from '@/composables/useViewport';
+	import LoadingSpinner from '@/components/ui/LoadingSpinner.vue';
 
 	export default {
+		components: { LoadingSpinner },
+
 		props: {
 			calendar: {
 				type: Array,

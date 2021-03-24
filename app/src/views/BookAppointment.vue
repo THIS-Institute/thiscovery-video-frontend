@@ -20,6 +20,7 @@
 					v-if="!isLoading"
 					v-bind="slots"
 				/>
+				<loading-spinner v-else />
 			</div>
 
 			<div
@@ -43,9 +44,10 @@
 	import messages from '@/messages';
 	import { useMessages } from '@/composables/useMessages';
 	import AppointmentSlots from '@/components/appointments/AppointmentSlots';
+	import LoadingSpinner from '@/components/ui/LoadingSpinner.vue';
 
 	export default {
-		components: { AppointmentSlots },
+		components: { LoadingSpinner, AppointmentSlots },
 
 		setup() {
 			const store = useStore();
