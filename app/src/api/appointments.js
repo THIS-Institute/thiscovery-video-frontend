@@ -11,8 +11,8 @@ export async function fetchInitialAppointmentCalendar () {
 	})
 	.then(response => response.json())
 	.then((response) => {
-		if (response.slots) {
-			calendar = response.slots;
+		if (response.dates) {
+			calendar = response.dates;
 		}
 	})
 	.catch((error) => console.error(error));
