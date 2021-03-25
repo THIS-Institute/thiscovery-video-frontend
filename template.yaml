@@ -175,7 +175,8 @@ Resources:
         CustomErrorResponses:
           - ErrorCode: 404
             ResponseCode: 404
-            ResponsePagePath: index.html
+            ResponsePagePath: /index.html
+            ErrorCachingMinTTL: 10
         PriceClass: PriceClass_100
         HttpVersion: http2
         Origins:
