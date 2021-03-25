@@ -60,7 +60,7 @@ Resources:
       CodeUri: src
       Handler: room_token.lambda_handler
       Runtime: python3.8
-      MemorySize: 3008
+      MemorySize: 1024
       Timeout: 30
       Tracing: Active
       Policies:
@@ -82,7 +82,7 @@ Resources:
       CodeUri: src
       Handler: get_appointment_slots.lambda_handler
       Runtime: python3.8
-      MemorySize: 3008
+      MemorySize: 2048
       Timeout: 30
       Tracing: Active
       Policies:
@@ -104,7 +104,7 @@ Resources:
       CodeUri: src
       Handler: log.lambda_handler
       Runtime: python3.8
-      MemorySize: 3008
+      MemorySize: 1024
       Timeout: 30
       Tracing: Active
       Policies:
@@ -126,7 +126,7 @@ Resources:
       CodeUri: src
       Handler: log.lambda_handler
       Runtime: python3.8
-      MemorySize: 3008
+      MemorySize: 1024
       Timeout: 30
       Tracing: Active
       Policies:
@@ -148,7 +148,7 @@ Resources:
       CodeUri: src
       Handler: log.lambda_handler
       Runtime: python3.8
-      MemorySize: 3008
+      MemorySize: 1024
       Timeout: 30
       Tracing: Active
       Policies:
