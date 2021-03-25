@@ -342,7 +342,7 @@ Resources:
   FrontendAssets:
     Type: AWS::S3::Bucket
     Properties:
-      BucketName: !Sub ${AWS::StackName}-frontenda-${AWS::AccountId}
+      BucketName: !Sub frontend-assets-${AWS::AccountId}
       WebsiteConfiguration:
         IndexDocument: index.html
 Parameters:
