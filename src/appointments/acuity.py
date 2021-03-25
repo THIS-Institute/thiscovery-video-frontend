@@ -24,7 +24,8 @@ class Acuity:
     def get_availability_times(self, appointment_type_id, date):
         params = {
             'appointmentTypeID': appointment_type_id,
-            'date': date
+            'date': date,
+            'timezone': 'Europe/London',
         }
 
         response = self._send_request(endpoint='availability/times', params=params)

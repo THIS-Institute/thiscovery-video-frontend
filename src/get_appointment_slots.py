@@ -2,6 +2,7 @@ import os
 import json
 import concurrent.futures
 from datetime import datetime, timedelta
+from pytz import timezone, utc
 from appointments.acuity import Acuity
 
 def get_next_date(date):
@@ -41,19 +42,21 @@ def sort_dictionary_by_date(dates_dict):
 
 def format_date_response(date, timeslots_result):
     timeslots = []
-
     available_timeslots = set()
 
     for timeslot in timeslots_result:
         time = parse_time(timeslot['time'])
         available_timeslots.add(time.strftime('%H%M'))
 
+    london = timezone('Europe/London')
+    date = london.localize(date)
+
     current_time = date.replace(hour=9, minute=0, second=0, microsecond=0)
     day_end = date.replace(hour=17, minute=0, second=0, microsecond=0)
 
     while current_time <= day_end:
         timeslot = {
-            'time': current_time.isoformat(),
+            'time': current_time.strftime('%Y-%m-%dT%H:%M:%S%z'),
             'available': current_time.strftime('%H%M') in available_timeslots,
         }
 
@@ -86,8 +89,8 @@ def fetch_date(acuity, date):
     return response
 
 def lambda_handler(event, context):
-    today = datetime.today()
-    timeslots = fetch_initial_timeslots(days=5, start_date=today)
+    now = datetime.today()
+    timeslots = fetch_initial_timeslots(days=5, start_date=now)
 
     if timeslots[0]:
         timeslots[0]['limit'] = True
