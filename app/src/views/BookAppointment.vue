@@ -16,10 +16,7 @@
 			<hr class="e-divider mt-5 border-0 xl:hidden">
 
 			<div class="e-content relative gap-5 mt-12 col-span-12 xl:mt-7 xl:col-start-2 xl:col-span-10">
-				<appointment-slots
-					v-if="!isLoading"
-					v-bind="slots"
-				/>
+				<appointment-slots v-if="!isLoading" />
 				<loading-spinner v-else />
 			</div>
 
@@ -53,26 +50,26 @@
 			const store = useStore();
 			const { message } = useMessages(messages);
 			const isLoading = ref(false);
-			const slots = computed(() => store.state.task.appointmentSlots);
+			const calendar = computed(() => store.state.task.appointmentCalendar);
 			const isConfirmed = computed(() => store.state.task.confirmed);
 
-			const onSlotsInitialised = () => {
+			const onCalendarInitialised = () => {
 				isLoading.value = false;
 			};
 
-			if (slots.value && slots.value.length == 0) {
+			if (calendar.value && calendar.value.length == 0) {
 				isLoading.value = true;
 
 				store
-					.dispatch('task/initAppointmentSlots')
-					.then(onSlotsInitialised);
+					.dispatch('task/initAppointmentCalendar')
+					.then(onCalendarInitialised);
 			}
 
 			return {
 				message,
 				isConfirmed,
 				isLoading,
-				slots,
+				calendar,
 			}
 		},
 	};

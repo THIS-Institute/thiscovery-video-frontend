@@ -21,7 +21,7 @@
 
 			<h2
 				class="e-h-interview"
-				v-text="title"
+				v-text="taskTitle"
 			/>
 
 			<booking-status
@@ -30,7 +30,7 @@
 			/>
 
 			<selected-slot
-				:date="date"
+				:timeslot="selectedTimeslot"
 				:confirmed="confirmed"
 			/>
 
@@ -39,7 +39,7 @@
 				title="Book appointment"
 				icon="chevron-right"
 				class="e-button--red hidden md:inline-block"
-				:disabled="!date"
+				:disabled="!selectedTimeslot"
 				pill
 				@click="confirmSlot"
 			/>
@@ -75,7 +75,7 @@
 			title="Book appointment"
 			icon="chevron-right"
 			class="e-button--red"
-			:disabled="!date"
+			:disabled="!selectedTimeslot"
 			pill
 			@click="confirmSlot"
 		/>
@@ -83,13 +83,13 @@
 </template>
 
 <script>
-	import { store } from '@/store/index';
+	import { useStore } from 'vuex';
 	import { computed } from 'vue';
 
-	import DatePicker from '@/components/appointments/DatePicker';
-	import SelectedSlot from '@/components/appointments/SelectedSlot';
-	import BookingStatus from '@/components/appointments/BookingStatus';
-	import AppointmentInfo from '@/components/appointments/AppointmentInfo';
+	import DatePicker from './DatePicker';
+	import SelectedSlot from './SelectedSlot';
+	import BookingStatus from './BookingStatus';
+	import AppointmentInfo from './AppointmentInfo';
 
 	export default {
 		components: {
@@ -99,35 +99,23 @@
 			AppointmentInfo,
 		},
 
-		props: {
-			title: {
-				type: String,
-				required: true,
-			},
-
-			calendar: {
-				type: Array,
-				required: true,
-			},
-		},
-
 		setup() {
+			const store = useStore();
+			const calendar = computed(() => store.state.task.appointmentCalendar);
 			const isSubmitting = computed(() => store.state.task.isSubmitting);
 			const confirmed = computed(() => store.state.task.confirmed);
+			const taskTitle = computed(() => store.state.task.title);
+			const selectedTimeslot = computed(() => store.state.task.timeslot);
 
 			const confirmSlot = () => store.commit('task/confirmSlot');
 
-			const date = computed(() => {
-				if (!store.state.task.timeslot) return;
-
-				return store.state.task.timeslot;
-			});
-
 			return {
+				taskTitle,
 				isSubmitting,
 				confirmed,
 				confirmSlot,
-				date,
+				selectedTimeslot,
+				calendar,
 			};
 		},
 	};

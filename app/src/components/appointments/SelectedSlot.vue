@@ -1,5 +1,5 @@
 <template>
-	<template v-if="date && !confirmed">
+	<template v-if="timeslot && !confirmed">
 		<div
 			:class="[
 				'grid grid-cols-2 items-center justify-around',
@@ -15,7 +15,7 @@
 
 				<p
 					class="font-bold whitespace-nowrap"
-					v-text="date.date"
+					v-text="asFormattedDate(timeslot)"
 				/>
 			</div>
 
@@ -27,7 +27,7 @@
 
 				<p
 					class="font-bold whitespace-nowrap"
-					v-text="`${date.slot}${date.meridiem}`"
+					v-text="asFormattedTime(timeslot)"
 				/>
 			</div>
 		</div>
@@ -39,7 +39,7 @@
 	</template>
 
 	<div
-		v-else-if="!date"
+		v-else-if="!timeslot"
 		class="py-7 px-7.5 border border-grey-200 rounded-lg"
 	>
 		<h1
@@ -64,7 +64,7 @@
 
 		<p
 			class="font-bold mt-1"
-			v-text="`${date.date}, ${date.slot}${date.meridiem}`"
+			v-text="`${asFormattedDate(timeslot)}, ${asFormattedTime(timeslot)}`"
 		/>
 
 		<e-button
@@ -81,11 +81,12 @@
 <script>
 	import messages from '@/messages';
 	import { useMessages } from '@/composables/useMessages';
+	import { useDates } from './useDates';
 
 	export default {
 		props: {
-			date: {
-				type: Object,
+			timeslot: {
+				type: String,
 				default: null,
 			},
 
@@ -98,8 +99,13 @@
 
 		setup() {
 			const { message } = useMessages(messages);
+			const { asFormattedDate, asFormattedTime } = useDates();
 
-			return { ...message('live.selectedSlot') };
+			return {
+				asFormattedDate,
+				asFormattedTime,
+				...message('live.selectedSlot'),
+			};
 		},
 	};
 </script>

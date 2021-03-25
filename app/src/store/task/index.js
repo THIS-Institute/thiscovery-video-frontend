@@ -1,23 +1,24 @@
 import env from '@/app.env';
-import { fetchInitialAppointmentSlots } from '@/api/appointments';
+
+import {
+	fetchInitialAppointmentCalendar,
+	fetchNextAppointmentDate,
+} from '@/api/appointments';
 
 export const task = {
 	namespaced: true,
 
 	state: () => ({
-		appointmentSlots: [],
+		title: 'Suggest recommendation for good practice',
+		appointmentCalendar: [],
 		timeslot: null,
 		confirmed: false,
 		isSubmitting: false,
 	}),
 
 	mutations: {
-		select(state, { date, slot }) {
-			state.timeslot = {
-				date: date.title,
-				slot: slot.time,
-				meridiem: slot.meridiem,
-			};
+		select(state, timeslot) {
+			state.timeslot = timeslot;
 		},
 
 		confirmSlot(state) {
@@ -34,15 +35,30 @@ export const task = {
 			state.timeslot = null;
 		},
 
-		setAppointmentSlots(state, slots) {
-			state.appointmentSlots = slots;
+		setAppointmentCalendar(state, calendar) {
+			state.appointmentCalendar = calendar;
+		},
+
+		pushDateAppointmentCalendar(state, date) {
+			state.appointmentCalendar.push(date);
 		},
 	},
 
 	actions: {
-		initAppointmentSlots: async ({ commit }) => {
-			const slots = await fetchInitialAppointmentSlots();
-			commit('setAppointmentSlots', slots);
+		initAppointmentCalendar: async ({ commit }) => {
+			const calendar = await fetchInitialAppointmentCalendar();
+			commit('setAppointmentCalendar', calendar);
+		},
+
+		pushNextAppointmentDate: async ({ commit, state }) => {
+			const lastAppointmentDate = state.appointmentCalendar[state.appointmentCalendar.length - 1];
+
+			if (!lastAppointmentDate) {
+				return;
+			}
+
+			const date = await fetchNextAppointmentDate(lastAppointmentDate.date);
+			commit('pushDateAppointmentCalendar', date);
 		},
 	},
 

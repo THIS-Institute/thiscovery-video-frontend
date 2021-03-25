@@ -5,13 +5,13 @@
 			:class="{ 'opacity-25': submitting }"
 		>
 			<div
-				v-for="(date, index) in dates"
+				v-for="(date, index) in calendarSnapshot"
 				:key="index"
 				class="px-2"
 			>
 				<p
 					class="text-center"
-					v-text="date.title"
+					v-text="asFormattedDate(date.date)"
 				/>
 			</div>
 
@@ -23,16 +23,16 @@
 				]"
 			>
 				<button
-					v-for="next in [false, true]"
-					:key="next"
+					v-for="forward in [false, true]"
+					:key="forward"
 					:class="[
 						'inline-flex items-center pointer-events-auto',
 						'text-red disabled:opacity-25',
 					]"
-					:disabled="next ? upperLimit : lowerLimit"
-					@click="cycleDates(next)"
+					:disabled="forward ? upperLimit : lowerLimit"
+					@click="moveSnapshot(forward)"
 				>
-					<icon :name="next ? 'chevron-right' : 'chevron-left'" />
+					<icon :name="forward ? 'chevron-right' : 'chevron-left'" />
 				</button>
 			</div>
 		</div>
@@ -49,7 +49,7 @@
 			]"
 		>
 			<div
-				v-for="(date, index) in dates"
+				v-for="(date, index) in calendarSnapshot"
 				:key="index"
 				:class="{
 					'bg-grey-200 bg-opacity-10': index % 2 === 1,
@@ -57,22 +57,22 @@
 			>
 				<ol class="flex flex-col space-y-4 py-2.5 px-2">
 					<li
-						v-for="slot in date.timeslots"
-						:key="slot.time"
+						v-for="timeslot in date.timeslots"
+						:key="timeslot.time"
 						class="flex justify-center"
 					>
 						<e-button
-							:title="`${slot.time}${slot.meridiem}`"
+							:title="asFormattedTime(timeslot.time)"
 							:class="[
 								'e-button--time justify-center',
 								{
-									'hover:bg-transparent': !slot.available,
+									'hover:bg-transparent': !timeslot.available,
 								},
 							]"
 							time
 							:small="total <= 3"
-							:disabled="!slot.available"
-							@click="select(date, slot)"
+							:disabled="!timeslot.available"
+							@click="selectTimeslot(timeslot.time)"
 						/>
 					</li>
 				</ol>
@@ -84,10 +84,11 @@
 </template>
 
 <script>
-	import { store } from '@/store/index';
-
 	import { reactive, toRefs, computed } from 'vue';
+	import { useStore } from 'vuex';
 	import { useViewport } from '@/composables/useViewport';
+	import { useDates } from './useDates';
+
 	import LoadingSpinner from '@/components/ui/LoadingSpinner.vue';
 
 	export default {
@@ -103,48 +104,43 @@
 		},
 		
 		setup(props) {
-			const state = reactive({
-				start: 0,
+			const store = useStore();
+			const snapshot = reactive({
+				offset: 0,
 				total: 4,
-				selected: null,
 			});
 
-			const selected = computed(() => {
-				const active = state.selected;
-
-				return `${active.date} ${active.slot}${active.meridiem}`;
+			const calendarSnapshot = computed(() => {
+				return props.calendar.slice(snapshot.offset, (snapshot.offset + snapshot.total));
 			});
 
-			const dates = computed(() => {
-				return props.calendar.slice(state.start, (state.start + state.total));
-			});
+			const lowerLimit = computed(() => props.calendar[snapshot.offset].limit);
+			const upperLimit = computed(() => props.calendar[(snapshot.offset + snapshot.total) - 1].limit);
 
-			const lowerLimit = computed(() => props.calendar[state.start].limit);
-
-			const upperLimit = computed(() => props.calendar[(state.start + state.total) - 1].limit);
-
-			const select = (date, slot) => {
-				store.commit('task/select', { date, slot });
+			const selectTimeslot = (timeslot) => {
+				store.commit('task/select', timeslot);
 			};
 
-			const cycleDates = (forward) => {
-				state.start += forward ? 1 : -1;
+			const moveSnapshot = (forward) => {
+				snapshot.offset += forward ? 1 : -1;
 			};
 
 			const onViewportResized = () => {
-				state.total = getMediaQuery('xl') ? 4 : 3;
+				snapshot.total = getMediaQuery('xl') ? 4 : 3;
 			};
 
 			const { getMediaQuery } = useViewport(onViewportResized);
+			const { asFormattedDate, asFormattedTime } = useDates();
 
 			return {
 				lowerLimit,
 				upperLimit,
-				cycleDates,
-				select,
-				selected,
-				dates,
-				...toRefs(state),
+				moveSnapshot,
+				selectTimeslot,
+				calendarSnapshot,
+				asFormattedDate,
+				asFormattedTime,
+				...toRefs(snapshot),
 			};
 		},
 	};
