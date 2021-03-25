@@ -8,18 +8,17 @@ def get_next_date(date):
     return date + timedelta(days=1)
 
 def fetch_initial_timeslots(days, start_date):
-    start_date = datetime.today()
     next_date = start_date + timedelta(days=1)
     check_dates = []
 
-    for i in range(days+1):
+    for i in range(days):
         check_dates.append(next_date)
         next_date = get_next_date(next_date)
 
     acuity = Acuity()
     dates = {}
 
-    with concurrent.futures.ThreadPoolExecutor(max_workers=5) as executor:
+    with concurrent.futures.ThreadPoolExecutor() as executor:
         date_futures = { executor.submit(fetch_date, acuity, date): date for date in check_dates }
         for future in concurrent.futures.as_completed(date_futures):
             date = date_futures[future]
@@ -43,11 +42,27 @@ def sort_dictionary_by_date(dates_dict):
 def format_date_response(date, timeslots_result):
     timeslots = []
 
-    for timeslot_result in timeslots_result:
-        timeslots.append(format_timeslot_response(timeslot_result=timeslot_result))
+    available_timeslots = set()
+
+    for timeslot in timeslots_result:
+        time = parse_time(timeslot['time'])
+        available_timeslots.add(time.strftime('%H%M'))
+
+    current_time = date.replace(hour=9, minute=0, second=0, microsecond=0)
+    day_end = date.replace(hour=17, minute=0, second=0, microsecond=0)
+
+    while current_time <= day_end:
+        timeslot = {
+            'time': current_time.isoformat(),
+            'available': current_time.strftime('%H%M') in available_timeslots,
+        }
+
+        timeslots.append(timeslot)
+        current_time += timedelta(minutes=15)
 
     return {
         'date': date.strftime('%Y-%m-%d'),
+        'limit': False,
         'timeslots': timeslots,
     }
 
@@ -74,11 +89,14 @@ def lambda_handler(event, context):
     today = datetime.today()
     timeslots = fetch_initial_timeslots(days=5, start_date=today)
 
+    if timeslots[0]:
+        timeslots[0]['limit'] = True
+
     response = {
-        'slots': timeslots
+        'dates': timeslots,
     }
 
     return {
         'statusCode': 200,
-        'body': json.dumps(response)
+        'body': json.dumps(timeslots)
     }
