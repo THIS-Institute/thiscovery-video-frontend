@@ -101,6 +101,13 @@ Resources:
             Path: /v1/appointment-slots/{typeId}
             Method: GET
             RestApiId: !Ref BackendApi
+      Environment:
+        Variables:
+          APPOINTMENT_DEFAULT_DAYS: !Ref EnvConfigAppointmentsDefaultDaysAsString
+          APPOINTMENT_START_HOUR: !Ref EnvConfigAppointmentsStartHourAsString
+          APPOINTMENT_END_HOUR: !Ref EnvConfigAppointmentsEndHourAsString
+          APPOINTMENT_INTERVAL_MIN: !Ref EnvConfigAppointmentsIntervalMinAsString
+          ACUITY_BASE_URI: !Ref EnvConfigAcuityBaseUriAsString
   GetAppointmentDateSlots:
     Type: AWS::Serverless::Function
     Properties:
@@ -123,6 +130,13 @@ Resources:
             Path: /v1/appointment-slots/{typeId}/{date}
             Method: GET
             RestApiId: !Ref BackendApi
+      Environment:
+        Variables:
+          APPOINTMENT_DEFAULT_DAYS: !Ref EnvConfigAppointmentsDefaultDaysAsString
+          APPOINTMENT_START_HOUR: !Ref EnvConfigAppointmentsStartHourAsString
+          APPOINTMENT_END_HOUR: !Ref EnvConfigAppointmentsEndHourAsString
+          APPOINTMENT_INTERVAL_MIN: !Ref EnvConfigAppointmentsIntervalMinAsString
+          ACUITY_BASE_URI: !Ref EnvConfigAcuityBaseUriAsString
   CancelAppointmentById:
     Type: AWS::Serverless::Function
     Properties:
@@ -390,3 +404,25 @@ Parameters:
   SourceVersion:
     Type: String
     Description: Source version for deployment (injected by Stackery at deployment time)
+  EnvConfigAppointmentsDefaultDaysAsString:
+    Type: AWS::SSM::Parameter::Value<String>
+    Default: /<EnvironmentName>/appointments/default-days
+  EnvConfigAppointmentsStartHourAsString:
+    Type: AWS::SSM::Parameter::Value<String>
+    Default: /<EnvironmentName>/appointments/start-hour
+  EnvConfigAppointmentsEndHourAsString:
+    Type: AWS::SSM::Parameter::Value<String>
+    Default: /<EnvironmentName>/appointments/end-hour
+  EnvConfigAppointmentsIntervalMinAsString:
+    Type: AWS::SSM::Parameter::Value<String>
+    Default: /<EnvironmentName>/appointments/interval-min
+  EnvConfigAcuityBaseUriAsString:
+    Type: AWS::SSM::Parameter::Value<String>
+    Default: /<EnvironmentName>/acuity/base-uri
+Metadata:
+  EnvConfigParameters:
+    EnvConfigAppointmentsDefaultDaysAsString: appointments.default-days
+    EnvConfigAppointmentsStartHourAsString: appointments.start-hour
+    EnvConfigAppointmentsEndHourAsString: appointments.end-hour
+    EnvConfigAppointmentsIntervalMinAsString: appointments.interval-min
+    EnvConfigAcuityBaseUriAsString: acuity.base-uri
