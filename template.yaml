@@ -30,20 +30,20 @@ Resources:
                 type: aws_proxy
                 uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${CancelAppointmentById.Arn}/invocations
               responses: {}
-          /v1/appointments/{typeId}/slots:
-            get:
-              x-amazon-apigateway-integration:
-                httpMethod: POST
-                type: aws_proxy
-                uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${GetAppointmentBatchSlots.Arn}/invocations
-              responses: {}
-          /v1/appointments/{typeId}/slots/{date}:
-            get:
-              x-amazon-apigateway-integration:
-                httpMethod: POST
-                type: aws_proxy
-                uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${GetAppointmentDateSlots.Arn}/invocations
-              responses: {}
+          # /v1/appointments/{typeId}/slots:
+          #   get:
+          #     x-amazon-apigateway-integration:
+          #       httpMethod: POST
+          #       type: aws_proxy
+          #       uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${GetAppointmentBatchSlots.Arn}/invocations
+          #     responses: {}
+          # /v1/appointments/{typeId}/slots/{date}:
+          #   get:
+          #     x-amazon-apigateway-integration:
+          #       httpMethod: POST
+          #       type: aws_proxy
+          #       uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${GetAppointmentDateSlots.Arn}/invocations
+          #     responses: {}
           /v1/appointments/:
             post:
               x-amazon-apigateway-integration:
@@ -79,50 +79,50 @@ Resources:
             Path: /v1/room/token
             Method: POST
             RestApiId: !Ref BackendApi
-  GetAppointmentBatchSlots:
-    Type: AWS::Serverless::Function
-    Properties:
-      FunctionName: Appointments-GetAppointmentBatchSlots
-      Description: !Sub
-        - Stack ${StackTagName} Environment ${EnvironmentTagName} Function ${ResourceName}
-        - ResourceName: GetAppointmentBatchSlots
-      CodeUri: src
-      Handler: get_appointment_batch_slots.lambda_handler
-      Runtime: python3.8
-      MemorySize: 2048
-      Timeout: 30
-      Tracing: Active
-      Policies:
-        - AWSXrayWriteOnlyAccess
-      Events:
-        BackendApiGETv1appointmentsidslots:
-          Type: Api
-          Properties:
-            Path: /v1/appointments/{typeId}/slots
-            Method: GET
-            RestApiId: !Ref BackendApi
-  GetAppointmentDateSlots:
-    Type: AWS::Serverless::Function
-    Properties:
-      FunctionName: Appointments-GetAppointmentDateSlots
-      Description: !Sub
-        - Stack ${StackTagName} Environment ${EnvironmentTagName} Function ${ResourceName}
-        - ResourceName: GetAppointmentDateSlots
-      CodeUri: src
-      Handler: get_appointment_date_slots.lambda_handler
-      Runtime: python3.8
-      MemorySize: 2048
-      Timeout: 30
-      Tracing: Active
-      Policies:
-        - AWSXrayWriteOnlyAccess
-      Events:
-        BackendApiGETv1appointmentsidslotsdate:
-          Type: Api
-          Properties:
-            Path: /v1/appointments/{typeId}/slots/{date}
-            Method: GET
-            RestApiId: !Ref BackendApi
+  # GetAppointmentBatchSlots:
+  #   Type: AWS::Serverless::Function
+  #   Properties:
+  #     FunctionName: Appointments-GetAppointmentBatchSlots
+  #     Description: !Sub
+  #       - Stack ${StackTagName} Environment ${EnvironmentTagName} Function ${ResourceName}
+  #       - ResourceName: GetAppointmentBatchSlots
+  #     CodeUri: src
+  #     Handler: get_appointment_batch_slots.lambda_handler
+  #     Runtime: python3.8
+  #     MemorySize: 2048
+  #     Timeout: 30
+  #     Tracing: Active
+  #     Policies:
+  #       - AWSXrayWriteOnlyAccess
+  #     Events:
+  #       BackendApiGETv1appointmentsidslots:
+  #         Type: Api
+  #         Properties:
+  #           Path: /v1/appointments/{typeId}/slots
+  #           Method: GET
+  #           RestApiId: !Ref BackendApi
+  # GetAppointmentDateSlots:
+  #   Type: AWS::Serverless::Function
+  #   Properties:
+  #     FunctionName: Appointments-GetAppointmentDateSlots
+  #     Description: !Sub
+  #       - Stack ${StackTagName} Environment ${EnvironmentTagName} Function ${ResourceName}
+  #       - ResourceName: GetAppointmentDateSlots
+  #     CodeUri: src
+  #     Handler: get_appointment_date_slots.lambda_handler
+  #     Runtime: python3.8
+  #     MemorySize: 2048
+  #     Timeout: 30
+  #     Tracing: Active
+  #     Policies:
+  #       - AWSXrayWriteOnlyAccess
+  #     Events:
+  #       BackendApiGETv1appointmentsidslotsdate:
+  #         Type: Api
+  #         Properties:
+  #           Path: /v1/appointments/{typeId}/slots/{date}
+  #           Method: GET
+  #           RestApiId: !Ref BackendApi
   CancelAppointmentById:
     Type: AWS::Serverless::Function
     Properties:
