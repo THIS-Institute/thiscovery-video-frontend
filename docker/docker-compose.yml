@@ -26,6 +26,11 @@ services:
     volumes:
       - ../src:/var/task
 
+  python:
+    image: python:3.8
+    volumes:
+      - ../src:/usr/src/app
+
   awslocal:
     image: localstack/localstack
     ports:
