@@ -30,26 +30,26 @@ Resources:
                 type: aws_proxy
                 uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${CancelAppointmentById.Arn}/invocations
               responses: {}
-          /v1/appointments/{typeId}/slots:
-            get:
-              x-amazon-apigateway-integration:
-                httpMethod: POST
-                type: aws_proxy
-                uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${GetAppointmentBatchSlots.Arn}/invocations
-              responses: {}
-          /v1/appointments/{typeId}/slots/{date}:
-            get:
-              x-amazon-apigateway-integration:
-                httpMethod: POST
-                type: aws_proxy
-                uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${GetAppointmentDateSlots.Arn}/invocations
-              responses: {}
           /v1/appointments/:
             post:
               x-amazon-apigateway-integration:
                 httpMethod: POST
                 type: aws_proxy
                 uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${CreateAppointment.Arn}/invocations
+              responses: {}
+          /v1/appointment-slots/{typeId}:
+            get:
+              x-amazon-apigateway-integration:
+                httpMethod: POST
+                type: aws_proxy
+                uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${GetAppointmentBatchSlots.Arn}/invocations
+              responses: {}
+          /v1/appointment-slots/{typeId}/{date}:
+            get:
+              x-amazon-apigateway-integration:
+                httpMethod: POST
+                type: aws_proxy
+                uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${GetAppointmentDateSlots.Arn}/invocations
               responses: {}
       EndpointConfiguration: REGIONAL
       TracingEnabled: true
@@ -98,7 +98,7 @@ Resources:
         BackendApiGETv1appointmentsidslots:
           Type: Api
           Properties:
-            Path: /v1/appointments/{typeId}/slots
+            Path: /v1/appointment-slots/{typeId}
             Method: GET
             RestApiId: !Ref BackendApi
   GetAppointmentDateSlots:
@@ -120,7 +120,7 @@ Resources:
         BackendApiGETv1appointmentsidslotsdate:
           Type: Api
           Properties:
-            Path: /v1/appointments/{typeId}/slots/{date}
+            Path: /v1/appointment-slots/{typeId}/{date}
             Method: GET
             RestApiId: !Ref BackendApi
   CancelAppointmentById:
