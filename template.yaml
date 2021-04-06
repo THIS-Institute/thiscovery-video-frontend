@@ -60,7 +60,7 @@ Resources:
   RoomCreateToken:
     Type: AWS::Serverless::Function
     Properties:
-      FunctionName: !Sub ${AWS::StackName}-RoomCreateToken
+      FunctionName: !Sub ${AWS::StackTagName}-RoomCreateToken
       Description: !Sub
         - Stack ${StackTagName} Environment ${EnvironmentTagName} Function ${ResourceName}
         - ResourceName: RoomCreateToken
@@ -82,7 +82,7 @@ Resources:
   GetAppointmentBatchSlots:
     Type: AWS::Serverless::Function
     Properties:
-      FunctionName: !Sub ${AWS::StackName}-GetAppointmentBatchSlots
+      FunctionName: !Sub ${AWS::StackTagName}-GetAppointmentBatchSlots
       Description: !Sub
         - Stack ${StackTagName} Environment ${EnvironmentTagName} Function ${ResourceName}
         - ResourceName: GetAppointmentBatchSlots
@@ -104,7 +104,7 @@ Resources:
   GetAppointmentDateSlots:
     Type: AWS::Serverless::Function
     Properties:
-      FunctionName: !Sub ${AWS::StackName}-GetAppointmentDateSlots
+      FunctionName: !Sub ${AWS::StackTagName}-GetAppointmentDateSlots
       Description: !Sub
         - Stack ${StackTagName} Environment ${EnvironmentTagName} Function ${ResourceName}
         - ResourceName: GetAppointmentDateSlots
@@ -126,7 +126,7 @@ Resources:
   CancelAppointmentById:
     Type: AWS::Serverless::Function
     Properties:
-      FunctionName: !Sub ${AWS::StackName}-CancelAppointmentById
+      FunctionName: !Sub ${AWS::StackTagName}-CancelAppointmentById
       Description: !Sub
         - Stack ${StackTagName} Environment ${EnvironmentTagName} Function ${ResourceName}
         - ResourceName: CancelAppointmentById
@@ -148,7 +148,7 @@ Resources:
   RescheduleAppointmentById:
     Type: AWS::Serverless::Function
     Properties:
-      FunctionName: !Sub ${AWS::StackName}-RescheduleAppointmentBy
+      FunctionName: !Sub ${AWS::StackTagName}-RescheduleAppointmentBy
       Description: !Sub
         - Stack ${StackTagName} Environment ${EnvironmentTagName} Function ${ResourceName}
         - ResourceName: RescheduleAppointmentById
@@ -170,7 +170,7 @@ Resources:
   CreateAppointment:
     Type: AWS::Serverless::Function
     Properties:
-      FunctionName: !Sub ${AWS::StackName}-CreateAppointment
+      FunctionName: !Sub ${AWS::StackTagName}-CreateAppointment
       Description: !Sub
         - Stack ${StackTagName} Environment ${EnvironmentTagName} Function ${ResourceName}
         - ResourceName: CreateAppointment
