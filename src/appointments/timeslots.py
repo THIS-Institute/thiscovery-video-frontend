@@ -9,8 +9,8 @@ class Timeslots:
         self.acuity = acuity
         self.tz_london = timezone('Europe/London')
 
-    def get_batch_dates(self, days, start_date, appointment_type_id):
-        date = start_date
+    def get_batch_dates(self, days, date_offset, appointment_type_id):
+        date = date_offset
         query_dates = []
 
         for i in range(days):
