@@ -26,10 +26,13 @@ services:
     volumes:
       - ../src:/var/task
 
-  python:
-    image: python:3.8
+  python-cli:
+    build:
+      context: ../
+      dockerfile: docker/python-cli.Dockerfile
+    env_file: ../.lambda.env
     volumes:
-      - ../src:/usr/src/app
+      - ../scripts/util/local-secrets-loader.py:/usr/src/sl/local-secrets-loader.py
 
   awslocal:
     image: localstack/localstack

@@ -94,6 +94,8 @@ Resources:
       Tracing: Active
       Policies:
         - AWSXrayWriteOnlyAccess
+        - AWSSecretsManagerGetSecretValuePolicy:
+            SecretArn: !Sub arn:${AWS::Partition}:secretsmanager:${AWS::Region}:${AWS::AccountId}:secret:/${EnvironmentTagName}/*
       Events:
         BackendApiGETv1appointmentsidslots:
           Type: Api
@@ -108,6 +110,7 @@ Resources:
           APPOINTMENT_END_HOUR: !Ref EnvConfigAppointmentsEndHourAsString
           APPOINTMENT_INTERVAL_MIN: !Ref EnvConfigAppointmentsIntervalMinAsString
           ACUITY_BASE_URI: !Ref EnvConfigAcuityBaseUriAsString
+          SECRETS_NAMESPACE: !Sub /${EnvironmentTagName}/
   GetAppointmentDateSlots:
     Type: AWS::Serverless::Function
     Properties:
@@ -123,6 +126,8 @@ Resources:
       Tracing: Active
       Policies:
         - AWSXrayWriteOnlyAccess
+        - AWSSecretsManagerGetSecretValuePolicy:
+            SecretArn: !Sub arn:${AWS::Partition}:secretsmanager:${AWS::Region}:${AWS::AccountId}:secret:/${EnvironmentTagName}/*
       Events:
         BackendApiGETv1appointmentsidslotsdate:
           Type: Api
@@ -137,6 +142,7 @@ Resources:
           APPOINTMENT_END_HOUR: !Ref EnvConfigAppointmentsEndHourAsString
           APPOINTMENT_INTERVAL_MIN: !Ref EnvConfigAppointmentsIntervalMinAsString
           ACUITY_BASE_URI: !Ref EnvConfigAcuityBaseUriAsString
+          SECRETS_NAMESPACE: !Sub /${EnvironmentTagName}/
   CancelAppointmentById:
     Type: AWS::Serverless::Function
     Properties:

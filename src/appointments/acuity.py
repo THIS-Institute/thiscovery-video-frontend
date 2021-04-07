@@ -3,9 +3,9 @@ from requests import Request, Session
 from requests.auth import HTTPBasicAuth
 
 class Acuity:
-    def __init__(self):
+    def __init__(self, auth):
         self._base_uri = os.environ['ACUITY_BASE_URI']
-        self._auth = HTTPBasicAuth(os.environ['ACUITY_UID'], os.environ['ACUITY_API_KEY'])
+        self._auth = auth
         self._session = Session()
 
     def get_availability_dates(self, appointment_type_id, month):
@@ -45,3 +45,7 @@ class Acuity:
         )
 
         return response
+
+class AcuityAuth(HTTPBasicAuth):
+    def __init__(self, uid, api_key):
+        super().__init__(uid, api_key)

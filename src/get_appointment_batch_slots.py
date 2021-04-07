@@ -1,12 +1,22 @@
 import os
 import json
 from datetime import datetime
-from appointments.acuity import Acuity
+from appointments.acuity import Acuity, AcuityAuth
 from appointments.timeslots import Timeslots
 
+def get_acuity_client():
+    secret = SecretsManager(os.environ['SECRETS_NAMESPACE'])
+
+    auth = AcuityAuth(
+        uid=secret.get('acuity-uid'),
+        api_key=secret.get('acuity-api-key')
+    )
+
+    return Acuity(auth=auth)
+
 def lambda_handler(event, context):
-    acuity = Acuity()
-    timeslots = Timeslots(acuity=acuity)
+    acuity = get_acuity_client()
+    timeslots = Timeslots(acuity_client=acuity)
 
     date_offset = datetime.today()
     days = int(os.environ['APPOINTMENT_DEFAULT_DAYS'])

@@ -5,6 +5,7 @@
 # App
 .env
 .lambda.env
+secrets.json
 
 # Frontend
 /app/node_modules
