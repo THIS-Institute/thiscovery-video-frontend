@@ -56,6 +56,8 @@ class Timeslots:
         end_hour = int(os.environ['APPOINTMENT_END_HOUR'])
         interval_minutes = int(os.environ['APPOINTMENT_INTERVAL_MIN'])
 
+        next_date = date + timedelta(days=1)
+        
         timeslots = self.build_timeslots(
             date=self.tz_london.localize(date),
             available_timeslots=available,
@@ -66,6 +68,7 @@ class Timeslots:
 
         return {
             'date': date.strftime('%Y-%m-%d'),
+            'next': next_date.strftime('%Y-%m-%d'),
             'limit': False,
             'timeslots': timeslots,
         }
