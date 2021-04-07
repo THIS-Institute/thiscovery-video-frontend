@@ -3,7 +3,7 @@ import env from '@/app.env';
 export async function fetchInitialAppointmentCalendar () {
 	let calendar = [];
 
-	await fetch(`${env.backendApiHost}/v1/appointments/test/slots`, {
+	await fetch(`${env.backendApiHost}/v1/appointment-slots/test`, {
 		method: 'GET',
 		headers: {
 			'Content-Type': 'application/json',
@@ -20,10 +20,10 @@ export async function fetchInitialAppointmentCalendar () {
 	return calendar;
 }
 
-export async function fetchNextAppointmentDate () {
-	let calendar = [];
+export async function fetchNextAppointmentDate (date) {
+	let availability = [];
 
-	await fetch(`${env.backendApiHost}/v1/appointments/test/slots`, {
+	await fetch(`${env.backendApiHost}/v1/appointment-slots/test/${date}`, {
 		method: 'GET',
 		headers: {
 			'Content-Type': 'application/json',
@@ -31,11 +31,11 @@ export async function fetchNextAppointmentDate () {
 	})
 	.then(response => response.json())
 	.then((response) => {
-		if (response.dates) {
-			calendar = response.dates;
+		if (response.timeslots) {
+			availability = response;
 		}
 	})
 	.catch((error) => console.error(error));
 
-	return calendar;
+	return availability;
 }

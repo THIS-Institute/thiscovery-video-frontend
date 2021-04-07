@@ -29,7 +29,7 @@
 						'inline-flex items-center pointer-events-auto',
 						'text-red disabled:opacity-25',
 					]"
-					:disabled="forward ? upperLimit : lowerLimit"
+					:disabled="(forward ? upperLimit : lowerLimit) || fetching"
 					@click="moveSnapshot(forward)"
 				>
 					<icon :name="forward ? 'chevron-right' : 'chevron-left'" />
@@ -84,7 +84,7 @@
 </template>
 
 <script>
-	import { reactive, toRefs, computed } from 'vue';
+	import { reactive, ref, toRefs, computed } from 'vue';
 	import { useStore } from 'vuex';
 	import { useViewport } from '@/composables/useViewport';
 	import { useDates } from './useDates';
@@ -109,6 +109,7 @@
 				offset: 0,
 				total: 4,
 			});
+			const fetching = ref(false);
 
 			const calendarSnapshot = computed(() => {
 				return props.calendar.slice(snapshot.offset, (snapshot.offset + snapshot.total));
@@ -122,7 +123,18 @@
 			};
 
 			const moveSnapshot = (forward) => {
+				if (forward) {
+					fetching.value = true;
+					store
+						.dispatch('task/pushNextAppointmentDate')
+						.then(onNextDateReady);
+				}
+
 				snapshot.offset += forward ? 1 : -1;
+			};
+
+			const onNextDateReady = () => {
+				fetching.value = false;
 			};
 
 			const onViewportResized = () => {
@@ -133,6 +145,7 @@
 			const { asFormattedDate, asFormattedTime } = useDates();
 
 			return {
+				fetching,
 				lowerLimit,
 				upperLimit,
 				moveSnapshot,
