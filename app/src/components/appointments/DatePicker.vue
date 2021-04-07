@@ -117,24 +117,29 @@
 
 			const lowerLimit = computed(() => props.calendar[snapshot.offset].limit);
 			const upperLimit = computed(() => props.calendar[(snapshot.offset + snapshot.total) - 1].limit);
+			const snapshotLast = computed(() => snapshot.offset + snapshot.total);
+			const calendarLast = computed(() => props.calendar.length);
 
 			const selectTimeslot = (timeslot) => {
 				store.commit('task/select', timeslot);
 			};
 
 			const moveSnapshot = (forward) => {
-				if (forward) {
+				const requiresDataFetch = (snapshotLast.value == calendarLast.value);
+
+				if (forward && requiresDataFetch) {
 					fetching.value = true;
 					store
 						.dispatch('task/pushNextAppointmentDate')
 						.then(onNextDateReady);
+				} else {
+					snapshot.offset += forward ? 1 : -1;
 				}
-
-				snapshot.offset += forward ? 1 : -1;
 			};
 
 			const onNextDateReady = () => {
 				fetching.value = false;
+				snapshot.offset += 1;
 			};
 
 			const onViewportResized = () => {
