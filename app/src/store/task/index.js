@@ -53,7 +53,7 @@ export const task = {
 		initAppointmentCalendar: async ({ commit, dispatch }) => {
 			const calendar = await fetchInitialAppointmentCalendar();
 			commit('setAppointmentCalendar', calendar);
-			dispatch('setNextFetchDate');
+			dispatch('nextFetchDate');
 		},
 
 		pushNextAppointmentDate: async ({ commit, state, dispatch }) => {
