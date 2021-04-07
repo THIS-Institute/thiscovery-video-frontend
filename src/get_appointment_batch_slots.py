@@ -3,6 +3,7 @@ import json
 from datetime import datetime
 from appointments.acuity import Acuity, AcuityAuth
 from appointments.timeslots import Timeslots
+from secrets import SecretsManager
 
 def get_acuity_client():
     secret = SecretsManager(os.environ['SECRETS_NAMESPACE'])
