@@ -84,7 +84,7 @@
 </template>
 
 <script>
-	import { reactive, ref, toRefs, computed } from 'vue';
+	import { reactive, toRefs, computed } from 'vue';
 	import { useStore } from 'vuex';
 	import { useViewport } from '@/composables/useViewport';
 	import { useDates } from './useDates';
