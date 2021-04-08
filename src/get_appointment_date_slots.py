@@ -31,15 +31,17 @@ def get_acuity_client():
         api_key=secret.get('acuity-api-key')
     )
 
-    return Acuity(auth=auth)
+    acuity_client = Acuity(auth=auth)
+
+    return acuity_client
 
 def lambda_handler(event, context):
     path_parameters = event['pathParameters']
 
-    if 'date' not in path_parameters:
+    try:
+        date = path_parameters['date']
+    except KeyError:
         return build_error_response('Missing date parameter')
-
-    date = path_parameters['date']
 
     try:
         date = parse_date(date)

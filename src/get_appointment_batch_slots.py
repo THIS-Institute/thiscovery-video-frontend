@@ -13,7 +13,9 @@ def get_acuity_client():
         api_key=secret.get('acuity-api-key')
     )
 
-    return Acuity(auth=auth)
+    acuity_client = Acuity(auth=auth)
+
+    return acuity_client
 
 def lambda_handler(event, context):
     acuity = get_acuity_client()

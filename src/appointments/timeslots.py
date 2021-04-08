@@ -6,7 +6,7 @@ from pytz import timezone
 
 class Timeslots:
     def __init__(self, acuity_client):
-        self._acuity_client = acuity_client
+        self.acuity = acuity_client
         self.tz_london = timezone('Europe/London')
 
     def get_batch_dates(self, days, date_offset, appointment_type_id):
@@ -37,7 +37,7 @@ class Timeslots:
         return timeslots
 
     def get_date(self, date, appointment_type_id):
-        result = self._acuity_client.get_availability_times(
+        result = self.acuity.get_availability_times(
             appointment_type_id=appointment_type_id,
             date=date.strftime('%Y-%m-%d')
         )
