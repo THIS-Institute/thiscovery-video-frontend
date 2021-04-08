@@ -107,8 +107,6 @@ export const appointments = {
 				return;
 			}
 
-			console.log(lastItem.next);
-
 			commit('setNextFetchDate', lastItem.next);
 		},
 
