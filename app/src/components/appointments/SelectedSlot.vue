@@ -1,5 +1,5 @@
 <template>
-	<template v-if="timeslot && !confirmed">
+	<template v-if="selection && !isStatusBooked">
 		<div
 			:class="[
 				'grid grid-cols-2 items-center justify-around',
@@ -15,7 +15,7 @@
 
 				<p
 					class="font-bold whitespace-nowrap"
-					v-text="asFormattedDate(timeslot)"
+					v-text="asFormattedDate(selection)"
 				/>
 			</div>
 
@@ -27,7 +27,7 @@
 
 				<p
 					class="font-bold whitespace-nowrap"
-					v-text="asFormattedTime(timeslot)"
+					v-text="asFormattedTime(selection)"
 				/>
 			</div>
 		</div>
@@ -39,7 +39,7 @@
 	</template>
 
 	<div
-		v-else-if="!timeslot"
+		v-else-if="!selection"
 		class="py-7 px-7.5 border border-grey-200 rounded-lg"
 	>
 		<h1
@@ -54,7 +54,7 @@
 	</div>
 
 	<div
-		v-else
+		v-if="isStatusBooked"
 		class="py-7 px-7.5 border border-grey-200 rounded-lg"
 	>
 		<p
@@ -64,7 +64,7 @@
 
 		<p
 			class="font-bold mt-1"
-			v-text="`${asFormattedDate(timeslot)}, ${asFormattedTime(timeslot)}`"
+			v-text="`${asFormattedDate(selection)}, ${asFormattedTime(selection)}`"
 		/>
 
 		<e-button
@@ -82,10 +82,11 @@
 	import messages from '@/messages';
 	import { useMessages } from '@/composables/useMessages';
 	import { useDates } from './useDates';
+	import { useAppointmentStatus } from './useAppointmentStatus';
 
 	export default {
 		props: {
-			timeslot: {
+			selection: {
 				type: String,
 				default: null,
 			},
@@ -100,8 +101,11 @@
 		setup() {
 			const { message } = useMessages(messages);
 			const { asFormattedDate, asFormattedTime } = useDates();
+			const { isStatusReady, isStatusBooked } = useAppointmentStatus();
 
 			return {
+				isStatusReady,
+				isStatusBooked,
 				asFormattedDate,
 				asFormattedTime,
 				...message('live.selectedSlot'),

@@ -2,7 +2,7 @@
 	<div class="relative">
 		<div
 			class="grid grid-cols-3 px-5 relative xl:grid-cols-4"
-			:class="{ 'opacity-25': submitting }"
+			:class="{ 'opacity-25': isWaiting }"
 		>
 			<div
 				v-for="(date, index) in calendarSnapshot"
@@ -29,7 +29,7 @@
 						'inline-flex items-center pointer-events-auto',
 						'text-red disabled:opacity-25',
 					]"
-					:disabled="(forward ? upperLimit : lowerLimit) || fetching"
+					:disabled="(forward ? upperLimit : lowerLimit) || isWaiting"
 					@click="moveSnapshot(forward)"
 				>
 					<icon :name="forward ? 'chevron-right' : 'chevron-left'" />
@@ -79,7 +79,7 @@
 			</div>
 		</div>
 
-		<loading-spinner v-if="submitting" />
+		<loading-spinner v-if="isWaiting" />
 	</div>
 </template>
 
@@ -97,7 +97,9 @@
 		props: {
 			calendar: {
 				type: Array,
-				default: null,
+				default: () => {
+					return [];
+				},
 			},
 
 			submitting: Boolean,
@@ -109,28 +111,27 @@
 				offset: 0,
 				total: 4,
 			});
-			const fetching = ref(false);
 
 			const calendarSnapshot = computed(() => {
 				return props.calendar.slice(snapshot.offset, (snapshot.offset + snapshot.total));
 			});
 
+			const isWaiting = computed(() => store.state.appointments.isWaiting);
 			const lowerLimit = computed(() => props.calendar[snapshot.offset].limit);
 			const upperLimit = computed(() => props.calendar[(snapshot.offset + snapshot.total) - 1].limit);
 			const snapshotLast = computed(() => snapshot.offset + snapshot.total);
 			const calendarLast = computed(() => props.calendar.length);
 
 			const selectTimeslot = (timeslot) => {
-				store.commit('task/select', timeslot);
+				store.dispatch('appointments/selectTimeslot', timeslot);
 			};
 
 			const moveSnapshot = (forward) => {
 				const requiresDataFetch = (snapshotLast.value == calendarLast.value);
 
 				if (forward && requiresDataFetch) {
-					fetching.value = true;
 					store
-						.dispatch('task/pushNextAppointmentDate')
+						.dispatch('appointments/pushNextAppointmentDate')
 						.then(onNextDateReady);
 				} else {
 					snapshot.offset += forward ? 1 : -1;
@@ -138,7 +139,6 @@
 			};
 
 			const onNextDateReady = () => {
-				fetching.value = false;
 				snapshot.offset += 1;
 			};
 
@@ -150,7 +150,7 @@
 			const { asFormattedDate, asFormattedTime } = useDates();
 
 			return {
-				fetching,
+				isWaiting,
 				lowerLimit,
 				upperLimit,
 				moveSnapshot,

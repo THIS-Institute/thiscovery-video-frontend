@@ -50,8 +50,8 @@
 			const store = useStore();
 			const { message } = useMessages(messages);
 			const isLoading = ref(false);
-			const calendar = computed(() => store.state.task.appointmentCalendar);
-			const isConfirmed = computed(() => store.state.task.confirmed);
+			const calendar = computed(() => store.state.appointments.availability);
+			const isConfirmed = computed(() => store.state.appointments.isConfirmed);
 
 			const onCalendarInitialised = () => {
 				isLoading.value = false;
@@ -61,7 +61,7 @@
 				isLoading.value = true;
 
 				store
-					.dispatch('task/initAppointmentCalendar')
+					.dispatch('appointments/initAppointmentCalendar')
 					.then(onCalendarInitialised);
 			}
 
