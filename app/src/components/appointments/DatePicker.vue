@@ -2,16 +2,16 @@
 	<div class="relative">
 		<div
 			class="grid grid-cols-3 px-5 relative xl:grid-cols-4"
-			:class="{ 'opacity-25': submitting }"
+			:class="{ 'opacity-25': isWaiting }"
 		>
 			<div
-				v-for="(date, index) in dates"
+				v-for="(date, index) in calendarSnapshot"
 				:key="index"
 				class="px-2"
 			>
 				<p
 					class="text-center"
-					v-text="date.title"
+					v-text="asFormattedDate(date.date)"
 				/>
 			</div>
 
@@ -23,16 +23,16 @@
 				]"
 			>
 				<button
-					v-for="next in [false, true]"
-					:key="next"
+					v-for="forward in [false, true]"
+					:key="forward"
 					:class="[
 						'inline-flex items-center pointer-events-auto',
 						'text-red disabled:opacity-25',
 					]"
-					:disabled="next ? upperLimit : lowerLimit"
-					@click="cycleDates(next)"
+					:disabled="(forward ? upperLimit : lowerLimit) || isWaiting"
+					@click="moveSnapshot(forward)"
 				>
-					<icon :name="next ? 'chevron-right' : 'chevron-left'" />
+					<icon :name="forward ? 'chevron-right' : 'chevron-left'" />
 				</button>
 			</div>
 		</div>
@@ -49,7 +49,7 @@
 			]"
 		>
 			<div
-				v-for="(date, index) in dates"
+				v-for="(date, index) in calendarSnapshot"
 				:key="index"
 				:class="{
 					'bg-grey-200 bg-opacity-10': index % 2 === 1,
@@ -57,100 +57,108 @@
 			>
 				<ol class="flex flex-col space-y-4 py-2.5 px-2">
 					<li
-						v-for="slot in date.timeslots"
-						:key="slot.time"
+						v-for="timeslot in date.timeslots"
+						:key="timeslot.time"
 						class="flex justify-center"
 					>
 						<e-button
-							:title="`${slot.time}${slot.meridiem}`"
+							:title="asFormattedTime(timeslot.time)"
 							:class="[
 								'e-button--time justify-center',
 								{
-									'hover:bg-transparent': !slot.available,
+									'hover:bg-transparent': !timeslot.available,
 								},
 							]"
 							time
 							:small="total <= 3"
-							:disabled="!slot.available"
-							@click="select(date, slot)"
+							:disabled="!timeslot.available"
+							@click="selectTimeslot(timeslot.time)"
 						/>
 					</li>
 				</ol>
 			</div>
 		</div>
 
-		<div
-			v-if="submitting"
-			class="absolute inset-0 w-full h-full flex items-center justify-center"
-		>
-			<icon
-				name="loading"
-				class="text-red animate-spin"
-				size="w-10 h-10"
-			/>
-		</div>
+		<loading-spinner v-if="isWaiting" />
 	</div>
 </template>
 
 <script>
-	import { store } from '@/store/index';
-
 	import { reactive, toRefs, computed } from 'vue';
+	import { useStore } from 'vuex';
 	import { useViewport } from '@/composables/useViewport';
+	import { useDates } from './useDates';
+
+	import LoadingSpinner from '@/components/ui/LoadingSpinner.vue';
 
 	export default {
+		components: { LoadingSpinner },
+
 		props: {
 			calendar: {
 				type: Array,
-				default: null,
+				default: () => {
+					return [];
+				},
 			},
 
 			submitting: Boolean,
 		},
 		
 		setup(props) {
-			const state = reactive({
-				start: 0,
+			const store = useStore();
+			const snapshot = reactive({
+				offset: 0,
 				total: 4,
-				selected: null,
 			});
 
-			const selected = computed(() => {
-				const active = state.selected;
-
-				return `${active.date} ${active.slot}${active.meridiem}`;
+			const calendarSnapshot = computed(() => {
+				return props.calendar.slice(snapshot.offset, (snapshot.offset + snapshot.total));
 			});
 
-			const dates = computed(() => {
-				return props.calendar.slice(state.start, (state.start + state.total));
-			});
+			const isWaiting = computed(() => store.state.appointments.isWaiting);
+			const lowerLimit = computed(() => props.calendar[snapshot.offset].limit);
+			const upperLimit = computed(() => props.calendar[(snapshot.offset + snapshot.total) - 1].limit);
+			const snapshotLast = computed(() => snapshot.offset + snapshot.total);
+			const calendarLast = computed(() => props.calendar.length);
 
-			const lowerLimit = computed(() => props.calendar[state.start].limit);
-
-			const upperLimit = computed(() => props.calendar[(state.start + state.total) - 1].limit);
-
-			const select = (date, slot) => {
-				store.commit('task/select', { date, slot });
+			const selectTimeslot = (timeslot) => {
+				store.dispatch('appointments/selectTimeslot', timeslot);
 			};
 
-			const cycleDates = (forward) => {
-				state.start += forward ? 1 : -1;
+			const moveSnapshot = (forward) => {
+				const requiresDataFetch = (snapshotLast.value == calendarLast.value);
+
+				if (forward && requiresDataFetch) {
+					store
+						.dispatch('appointments/pushNextAppointmentDate')
+						.then(onNextDateReady);
+				} else {
+					snapshot.offset += forward ? 1 : -1;
+				}
+			};
+
+			const onNextDateReady = () => {
+				snapshot.offset += 1;
 			};
 
 			const onViewportResized = () => {
-				state.total = getMediaQuery('xl') ? 4 : 3;
+				snapshot.total = getMediaQuery('xl') ? 4 : 3;
 			};
 
 			const { getMediaQuery } = useViewport(onViewportResized);
+			const { asFormattedDate, asFormattedTime } = useDates();
 
 			return {
+				isWaiting,
 				lowerLimit,
 				upperLimit,
-				cycleDates,
-				select,
-				selected,
-				dates,
-				...toRefs(state),
+				moveSnapshot,
+				selectTimeslot,
+				calendarSnapshot,
+				asFormattedDate,
+				asFormattedTime,
+				...toRefs(snapshot),
 			};
 		},
 	};

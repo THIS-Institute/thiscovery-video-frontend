@@ -5,7 +5,7 @@
 			'xl:rounded-lg xl:bg-white',
 			'xl:px-17 xl:py-8',
 			{
-				'pb-16 md:pb-0': !confirmed,
+				'pb-16 md:pb-0': isStatusReady,
 			},
 		]"
 	>
@@ -21,75 +21,86 @@
 
 			<h2
 				class="e-h-interview"
-				v-text="title"
+				v-text="taskTitle"
 			/>
 
 			<booking-status
-				v-if="confirmed"
-				:confirmed="confirmed"
+				v-if="isStatusBooked"
+				:message="message('live.bookingStatus.success')"
+			/>
+
+			<booking-status
+				v-if="isStatusCancelled"
+				:message="message('live.bookingStatus.cancelled')"
+				error
 			/>
 
 			<selected-slot
-				:date="date"
-				:confirmed="confirmed"
+				:selection="selection"
+				:confirmed="isConfirmed"
 			/>
 
 			<e-button
-				v-if="!confirmed"
-				title="Book appointment"
+				v-if="!isStatusBooked"
+				:title="(isStatusRescheduling) ? 'Reschedule appointment' : 'Book appointment'"
 				icon="chevron-right"
 				class="e-button--red hidden md:inline-block"
-				:disabled="!date"
+				:disabled="!selection"
 				pill
-				@click="confirmSlot"
+				@click="confirmSelection"
 			/>
 		</div>
 
 		<div
 			:class="[
 				'col-span-10 h-full',
-				confirmed
+				isStatusBooked
 					? 'md:col-span-5 md:col-start-6'
 					: 'md:col-span-6 md:col-start-5',
 			]"
 		>
 			<appointment-info
-				v-if="confirmed"
+				v-if="isStatusBooked"
 				class="h-full"
+				@reschedule="invokeReschedule"
+				@cancel="invokeCancellation"
 			/>
 
 			<date-picker
 				v-else
 				class="h-full"
-				:submitting="isSubmitting"
+				:submitting="isWaiting"
 				:calendar="calendar"
 			/>
 		</div>
 	</section>
 
 	<div
-		v-if="!confirmed"
+		v-if="!isStatusBooked"
 		class="sticky bottom-0 bg-white p-5 -mx-5 sm:-mx-10 shadow-sticky md:hidden"
 	>
 		<e-button
-			title="Book appointment"
+			:title="(isStatusRescheduling) ? 'Reschedule appointment' : 'Book appointment'"
 			icon="chevron-right"
 			class="e-button--red"
-			:disabled="!date"
+			:disabled="!selection"
 			pill
-			@click="confirmSlot"
+			@click="confirmSelection"
 		/>
 	</div>
 </template>
 
 <script>
-	import { store } from '@/store/index';
+	import { useStore } from 'vuex';
 	import { computed } from 'vue';
-
-	import DatePicker from '@/components/appointments/DatePicker';
-	import SelectedSlot from '@/components/appointments/SelectedSlot';
-	import BookingStatus from '@/components/appointments/BookingStatus';
-	import AppointmentInfo from '@/components/appointments/AppointmentInfo';
+	import { onBeforeRouteLeave } from 'vue-router';
+	import messages from '@/messages';
+	import { useMessages } from '@/composables/useMessages';
+	import { useAppointmentStatus } from './useAppointmentStatus';
+	import DatePicker from './DatePicker';
+	import SelectedSlot from './SelectedSlot';
+	import BookingStatus from './BookingStatus';
+	import AppointmentInfo from './AppointmentInfo';
 
 	export default {
 		components: {
@@ -99,35 +110,58 @@
 			AppointmentInfo,
 		},
 
-		props: {
-			title: {
-				type: String,
-				required: true,
-			},
-
-			calendar: {
-				type: Array,
-				required: true,
-			},
-		},
-
 		setup() {
-			const isSubmitting = computed(() => store.state.task.isSubmitting);
-			const confirmed = computed(() => store.state.task.confirmed);
+			const store = useStore();
+			const calendar = computed(() => store.state.appointments.availability);
+			const isWaiting = computed(() => store.state.appointments.isWaiting);
+			const isConfirmed = computed(() => store.state.appointments.isConfirmed);
+			const taskTitle = computed(() => store.state.task.title);
+			const selection = computed(() => store.state.appointments.selection);
 
-			const confirmSlot = () => store.commit('task/confirmSlot');
+			onBeforeRouteLeave(() => {
+				store.dispatch('appointments/syncBookedStatus');
+			})
 
-			const date = computed(() => {
-				if (!store.state.task.timeslot) return;
+			const confirmSelection = () => store.dispatch('appointments/confirmSelectedSlot');
 
-				return store.state.task.timeslot;
-			});
+			const invokeReschedule = () => {
+				store.dispatch('appointments/reschedule');
+			};
+
+			const invokeCancellation = () => {
+				if (!confirm('Are you sure you want to cancel your appointment?')) {
+					return;
+				}
+
+				store.dispatch('appointments/cancel')
+					.then(onAppointmentCancelled)
+			};
+
+			const onAppointmentCancelled = () => {};
+
+			const {
+				isStatusReady,
+				isStatusBooked,
+				isStatusRescheduling,
+				isStatusCancelled,
+			} = useAppointmentStatus();
+
+			const { message } = useMessages(messages);
 
 			return {
-				isSubmitting,
-				confirmed,
-				confirmSlot,
-				date,
+				message,
+				taskTitle,
+				isWaiting,
+				isConfirmed,
+				confirmSelection,
+				selection,
+				calendar,
+				invokeReschedule,
+				invokeCancellation,
+				isStatusReady,
+				isStatusBooked,
+				isStatusRescheduling,
+				isStatusCancelled,
 			};
 		},
 	};

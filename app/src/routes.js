@@ -11,6 +11,7 @@ const PreSettingsView = () => import('./views/PreSettings');
 const SelfRecordView = () => import('./views/SelfRecord');
 const LiveRoomView = () => import('./views/LiveRoom');
 const LiveLandingView = () => import('./views/LiveLanding');
+const PathNotFound = () => import('./views/PathNotFound');
 
 // Layouts
 import FullBackgroundLayout from './layouts/FullBackground';
@@ -82,7 +83,7 @@ export const routes = [
 		props: {
 			backgroundType: 'scratches',
 			hasNav: false,
-			hasBack: false
+			hasBack: false,
 		},
 		children: [
 			{
@@ -138,5 +139,21 @@ export const routes = [
 	{
 		path: '/styleguide',
 		component: Styleguide,
+	},
+
+	{
+		path: '/:pathMatch(.*)*',
+		component: FullBackgroundLayout,
+		props: {
+			backgroundType: 'curls',
+			hasNav: false,
+			hasBack: false,
+		},
+		children: [
+			{
+				path: '',
+				component: PathNotFound,
+			},
+		],
 	},
 ];

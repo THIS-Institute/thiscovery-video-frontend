@@ -145,6 +145,7 @@ export default Object.freeze({
 
 		bookingStatus: {
 			success: 'Appointment confirmed',
+			cancelled: 'Appointment cancelled',
 			failed: 'Something went wrong',
 		},
 	

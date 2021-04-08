@@ -4,10 +4,10 @@
 			'flex items-center justify-end space-x-4',
 			'flex-row-reverse space-x-reverse',
 			'rounded-lg text-white py-4 px-8',
-			confirmed ? 'bg-green' : 'bg-red',
+			error ? 'bg-red' : 'bg-green',
 		]"
 	>
-		<span>{{ confirmed ? 'Appointment confirmed' : 'Something went wrong' }}</span>
+		<span v-text="message" />
 
 		<div
 			:class="[
@@ -16,7 +16,7 @@
 			]"
 		>
 			<icon
-				:name="confirmed ? 'check' : 'close'"
+				:name="error ? 'close' : 'check'"
 				size="w-5 h-5"
 			/>
 		</div>
@@ -24,27 +24,14 @@
 </template>
 
 <script>
-	import { computed } from 'vue';
-	import messages from '@/messages';
-	import { useMessages } from '@/composables/useMessages';
-
 	export default {
 		props: {
-			confirmed: Boolean,
-		},
+			message: {
+				type: String,
+				default: null,
+			},
 
-		setup(props) {
-			const { message } = useMessages(messages);
-
-			const status = computed(() => {
-				return props.confirmed
-					? message('live.bookingStatus.success')
-					: message('live.bookingStatus.failed');
-			});
-
-			return {
-				status,
-			};
+			error: Boolean,
 		},
 	};
 </script>

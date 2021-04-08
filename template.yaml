@@ -30,19 +30,26 @@ Resources:
                 type: aws_proxy
                 uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${CancelAppointmentById.Arn}/invocations
               responses: {}
-          /v1/appointments/{id}/slots:
-            get:
-              x-amazon-apigateway-integration:
-                httpMethod: POST
-                type: aws_proxy
-                uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${GetAppointmentSlots.Arn}/invocations
-              responses: {}
           /v1/appointments/:
             post:
               x-amazon-apigateway-integration:
                 httpMethod: POST
                 type: aws_proxy
                 uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${CreateAppointment.Arn}/invocations
+              responses: {}
+          /v1/appointment-slots/{typeId}:
+            get:
+              x-amazon-apigateway-integration:
+                httpMethod: POST
+                type: aws_proxy
+                uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${GetAppointmentBatchSlots.Arn}/invocations
+              responses: {}
+          /v1/appointment-slots/{typeId}/{date}:
+            get:
+              x-amazon-apigateway-integration:
+                httpMethod: POST
+                type: aws_proxy
+                uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${GetAppointmentDateSlots.Arn}/invocations
               responses: {}
       EndpointConfiguration: REGIONAL
       TracingEnabled: true
@@ -53,14 +60,14 @@ Resources:
   RoomCreateToken:
     Type: AWS::Serverless::Function
     Properties:
-      FunctionName: !Sub ${AWS::StackName}-RoomCreateToken
+      FunctionName: Rooms-RoomCreateToken
       Description: !Sub
         - Stack ${StackTagName} Environment ${EnvironmentTagName} Function ${ResourceName}
         - ResourceName: RoomCreateToken
       CodeUri: src
       Handler: room_token.lambda_handler
       Runtime: python3.8
-      MemorySize: 3008
+      MemorySize: 1024
       Timeout: 30
       Tracing: Active
       Policies:
@@ -72,39 +79,81 @@ Resources:
             Path: /v1/room/token
             Method: POST
             RestApiId: !Ref BackendApi
-  GetAppointmentSlots:
+  GetAppointmentBatchSlots:
     Type: AWS::Serverless::Function
     Properties:
-      FunctionName: !Sub ${AWS::StackName}-GetAppointmentSlots
+      FunctionName: Appointments-GetAppointmentBatchSlots
       Description: !Sub
         - Stack ${StackTagName} Environment ${EnvironmentTagName} Function ${ResourceName}
-        - ResourceName: GetAppointmentSlots
+        - ResourceName: GetAppointmentBatchSlots
       CodeUri: src
-      Handler: get_appointment_slots.lambda_handler
+      Handler: get_appointment_batch_slots.lambda_handler
       Runtime: python3.8
-      MemorySize: 3008
+      MemorySize: 2048
       Timeout: 30
       Tracing: Active
       Policies:
         - AWSXrayWriteOnlyAccess
+        - AWSSecretsManagerGetSecretValuePolicy:
+            SecretArn: !Sub arn:${AWS::Partition}:secretsmanager:${AWS::Region}:${AWS::AccountId}:secret:/${EnvironmentTagName}/*
       Events:
         BackendApiGETv1appointmentsidslots:
           Type: Api
           Properties:
-            Path: /v1/appointments/{id}/slots
+            Path: /v1/appointment-slots/{typeId}
             Method: GET
             RestApiId: !Ref BackendApi
+      Environment:
+        Variables:
+          APPOINTMENT_DEFAULT_DAYS: !Ref EnvConfigAppointmentsDefaultDaysAsString
+          APPOINTMENT_START_HOUR: !Ref EnvConfigAppointmentsStartHourAsString
+          APPOINTMENT_END_HOUR: !Ref EnvConfigAppointmentsEndHourAsString
+          APPOINTMENT_INTERVAL_MIN: !Ref EnvConfigAppointmentsIntervalMinAsString
+          ACUITY_BASE_URI: !Ref EnvConfigAcuityBaseUriAsString
+          SECRETS_NAMESPACE: !Sub /${EnvironmentTagName}/
+  GetAppointmentDateSlots:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: Appointments-GetAppointmentDateSlots
+      Description: !Sub
+        - Stack ${StackTagName} Environment ${EnvironmentTagName} Function ${ResourceName}
+        - ResourceName: GetAppointmentDateSlots
+      CodeUri: src
+      Handler: get_appointment_date_slots.lambda_handler
+      Runtime: python3.8
+      MemorySize: 2048
+      Timeout: 30
+      Tracing: Active
+      Policies:
+        - AWSXrayWriteOnlyAccess
+        - AWSSecretsManagerGetSecretValuePolicy:
+            SecretArn: !Sub arn:${AWS::Partition}:secretsmanager:${AWS::Region}:${AWS::AccountId}:secret:/${EnvironmentTagName}/*
+      Events:
+        BackendApiGETv1appointmentsidslotsdate:
+          Type: Api
+          Properties:
+            Path: /v1/appointment-slots/{typeId}/{date}
+            Method: GET
+            RestApiId: !Ref BackendApi
+      Environment:
+        Variables:
+          APPOINTMENT_DEFAULT_DAYS: !Ref EnvConfigAppointmentsDefaultDaysAsString
+          APPOINTMENT_START_HOUR: !Ref EnvConfigAppointmentsStartHourAsString
+          APPOINTMENT_END_HOUR: !Ref EnvConfigAppointmentsEndHourAsString
+          APPOINTMENT_INTERVAL_MIN: !Ref EnvConfigAppointmentsIntervalMinAsString
+          ACUITY_BASE_URI: !Ref EnvConfigAcuityBaseUriAsString
+          SECRETS_NAMESPACE: !Sub /${EnvironmentTagName}/
   CancelAppointmentById:
     Type: AWS::Serverless::Function
     Properties:
-      FunctionName: !Sub ${AWS::StackName}-CancelAppointmentById
+      FunctionName: Appointments-CancelAppointmentById
       Description: !Sub
         - Stack ${StackTagName} Environment ${EnvironmentTagName} Function ${ResourceName}
         - ResourceName: CancelAppointmentById
       CodeUri: src
       Handler: log.lambda_handler
       Runtime: python3.8
-      MemorySize: 3008
+      MemorySize: 1024
       Timeout: 30
       Tracing: Active
       Policies:
@@ -119,14 +168,14 @@ Resources:
   RescheduleAppointmentById:
     Type: AWS::Serverless::Function
     Properties:
-      FunctionName: !Sub ${AWS::StackName}-RescheduleAppointmentBy
+      FunctionName: Appointments-RescheduleAppointmentById
       Description: !Sub
         - Stack ${StackTagName} Environment ${EnvironmentTagName} Function ${ResourceName}
         - ResourceName: RescheduleAppointmentById
       CodeUri: src
       Handler: log.lambda_handler
       Runtime: python3.8
-      MemorySize: 3008
+      MemorySize: 1024
       Timeout: 30
       Tracing: Active
       Policies:
@@ -141,14 +190,14 @@ Resources:
   CreateAppointment:
     Type: AWS::Serverless::Function
     Properties:
-      FunctionName: !Sub ${AWS::StackName}-CreateAppointment
+      FunctionName: Appointments-CreateAppointment
       Description: !Sub
         - Stack ${StackTagName} Environment ${EnvironmentTagName} Function ${ResourceName}
         - ResourceName: CreateAppointment
       CodeUri: src
       Handler: log.lambda_handler
       Runtime: python3.8
-      MemorySize: 3008
+      MemorySize: 1024
       Timeout: 30
       Tracing: Active
       Policies:
@@ -172,6 +221,15 @@ Resources:
           ViewerProtocolPolicy: redirect-to-https
         Enabled: true
         DefaultRootObject: index.html
+        CustomErrorResponses:
+          - ErrorCode: 403
+            ResponseCode: 200
+            ResponsePagePath: /index.html
+            ErrorCachingMinTTL: 10
+          - ErrorCode: 404
+            ResponseCode: 200
+            ResponsePagePath: /index.html
+            ErrorCachingMinTTL: 10
         PriceClass: PriceClass_100
         HttpVersion: http2
         Origins:
@@ -333,7 +391,7 @@ Resources:
   FrontendAssets:
     Type: AWS::S3::Bucket
     Properties:
-      BucketName: !Sub ${AWS::StackName}-frontenda-${AWS::AccountId}
+      BucketName: !Sub frontend-assets-${AWS::AccountId}
       WebsiteConfiguration:
         IndexDocument: index.html
 Parameters:
@@ -352,3 +410,25 @@ Parameters:
   SourceVersion:
     Type: String
     Description: Source version for deployment (injected by Stackery at deployment time)
+  EnvConfigAppointmentsDefaultDaysAsString:
+    Type: AWS::SSM::Parameter::Value<String>
+    Default: /<EnvironmentName>/appointments/default-days
+  EnvConfigAppointmentsStartHourAsString:
+    Type: AWS::SSM::Parameter::Value<String>
+    Default: /<EnvironmentName>/appointments/start-hour
+  EnvConfigAppointmentsEndHourAsString:
+    Type: AWS::SSM::Parameter::Value<String>
+    Default: /<EnvironmentName>/appointments/end-hour
+  EnvConfigAppointmentsIntervalMinAsString:
+    Type: AWS::SSM::Parameter::Value<String>
+    Default: /<EnvironmentName>/appointments/interval-min
+  EnvConfigAcuityBaseUriAsString:
+    Type: AWS::SSM::Parameter::Value<String>
+    Default: /<EnvironmentName>/acuity/base-uri
+Metadata:
+  EnvConfigParameters:
+    EnvConfigAppointmentsDefaultDaysAsString: appointments.default-days
+    EnvConfigAppointmentsStartHourAsString: appointments.start-hour
+    EnvConfigAppointmentsEndHourAsString: appointments.end-hour
+    EnvConfigAppointmentsIntervalMinAsString: appointments.interval-min
+    EnvConfigAcuityBaseUriAsString: acuity.base-uri
