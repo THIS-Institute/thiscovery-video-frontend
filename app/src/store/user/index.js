@@ -3,8 +3,11 @@ export const user = {
 
 	state: () => ({
 		profile: {
-			initials: 'EP',
-			name: 'Eleanor',
+			initials: 'MW',
+			name: 'Matthew',
+			firstName: 'Matthew',
+			lastName: 'Wilkinson',
+			email: 'matthew@engageinteractive.co.uk',
 		},
 	}),
 
