@@ -61,8 +61,15 @@ export const interviews = {
 
 			await navigator.mediaDevices
 				.getUserMedia(constraints)
-				.then(() => commit('setDeclinedPermissions', false))
+				.then(onUserMedia)
 				.catch((error) => dispatch('handleUserMediaError', error));
+
+			const onUserMedia = (mediaStream) => {
+				commit('setDeclinedPermissions', false);
+
+				const tracks = mediaStream.getTracks();
+				tracks.forEach((track) => track.stop());
+			};
 
 			await navigator.mediaDevices
 				.enumerateDevices()
