@@ -14,9 +14,9 @@
 				:text="getDeviceText(device)"
 				text-class="text-sm font-bold"
 				:icon="{
-					name: device.enabled ? 'check' : 'close',
+					name: device.available ? 'check' : 'close',
 					size: 'w-4 h-4 text-white',
-					bg: device.enabled ? 'bg-green' : 'bg-red',
+					bg: device.available ? 'bg-green' : 'bg-red',
 				}"
 			/>
 		</li>
@@ -42,7 +42,7 @@
 					return `You declined permissions for ${device.type.toLowerCase()}`;
 				}
 
-				if (!device.enabled) {
+				if (!device.available) {
 					return `No ${device.type.toLowerCase()} available`;
 				}
 
@@ -53,13 +53,13 @@
 				camera: {
 					type: 'Camera',
 					label: activeCameraName,
-					enabled: hasCamera,
+					available: hasCamera,
 				},
 
 				microphone: {
 					type: 'Microphone',
 					label: activeMicrophoneName,
-					enabled: hasMicrophone,
+					available: hasMicrophone,
 				},
 			});
 
