@@ -114,7 +114,7 @@ export const routes = [
 				},
 			},
 			{
-				path: '',
+				path: 'settings',
 				name: constant.ROUTE_LIVE_SETTINGS,
 				component: PreSettingsView,
 				props: {

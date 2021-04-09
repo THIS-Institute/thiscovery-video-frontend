@@ -21,6 +21,7 @@
 						]"
 					>
 						<video-wrapper
+							v-if="hasCamera"
 							class="rounded-lg overflow-hidden"
 							pre-record
 						/>
@@ -39,7 +40,7 @@
 								/>
 
 								<e-button
-									v-if="false"
+									v-if="hasMicrophone"
 									:title="msgs.cta.title"
 									icon="chevron-right"
 									class="e-button--red mt-5"
@@ -61,11 +62,7 @@
 								</modal>
 							</div>
 
-							<devices
-								v-if="msgs.devices"
-								class="mt-5"
-								v-bind="msgs.devices"
-							/>
+							<devices class="mt-5" />
 						</div>
 
 						<info-bar
@@ -84,6 +81,7 @@
 	import messages from '@/messages';
 	import { useMessages } from '@/composables/useMessages';
 	import { useStore } from 'vuex';
+	import { useDevices } from '@/components/interviews/settings/useDevices';
 
 	import VideoWrapper from '@/components/interviews/settings/VideoWrapper';
 	import InfoBar from '@/components/ui/InfoBar';
@@ -112,14 +110,20 @@
 			},
 		},
 
-		setup(props) {
-			const { message } = useMessages(messages);
-			const msgs = message(`${props.domain}.preSettings`);
-
+		setup() {
 			const store = useStore();
+			const { message } = useMessages(messages);
+			const msgs = message(`preSettings`);
+
+			store.dispatch('interviews/updateMediaDevices');
+			
 			const troubleShoot = () => store.commit('app/toggleModal');
 
+			const { hasMicrophone, hasCamera } = useDevices();
+
 			return {
+				hasCamera,
+				hasMicrophone,
 				msgs,
 				troubleShoot,
 			};

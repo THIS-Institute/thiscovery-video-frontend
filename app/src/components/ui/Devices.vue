@@ -7,11 +7,11 @@
 		]"
 	>
 		<li
-			v-for="(device, index) in [camera, microphone]"
+			v-for="(device, index) in devices"
 			:key="index"
 		>
 			<icon-text
-				:text="device.title"
+				:text="getDeviceText(device)"
 				text-class="text-sm font-bold"
 				:icon="{
 					name: device.enabled ? 'check' : 'close',
@@ -24,17 +24,49 @@
 </template>
 
 <script>
-	export default {
-		props: {
-			camera: {
-				type: Object,
-				required: true,
-			},
+	import { reactive } from 'vue';
+	import { useDevices } from '@/components/interviews/settings/useDevices';
 
-			microphone: {
-				type: Object,
-				required: true,
-			},
+	export default {
+		setup() {
+			const {
+				declinedPermission,
+				activeCameraName,
+				activeMicrophoneName,
+				hasCamera,
+				hasMicrophone,
+			} = useDevices();
+
+			const getDeviceText = (device) => {
+				if (declinedPermission.value) {
+					return `You declined permissions for ${device.type.toLowerCase()}`;
+				}
+
+				if (!device.enabled) {
+					return `No ${device.type.toLowerCase()} available`;
+				}
+
+				return `${device.type}: ${device.label} is availble`;
+			};
+
+			const devices = reactive({
+				camera: {
+					type: 'Camera',
+					label: activeCameraName,
+					enabled: hasCamera,
+				},
+
+				microphone: {
+					type: 'Microphone',
+					label: activeMicrophoneName,
+					enabled: hasMicrophone,
+				},
+			});
+
+			return {
+				devices,
+				getDeviceText,
+			};
 		},
 	};
 </script>
