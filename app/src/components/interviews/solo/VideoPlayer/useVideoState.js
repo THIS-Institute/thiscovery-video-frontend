@@ -5,10 +5,12 @@ export function useVideoState() {
 
     const isReviewing = computed(() => state.isReviewing );
     const isPlaying = computed(() => state.isPlaying );
+    const canPlay = computed(() => state.canPlay );
 
     return {
         state,
         isReviewing,
         isPlaying,
+        canPlay,
     };
 }

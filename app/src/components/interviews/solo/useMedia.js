@@ -10,10 +10,6 @@ export function useMedia() {
 	const recorder = shallowReactive({});
 	const playbackURL = ref(null);
 
-	const recordingOptions = {
-		mimeType: 'video/webm; codecs=vp9',
-	};
-
 	const constraints = {
 		audio: true,
 		video: true,
@@ -41,7 +37,7 @@ export function useMedia() {
 	};
 
 	const setupMediaRecorder = () => {
-		recorder.value = new MediaRecorder(stream.value, recordingOptions);
+		recorder.value = new MediaRecorder(stream.value);
 		recorder.value.ondataavailable = onDataAvailable;
 		recorder.value.onerror = onRecorderError;
 	};
@@ -52,7 +48,11 @@ export function useMedia() {
 		if (event.data.size > 0) {
 			recordingBuffer.push(event.data);
 
-			const blob = new Blob(recordingBuffer, { type: 'video/webm' });
+			const blobOptions = {
+				type: recorder.value.mimeType,
+			}
+
+			const blob = new Blob(recordingBuffer, blobOptions);
 
 			if (playbackURL.value) {
 				URL.revokeObjectURL(playbackURL.value);

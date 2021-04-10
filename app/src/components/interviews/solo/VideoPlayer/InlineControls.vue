@@ -22,6 +22,7 @@
 			<e-button
 				:icon="isPlaying ? 'pause' : 'play'"
 				class="e-button--white"
+				:disabled="!canPlay"
 				@click="$emit('togglePlayback')"
 			/>
 		</template>
@@ -42,11 +43,13 @@
 			const {
 				isReviewing,
 				isPlaying,
+				canPlay,
 			} = useVideoState();
 
 			return {
 				isReviewing,
 				isPlaying,
+				canPlay,
 			}
 		},
 	}

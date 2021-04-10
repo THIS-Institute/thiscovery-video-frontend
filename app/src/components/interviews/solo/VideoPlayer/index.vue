@@ -8,8 +8,9 @@
 			class="absolute inset-0 w-full h-full object-cover"
 			:src="videoPlaybackUrl"
 			@timeupdate="onTimeUpdate"
-			@canplay="onVideoCanPlay"
 			@ended="onVideoEnd"
+			@durationchange="onDurationChange"
+			@canplay="onCanPlay"
 		/>
 
 		<inline-controls
@@ -59,6 +60,7 @@
 				currentTime: 0,
 				isPlaying: false,
 				isReviewing: false,
+				canPlay: false,
 			});
 
 			provide('state', state);
@@ -95,14 +97,18 @@
 				state.currentTime = video.value.currentTime;
 			};
 
-			const onVideoCanPlay = () => {
-				state.duration = video.value.duration;
-			};
-
 			const onVideoEnd = () => {
 				state.isPlaying = false;
 				state.isReviewing = false;
 				state.currentTime = 0;
+			};
+
+			const onDurationChange = () => {
+				state.duration = video.value.duration;
+			};
+
+			const onCanPlay = () => {
+				state.canPlay = true;
 			};
 
 			return {
@@ -114,8 +120,9 @@
 				onAddMore,
 				onTogglePlayback,
 				onTimeUpdate,
-				onVideoCanPlay,
 				onVideoEnd,
+				onDurationChange,
+				onCanPlay,
 			}
 		}
 	};
