@@ -36,7 +36,8 @@
 </template>
 
 <script>
-	import { computed, inject } from 'vue';
+	import { computed } from 'vue';
+	import { useVideoState } from './useVideoState';
 
 	export default {
 		emits: [
@@ -44,7 +45,7 @@
 		],
 
 		setup() {
-			const state = inject('state');
+			const { state } = useVideoState();
 
 			const progress = computed(() => {
 				const asPercentage = state.currentTime / state.duration;

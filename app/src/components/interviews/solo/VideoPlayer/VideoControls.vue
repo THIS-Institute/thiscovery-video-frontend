@@ -1,6 +1,7 @@
 <template>
 	<div class="flex flex-wrap items-center justify-between gap-y-5 px-5 my-5">
 		<e-button
+			v-if="!isReviewing"
 			title="Add more"
 			icon="record"
 			class="e-button--white-outline"
@@ -11,6 +12,7 @@
 		/>
 
 		<e-button
+			v-if="!isReviewing"
 			title="Next question"
 			icon="check"
 			class="e-button--green"
@@ -21,6 +23,7 @@
 		/>
 
 		<video-scrubber
+			v-if="isReviewing"
 			ref="scrubber"
 			class="w-full"
 			@scrub="$emit('scrub', $event)"
@@ -30,6 +33,7 @@
 
 <script>
 	import { ref } from 'vue';
+	import { useVideoState } from './useVideoState';
 
 	import VideoScrubber from './VideoScrubber';
 
@@ -45,9 +49,12 @@
 		],
 
 		setup() {
+			const { isReviewing } = useVideoState();
+
 			const scrubber = ref(null);
 
 			return {
+				isReviewing,
 				scrubber,
 			}
 		},

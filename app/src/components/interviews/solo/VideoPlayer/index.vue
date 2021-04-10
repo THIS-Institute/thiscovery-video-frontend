@@ -9,18 +9,20 @@
 			:src="videoPlaybackUrl"
 			@timeupdate="onTimeUpdate"
 			@canplay="onVideoCanPlay"
+			@ended="onVideoEnd"
 		/>
 
 		<inline-controls
 			@watch-answer="onWatchAnswer"
 			@add-comments="onAddComments"
+			@toggle-playback="onTogglePlayback"
 		/>
 	</placeholder>
 
 	<video-controls
 		@scrub="onScrub"
 		@add-more="onAddMore"
-		@next-question="onNextQuestion"
+		@next-question="$emit('nextQuestion')"
 	/>
 </template>
 
@@ -43,19 +45,26 @@
 			},
 		},
 
+		emits: [
+			'nextQuestion',
+		],
+
 		setup() {
 			const video = ref(null);
 
 			const state = reactive({
 				duration: 0,
 				currentTime: 0,
+				isPlaying: false,
+				isReviewing: false,
 			});
 
 			provide('state', state);
 
 			const onWatchAnswer = () => {
+				state.isReviewing = true;
+				state.isPlaying = true;
 				video.value.play();
-				console.log('Watch answer');
 			};
 
 			const onAddComments = () => {
@@ -63,24 +72,35 @@
 			};
 
 			const onScrub = (event) => {
-				video.value.currentTime = parseInt(event.target.value);
+				video.value.currentTime = parseFloat(event.target.value);
 			};
 
 			const onAddMore = () => {
 				console.log('Add more');
 			};
 
-			const onNextQuestion = () => {
-				console.log('Next question');
+			const onTogglePlayback = () => {
+				state.isPlaying = !state.isPlaying;
+
+				if (state.isPlaying) {
+					video.value.play();
+				} else {
+					video.value.pause();
+				}
 			};
 
 			const onTimeUpdate = () => {
 				state.currentTime = video.value.currentTime;
-				console.log(state.currentTime);
 			};
 
 			const onVideoCanPlay = () => {
 				state.duration = video.value.duration;
+			};
+
+			const onVideoEnd = () => {
+				state.isPlaying = false;
+				state.isReviewing = false;
+				state.currentTime = 0;
 			};
 
 			return {
@@ -90,9 +110,10 @@
 				onAddComments,
 				onScrub,
 				onAddMore,
-				onNextQuestion,
+				onTogglePlayback,
 				onTimeUpdate,
 				onVideoCanPlay,
+				onVideoEnd,
 			}
 		}
 	};
