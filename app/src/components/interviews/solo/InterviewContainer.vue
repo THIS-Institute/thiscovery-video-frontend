@@ -70,41 +70,15 @@
 			]"
 		>
 			<div class="rounded-lg overflow-hidden bg-grey-400">
-				<video-recorder
+				<!-- <video-recorder
 					user-name="Matthew"
 					@started="onRecorderStart"
 					@stopped="onRecorderStop"
+				/> -->
+
+				<video-player
+					video-url="/static/img/big-buck-bunny.mp4"
 				/>
-
-				<div>
-					<template v-if="stopped">
-						<e-button
-							title="Add more"
-							icon="record"
-							class="e-button--white-outline"
-							flipped
-							small
-							pill
-						/>
-
-						<e-button
-							title="Next question"
-							icon="check"
-							class="e-button--green"
-							flipped
-							small
-							pill
-							@click="nextQuestion"
-						/>
-					</template>
-
-					<scrubber
-						v-else-if="reviewing && video"
-						ref="videoScrubber"
-						class="w-full"
-						@scrub="onScrub"
-					/>
-				</div>
 			</div>
 
 			<modal>
@@ -146,7 +120,8 @@
 
 	// import VideoWrapper from '@/components/interviews/settings/VideoWrapper';
 	import Question from '@/components/interviews/solo/Question';
-	import VideoRecorder from './VideoRecorder';
+	// import VideoRecorder from './VideoRecorder';
+	import VideoPlayer from './VideoPlayer';
 
 	import InfoBar from '@/components/ui/InfoBar';
 	import Modal from '@/components/ui/modal/Modal';
@@ -162,7 +137,8 @@
 			Modal,
 			Confirm,
 			Scrubber,
-			VideoRecorder,
+			// VideoRecorder,
+			VideoPlayer,
 			// Comment,
 		},
 
