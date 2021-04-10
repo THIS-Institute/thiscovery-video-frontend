@@ -1,8 +1,7 @@
 import {
 	ref,
 	shallowReactive,
-	onMounted,
-	onBeforeUnmount,
+	provide,
 } from 'vue';
 
 export function useMedia() {
@@ -30,11 +29,14 @@ export function useMedia() {
 		}
 	};
 
-	const destroyMediaStream = () => {
-		const tracks = stream.value.getTracks()()
+	const destroyMediaStream = async () => {
+		const tracks = await stream.value.getTracks();
 
 		if (tracks.length) {
-			tracks.forEach((track) => track.stop());
+			await new Promise((resolve) => {
+				tracks.forEach((track) => track.stop());
+				resolve
+			});
 		}
 	};
 
@@ -58,11 +60,10 @@ export function useMedia() {
 			
 			playbackURL.value = URL.createObjectURL(blob);
 		}
-
-		console.log(recordingBuffer);
 	}
 
 	const onRecorderError = (error) => {
+		console.log('Recorder error');
 		console.error(error);
 	}
 
@@ -74,23 +75,22 @@ export function useMedia() {
 		recorder.value.stop();
 	};
 
-	onMounted( async () => {
-		await navigator.mediaDevices
+	const setupLocalVideo = () => {
+		navigator.mediaDevices
 			.getUserMedia(constraints)
 			.then(setupMediaStream)
 			.then(setupMediaRecorder)
 			.catch((error) => console.error(error));
-	});
+	};
 
-	onBeforeUnmount(() => {
-		destroyMediaStream();
-	});
+	provide('videoElementRef', videoElementRef);
+	provide('setupLocalVideo', setupLocalVideo);
+	provide('destroyMediaStream', destroyMediaStream);
+	provide('stream', stream);
 
 	return {
-		videoElementRef,
-		stream,
 		startRecording,
 		stopRecording,
 		playbackURL,
-	};
+	}
 }

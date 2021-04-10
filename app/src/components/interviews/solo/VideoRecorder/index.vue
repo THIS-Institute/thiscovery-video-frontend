@@ -12,6 +12,7 @@
 			v-show="showVideo"
 			ref="videoElementRef"
 			class="transform -scale-x-100"
+			preload="auto"
 			autoplay
 			playsinline
 			muted
@@ -42,10 +43,9 @@
 </template>
 
 <script>
-	import { reactive, ref } from 'vue';
+	import { reactive, ref, inject, onMounted, onBeforeUnmount } from 'vue';
 	import { useStore } from 'vuex';
 	import { statuses, useRecordingState } from './useRecordingState';
-	import { useMedia } from './useMedia';
 
 	import VideoPlaceholder from './VideoPlaceholder';
 	import RecorderControls from './RecorderControls';
@@ -54,6 +54,8 @@
 	import InlineControls from './InlineControls';
 
 	export default {
+		name: 'VideoRecorder',
+
 		components: {
 			VideoPlaceholder,
 			RecorderControls,
@@ -80,12 +82,20 @@
 				status: statuses.READY,
 			});
 
-			const {
-				videoElementRef,
-				startRecording,
-				stopRecording,
-				playbackURL,
-			} = useMedia();
+			const videoElementRef = inject('videoElementRef');
+			const startRecording = inject('startRecording');
+			const stopRecording = inject('stopRecording');
+			const playbackURL = inject('playbackURL');
+			const setupLocalVideo = inject('setupLocalVideo');
+			const destroyMediaStream = inject('destroyMediaStream');
+
+			onMounted(() => {
+				setupLocalVideo();
+			});
+
+			onBeforeUnmount(() => {
+				destroyMediaStream();
+			});
 		
 			const {
 				isReady,
@@ -101,7 +111,7 @@
 
 			const handleStopRecording = () => {
 				stopRecording();
-
+				
 				store.commit('interviews/setPlaybackURL', playbackURL);
 				state.status = statuses.READY;
 

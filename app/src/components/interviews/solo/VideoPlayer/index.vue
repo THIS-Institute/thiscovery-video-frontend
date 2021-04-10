@@ -33,6 +33,8 @@
 	import VideoControls from './VideoControls';
 
 	export default {
+		name: 'VideoPlayer',
+
 		components: {
 			InlineControls,
 			VideoControls,

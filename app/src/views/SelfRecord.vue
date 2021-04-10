@@ -10,11 +10,6 @@
 			>
 				<interview-container
 					:sections="sections"
-					:pre-record="true"
-					:loading="false"
-					:recording="false"
-					:stopped="false"
-					:reviewing="false"
 				/>
 			</div>
 		</div>
