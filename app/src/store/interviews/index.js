@@ -13,6 +13,7 @@ export const interviews = {
 		availableAudioOutput: [],
 		declinedPermissions: false,
 		playbackURL: null,
+		playbackTime: 0,
 	}),
 
 	mutations: {
@@ -50,6 +51,10 @@ export const interviews = {
 
 		setPlaybackURL: (state, url) => {
 			state.playbackURL = url;
+		},
+
+		setPlaybackTime: (state, time) => {
+			state.playbackTime = time;
 		},
 	},
 

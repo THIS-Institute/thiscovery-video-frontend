@@ -77,7 +77,7 @@
 				/> -->
 
 				<video-player
-					video-url="/static/img/big-buck-bunny.mp4"
+					video-playback-url="/static/img/big-buck-bunny.mp4"
 				/>
 			</div>
 
@@ -126,7 +126,6 @@
 	import InfoBar from '@/components/ui/InfoBar';
 	import Modal from '@/components/ui/modal/Modal';
 	import Confirm from '@/components/ui/modal/Confirm';
-	import Scrubber from '@/components/ui/Scrubber';
 	// import Comment from '@/components/ui/modal/Comment';
 
 	export default {
@@ -136,7 +135,6 @@
 			InfoBar,
 			Modal,
 			Confirm,
-			Scrubber,
 			// VideoRecorder,
 			VideoPlayer,
 			// Comment,
@@ -191,7 +189,6 @@
 			const confirmRetake = () => store.commit('app/toggleModal');
 
 			const video = ref(null);
-			const videoScrubber = ref(null);
 
 			const state = reactive({
 				isPlaying: false,
@@ -206,11 +203,6 @@
 
 			const onScrub = (time) => {
 				video.value.currentTime = (time / 1000);
-			};
-
-			const updateProgress = () => {
-				const current = video.value.currentTime;
-				videoScrubber.value.currentTime = (current * 1000);
 			};
 
 			const onRecorderStart = () => {
@@ -232,8 +224,6 @@
 				togglePlayback,
 				video,
 				onScrub,
-				videoScrubber,
-				updateProgress,
 				onRecorderStart,
 				onRecorderStop,
 				...toRefs(state),

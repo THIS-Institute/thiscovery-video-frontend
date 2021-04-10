@@ -19,14 +19,37 @@
 			pill
 			@click="$emit('nextQuestion')"
 		/>
+
+		<video-scrubber
+			ref="scrubber"
+			class="w-full"
+			@scrub="$emit('scrub', $event)"
+		/>
 	</div>
 </template>
 
 <script>
+	import { ref } from 'vue';
+
+	import VideoScrubber from './VideoScrubber';
+
 	export default {
+		components: {
+			VideoScrubber,
+		},
+
 		emits: [
+			'scrub',
 			'addMore',
 			'nextQuestion',
-		]
+		],
+
+		setup() {
+			const scrubber = ref(null);
+
+			return {
+				scrubber,
+			}
+		},
 	};
 </script>
