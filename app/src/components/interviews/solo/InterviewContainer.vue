@@ -70,7 +70,7 @@
 			]"
 		>
 			<div class="rounded-lg overflow-hidden bg-grey-400">
-				<video-wrapper
+				<!-- <video-wrapper
 					:pre-record="preRecord"
 					:recording="recording"
 					:loading="loading"
@@ -85,38 +85,14 @@
 						src="/static/img/big-buck-bunny.mp4"
 						@timeupdate="updateProgress"
 					/>
-				</video-wrapper>
+				</video-wrapper> -->
 
-				<div class="flex flex-wrap items-center justify-between gap-y-5 px-5 my-5">
-					<e-button
-						v-if="preRecord"
-						title="Click to record your answer"
-						icon="record"
-						class="e-button--red mx-auto"
-						flipped
-						small
-						pill
-					/>
+				<video-recorder
+					user-name="Matthew"
+				/>
 
-					<e-button
-						v-else-if="loading"
-						title="Cancel"
-						class="e-button--white-outline mx-auto"
-						small
-						pill
-					/>
-
-					<e-button
-						v-else-if="recording"
-						title="Stop recording"
-						icon="stop"
-						class="e-button--white-outline mx-auto"
-						flipped
-						small
-						pill
-					/>
-
-					<template v-else-if="stopped">
+				<div>
+					<template v-if="stopped">
 						<e-button
 							title="Add more"
 							icon="record"
@@ -184,8 +160,9 @@
 	import { computed, ref, reactive, toRefs } from 'vue';
 	import { useStore } from 'vuex';
 
-	import VideoWrapper from '@/components/interviews/settings/VideoWrapper';
+	// import VideoWrapper from '@/components/interviews/settings/VideoWrapper';
 	import Question from '@/components/interviews/solo/Question';
+	import VideoRecorder from './VideoRecorder';
 
 	import InfoBar from '@/components/ui/InfoBar';
 	import Modal from '@/components/ui/modal/Modal';
@@ -195,12 +172,13 @@
 
 	export default {
 		components: {
-			VideoWrapper,
+			// VideoWrapper,
 			Question,
 			InfoBar,
 			Modal,
 			Confirm,
 			Scrubber,
+			VideoRecorder,
 			// Comment,
 		},
 
