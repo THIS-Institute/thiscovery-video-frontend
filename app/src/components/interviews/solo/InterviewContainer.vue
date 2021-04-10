@@ -70,25 +70,10 @@
 			]"
 		>
 			<div class="rounded-lg overflow-hidden bg-grey-400">
-				<!-- <video-wrapper
-					:pre-record="preRecord"
-					:recording="recording"
-					:loading="loading"
-					:stopped="stopped"
-					:reviewing="reviewing"
-					:is-playing="isPlaying"
-					@toggle-playback="togglePlayback()"
-				>
-					<video
-						ref="video"
-						class="absolute inset-0 w-full h-full object-cover"
-						src="/static/img/big-buck-bunny.mp4"
-						@timeupdate="updateProgress"
-					/>
-				</video-wrapper> -->
-
 				<video-recorder
 					user-name="Matthew"
+					@started="onRecorderStart"
+					@stopped="onRecorderStop"
 				/>
 
 				<div>
@@ -109,7 +94,7 @@
 							flipped
 							small
 							pill
-							@click="nextQuestion()"
+							@click="nextQuestion"
 						/>
 					</template>
 
@@ -155,10 +140,9 @@
 </template>
 
 <script>
-	import { useQuestions } from '@/composables/useQuestions';
-
 	import { computed, ref, reactive, toRefs } from 'vue';
 	import { useStore } from 'vuex';
+	import { useQuestions } from '@/composables/useQuestions';
 
 	// import VideoWrapper from '@/components/interviews/settings/VideoWrapper';
 	import Question from '@/components/interviews/solo/Question';
@@ -253,6 +237,14 @@
 				videoScrubber.value.currentTime = (current * 1000);
 			};
 
+			const onRecorderStart = () => {
+				console.log('Recorder started');
+			};
+
+			const onRecorderStop = () => {
+				console.log('Recorder stopped');
+			};
+
 			return {
 				toReadableValue,
 				activeSection,
@@ -266,6 +258,8 @@
 				onScrub,
 				videoScrubber,
 				updateProgress,
+				onRecorderStart,
+				onRecorderStop,
 				...toRefs(state),
 			};
 		},

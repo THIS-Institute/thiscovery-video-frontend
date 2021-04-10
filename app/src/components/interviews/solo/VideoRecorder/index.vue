@@ -8,8 +8,13 @@
 			:name="userName"
 		/>
 
-		<video-preview
+		<video
 			v-show="showVideo"
+			ref="videoElementRef"
+			class="transform -scale-x-100"
+			autoplay
+			playsinline
+			muted
 		/>
 
 		<recording-indicator
@@ -38,9 +43,10 @@
 
 <script>
 	import { reactive, ref } from 'vue';
+	import { useStore } from 'vuex';
 	import { statuses, useRecordingState } from './useRecordingState';
+	import { useMedia } from './useMedia';
 
-	import VideoPreview from '@/components/interviews/settings/VideoPreview';
 	import VideoPlaceholder from './VideoPlaceholder';
 	import RecorderControls from './RecorderControls';
 	import RecordingIndicator from './RecordingIndicator';
@@ -49,7 +55,6 @@
 
 	export default {
 		components: {
-			VideoPreview,
 			VideoPlaceholder,
 			RecorderControls,
 			RecordingIndicator,
@@ -65,14 +70,22 @@
 		},
 
 		emits: [
-			'ready',
-			'recording',
+			'started',
+			'stopped',
 		],
 
 		setup(props, { emit }) {
+			const store = useStore();
 			const state = reactive({
 				status: statuses.READY,
 			});
+
+			const {
+				videoElementRef,
+				startRecording,
+				stopRecording,
+				playbackURL,
+			} = useMedia();
 		
 			const {
 				isReady,
@@ -87,8 +100,12 @@
 			};
 
 			const handleStopRecording = () => {
+				stopRecording();
+
+				store.commit('interviews/setPlaybackURL', playbackURL);
 				state.status = statuses.READY;
-				emit('ready');
+
+				emit('stopped');
 			};
 
 			const handelCancelCountdown = () => {
@@ -97,7 +114,8 @@
 			
 			const onCountdownFinish = () => {
 				state.status = statuses.RECORDING;
-				emit('recording');
+				startRecording();
+				emit('started');
 			};
 
 			const handleToggleCamera = () => {
@@ -108,6 +126,7 @@
 
 			return {
 				state,
+				videoElementRef,
 				isReady,
 				isRecording,
 				isCountdown,
