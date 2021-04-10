@@ -13,7 +13,6 @@ export const interviews = {
 		availableAudioOutput: [],
 		declinedPermissions: false,
 		playbackURL: null,
-		playbackTime: 0,
 	}),
 
 	mutations: {
