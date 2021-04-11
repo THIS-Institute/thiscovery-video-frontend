@@ -72,7 +72,7 @@ Resources:
         AllowHeaders: '''*'''
         AllowOrigin: '''*'''
       BinaryMediaTypes:
-        - *~1*
+        - '*~1*'
   RoomCreateToken:
     Type: AWS::Serverless::Function
     Properties:
