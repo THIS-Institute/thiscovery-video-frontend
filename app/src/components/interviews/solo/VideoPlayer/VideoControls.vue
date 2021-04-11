@@ -20,6 +20,7 @@
 			flipped
 			small
 			pill
+			:disabled="isUploading"
 			@click="$emit('progressQuestion')"
 		/>
 
@@ -33,7 +34,7 @@
 </template>
 
 <script>
-	import { ref } from 'vue';
+	import { ref, inject } from 'vue';
 	import { useVideoState } from './useVideoState';
 
 	import VideoScrubber from './VideoScrubber';
@@ -50,13 +51,16 @@
 		],
 
 		setup() {
-			const { isReviewing } = useVideoState();
-
 			const scrubber = ref(null);
 
+			const { isReviewing } = useVideoState();
+
+			const isUploading = inject('isUploading');
+
 			return {
-				isReviewing,
 				scrubber,
+				isReviewing,
+				isUploading,
 			}
 		},
 	};

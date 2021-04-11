@@ -121,6 +121,7 @@
 	import { useStore } from 'vuex';
 	import { useQuestions } from './useQuestions';
 	import { useMedia } from './useMedia';
+	import { processAnswer } from './selfRecord';
 
 	// import VideoWrapper from '@/components/interviews/settings/VideoWrapper';
 	import Question from '@/components/interviews/solo/Question';
@@ -169,7 +170,10 @@
 
 			const state = reactive({
 				mode: MODE_RECORDING,
+				isUploading: false,
 			});
+
+			provide('isUploading', state.isUploading);
 
 			const isRecordingMode = () => {
 				return state.mode === MODE_RECORDING;
@@ -214,9 +218,9 @@
 			};
 
 			const onNextQuestion = async () => {
-				let blob = await fetch(playbackURL.value).then(r => r.blob());
-
-				console.log(blob);
+				await processAnswer({
+					playbackURL: playbackURL.value,
+				});
 
 				nextQuestion();
 			};
