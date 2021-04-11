@@ -225,50 +225,56 @@ Resources:
             Path: /v1/appointments/
             Method: POST
             RestApiId: !Ref BackendApi
-    CreateInterviewAnswer:
-      Type: AWS::Serverless::Function
-      Properties:
-        FunctionName: Interviews-CreateAnswer
-        Description: !Sub
-          - Stack ${StackTagName} Environment ${EnvironmentTagName} Function ${ResourceName}
-          - ResourceName: CreateAnswer
-        CodeUri: src
-        Handler: log.lambda_handler
-        Runtime: python3.8
-        MemorySize: 1024
-        Timeout: 30
-        Tracing: Active
-        Policies:
-          - AWSXrayWriteOnlyAccess
-        Events:
-          BackendApiPOSTv1CreateInterviewAnswer:
-            Type: Api
-            Properties:
-              Path: /v1/self-record-interview/answer/
-              Method: POST
-              RestApiId: !Ref BackendApi
-    UploadVideoAnswer:
-      Type: AWS::Serverless::Function
-      Properties:
-        FunctionName: Interviews-UploadVideoAnswer
-        Description: !Sub
-          - Stack ${StackTagName} Environment ${EnvironmentTagName} Function ${ResourceName}
-          - ResourceName: UploadVideoAnswer
-        CodeUri: src
-        Handler: log.lambda_handler
-        Runtime: python3.8
-        MemorySize: 2048
-        Timeout: 30
-        Tracing: Active
-        Policies:
-          - AWSXrayWriteOnlyAccess
-        Events:
-          BackendApiUploadVideoAnswer:
-            Type: Api
-            Properties:
-              Path: /v1/self-record-interview/upload-video
-              Method: POST
-              RestApiId: !Ref BackendApi
+  CreateInterviewAnswer:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: Interviews-CreateAnswer
+      Description: !Sub
+        - Stack ${StackTagName} Environment ${EnvironmentTagName} Function ${ResourceName}
+        - ResourceName: Function
+      CodeUri: src
+      Handler: log.lambda_handler
+      Runtime: python3.8
+      MemorySize: 1024
+      Timeout: 30
+      Tracing: Active
+      Policies:
+        - AWSXrayWriteOnlyAccess
+      Events:
+        BackendApiPOSTv1selfrecordinterviewanswer:
+          Type: Api
+          Properties:
+            Path: /v1/self-record-interview/answer/
+            Method: POST
+            RestApiId: !Ref BackendApi
+  UploadVideoAnswer:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: Interviews-UploadVideoAnswer
+      Description: !Sub
+        - Stack ${StackTagName} Environment ${EnvironmentTagName} Function ${ResourceName}
+        - ResourceName: UploadVideoAnswer
+      CodeUri: src
+      Handler: log.lambda_handler
+      Runtime: python3.8
+      MemorySize: 2048
+      Timeout: 30
+      Tracing: Active
+      Policies:
+        - AWSXrayWriteOnlyAccess
+        - S3CrudPolicy:
+            BucketName: !Ref InterviewAssets
+      Events:
+        BackendApiPOSTv1selfrecordinterviewuploadvideo:
+          Type: Api
+          Properties:
+            Path: /v1/self-record-interview/upload-video
+            Method: POST
+            RestApiId: !Ref BackendApi
+      Environment:
+        Variables:
+          BUCKET_NAME: !Ref InterviewAssets
+          BUCKET_ARN: !GetAtt InterviewAssets.Arn
   Cdn:
     Type: AWS::CloudFront::Distribution
     Properties:
