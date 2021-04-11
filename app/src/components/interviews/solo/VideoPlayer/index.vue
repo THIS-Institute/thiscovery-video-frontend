@@ -11,6 +11,7 @@
 			@ended="onVideoEnd"
 			@durationchange="onDurationChange"
 			@canplay="onCanPlay"
+			@loadedmetadata="onMetadataLoaded"
 		/>
 
 		<inline-controls
@@ -67,8 +68,12 @@
 
 			const onWatchAnswer = () => {
 				state.isReviewing = true;
-				state.isPlaying = true;
-				video.value.play();
+
+				video.value
+					.play()
+					.then(() => {
+						state.isPlaying = true;
+					});
 			};
 
 			const onAddComments = () => {
@@ -100,7 +105,7 @@
 			const onVideoEnd = () => {
 				state.isPlaying = false;
 				state.isReviewing = false;
-				state.currentTime = 0;
+				video.value.currentTime = 0;
 			};
 
 			const onDurationChange = () => {
@@ -110,6 +115,8 @@
 			const onCanPlay = () => {
 				state.canPlay = true;
 			};
+
+			const onMetadataLoaded = () => {};
 
 			return {
 				state,
@@ -123,6 +130,7 @@
 				onVideoEnd,
 				onDurationChange,
 				onCanPlay,
+				onMetadataLoaded,
 			}
 		}
 	};

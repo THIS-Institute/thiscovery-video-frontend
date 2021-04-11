@@ -205,9 +205,7 @@
 			const store = useStore();
 			const confirmRetake = () => store.commit('app/toggleModal');
 
-			const onRecorderStart = () => {
-				console.log('Recorder started');
-			};
+			const onRecorderStart = () => {};
 
 			const onRecorderStop = () => {
 				setMode(MODE_REVIEWING);
