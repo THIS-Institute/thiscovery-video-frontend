@@ -51,12 +51,28 @@ Resources:
                 type: aws_proxy
                 uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${GetAppointmentDateSlots.Arn}/invocations
               responses: {}
+          /v1/self-record-interview/answer/:
+            post:
+              x-amazon-apigateway-integration:
+                httpMethod: POST
+                type: aws_proxy
+                uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${PostSelfRecordAnswer.Arn}/invocations
+              responses: {}
+          /v1/self-record-interview/upload-video:
+            post:
+              x-amazon-apigateway-integration:
+                httpMethod: POST
+                type: aws_proxy
+                uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${UploadSelfRecordAnswerVideo.Arn}/invocations
+              responses: {}
       EndpointConfiguration: REGIONAL
       TracingEnabled: true
       MinimumCompressionSize: 1000
       Cors:
         AllowHeaders: '''*'''
         AllowOrigin: '''*'''
+      BinaryMediaTypes:
+        - *~1*
   RoomCreateToken:
     Type: AWS::Serverless::Function
     Properties:
@@ -209,6 +225,50 @@ Resources:
             Path: /v1/appointments/
             Method: POST
             RestApiId: !Ref BackendApi
+    PostSelfRecordAnswer:
+      Type: AWS::Serverless::Function
+      Properties:
+        FunctionName: Interviews-CreateAnswer
+        Description: !Sub
+          - Stack ${StackTagName} Environment ${EnvironmentTagName} Function ${ResourceName}
+          - ResourceName: CreateAnswer
+        CodeUri: src
+        Handler: log.lambda_handler
+        Runtime: python3.8
+        MemorySize: 1024
+        Timeout: 30
+        Tracing: Active
+        Policies:
+          - AWSXrayWriteOnlyAccess
+        Events:
+          BackendApiPOSTv1SelfRecordAnswer:
+            Type: Api
+            Properties:
+              Path: /v1/self-record-interview/answer/
+              Method: POST
+              RestApiId: !Ref BackendApi
+    UploadSelfRecordAnswerVideo:
+      Type: AWS::Serverless::Function
+      Properties:
+        FunctionName: Interviews-UploadVideoAnswer
+        Description: !Sub
+          - Stack ${StackTagName} Environment ${EnvironmentTagName} Function ${ResourceName}
+          - ResourceName: UploadVideoAnswer
+        CodeUri: src
+        Handler: log.lambda_handler
+        Runtime: python3.8
+        MemorySize: 2048
+        Timeout: 30
+        Tracing: Active
+        Policies:
+          - AWSXrayWriteOnlyAccess
+        Events:
+          BackendApiSelfRecordUploadAnswerVideo:
+            Type: Api
+            Properties:
+              Path: /v1/self-record-interview/upload-video
+              Method: POST
+              RestApiId: !Ref BackendApi
   Cdn:
     Type: AWS::CloudFront::Distribution
     Properties:
@@ -394,6 +454,10 @@ Resources:
       BucketName: !Sub frontend-assets-${AWS::AccountId}
       WebsiteConfiguration:
         IndexDocument: index.html
+  InterviewAssets:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub interview-assets-${AWS::AccountId}
 Parameters:
   StackTagName:
     Type: String

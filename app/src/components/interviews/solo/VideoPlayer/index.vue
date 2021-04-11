@@ -23,8 +23,8 @@
 
 	<video-controls
 		@scrub="onScrub"
-		@add-more="onAddMore"
-		@next-question="$emit('nextQuestion')"
+		@add-more="$emit('addMore')"
+		@progress-question="$emit('progressQuestion')"
 	/>
 </template>
 
@@ -51,7 +51,8 @@
 		},
 
 		emits: [
-			'nextQuestion',
+			'addMore',
+			'progressQuestion',
 		],
 
 		setup(props) {
@@ -86,10 +87,6 @@
 
 			const onScrub = (event) => {
 				video.value.currentTime = parseFloat(event.target.value);
-			};
-
-			const onAddMore = () => {
-				console.log('Add more');
 			};
 
 			const onTogglePlayback = () => {
@@ -128,7 +125,6 @@
 				onWatchAnswer,
 				onAddComments,
 				onScrub,
-				onAddMore,
 				onTogglePlayback,
 				onTimeUpdate,
 				onVideoEnd,

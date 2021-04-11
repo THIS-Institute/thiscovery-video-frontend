@@ -80,6 +80,7 @@
 				<video-player
 					v-if="isReviewingMode() && playbackURL"
 					:video-playback-url="playbackURL"
+					@progress-question="onNextQuestion"
 				/>
 			</div>
 
@@ -154,6 +155,8 @@
 			const MODE_RECORDING = 'recording';
 			const MODE_REVIEWING = 'reviewing';
 
+			const store = useStore();
+
 			const {
 				startRecording,
 				stopRecording,
@@ -202,13 +205,20 @@
 				};
 			});
 
-			const store = useStore();
 			const confirmRetake = () => store.commit('app/toggleModal');
 
 			const onRecorderStart = () => {};
 
 			const onRecorderStop = () => {
 				setMode(MODE_REVIEWING);
+			};
+
+			const onNextQuestion = async () => {
+				let blob = await fetch(playbackURL.value).then(r => r.blob());
+
+				console.log(blob);
+
+				nextQuestion();
 			};
 
 			return {
@@ -224,6 +234,7 @@
 				onRecorderStart,
 				onRecorderStop,
 				playbackURL,
+				onNextQuestion,
 			};
 		},
 	};

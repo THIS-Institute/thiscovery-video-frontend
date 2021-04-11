@@ -8,6 +8,7 @@
 			flipped
 			small
 			pill
+			disabled
 			@click="$emit('addMore')"
 		/>
 
@@ -19,7 +20,7 @@
 			flipped
 			small
 			pill
-			@click="$emit('nextQuestion')"
+			@click="$emit('progressQuestion')"
 		/>
 
 		<video-scrubber
@@ -45,7 +46,7 @@
 		emits: [
 			'scrub',
 			'addMore',
-			'nextQuestion',
+			'progressQuestion',
 		],
 
 		setup() {

@@ -2,7 +2,7 @@
  * Resolves the duration of a video/webm blob
  * Chrome bug: https://bugs.chromium.org/p/chromium/issues/detail?id=642012
  * 
- * @param {Blob|String} blob
+ * @param {String} blob
  *
  * @returns {Promise<Number>} Blob duration in seconds.
  */
