@@ -30,6 +30,7 @@
 
 <script>
 	import { ref, reactive, provide } from 'vue';
+	import getBlobDuration from './getBlobDuration';
 
 	import InlineControls from './InlineControls';
 	import VideoControls from './VideoControls';
@@ -53,7 +54,7 @@
 			'nextQuestion',
 		],
 
-		setup() {
+		setup(props) {
 			const video = ref(null);
 
 			const state = reactive({
@@ -65,6 +66,9 @@
 			});
 
 			provide('state', state);
+
+			getBlobDuration(props.videoPlaybackUrl)
+				.then((duration) => state.duration = duration);
 
 			const onWatchAnswer = () => {
 				state.isReviewing = true;
