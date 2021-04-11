@@ -56,14 +56,14 @@ Resources:
               x-amazon-apigateway-integration:
                 httpMethod: POST
                 type: aws_proxy
-                uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${PostSelfRecordAnswer.Arn}/invocations
+                uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${CreateInterviewAnswer.Arn}/invocations
               responses: {}
           /v1/self-record-interview/upload-video:
             post:
               x-amazon-apigateway-integration:
                 httpMethod: POST
                 type: aws_proxy
-                uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${UploadSelfRecordAnswerVideo.Arn}/invocations
+                uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${UploadVideoAnswer.Arn}/invocations
               responses: {}
       EndpointConfiguration: REGIONAL
       TracingEnabled: true
@@ -225,7 +225,7 @@ Resources:
             Path: /v1/appointments/
             Method: POST
             RestApiId: !Ref BackendApi
-    PostSelfRecordAnswer:
+    CreateInterviewAnswer:
       Type: AWS::Serverless::Function
       Properties:
         FunctionName: Interviews-CreateAnswer
@@ -241,13 +241,13 @@ Resources:
         Policies:
           - AWSXrayWriteOnlyAccess
         Events:
-          BackendApiPOSTv1SelfRecordAnswer:
+          BackendApiPOSTv1CreateInterviewAnswer:
             Type: Api
             Properties:
               Path: /v1/self-record-interview/answer/
               Method: POST
               RestApiId: !Ref BackendApi
-    UploadSelfRecordAnswerVideo:
+    UploadVideoAnswer:
       Type: AWS::Serverless::Function
       Properties:
         FunctionName: Interviews-UploadVideoAnswer
@@ -263,7 +263,7 @@ Resources:
         Policies:
           - AWSXrayWriteOnlyAccess
         Events:
-          BackendApiSelfRecordUploadAnswerVideo:
+          BackendApiUploadVideoAnswer:
             Type: Api
             Properties:
               Path: /v1/self-record-interview/upload-video
