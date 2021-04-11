@@ -45,6 +45,21 @@
 		setup() {
 			const { message } = useMessages(messages);
 
+			const types = [
+				"video/webm",
+				"audio/webm",
+				"video/webm;codecs=vp8",
+				"video/webm;codecs=vp9",
+				"video/webm;codecs=daala",
+				"video/webm;codecs=h264",
+				"audio/webm;codecs=opus",
+				"video/mpeg"
+			];
+
+			for (var i in types) {
+				console.log(`${types[i]}:${MediaRecorder.isTypeSupported(types[i])}`);
+			}
+
 			let paths = message('landing.paths');
 			if (!paths || !Array.isArray(paths)) {
 				paths = [];

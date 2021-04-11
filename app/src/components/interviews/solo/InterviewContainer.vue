@@ -70,80 +70,17 @@
 			]"
 		>
 			<div class="rounded-lg overflow-hidden bg-grey-400">
-				<video-wrapper
-					:pre-record="preRecord"
-					:recording="recording"
-					:loading="loading"
-					:stopped="stopped"
-					:reviewing="reviewing"
-					:is-playing="isPlaying"
-					@toggle-playback="togglePlayback()"
-				>
-					<video
-						ref="video"
-						class="absolute inset-0 w-full h-full object-cover"
-						src="/static/img/big-buck-bunny.mp4"
-						@timeupdate="updateProgress"
-					/>
-				</video-wrapper>
+				<video-recorder
+					v-if="isRecordingMode()"
+					user-name="Matthew"
+					@started="onRecorderStart"
+					@stopped="onRecorderStop"
+				/>
 
-				<div class="flex flex-wrap items-center justify-between gap-y-5 px-5 my-5">
-					<e-button
-						v-if="preRecord"
-						title="Click to record your answer"
-						icon="record"
-						class="e-button--red mx-auto"
-						flipped
-						small
-						pill
-					/>
-
-					<e-button
-						v-else-if="loading"
-						title="Cancel"
-						class="e-button--white-outline mx-auto"
-						small
-						pill
-					/>
-
-					<e-button
-						v-else-if="recording"
-						title="Stop recording"
-						icon="stop"
-						class="e-button--white-outline mx-auto"
-						flipped
-						small
-						pill
-					/>
-
-					<template v-else-if="stopped">
-						<e-button
-							title="Add more"
-							icon="record"
-							class="e-button--white-outline"
-							flipped
-							small
-							pill
-						/>
-
-						<e-button
-							title="Next question"
-							icon="check"
-							class="e-button--green"
-							flipped
-							small
-							pill
-							@click="nextQuestion()"
-						/>
-					</template>
-
-					<scrubber
-						v-else-if="reviewing && video"
-						ref="videoScrubber"
-						class="w-full"
-						@scrub="onScrub"
-					/>
-				</div>
+				<video-player
+					v-if="isReviewingMode() && playbackURL"
+					:video-playback-url="playbackURL"
+				/>
 			</div>
 
 			<modal>
@@ -155,7 +92,7 @@
 			</modal>
 
 			<info-bar
-				v-if="preRecord || loading || recording"
+				v-if="isRecordingMode()"
 				class="mt-2.5"
 				title="Having trouble recording?"
 				:cta="{
@@ -165,7 +102,7 @@
 			/>
 
 			<info-bar
-				v-if="stopped || reviewing"
+				v-if="isReviewingMode()"
 				class="mt-2.5"
 				title="Not happy with your answer?"
 				:cta="{
@@ -179,28 +116,30 @@
 </template>
 
 <script>
-	import { useQuestions } from '@/composables/useQuestions';
-
-	import { computed, ref, reactive, toRefs } from 'vue';
+	import { computed, reactive, provide } from 'vue';
 	import { useStore } from 'vuex';
+	import { useQuestions } from './useQuestions';
+	import { useMedia } from './useMedia';
 
-	import VideoWrapper from '@/components/interviews/settings/VideoWrapper';
+	// import VideoWrapper from '@/components/interviews/settings/VideoWrapper';
 	import Question from '@/components/interviews/solo/Question';
+	import VideoRecorder from './VideoRecorder';
+	import VideoPlayer from './VideoPlayer';
 
 	import InfoBar from '@/components/ui/InfoBar';
 	import Modal from '@/components/ui/modal/Modal';
 	import Confirm from '@/components/ui/modal/Confirm';
-	import Scrubber from '@/components/ui/Scrubber';
 	// import Comment from '@/components/ui/modal/Comment';
 
 	export default {
 		components: {
-			VideoWrapper,
+			// VideoWrapper,
 			Question,
 			InfoBar,
 			Modal,
 			Confirm,
-			Scrubber,
+			VideoRecorder,
+			VideoPlayer,
 			// Comment,
 		},
 
@@ -209,24 +148,38 @@
 				type: Array,
 				required: true,
 			},
-
-			// User has not yet started recording
-			preRecord: Boolean,
-
-			// User has clicked record and is loading
-			loading: Boolean,
-
-			// User is now recording their answer
-			recording: Boolean,
-
-			// User has stopped the recording
-			stopped: Boolean,
-
-			// User is rewatching their answer
-			reviewing: Boolean,
 		},
 
 		setup(props) {
+			const MODE_RECORDING = 'recording';
+			const MODE_REVIEWING = 'reviewing';
+
+			const {
+				startRecording,
+				stopRecording,
+				playbackURL,
+			} = useMedia();
+			
+			provide('startRecording', startRecording);
+			provide('stopRecording', stopRecording);
+			provide('playbackURL', playbackURL);
+
+			const state = reactive({
+				mode: MODE_RECORDING,
+			});
+
+			const isRecordingMode = () => {
+				return state.mode === MODE_RECORDING;
+			};
+
+			const isReviewingMode = () => {
+				return state.mode === MODE_REVIEWING;
+			};
+
+			const setMode = (mode) => {
+				state.mode = mode;
+			};
+
 			const {
 				toReadableValue,
 				activeQuestion,
@@ -252,43 +205,25 @@
 			const store = useStore();
 			const confirmRetake = () => store.commit('app/toggleModal');
 
-			const video = ref(null);
-			const videoScrubber = ref(null);
+			const onRecorderStart = () => {};
 
-			const state = reactive({
-				isPlaying: false,
-			});
-
-			const togglePlayback = () => {
-				const v = video.value;
-
-				v.paused ? v.play() : v.pause();
-				state.isPlaying = !v.paused;
-			};
-
-			const onScrub = (time) => {
-				video.value.currentTime = (time / 1000);
-			};
-
-			const updateProgress = () => {
-				const current = video.value.currentTime;
-				videoScrubber.value.currentTime = (current * 1000);
+			const onRecorderStop = () => {
+				setMode(MODE_REVIEWING);
 			};
 
 			return {
 				toReadableValue,
+				isRecordingMode,
+				isReviewingMode,
 				activeSection,
 				nextQuestion,
 				readQuestion,
 				readSection,
 				progress,
 				confirmRetake,
-				togglePlayback,
-				video,
-				onScrub,
-				videoScrubber,
-				updateProgress,
-				...toRefs(state),
+				onRecorderStart,
+				onRecorderStop,
+				playbackURL,
 			};
 		},
 	};

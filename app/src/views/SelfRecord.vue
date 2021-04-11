@@ -8,13 +8,8 @@
 					'xl:col-span-8 xl:col-start-3',
 				]"
 			>
-				<interview
+				<interview-container
 					:sections="sections"
-					:pre-record="false"
-					:loading="false"
-					:recording="false"
-					:stopped="false"
-					:reviewing="true"
 				/>
 			</div>
 		</div>
@@ -22,16 +17,17 @@
 </template>
 
 <script>
-	import Interview from '@/components/interviews/solo/Interview';
+	import InterviewContainer from '@/components/interviews/solo/InterviewContainer';
 
 	export default {
 		components: {
-			Interview,
+			InterviewContainer,
 		},
 
 		props: {
 			sections: {
-				type: Array,
+	
+			type: Array,
 				required: true,
 			},
 		},
