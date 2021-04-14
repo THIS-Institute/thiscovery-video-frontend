@@ -9,12 +9,6 @@ export async function creatInterviewAnswer (data) {
 }
 
 export async function uploadInterviewAnswerVideo (blob) {
-    const options = {
-        headers: {
-			'Content-Type': 'multipart/form-data',
-		},
-    }
-
     const formData = new FormData();
 
     formData.append('video', blob);
@@ -22,7 +16,6 @@ export async function uploadInterviewAnswerVideo (blob) {
 	const response = await client.postRaw(
             `self-record-interview/upload-video`,
             formData,
-            options
         )
 		.then((response) => response)
 		.catch((error) => console.error(error));
