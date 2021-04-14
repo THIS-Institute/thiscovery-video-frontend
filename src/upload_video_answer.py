@@ -1,15 +1,17 @@
 import os
 import json
-import base64
-from requests_toolbelt.multipart import decoder
+import boto3
 
 def lambda_handler(event, context):
-    form_data = base64.b64decode(event['body'])
+    event_filename = event['requestContext']['extendedRequestId']
 
-    multipart_data = MultipartDecoder(form_data, 'multipart/form-data')
+    s3 = boto3.resource('s3')
 
-    for part in multipart_data.parts:
-        print(part)
+    s3.put_object(
+        Key=event_filename + '.json',
+        Bucket=os.environ['BUCKET_NAME'],
+        Body=event.encode('utf-8'),
+    )
 
     return {
         'headers': {
