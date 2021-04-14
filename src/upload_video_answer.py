@@ -1,17 +1,27 @@
 import os
 import json
+import base64, sys
 import boto3
+from cgi import parse_multipart, FieldStorage
+from io import BytesIO
 
 def lambda_handler(event, context):
-    event_filename = event['requestContext']['extendedRequestId']
+    if event['isBase64Encoded']:
+        data = base64.b64decode(event['body'])
+    else:
+        data = event['body'].encode('utf-8')
 
-    s3 = boto3.resource('s3')
+    body_file = BytesIO(data)
 
-    s3.put_object(
-        Key=event_filename + '.json',
-        Bucket=os.environ['BUCKET_NAME'],
-        Body=event.encode('utf-8'),
+    fs = FieldStorage(
+        fp=body_file,
+        headers=event['headers'],
+        environ={'REQUEST_METHOD':'POST', 'CONTENT_TYPE':event['headers']['content-type']}
     )
+
+    print(fs)
+
+    # print(fs)
 
     return {
         'headers': {
