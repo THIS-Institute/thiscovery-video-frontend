@@ -65,6 +65,13 @@ Resources:
                 type: aws_proxy
                 uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${UploadVideoAnswer.Arn}/invocations
               responses: {}
+          /v1/task/{key}:
+            get:
+              x-amazon-apigateway-integration:
+                httpMethod: POST
+                type: aws_proxy
+                uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${GetTask.Arn}/invocations
+              responses: {}
       EndpointConfiguration: REGIONAL
       TracingEnabled: true
       MinimumCompressionSize: 1000
@@ -285,6 +292,28 @@ Resources:
           BUCKET_ARN: !GetAtt InterviewAssets.Arn
           TABLE_NAME: !Ref InterviewsTable
           TABLE_ARN: !GetAtt InterviewsTable.Arn
+  GetTask:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: Tasks-GetTask
+      Description: !Sub
+        - Stack ${StackTagName} Environment ${EnvironmentTagName} Function ${ResourceName}
+        - ResourceName: GetTask
+      CodeUri: src
+      Handler: get_task.lambda_handler
+      Runtime: python3.8
+      MemorySize: 512
+      Timeout: 5
+      Tracing: Active
+      Policies:
+        - AWSXrayWriteOnlyAccess
+      Events:
+        BackendApiGETv1gettask:
+          Type: Api
+          Properties:
+            Path: /v1/task/{key}
+            Method: GET
+            RestApiId: !Ref BackendApi
   Cdn:
     Type: AWS::CloudFront::Distribution
     Properties:
