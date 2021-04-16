@@ -90,9 +90,6 @@ export const routes = [
 				path: 'interview',
 				name: constant.ROUTE_SELF_INTERVIEW,
 				component: SelfRecordView,
-				props: {
-					sections: content.selfRecord.interview.sections,
-				},
 			},
 		],
 	},

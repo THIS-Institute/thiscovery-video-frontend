@@ -16,7 +16,7 @@
 
 	<p
 		class="text-sm mt-2.5"
-		v-text="content"
+		v-text="description"
 	/>
 </template>
 
@@ -33,7 +33,22 @@
 				default: null,
 			},
 
-			content: {
+			description: {
+				type: String,
+				default: null,
+			},
+
+			id: {
+				type: String,
+				default: null,
+			},
+
+			name: {
+				type: String,
+				default: null,
+			},
+
+			sequence: {
 				type: String,
 				default: null,
 			},

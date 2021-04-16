@@ -9,7 +9,8 @@
 				]"
 			>
 				<interview-container
-					:sections="sections"
+					v-if="hasQuestions"
+					:questions="questions"
 				/>
 			</div>
 		</div>
@@ -17,19 +18,31 @@
 </template>
 
 <script>
+	import { computed } from 'vue';
+	import { useStore } from 'vuex';
+
 	import InterviewContainer from '@/components/interviews/solo/InterviewContainer';
 
 	export default {
-		components: {
-			InterviewContainer,
-		},
+		components: { InterviewContainer },
 
-		props: {
-			sections: {
-	
-			type: Array,
-				required: true,
-			},
+		setup() {
+			const store = useStore();
+
+			const questions = computed(() => {
+				return store.state.interviews.selfRecordQuestions;
+			})
+
+			const hasQuestions = computed(() => {
+				return questions.value.length > 0;
+			})
+
+			store.dispatch('interviews/getSelfRecordQuestions');
+
+			return {
+				hasQuestions,
+				questions,
+			};
 		},
 	};
 </script>
