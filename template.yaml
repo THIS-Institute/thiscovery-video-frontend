@@ -336,7 +336,7 @@ Resources:
         - Stack ${StackTagName} Environment ${EnvironmentTagName} Function ${ResourceName}
         - ResourceName: GetSelfRecordQuestions
       CodeUri: src
-      Handler: get_task.lambda_handler
+      Handler: get_self_record_questions.lambda_handler
       Runtime: python3.8
       MemorySize: 512
       Timeout: 5
@@ -358,7 +358,7 @@ Resources:
         - Stack ${StackTagName} Environment ${EnvironmentTagName} Function ${ResourceName}
         - ResourceName: GetInterviewersQuestions
       CodeUri: src
-      Handler: get_task.lambda_handler
+      Handler: get_interviewers_questions.lambda_handler
       Runtime: python3.8
       MemorySize: 512
       Timeout: 5
