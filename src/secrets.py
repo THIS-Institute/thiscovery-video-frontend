@@ -10,6 +10,7 @@ class SecretsManager:
         self.namespace = namespace
 
         kwargs = {'service_name': 'secretsmanager'}
+
         if 'LOCAL_AWS_ENDPOINT' in os.environ:
             kwargs['endpoint_url'] = os.environ['LOCAL_AWS_ENDPOINT']
 
