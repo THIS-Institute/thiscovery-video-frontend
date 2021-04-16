@@ -51,12 +51,35 @@ Resources:
                 type: aws_proxy
                 uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${GetAppointmentDateSlots.Arn}/invocations
               responses: {}
+          /v1/self-record-interview/answer/:
+            post:
+              x-amazon-apigateway-integration:
+                httpMethod: POST
+                type: aws_proxy
+                uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${CreateInterviewAnswer.Arn}/invocations
+              responses: {}
+          /v1/self-record-interview/upload-video:
+            post:
+              x-amazon-apigateway-integration:
+                httpMethod: POST
+                type: aws_proxy
+                uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${UploadVideoAnswer.Arn}/invocations
+              responses: {}
+          /v1/task/{key}:
+            get:
+              x-amazon-apigateway-integration:
+                httpMethod: POST
+                type: aws_proxy
+                uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${GetTask.Arn}/invocations
+              responses: {}
       EndpointConfiguration: REGIONAL
       TracingEnabled: true
       MinimumCompressionSize: 1000
       Cors:
         AllowHeaders: '''*'''
         AllowOrigin: '''*'''
+      BinaryMediaTypes:
+        - multipart~1*form-data
   RoomCreateToken:
     Type: AWS::Serverless::Function
     Properties:
@@ -208,6 +231,88 @@ Resources:
           Properties:
             Path: /v1/appointments/
             Method: POST
+            RestApiId: !Ref BackendApi
+  CreateInterviewAnswer:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: Interviews-CreateAnswer
+      Description: !Sub
+        - Stack ${StackTagName} Environment ${EnvironmentTagName} Function ${ResourceName}
+        - ResourceName: Function
+      CodeUri: src
+      Handler: log.lambda_handler
+      Runtime: python3.8
+      MemorySize: 1024
+      Timeout: 30
+      Tracing: Active
+      Policies:
+        - AWSXrayWriteOnlyAccess
+        - DynamoDBCrudPolicy:
+            TableName: !Ref InterviewsTable
+      Events:
+        BackendApiPOSTv1selfrecordinterviewanswer:
+          Type: Api
+          Properties:
+            Path: /v1/self-record-interview/answer/
+            Method: POST
+            RestApiId: !Ref BackendApi
+      Environment:
+        Variables:
+          TABLE_NAME: !Ref InterviewsTable
+          TABLE_ARN: !GetAtt InterviewsTable.Arn
+  UploadVideoAnswer:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: Interviews-UploadVideoAnswer
+      Description: !Sub
+        - Stack ${StackTagName} Environment ${EnvironmentTagName} Function ${ResourceName}
+        - ResourceName: UploadVideoAnswer
+      CodeUri: src
+      Handler: upload_video_answer.lambda_handler
+      Runtime: python3.8
+      MemorySize: 2048
+      Timeout: 30
+      Tracing: Active
+      Policies:
+        - AWSXrayWriteOnlyAccess
+        - S3CrudPolicy:
+            BucketName: !Ref InterviewAssets
+        - DynamoDBCrudPolicy:
+            TableName: !Ref InterviewsTable
+      Events:
+        BackendApiPOSTv1selfrecordinterviewuploadvideo:
+          Type: Api
+          Properties:
+            Path: /v1/self-record-interview/upload-video
+            Method: POST
+            RestApiId: !Ref BackendApi
+      Environment:
+        Variables:
+          BUCKET_NAME: !Ref InterviewAssets
+          BUCKET_ARN: !GetAtt InterviewAssets.Arn
+          TABLE_NAME: !Ref InterviewsTable
+          TABLE_ARN: !GetAtt InterviewsTable.Arn
+  GetTask:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: Tasks-GetTask
+      Description: !Sub
+        - Stack ${StackTagName} Environment ${EnvironmentTagName} Function ${ResourceName}
+        - ResourceName: GetTask
+      CodeUri: src
+      Handler: get_task.lambda_handler
+      Runtime: python3.8
+      MemorySize: 512
+      Timeout: 5
+      Tracing: Active
+      Policies:
+        - AWSXrayWriteOnlyAccess
+      Events:
+        BackendApiGETv1gettask:
+          Type: Api
+          Properties:
+            Path: /v1/task/{key}
+            Method: GET
             RestApiId: !Ref BackendApi
   Cdn:
     Type: AWS::CloudFront::Distribution
@@ -394,6 +499,27 @@ Resources:
       BucketName: !Sub frontend-assets-${AWS::AccountId}
       WebsiteConfiguration:
         IndexDocument: index.html
+  InterviewAssets:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub interview-assets-${AWS::AccountId}
+  InterviewsTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: Interviews
+      KeySchema:
+        - AttributeName: userId
+          KeyType: HASH
+        - AttributeName: interviewId
+          KeyType: RANGE
+      AttributeDefinitions:
+        - AttributeName: userId
+          AttributeType: S
+        - AttributeName: interviewId
+          AttributeType: S
+      BillingMode: PAY_PER_REQUEST
+      StreamSpecification:
+        StreamViewType: NEW_AND_OLD_IMAGES
 Parameters:
   StackTagName:
     Type: String

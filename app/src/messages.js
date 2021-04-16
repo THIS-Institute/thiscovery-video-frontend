@@ -1,7 +1,7 @@
 import * as route from './routeConstants';
 
-const userInterviewPaths = Object.freeze([
-	{
+const userInterviewPaths = Object.freeze({
+	live: {
 		icon: 'camera',
 		title: 'Live interview',
 		content: 'Book an online meeting with a member of the online research team',
@@ -21,10 +21,9 @@ const userInterviewPaths = Object.freeze([
 				route: route.ROUTE_HOME,
 			}
 		},
-		available: true,
 	},
 
-	{
+	selfRecord: {
 		icon: 'video',
 		title: 'Self record',
 		content: 'Record your responses privately and in your own time',
@@ -44,9 +43,8 @@ const userInterviewPaths = Object.freeze([
 				route: route.ROUTE_SELF_HOWTO,
 			}
 		},
-		available: true
 	},
-]);
+});
 
 const selfRecordInstructions = Object.freeze([
 	{

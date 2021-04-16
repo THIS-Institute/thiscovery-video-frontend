@@ -27,7 +27,19 @@ BackendClient.prototype.get = async function (endpoint, requestOptions = {}) {
 BackendClient.prototype.post = async function (endpoint, data, requestOptions = {}) {
 	const options = Object.assign({
 		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+		},
 		body: JSON.stringify(data),
+	}, requestOptions);
+
+	return await this._request(endpoint, options);
+}
+
+BackendClient.prototype.postRaw = async function (endpoint, data, requestOptions = {}) {
+	const options = Object.assign({
+		method: 'POST',
+		body: data,
 	}, requestOptions);
 
 	return await this._request(endpoint, options);
@@ -36,6 +48,9 @@ BackendClient.prototype.post = async function (endpoint, data, requestOptions = 
 BackendClient.prototype.patch = async function (endpoint, requestOptions = {}) {
 	const options = Object.assign({
 		method: 'PATCH',
+		headers: {
+			'Content-Type': 'application/json',
+		},
 	}, requestOptions);
 
 	return await this._request(endpoint, options);
@@ -44,21 +59,16 @@ BackendClient.prototype.patch = async function (endpoint, requestOptions = {}) {
 BackendClient.prototype.delete = async function (endpoint, requestOptions = {}) {
 	const options = Object.assign({
 		method: 'DELETE',
+		headers: {
+			'Content-Type': 'application/json',
+		},
 	}, requestOptions);
 
 	return await this._request(endpoint, options);
 }
 
-BackendClient.prototype._request = async function (endpoint, requestOptions = {}) {
+BackendClient.prototype._request = async function (endpoint, options = {}) {
 	const url = `${this.baseUrl}/${this.VERSION}/${endpoint}`;
-
-	const defaultOptions = {
-		headers: {
-			'Content-Type': 'application/json',
-		},
-	};
-
-	const options = Object.assign(defaultOptions, requestOptions);
 	
 	const response = await fetch(url, options);
 

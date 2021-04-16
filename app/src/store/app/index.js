@@ -4,20 +4,6 @@ export const app = {
 	state: () => ({
 		modalActive: false,
 		navActive: false,
-		nav: [
-			{
-				title: 'Home',
-				url: '/',
-			},
-			{
-				title: 'About',
-				url: '/about',
-			},
-			{
-				title: 'Contact us',
-				url: '/contact-us',
-			},
-		],
 	}),
 
 	mutations: {
@@ -29,7 +15,4 @@ export const app = {
 			state.modalActive = !state.modalActive;
 		},
 	},
-
-	actions: {},
-	getters: {},
 };

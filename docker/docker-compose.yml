@@ -32,14 +32,15 @@ services:
       dockerfile: docker/python-cli.Dockerfile
     env_file: ../.lambda.env
     volumes:
-      - ../scripts/util/local-secrets-loader.py:/usr/src/sl/local-secrets-loader.py
+      - ../scripts/util/local-secrets-loader.py:/usr/src/util/local-secrets-loader.py
 
   awslocal:
     image: localstack/localstack
-    ports:
-      - 4566:4566
+    restart: unless-stopped
     environment:
-      - SERVICES=secretsmanager
+      - SERVICES=secretsmanager,dynamodb
       - DEFAULT_REGION=eu-west-1
     volumes:
       - "${TMPDIR:-/tmp/localstack}:/tmp/localstack"
+    ports:
+      - 4566:4566

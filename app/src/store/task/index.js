@@ -1,7 +1,48 @@
+import { getTask } from '@/api/tasks';
+
 export const task = {
 	namespaced: true,
 
 	state: () => ({
-		title: 'Suggest recommendation for good practice',
+		initalised: false,
+		id: null,
+		onDemandAvailable: false,
+		liveAvailable: false,
+		title: null,
 	}),
+
+	mutations: {
+		setInitalised(state, status) {
+			state.initalised = status;
+		},
+
+		setId(state, id) {
+			state.id = id;
+		},
+
+		setOnDemandAvailable(state, available) {
+			state.onDemandAvailable = available;
+		},
+
+		setLiveAvailable(state, available) {
+			state.liveAvailable = available;
+		},
+
+		setTitle(state, title) {
+			state.title = title;
+		},
+	},
+
+	actions: {
+		initalise: async ({ commit }) => {
+			const task = await getTask('somekey');
+
+			commit('setId', task.id);
+			commit('appointments/setBookingTypeId', task.acuityTypeId, { root: true });
+			commit('setOnDemandAvailable', task.onDemandAvailable);
+			commit('setLiveAvailable', task.liveAvailable);
+			commit('setTitle', task.title);
+			commit('setInitalised', true);
+		},
+	},
 };

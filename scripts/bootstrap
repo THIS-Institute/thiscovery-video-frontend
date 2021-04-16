@@ -113,9 +113,7 @@ echo -e "--> "$COLOUR_GREEN"Launching project containers"$COLOUR_RESET
 docker-compose up -d --build --quiet-pull
 echo ""
 
-# Populate secrets manager with secrets if there's a secrets.json file
-if [ -f secrets.json ]; then
-    scripts/secrets-hydrate
-fi
+# Updates dev environment dependencies
+scripts/update
 
 echo -e $COLOUR_GREEN"Project is initialised! 🚀"$COLOUR_RESET

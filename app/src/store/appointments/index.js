@@ -9,7 +9,7 @@ export const appointments = {
 
 	state: () => ({
 		status: constants.STATUS_READY,
-		bookingTypeId: '12345678',
+		bookingTypeId: null,
 		isConfirmed: false,
 		selection: null,
 		availability: [],
@@ -20,6 +20,11 @@ export const appointments = {
 	mutations: {
 		setStatus(state, status) {
 			state.status = status;
+		},
+
+		setBookingTypeId(state, bookingTypeId) {
+			state.bookingTypeId = bookingTypeId;
+			console.log(bookingTypeId);
 		},
 
 		updateIsConfirmed(state, isConfirmed) {

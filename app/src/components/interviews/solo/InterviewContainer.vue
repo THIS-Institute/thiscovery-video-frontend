@@ -80,6 +80,7 @@
 				<video-player
 					v-if="isReviewingMode() && playbackURL"
 					:video-playback-url="playbackURL"
+					@progress-question="onNextQuestion"
 				/>
 			</div>
 
@@ -120,6 +121,7 @@
 	import { useStore } from 'vuex';
 	import { useQuestions } from './useQuestions';
 	import { useMedia } from './useMedia';
+	import { processAnswer } from './selfRecord';
 
 	// import VideoWrapper from '@/components/interviews/settings/VideoWrapper';
 	import Question from '@/components/interviews/solo/Question';
@@ -154,6 +156,8 @@
 			const MODE_RECORDING = 'recording';
 			const MODE_REVIEWING = 'reviewing';
 
+			const store = useStore();
+
 			const {
 				startRecording,
 				stopRecording,
@@ -166,7 +170,10 @@
 
 			const state = reactive({
 				mode: MODE_RECORDING,
+				isUploading: false,
 			});
+
+			provide('isUploading', state.isUploading);
 
 			const isRecordingMode = () => {
 				return state.mode === MODE_RECORDING;
@@ -202,13 +209,20 @@
 				};
 			});
 
-			const store = useStore();
 			const confirmRetake = () => store.commit('app/toggleModal');
 
 			const onRecorderStart = () => {};
 
 			const onRecorderStop = () => {
 				setMode(MODE_REVIEWING);
+			};
+
+			const onNextQuestion = async () => {
+				await processAnswer({
+					playbackURL: playbackURL.value,
+				});
+
+				nextQuestion();
 			};
 
 			return {
@@ -224,6 +238,7 @@
 				onRecorderStart,
 				onRecorderStop,
 				playbackURL,
+				onNextQuestion,
 			};
 		},
 	};

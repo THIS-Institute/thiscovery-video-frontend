@@ -8,6 +8,7 @@
 			flipped
 			small
 			pill
+			disabled
 			@click="$emit('addMore')"
 		/>
 
@@ -19,7 +20,8 @@
 			flipped
 			small
 			pill
-			@click="$emit('nextQuestion')"
+			:disabled="isUploading"
+			@click="$emit('progressQuestion')"
 		/>
 
 		<video-scrubber
@@ -32,7 +34,7 @@
 </template>
 
 <script>
-	import { ref } from 'vue';
+	import { ref, inject } from 'vue';
 	import { useVideoState } from './useVideoState';
 
 	import VideoScrubber from './VideoScrubber';
@@ -45,17 +47,20 @@
 		emits: [
 			'scrub',
 			'addMore',
-			'nextQuestion',
+			'progressQuestion',
 		],
 
 		setup() {
-			const { isReviewing } = useVideoState();
-
 			const scrubber = ref(null);
 
+			const { isReviewing } = useVideoState();
+
+			const isUploading = inject('isUploading');
+
 			return {
-				isReviewing,
 				scrubber,
+				isReviewing,
+				isUploading,
 			}
 		},
 	};

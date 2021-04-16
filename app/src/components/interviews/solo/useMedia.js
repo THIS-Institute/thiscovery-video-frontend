@@ -42,17 +42,17 @@ export function useMedia() {
 		recorder.value.onerror = onRecorderError;
 	};
 
-	let recordingBuffer = [];
+	let recordingBuffer = ref([]);
 
 	const onDataAvailable = (event) => {
 		if (event.data.size > 0) {
-			recordingBuffer.push(event.data);
+			recordingBuffer.value.push(event.data);
 
 			const blobOptions = {
 				type: recorder.value.mimeType,
 			}
 
-			const blob = new Blob(recordingBuffer, blobOptions);
+			const blob = new Blob(recordingBuffer.value, blobOptions);
 
 			if (playbackURL.value) {
 				URL.revokeObjectURL(playbackURL.value);
@@ -63,7 +63,7 @@ export function useMedia() {
 	}
 
 	const onRecorderError = (error) => {
-		console.log('Recorder error');
+		console.log('Recorder Error:');
 		console.error(error);
 	}
 
