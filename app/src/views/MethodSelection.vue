@@ -15,10 +15,15 @@
 
 			<div class="relative grid grid-cols-8 gap-5 mt-7 col-span-12 xl:col-start-2 xl:col-span-8">
 				<method-card
-					v-for="(path, index) in paths"
-					:key="index"
 					class="col-span-8 sm:col-span-8 md:col-span-5 xl:col-span-4"
-					v-bind="path"
+					v-bind="message('landing.paths.live')"
+					:available="isLiveAvailable"
+				/>
+
+				<method-card
+					class="col-span-8 sm:col-span-8 md:col-span-5 xl:col-span-4"
+					v-bind="message('landing.paths.selfRecord')"
+					:available="isOnDemandAvailable"
 				/>
 			</div>
 
@@ -35,6 +40,8 @@
 </template>
 
 <script>
+	import { computed } from 'vue';
+	import { useStore } from 'vuex';
 	import messages from '@/messages';
 	import { useMessages } from '@/composables/useMessages';
 	import MethodCard from '@/components/methods/MethodCard';
@@ -43,29 +50,19 @@
 		components: { MethodCard },
 
 		setup() {
+			const store = useStore();
 			const { message } = useMessages(messages);
 
-			const types = [
-				"video/webm",
-				"audio/webm",
-				"video/webm;codecs=vp8",
-				"video/webm;codecs=vp9",
-				"video/webm;codecs=daala",
-				"video/webm;codecs=h264",
-				"audio/webm;codecs=opus",
-				"video/mpeg"
-			];
+			const isLiveAvailable = computed(() => store.state.task.liveAvailable);
+			const isOnDemandAvailable = computed(() => store.state.task.onDemandAvailable);
 
-			for (var i in types) {
-				console.log(`${types[i]}:${MediaRecorder.isTypeSupported(types[i])}`);
+			store.dispatch('task/initalise');
+
+			return {
+				message,
+				isLiveAvailable,
+				isOnDemandAvailable,
 			}
-
-			let paths = message('landing.paths');
-			if (!paths || !Array.isArray(paths)) {
-				paths = [];
-			}
-
-			return { message, paths }
 		},
 	};
 </script>
