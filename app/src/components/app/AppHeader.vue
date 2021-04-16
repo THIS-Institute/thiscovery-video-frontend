@@ -21,14 +21,7 @@
 				</div>
 
 				<nav class="flex-shrink-0 ml-16 hidden lg:block">
-					<ul class="inline-flex items-center space-x-12">
-						<li
-							v-for="(link, index) in nav"
-							:key="index"
-						>
-							<nav-link v-bind="link" />
-						</li>
-					</ul>
+					<navigation-links />
 				</nav>
 			</div>
 
@@ -61,7 +54,7 @@
 					'lg:hidden',
 				]"
 				aria-label="Main menu"
-				@click="toggle"
+				@click="onToggleNav"
 			>
 				<placeholder
 					ratio="pt-full"
@@ -81,19 +74,12 @@
 <script>
 	import { useStore } from 'vuex';
 
-	import NavLink from '@/components/ui/NavLink';
+	import NavigationLinks from './NavigationLinks';
 
 	export default {
-		components: {
-			NavLink,
-		},
+		components: { NavigationLinks },
 
 		props: {
-			nav: {
-				type: Array,
-				required: true,
-			},
-
 			profile: {
 				type: Object,
 				default: null,
@@ -104,10 +90,10 @@
 
 		setup() {
 			const store = useStore();
-			const toggle = () => store.commit('app/toggleNav');
+			const onToggleNav = () => store.commit('app/toggleNav');
 
 			return {
-				toggle,
+				onToggleNav,
 			};
 		},
 	};
