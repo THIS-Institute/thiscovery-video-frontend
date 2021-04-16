@@ -13,7 +13,7 @@ def lambda_handler(event, context):
 
     body_file = BytesIO(data)
 
-    fs = FieldStorage(
+    field_storage = FieldStorage(
         fp=body_file,
         headers=event['headers'],
         environ={
@@ -22,7 +22,22 @@ def lambda_handler(event, context):
         },
     )
 
-    video = fs['video']
+    try:
+        video = field_storage['video']
+    except KeyError:
+        return {
+            'headers': {
+                'Access-Control-Allow-Origin': '*',
+                'Content-Type': 'application/json'
+            },
+            'statusCode': 422,
+            'body': json.dumps({
+                'error': 'KeyError'
+            })
+        }
+    except:
+        raise
+
     event_filename = event['requestContext']['requestId']
 
     s3 = boto3.client('s3')
@@ -30,7 +45,7 @@ def lambda_handler(event, context):
     s3.put_object(
         Key=f'unprocessed/{event_filename}',
         Bucket=os.environ['BUCKET_NAME'],
-        Body=video.read(),
+        Body=video.file.read(),
         ContentType=video.type,
     )
 
