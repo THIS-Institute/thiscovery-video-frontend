@@ -72,6 +72,20 @@ Resources:
                 type: aws_proxy
                 uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${GetTask.Arn}/invocations
               responses: {}
+          /v1/self-record-questions/{taskId}:
+            get:
+              x-amazon-apigateway-integration:
+                httpMethod: POST
+                type: aws_proxy
+                uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${GetSelfRecordQuestions.Arn}/invocations
+              responses: {}
+          /v1/interviewers-questions/{taskId}:
+            get:
+              x-amazon-apigateway-integration:
+                httpMethod: POST
+                type: aws_proxy
+                uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${GetInterviewersQuestions.Arn}/invocations
+              responses: {}
       EndpointConfiguration: REGIONAL
       TracingEnabled: true
       MinimumCompressionSize: 1000
@@ -312,6 +326,50 @@ Resources:
           Type: Api
           Properties:
             Path: /v1/task/{key}
+            Method: GET
+            RestApiId: !Ref BackendApi
+  GetSelfRecordQuestions:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: Tasks-GetSelfRecordQuestions
+      Description: !Sub
+        - Stack ${StackTagName} Environment ${EnvironmentTagName} Function ${ResourceName}
+        - ResourceName: GetSelfRecordQuestions
+      CodeUri: src
+      Handler: get_task.lambda_handler
+      Runtime: python3.8
+      MemorySize: 512
+      Timeout: 5
+      Tracing: Active
+      Policies:
+        - AWSXrayWriteOnlyAccess
+      Events:
+        BackendApiGETv1selfrecordquestions:
+          Type: Api
+          Properties:
+            Path: /v1/self-record-questions/{taskId}
+            Method: GET
+            RestApiId: !Ref BackendApi
+  GetInterviewersQuestions:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: Tasks-GetInterviewersQuestions
+      Description: !Sub
+        - Stack ${StackTagName} Environment ${EnvironmentTagName} Function ${ResourceName}
+        - ResourceName: GetInterviewersQuestions
+      CodeUri: src
+      Handler: get_task.lambda_handler
+      Runtime: python3.8
+      MemorySize: 512
+      Timeout: 5
+      Tracing: Active
+      Policies:
+        - AWSXrayWriteOnlyAccess
+      Events:
+        BackendApiGETv1interviewersquestions:
+          Type: Api
+          Properties:
+            Path: /v1/interviewers-questions/{taskId}
             Method: GET
             RestApiId: !Ref BackendApi
   Cdn:
