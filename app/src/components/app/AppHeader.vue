@@ -88,7 +88,7 @@
 			const store = useStore();
 			const onToggleNav = () => store.commit('app/toggleNav');
 
-			const user = computed(() => store.state.app.user);
+			const user = computed(() => store.state.user.user);
 
 			return {
 				user,

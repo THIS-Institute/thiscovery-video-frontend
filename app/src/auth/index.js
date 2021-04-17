@@ -5,18 +5,18 @@ import { store } from '@/store';
 let client;
 
 async function handleRedirectCallback() {
-    store.commit('app/setIsAuthLoading', true);
+    store.commit('user/setIsAuthLoading', true);
 
     try {
         await client.handleRedirectCallback()
         const user = await client.getUser();
 
-        store.commit('app/setUser', user);
-        store.commit('app/setIsAuthenticated', true);
+        store.commit('user/setUser', user);
+        store.commit('user/setIsAuthenticated', true);
     } catch (exception) {
-        store.commit('app/setAuthError', exception);
+        store.commit('user/setAuthError', exception);
     } finally {
-        store.commit('app/setIsAuthLoading', false);
+        store.commit('user/setIsAuthLoading', false);
     }
 }
 
@@ -37,9 +37,9 @@ function logout(options) {
 }
 
 const authPlugin = {
-    isAuthenticated: computed(() => store.state.app.isAuthenticated),
-    loading: computed(() => store.state.app.isAuthLoading),
-    user: computed(() => store.state.app.user),
+    isAuthenticated: computed(() => store.state.user.isAuthenticated),
+    loading: computed(() => store.state.user.isAuthLoading),
+    user: computed(() => store.state.user.user),
     getIdTokenClaims,
     getTokenSilently,
     handleRedirectCallback,
@@ -98,16 +98,16 @@ export const setupAuth = async (options, callbackRedirect) => {
             callbackRedirect(appState);
         }
     } catch (exception) {
-        store.commit('app/setAuthError', exception);
+        store.commit('user/setAuthError', exception);
     } finally {
         // Initialize our internal authentication state
         const isAuthenticated = await client.isAuthenticated();
-        store.commit('app/setIsAuthenticated', isAuthenticated);
+        store.commit('user/setIsAuthenticated', isAuthenticated);
 
         const user = await client.getUser();
-        store.commit('app/setUser', user);
+        store.commit('user/setUser', user);
         
-        store.commit('app/setIsAuthLoading', false);
+        store.commit('user/setIsAuthLoading', false);
     }
 
     return {

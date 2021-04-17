@@ -72,7 +72,7 @@
 			<div class="rounded-lg overflow-hidden bg-grey-400">
 				<video-recorder
 					v-if="isRecordingMode()"
-					user-name="Matthew"
+					:user-name="userName"
 					@started="onRecorderStart"
 					@stopped="onRecorderStop"
 				/>
@@ -174,6 +174,8 @@
 				isUploading: false,
 			});
 
+			const userName = computed(() => store.state.user.user.given_name);
+
 			provide('isUploading', state.isUploading);
 
 			const isRecordingMode = () => {
@@ -244,6 +246,7 @@
 				onRecorderStop,
 				playbackURL,
 				onNextQuestion,
+				userName,
 			};
 		},
 	};

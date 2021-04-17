@@ -2,10 +2,6 @@ export const app = {
 	namespaced: true,
 
 	state: () => ({
-		isAuthenticated: false,
-		isAuthLoading: false,
-		user: {},
-		authError: null,
 		modalActive: false,
 		navActive: false,
 	}),

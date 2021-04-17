@@ -2,16 +2,27 @@ export const user = {
 	namespaced: true,
 
 	state: () => ({
-		profile: {
-			initials: 'MW',
-			name: 'Matthew',
-			firstName: 'Matthew',
-			lastName: 'Wilkinson',
-			email: 'matthew@engageinteractive.co.uk',
-		},
+		isAuthenticated: false,
+		isAuthLoading: false,
+		user: {},
+		authError: null,
 	}),
 
-	mutations: {},
+	mutations: {
+		setIsAuthenticated(state, isAuthenticated) {
+			state.isAuthenticated = isAuthenticated;
+		},
+		setIsAuthLoading(state, isAuthLoading) {
+			state.isAuthLoading = isAuthLoading;
+		},
+		setUser(state, user) {
+			state.user = user;
+		},
+		setAuthError(state, authError) {
+			state.authError = authError;
+		},
+	},
+	
 	actions: {},
 	getters: {},
 };
