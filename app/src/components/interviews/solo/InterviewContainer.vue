@@ -146,7 +146,7 @@
 		},
 
 		props: {
-			sections: {
+			questions: {
 				type: Array,
 				required: true,
 			},
@@ -195,7 +195,7 @@
 				nextQuestion,
 				readQuestion,
 				readSection,
-			} = useQuestions(props.sections, 0, 0);
+			} = useQuestions(props.questions, 0, 0);
 
 			// Percentage progress through all questions
 			const progress = computed(() => {

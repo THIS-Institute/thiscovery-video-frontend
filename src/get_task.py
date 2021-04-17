@@ -14,5 +14,6 @@ def lambda_handler(event, context):
             'onDemandAvailable': True,
             'liveAvailable': True,
             'title': 'Suggest recommendation for good practice',
+            'completionUrl': 'https://www.thiscovery.org/',
         }),
     }

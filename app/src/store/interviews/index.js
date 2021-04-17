@@ -1,5 +1,10 @@
 import env from '@/app.env';
 
+import {
+	getSelfRecordQuestions,
+	getInterviewersQuestions,
+} from '@/api/tasks';
+
 export const interviews = {
 	namespaced: true,
 
@@ -13,6 +18,8 @@ export const interviews = {
 		availableAudioOutput: [],
 		declinedPermissions: false,
 		playbackURL: null,
+		selfRecordQuestions: [],
+		interviewerQuestions: [],
 	}),
 
 	mutations: {
@@ -54,6 +61,14 @@ export const interviews = {
 
 		setPlaybackTime: (state, time) => {
 			state.playbackTime = time;
+		},
+
+		setSelfRecordQuestions: (state, questions) => {
+			state.selfRecordQuestions = questions;
+		},
+
+		setInterviewerQuestions: (state, questions) => {
+			state.interviewerQuestions = questions;
 		},
 	},
 
@@ -150,6 +165,18 @@ export const interviews = {
 					}
 				})
 				.catch((error) => console.error(error));
+		},
+
+		getSelfRecordQuestions: async ({ commit, rootState }) => {
+			const taskID = rootState.task.id;
+			const questions = await getSelfRecordQuestions(taskID);
+			commit('setSelfRecordQuestions', questions.blocks);
+		},
+
+		getInterviewerQuestions: async ({ commit, rootState }) => {
+			const taskID = rootState.task.id;
+			const questions = await getInterviewersQuestions(taskID);
+			commit('setInterviewerQuestions', questions);
 		},
 	},
 
