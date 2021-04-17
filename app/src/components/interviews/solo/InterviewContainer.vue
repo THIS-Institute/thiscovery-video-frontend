@@ -162,6 +162,7 @@
 				startRecording,
 				stopRecording,
 				playbackURL,
+				cleanup,
 			} = useMedia();
 			
 			provide('startRecording', startRecording);
@@ -220,9 +221,13 @@
 			const onNextQuestion = async () => {
 				await processAnswer({
 					playbackURL: playbackURL.value,
-				});
+				}).then(() => {
+					cleanup();
+				})
 
 				nextQuestion();
+
+				setMode(MODE_RECORDING);
 			};
 
 			return {
