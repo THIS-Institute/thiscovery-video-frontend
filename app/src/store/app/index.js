@@ -2,6 +2,10 @@ export const app = {
 	namespaced: true,
 
 	state: () => ({
+		isAuthenticated: false,
+		isAuthLoading: false,
+		user: {},
+		authError: null,
 		modalActive: false,
 		navActive: false,
 	}),
@@ -13,6 +17,22 @@ export const app = {
 
 		toggleModal(state) {
 			state.modalActive = !state.modalActive;
+		},
+
+		setIsAuthenticated(state, isAuthenticated) {
+			state.isAuthenticated = isAuthenticated;
+		},
+
+		setIsAuthLoading(state, isAuthLoading) {
+			state.isAuthLoading = isAuthLoading;
+		},
+
+		setUser(state, user) {
+			state.user = user;
+		},
+
+		setAuthError(state, authError) {
+			state.authError = authError;
 		},
 	},
 };

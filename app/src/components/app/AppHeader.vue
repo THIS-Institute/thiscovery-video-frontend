@@ -26,23 +26,23 @@
 			</div>
 
 			<a
-				v-if="profile"
+				v-if="user"
 				class="bg-white rounded-full border-2 border-red p-1 pr-5 hidden lg:block"
 				href="#"
 			>
 				<div class="flex items-center justify-between space-x-3.5">
-					<span
+					<img
 						:class="[
 							'inline-flex items-center justify-center',
 							'w-8 h-8 text-sm',
 							'rounded-full bg-red text-white',
 						]"
-						v-text="profile.initials"
-					/>
+						:src="user.picture"
+					>
 
 					<span
 						class="text-red"
-						v-text="profile.name"
+						v-text="user.given_name"
 					/>
 				</div>
 			</a>
@@ -72,6 +72,7 @@
 </template>
 
 <script>
+	import { computed } from '@vue/runtime-core';
 	import { useStore } from 'vuex';
 
 	import NavigationLinks from './NavigationLinks';
@@ -80,11 +81,6 @@
 		components: { NavigationLinks },
 
 		props: {
-			profile: {
-				type: Object,
-				default: null,
-			},
-
 			navActive: Boolean,
 		},
 
@@ -92,7 +88,10 @@
 			const store = useStore();
 			const onToggleNav = () => store.commit('app/toggleNav');
 
+			const user = computed(() => store.state.app.user);
+
 			return {
+				user,
 				onToggleNav,
 			};
 		},

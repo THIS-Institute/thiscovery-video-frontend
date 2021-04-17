@@ -13,12 +13,5 @@
 
 	export default {
 		components: { NavigationLinks },
-
-		props: {
-			profile: {
-				type: Object,
-				default: null,
-			},
-		},
 	};
 </script>
