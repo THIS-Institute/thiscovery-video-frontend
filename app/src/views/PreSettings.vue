@@ -57,9 +57,9 @@
 									@click="troubleShoot"
 								/>
 
-								<modal wrapper-class="max-w-xl">
+								<modal-container wrapper-class="max-w-xl">
 									<trouble-shooting />
-								</modal>
+								</modal-container>
 							</div>
 
 							<devices class="mt-5" />
@@ -86,7 +86,7 @@
 	import VideoWrapper from '@/components/interviews/settings/VideoWrapper';
 	import InfoBar from '@/components/ui/InfoBar';
 	import Devices from '@/components/ui/Devices';
-	import Modal from '@/components/ui/modal/Modal';
+	import ModalContainer from '@/components/ui/modal/ModalContainer';
 	import TroubleShooting from '@/components/ui/modal/TroubleShooting';
 
 	export default {
@@ -94,7 +94,7 @@
 			VideoWrapper,
 			InfoBar,
 			Devices,
-			Modal,
+			ModalContainer,
 			TroubleShooting,
 		},
 
