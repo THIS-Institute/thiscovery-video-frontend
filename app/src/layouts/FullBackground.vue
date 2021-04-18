@@ -42,8 +42,8 @@
 	import { useStore } from 'vuex';
 	import { useRouter } from 'vue-router';
 
-	import AppHeader from '@/components/app/AppHeader';
-	import AppNavigation from '@/components/app/AppNavigation';
+	import AppHeader from '@/domain/app/AppHeader';
+	import AppNavigation from '@/domain/app/AppNavigation';
 
 	export default {
 		components: {

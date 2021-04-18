@@ -3,7 +3,7 @@
 </template>
 
 <script>
-	import InterviewRoom from '@/components/interviews/live/InterviewRoom';
+	import InterviewRoom from '@/domain/interviews/live/InterviewRoom';
 
 	export default {
 		components: { InterviewRoom },

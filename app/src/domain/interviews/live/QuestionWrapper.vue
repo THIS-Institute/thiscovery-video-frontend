@@ -13,8 +13,8 @@
 </template>
 
 <script>
-	import QuestionPreview from '@/components/interviews/live/questions/QuestionPreview';
-	import QuestionControls from '@/components/interviews/live/questions/QuestionControls';
+	import QuestionPreview from '@/domain/interviews/live/questions/QuestionPreview';
+	import QuestionControls from '@/domain/interviews/live/questions/QuestionControls';
 
 	export default {
 		components: {

@@ -75,7 +75,7 @@
 </template>
 
 <script>
-	import InfoBar from '@/components/ui/InfoBar';
+	import InfoBar from '@/components/InfoBar';
 
 	export default {
 		components: {

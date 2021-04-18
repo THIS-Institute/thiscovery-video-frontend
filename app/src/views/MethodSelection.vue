@@ -44,7 +44,7 @@
 	import { useStore } from 'vuex';
 	import messages from '@/messages';
 	import { useMessages } from '@/composables/useMessages';
-	import MethodCard from '@/components/methods/MethodCard';
+	import MethodCard from '@/domain/methods/MethodCard';
 
 	export default {
 		components: { MethodCard },

@@ -136,14 +136,14 @@
 	import { useMedia } from './useMedia';
 	import { processAnswer } from './selfRecord';
 
-	import Question from '@/components/interviews/solo/Question';
+	import Question from '@/domain/interviews/solo/Question';
 	import VideoRecorder from './VideoRecorder';
 	import VideoPlayer from './VideoPlayer';
 
-	import InfoBar from '@/components/ui/InfoBar';
-	import ModalContainer from '@/components/ui/modal/ModalContainer';
-	import ConfirmDialog from '@/components/ui/modal/ConfirmDialog';
-	import CommentDialog from '@/components/ui/modal/CommentDialog';
+	import InfoBar from '@/components/InfoBar';
+	import ModalContainer from '@/components/modal/ModalContainer';
+	import ConfirmDialog from '@/components/modal/ConfirmDialog';
+	import CommentDialog from '@/components/modal/CommentDialog';
 
 	export default {
 		components: {

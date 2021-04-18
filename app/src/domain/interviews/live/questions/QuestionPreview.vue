@@ -12,7 +12,7 @@
 <script>
 	import { reactive, toRefs } from 'vue';
 
-	import Question from '@/components/interviews/live/questions/Question';
+	import Question from '@/domain/interviews/live/questions/Question';
 
 	export default {
 		components: {

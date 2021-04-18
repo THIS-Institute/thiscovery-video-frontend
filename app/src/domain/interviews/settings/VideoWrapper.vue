@@ -112,7 +112,7 @@
 	import { reactive, toRefs, computed } from 'vue';
 	import { useStore } from 'vuex';
 
-	import VideoPreview from '@/components/interviews/settings/VideoPreview';
+	import VideoPreview from '@/domain/interviews/settings/VideoPreview';
 
 	export default {
 		components: {

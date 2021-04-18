@@ -51,7 +51,7 @@
 <script>
 	import { reactive, toRefs, computed } from 'vue';
 
-	import Question from '@/components/interviews/live/questions/Question';
+	import Question from '@/domain/interviews/live/questions/Question';
 
 	export default {
 		components: {

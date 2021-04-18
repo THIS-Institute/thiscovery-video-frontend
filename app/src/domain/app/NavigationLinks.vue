@@ -29,7 +29,7 @@
 </template>
 
 <script>
-	import NavLink from '@/components/ui/NavLink';
+	import NavLink from '@/components/NavLink';
 
 	export default {
 		components: { NavLink },

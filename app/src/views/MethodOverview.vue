@@ -70,7 +70,7 @@
 	import { computed, reactive, toRefs } from 'vue';
 	import messages from '@/messages';
 	import { useMessages } from '@/composables/useMessages';
-	import InstructionsNav from '@/components/methods/InstructionsNav';
+	import InstructionsNav from '@/domain/methods/InstructionsNav';
 
 	export default {
 		components: { InstructionsNav },

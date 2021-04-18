@@ -89,7 +89,7 @@
 	import { useViewport } from '@/composables/useViewport';
 	import { useDates } from './useDates';
 
-	import LoadingSpinner from '@/components/ui/LoadingSpinner.vue';
+	import LoadingSpinner from '@/components/LoadingSpinner.vue';
 
 	export default {
 		components: { LoadingSpinner },

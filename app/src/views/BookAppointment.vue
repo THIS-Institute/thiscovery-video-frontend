@@ -40,8 +40,8 @@
 	import { useStore } from 'vuex';
 	import messages from '@/messages';
 	import { useMessages } from '@/composables/useMessages';
-	import AppointmentSlots from '@/components/appointments/AppointmentSlots';
-	import LoadingSpinner from '@/components/ui/LoadingSpinner.vue';
+	import AppointmentSlots from '@/domain/appointments/AppointmentSlots';
+	import LoadingSpinner from '@/components/LoadingSpinner';
 
 	export default {
 		components: { LoadingSpinner, AppointmentSlots },

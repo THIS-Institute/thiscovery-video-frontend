@@ -44,8 +44,8 @@
 	import { useStore } from 'vuex';
 	import { useViewport } from '@/composables/useViewport';
 
-	import AppHeader from '@/components/app/AppHeader';
-	import AppNavigation from '@/components/app/AppNavigation';
+	import AppHeader from '@/domain/app/AppHeader';
+	import AppNavigation from '@/domain/app/AppNavigation';
 
 	export default {
 		components: {
