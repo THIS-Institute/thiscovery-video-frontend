@@ -81,7 +81,8 @@
 					v-if="isReviewingMode() && playbackURL"
 					:video-playback-url="playbackURL"
 					@progress-question="onNextQuestion"
-					@retake="onTriggerRetake"
+					@retake="openConfirmDialog"
+					@add-comments="openCommentsDialog"
 				/>
 			</div>
 
@@ -98,6 +99,9 @@
 				<!-- Add a comment -->
 				<comment-dialog
 					v-if="state.showCommentDialog"
+					:comments="state.comments"
+					@save="onAddedComments"
+					@cancel="onCancelComments"
 				/>
 			</modal-container>
 
@@ -119,7 +123,7 @@
 					title: 'Click here to retake it',
 				}"
 				modal
-				@open-modal="onTriggerRetake"
+				@open-modal="openConfirmDialog"
 			/>
 		</div>
 	</div>
@@ -181,6 +185,7 @@
 				isUploading: false,
 				showConfirmDialog: false,
 				showCommentDialog: false,
+				comments: null,
 			});
 
 			const userName = computed(() => store.state.user.user.given_name);
@@ -228,39 +233,63 @@
 			};
 
 			const onNextQuestion = async () => {
-				await processAnswer({
+				const options = {
 					playbackURL: playbackURL.value,
-				}).then(() => {
-					cleanup();
-				})
+				};
 
+				await processAnswer(options)
+					.then(onAnswerProccessed);
+			};
+
+			const onAnswerProccessed = () => {
+				state.comments = null;
+				cleanup();
 				nextQuestion();
-
 				setMode(MODE_RECORDING);
 			};
 
-			const onTriggerRetake = () => {
+			const openConfirmDialog = () => {
 				state.showConfirmDialog = true;
 				store.dispatch('app/openModal');
 			};
 
-			const closeConfirmModal = () => {
+			const openCommentsDialog = () => {
+				state.showCommentDialog = true;
+				store.dispatch('app/openModal');
+			};
+
+			const closeConfirmDialog = () => {
 				state.showConfirmDialog = false;
 				store.dispatch('app/closeModal');
-			}
+			};
 
+			const closeCommentsDialog = () => {
+				state.showCommentDialog = false;
+				store.dispatch('app/closeModal');
+			};
+			
 			const onConfirmRetake = () => {
 				cleanup();
 				setMode(MODE_RECORDING);
-				closeConfirmModal();
+				closeConfirmDialog();
 			};
 
 			const onCancelRetake = () => {
-				closeConfirmModal();
+				closeConfirmDialog();
+			};
+
+			const onAddedComments = (comments) => {
+				state.comments = comments;
+				closeCommentsDialog();
+			};
+
+			const onCancelComments = () => {
+				closeCommentsDialog();
 			};
 
 			return {
 				state,
+				userName,
 				toReadableValue,
 				isRecordingMode,
 				isReviewingMode,
@@ -273,10 +302,12 @@
 				onRecorderStop,
 				playbackURL,
 				onNextQuestion,
-				onTriggerRetake,
+				openConfirmDialog,
+				openCommentsDialog,
 				onConfirmRetake,
 				onCancelRetake,
-				userName,
+				onCancelComments,
+				onAddedComments,
 			};
 		},
 	};
