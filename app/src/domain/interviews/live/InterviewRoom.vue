@@ -39,7 +39,10 @@
 								'rounded-lg shadow-sticky',
 							]"
 						>
-							<user-controls />
+							<user-controls
+								@toggle-camera="onToggleCamera"
+								@toggle-mute="onToggleMute"
+							/>
 
 							<div class="rounded-r-lg overflow-hidden w-36">
 								<placeholder
@@ -158,6 +161,26 @@
 					name: "Cameron Williamson",
 				},
 			});
+
+			const onToggleCamera = (enabled) => {
+				const participant = localParticipant.value;
+
+				participant.videoTracks.forEach((publication) => {
+					toggleLocalTrack(publication.track, enabled);
+				});
+			};
+
+			const onToggleMute = (enabled) => {
+				const participant = localParticipant.value;
+
+				participant.audioTracks.forEach((publication) => {
+					toggleLocalTrack(publication.track, enabled);
+				});
+			};
+
+			const toggleLocalTrack = (track, enabled) => {
+				(enabled) ? track.disable() : track.enabled();
+			};
 			
 			return {
 				...toRefs(state),
@@ -165,6 +188,8 @@
 				localParticipant,
 				remoteParticipants,
 				profile,
+				onToggleCamera,
+				onToggleMute,
 			}
 		},
 	};
