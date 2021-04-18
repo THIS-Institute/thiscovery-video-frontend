@@ -53,7 +53,7 @@
 	import messages from '@/messages';
 	import { useMessages } from '@/composables/useMessages';
 
-	import LoadingSpinner from '@/components/LoadingSpinner.vue';
+	import LoadingSpinner from '@/components/LoadingSpinner';
 
 	export default {
 		components: { LoadingSpinner },
