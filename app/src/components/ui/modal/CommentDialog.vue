@@ -38,7 +38,7 @@
 
 	<div class="flex items-center justify-center space-x-2 mt-5">
 		<e-button
-			title="cancel"
+			title="Cancel"
 			class="e-button--red-outline"
 			small
 			pill
