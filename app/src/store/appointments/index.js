@@ -24,7 +24,6 @@ export const appointments = {
 
 		setBookingTypeId(state, bookingTypeId) {
 			state.bookingTypeId = bookingTypeId;
-			console.log(bookingTypeId);
 		},
 
 		updateIsConfirmed(state, isConfirmed) {

@@ -8,5 +8,5 @@ export async function processAnswer(options) {
 
     const response = await uploadInterviewAnswerVideo(blob);
 
-    console.log(response);
+    return response;
 }

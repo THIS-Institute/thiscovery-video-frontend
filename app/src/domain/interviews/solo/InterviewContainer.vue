@@ -72,7 +72,7 @@
 			<div class="rounded-lg overflow-hidden bg-grey-400">
 				<video-recorder
 					v-if="isRecordingMode()"
-					user-name="Matthew"
+					:user-name="userName"
 					@started="onRecorderStart"
 					@stopped="onRecorderStop"
 				/>
@@ -81,16 +81,29 @@
 					v-if="isReviewingMode() && playbackURL"
 					:video-playback-url="playbackURL"
 					@progress-question="onNextQuestion"
+					@retake="openConfirmDialog"
+					@add-comments="openCommentsDialog"
 				/>
 			</div>
 
-			<modal>
+			<modal-container
+				v-if="state.showConfirmDialog || state.showCommentDialog"
+			>
 				<!-- Are you sure you want to retake? -->
-				<confirm />
+				<confirm-dialog
+					v-if="state.showConfirmDialog"
+					@confirm="onConfirmRetake"
+					@cancel="onCancelRetake"
+				/>
 
 				<!-- Add a comment -->
-				<!-- <comment /> -->
-			</modal>
+				<comment-dialog
+					v-if="state.showCommentDialog"
+					:comments="state.comments"
+					@save="onAddedComments"
+					@cancel="onCancelComments"
+				/>
+			</modal-container>
 
 			<info-bar
 				v-if="isRecordingMode()"
@@ -110,7 +123,7 @@
 					title: 'Click here to retake it',
 				}"
 				modal
-				@open-modal="confirmRetake"
+				@open-modal="openConfirmDialog"
 			/>
 		</div>
 	</div>
@@ -123,26 +136,24 @@
 	import { useMedia } from './useMedia';
 	import { processAnswer } from './selfRecord';
 
-	// import VideoWrapper from '@/components/interviews/settings/VideoWrapper';
-	import Question from '@/components/interviews/solo/Question';
+	import Question from '@/domain/interviews/solo/Question';
 	import VideoRecorder from './VideoRecorder';
 	import VideoPlayer from './VideoPlayer';
 
-	import InfoBar from '@/components/ui/InfoBar';
-	import Modal from '@/components/ui/modal/Modal';
-	import Confirm from '@/components/ui/modal/Confirm';
-	// import Comment from '@/components/ui/modal/Comment';
+	import InfoBar from '@/components/InfoBar';
+	import ModalContainer from '@/components/modal/ModalContainer';
+	import ConfirmDialog from '@/components/modal/ConfirmDialog';
+	import CommentDialog from '@/components/modal/CommentDialog';
 
 	export default {
 		components: {
-			// VideoWrapper,
 			Question,
 			InfoBar,
-			Modal,
-			Confirm,
+			ModalContainer,
+			ConfirmDialog,
 			VideoRecorder,
 			VideoPlayer,
-			// Comment,
+			CommentDialog,
 		},
 
 		props: {
@@ -162,6 +173,7 @@
 				startRecording,
 				stopRecording,
 				playbackURL,
+				cleanup,
 			} = useMedia();
 			
 			provide('startRecording', startRecording);
@@ -171,7 +183,12 @@
 			const state = reactive({
 				mode: MODE_RECORDING,
 				isUploading: false,
+				showConfirmDialog: false,
+				showCommentDialog: false,
+				comments: null,
 			});
+
+			const userName = computed(() => store.state.user.user.given_name);
 
 			provide('isUploading', state.isUploading);
 
@@ -209,8 +226,6 @@
 				};
 			});
 
-			const confirmRetake = () => store.commit('app/toggleModal');
-
 			const onRecorderStart = () => {};
 
 			const onRecorderStop = () => {
@@ -218,14 +233,63 @@
 			};
 
 			const onNextQuestion = async () => {
-				await processAnswer({
+				const options = {
 					playbackURL: playbackURL.value,
-				});
+				};
 
+				await processAnswer(options)
+					.then(onAnswerProccessed);
+			};
+
+			const onAnswerProccessed = () => {
+				state.comments = null;
+				cleanup();
 				nextQuestion();
+				setMode(MODE_RECORDING);
+			};
+
+			const openConfirmDialog = () => {
+				state.showConfirmDialog = true;
+				store.dispatch('app/openModal');
+			};
+
+			const openCommentsDialog = () => {
+				state.showCommentDialog = true;
+				store.dispatch('app/openModal');
+			};
+
+			const closeConfirmDialog = () => {
+				state.showConfirmDialog = false;
+				store.dispatch('app/closeModal');
+			};
+
+			const closeCommentsDialog = () => {
+				state.showCommentDialog = false;
+				store.dispatch('app/closeModal');
+			};
+			
+			const onConfirmRetake = () => {
+				cleanup();
+				setMode(MODE_RECORDING);
+				closeConfirmDialog();
+			};
+
+			const onCancelRetake = () => {
+				closeConfirmDialog();
+			};
+
+			const onAddedComments = (comments) => {
+				state.comments = comments;
+				closeCommentsDialog();
+			};
+
+			const onCancelComments = () => {
+				closeCommentsDialog();
 			};
 
 			return {
+				state,
+				userName,
 				toReadableValue,
 				isRecordingMode,
 				isReviewingMode,
@@ -234,11 +298,16 @@
 				readQuestion,
 				readSection,
 				progress,
-				confirmRetake,
 				onRecorderStart,
 				onRecorderStop,
 				playbackURL,
 				onNextQuestion,
+				openConfirmDialog,
+				openCommentsDialog,
+				onConfirmRetake,
+				onCancelRetake,
+				onCancelComments,
+				onAddedComments,
 			};
 		},
 	};

@@ -5,11 +5,11 @@
 
 	<div class="flex items-center justify-center space-x-4 mt-5">
 		<e-button
-			title="cancel"
+			title="Cancel"
 			class="e-button--red-outline"
 			small
 			pill
-			@click="toggle"
+			@click="$emit('cancel')"
 		/>
 
 		<e-button
@@ -19,25 +19,16 @@
 			flipped
 			small
 			pill
+			@click="$emit('confirm')"
 		/>
 	</div>
 </template>
 
 <script>
-	import { useStore } from 'vuex';
-
 	export default {
-		setup() {
-			const store = useStore();
-			const active = store.state.app.modalActive;
-
-			const toggle = () => {
-				if (active) store.commit('app/toggleModal');
-			};
-
-			return {
-				toggle,
-			};
-		},
+		emits: [
+			'confirm',
+			'cancel',
+		],
 	};
 </script>

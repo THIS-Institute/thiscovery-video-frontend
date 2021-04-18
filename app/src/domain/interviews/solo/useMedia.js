@@ -83,6 +83,11 @@ export function useMedia() {
 			.catch((error) => console.error(error));
 	};
 
+	const cleanup = () => {
+		URL.revokeObjectURL(playbackURL.value);
+		playbackURL.value = null;
+	};
+
 	provide('videoElementRef', videoElementRef);
 	provide('setupLocalVideo', setupLocalVideo);
 	provide('destroyMediaStream', destroyMediaStream);
@@ -92,5 +97,6 @@ export function useMedia() {
 		startRecording,
 		stopRecording,
 		playbackURL,
+		cleanup,
 	}
 }

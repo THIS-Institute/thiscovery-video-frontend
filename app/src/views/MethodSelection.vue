@@ -44,7 +44,7 @@
 	import { useStore } from 'vuex';
 	import messages from '@/messages';
 	import { useMessages } from '@/composables/useMessages';
-	import MethodCard from '@/components/methods/MethodCard';
+	import MethodCard from '@/domain/methods/MethodCard';
 
 	export default {
 		components: { MethodCard },
@@ -53,11 +53,14 @@
 			const store = useStore();
 			const { message } = useMessages(messages);
 
+			const taskInitialised = computed(() => store.state.task.initalised);
 			const isLiveAvailable = computed(() => store.state.task.liveAvailable);
 			const isOnDemandAvailable = computed(() => store.state.task.onDemandAvailable);
 
-			store.dispatch('task/initalise');
-
+			if (!taskInitialised.value) {
+				store.dispatch('task/initalise');
+			}
+			
 			return {
 				message,
 				isLiveAvailable,

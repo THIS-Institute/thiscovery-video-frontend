@@ -16,15 +16,15 @@
 
 		<inline-controls
 			@watch-answer="onWatchAnswer"
-			@add-comments="onAddComments"
 			@toggle-playback="onTogglePlayback"
+			@add-comments="$emit('addComments')"
 		/>
 	</placeholder>
 
 	<video-controls
 		@scrub="onScrub"
-		@add-more="$emit('addMore')"
 		@progress-question="$emit('progressQuestion')"
+		@retake="$emit('retake')"
 	/>
 </template>
 
@@ -51,8 +51,9 @@
 		},
 
 		emits: [
-			'addMore',
+			'retake',
 			'progressQuestion',
+			'addComments',
 		],
 
 		setup(props) {
@@ -79,10 +80,6 @@
 					.then(() => {
 						state.isPlaying = true;
 					});
-			};
-
-			const onAddComments = () => {
-				console.log('Add comments');
 			};
 
 			const onScrub = (event) => {
@@ -123,7 +120,6 @@
 				state,
 				video,
 				onWatchAnswer,
-				onAddComments,
 				onScrub,
 				onTogglePlayback,
 				onTimeUpdate,

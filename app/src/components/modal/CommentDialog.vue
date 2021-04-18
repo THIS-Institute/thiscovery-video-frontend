@@ -38,45 +38,48 @@
 
 	<div class="flex items-center justify-center space-x-2 mt-5">
 		<e-button
-			title="cancel"
+			title="Cancel"
 			class="e-button--red-outline"
 			small
 			pill
-			@click="toggle"
+			@click="$emit('cancel')"
 		/>
 
 		<e-button
 			title="Save note"
 			icon="check"
 			class="e-button--red"
-			:disabled="!comment"
 			flipped
 			small
 			pill
+			@click="$emit('save', comment)"
 		/>
 	</div>
 </template>
 
 <script>
 	import { reactive, toRefs } from 'vue';
-	import { useStore } from 'vuex';
 
 	export default {
-		setup() {
+		props: {
+			comments: {
+				type: String,
+				default: null,
+			},
+		},
+
+		emits: [
+			'save',
+			'cancel',
+		],
+
+		setup(props) {
 			const state = reactive({
-				comment: null,
+				comment: props.comments,
 			});
-
-			const store = useStore();
-			const active = store.state.app.modalActive;
-
-			const toggle = () => {
-				if (active) store.commit('app/toggleModal');
-			};
 
 			return {
 				...toRefs(state),
-				toggle,
 			};
 		},
 	};

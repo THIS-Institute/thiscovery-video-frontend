@@ -29,9 +29,9 @@
 							/>
 						</div>
 
-						<modal>
+						<modal-container>
 							<join-by-phone />
-						</modal>
+						</modal-container>
 
 						<div
 							:class="[
@@ -86,9 +86,9 @@
 	import RemoteVideo from './RemoteVideo';
 	import OnlyCaller from './OnlyCaller';
 	import UserControls from './UserControls';
-	import Timer from '@/components/ui/Timer';
-	import Modal from '@/components/ui/modal/Modal';
-	import JoinByPhone from '@/components/ui/modal/JoinByPhone';
+	import Timer from '@/components/Timer';
+	import ModalContainer from '@/components/modal/ModalContainer';
+	import JoinByPhone from '@/components/modal/JoinByPhone';
 	// import QuestionWrapper from './QuestionWrapper';
 
 	export default {
@@ -98,7 +98,7 @@
 			OnlyCaller,
 			UserControls,
 			Timer,
-			Modal,
+			ModalContainer,
 			JoinByPhone,
 			// QuestionWrapper,
 		},

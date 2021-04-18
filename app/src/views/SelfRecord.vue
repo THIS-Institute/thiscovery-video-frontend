@@ -21,7 +21,7 @@
 	import { computed } from 'vue';
 	import { useStore } from 'vuex';
 
-	import InterviewContainer from '@/components/interviews/solo/InterviewContainer';
+	import InterviewContainer from '@/domain/interviews/solo/InterviewContainer';
 
 	export default {
 		components: { InterviewContainer },

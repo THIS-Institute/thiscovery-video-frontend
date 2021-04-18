@@ -14,5 +14,19 @@ export const app = {
 		toggleModal(state) {
 			state.modalActive = !state.modalActive;
 		},
+
+		setModalActive(state, active) {
+			state.modalActive = active;
+		},
 	},
+
+	actions: {
+		openModal: ({ commit }) => {
+			commit('setModalActive', true);
+		},
+
+		closeModal: ({ commit }) => {
+			commit('setModalActive', false);
+		},
+	}
 };

@@ -2,14 +2,14 @@
 	<div class="flex flex-wrap items-center justify-between gap-y-5 px-5 my-5">
 		<e-button
 			v-if="!isReviewing"
-			title="Add more"
+			title="Retake"
 			icon="record"
 			class="e-button--white-outline"
 			flipped
 			small
 			pill
-			disabled
-			@click="$emit('addMore')"
+			:disabled="isUploading"
+			@click="$emit('retake')"
 		/>
 
 		<e-button
@@ -46,7 +46,7 @@
 
 		emits: [
 			'scrub',
-			'addMore',
+			'retake',
 			'progressQuestion',
 		],
 

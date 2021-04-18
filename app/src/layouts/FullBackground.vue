@@ -11,13 +11,11 @@
 			v-if="hasNav"
 			:nav="nav"
 			:nav-active="navActive"
-			:profile="profile"
 		/>
 
 		<app-navigation
 			v-if="navActive && hasNav"
 			:nav="nav"
-			:profile="profile"
 		/>
 
 		<main class="relative flex-auto z-site-content">
@@ -44,8 +42,8 @@
 	import { useStore } from 'vuex';
 	import { useRouter } from 'vue-router';
 
-	import AppHeader from '@/components/app/AppHeader';
-	import AppNavigation from '@/components/app/AppNavigation';
+	import AppHeader from '@/domain/app/AppHeader';
+	import AppNavigation from '@/domain/app/AppNavigation';
 
 	export default {
 		components: {
@@ -74,12 +72,10 @@
 			const back = () => window.history.length > 1 ? router.go(-1) : router.push('/');
 
 			const navActive = computed(() => store.state.app.navActive);
-			const profile = computed(() => store.state.user.profile);
 			const nav = computed(() => store.state.app.nav);
 
 			return {
 				navActive,
-				profile,
 				back,
 				nav,
 			};

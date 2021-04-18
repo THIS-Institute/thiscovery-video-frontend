@@ -57,9 +57,9 @@
 									@click="troubleShoot"
 								/>
 
-								<modal wrapper-class="max-w-xl">
+								<modal-container wrapper-class="max-w-xl">
 									<trouble-shooting />
-								</modal>
+								</modal-container>
 							</div>
 
 							<devices class="mt-5" />
@@ -81,20 +81,20 @@
 	import messages from '@/messages';
 	import { useMessages } from '@/composables/useMessages';
 	import { useStore } from 'vuex';
-	import { useDevices } from '@/components/interviews/settings/useDevices';
+	import { useDevices } from '@/domain/interviews/settings/useDevices';
 
-	import VideoWrapper from '@/components/interviews/settings/VideoWrapper';
-	import InfoBar from '@/components/ui/InfoBar';
-	import Devices from '@/components/ui/Devices';
-	import Modal from '@/components/ui/modal/Modal';
-	import TroubleShooting from '@/components/ui/modal/TroubleShooting';
+	import VideoWrapper from '@/domain/interviews/settings/VideoWrapper';
+	import InfoBar from '@/components/InfoBar';
+	import Devices from '@/components/Devices';
+	import ModalContainer from '@/components/modal/ModalContainer';
+	import TroubleShooting from '@/components/modal/TroubleShooting';
 
 	export default {
 		components: {
 			VideoWrapper,
 			InfoBar,
 			Devices,
-			Modal,
+			ModalContainer,
 			TroubleShooting,
 		},
 

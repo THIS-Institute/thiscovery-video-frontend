@@ -25,7 +25,7 @@
 
 <script>
 	import { reactive } from 'vue';
-	import { useDevices } from '@/components/interviews/settings/useDevices';
+	import { useDevices } from '@/domain/interviews/settings/useDevices';
 
 	export default {
 		setup() {
