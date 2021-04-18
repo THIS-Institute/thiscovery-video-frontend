@@ -5,12 +5,6 @@ import { appointments } from './appointments';
 import { user } from './user';
 import { interviews } from './interviews';
 
-const deviceEventListener = (store) => {
-	navigator.mediaDevices.ondevicechange = () => {
-		store.dispatch('interviews/updateMediaDevices');
-	};
-}
-
 export const store = createStore({
 	modules: {
 		app,
@@ -19,7 +13,4 @@ export const store = createStore({
 		user,
 		interviews,
 	},
-	plugins: [
-		deviceEventListener,
-	],
 });
