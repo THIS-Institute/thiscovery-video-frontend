@@ -81,16 +81,25 @@
 					v-if="isReviewingMode() && playbackURL"
 					:video-playback-url="playbackURL"
 					@progress-question="onNextQuestion"
+					@retake="onTriggerRetake"
 				/>
 			</div>
 
-			<modal>
+			<modal-container
+				v-if="state.showConfirmDialog || state.showCommentDialog"
+			>
 				<!-- Are you sure you want to retake? -->
-				<confirm />
+				<confirm-dialog
+					v-if="state.showConfirmDialog"
+					@confirm="onConfirmRetake"
+					@cancel="onCancelRetake"
+				/>
 
 				<!-- Add a comment -->
-				<!-- <comment /> -->
-			</modal>
+				<comment-dialog
+					v-if="state.showCommentDialog"
+				/>
+			</modal-container>
 
 			<info-bar
 				v-if="isRecordingMode()"
@@ -110,7 +119,7 @@
 					title: 'Click here to retake it',
 				}"
 				modal
-				@open-modal="confirmRetake"
+				@open-modal="onTriggerRetake"
 			/>
 		</div>
 	</div>
@@ -123,26 +132,24 @@
 	import { useMedia } from './useMedia';
 	import { processAnswer } from './selfRecord';
 
-	// import VideoWrapper from '@/components/interviews/settings/VideoWrapper';
 	import Question from '@/components/interviews/solo/Question';
 	import VideoRecorder from './VideoRecorder';
 	import VideoPlayer from './VideoPlayer';
 
 	import InfoBar from '@/components/ui/InfoBar';
-	import Modal from '@/components/ui/modal/Modal';
-	import Confirm from '@/components/ui/modal/Confirm';
-	// import Comment from '@/components/ui/modal/Comment';
+	import ModalContainer from '@/components/ui/modal/ModalContainer';
+	import ConfirmDialog from '@/components/ui/modal/ConfirmDialog';
+	import CommentDialog from '@/components/ui/modal/CommentDialog';
 
 	export default {
 		components: {
-			// VideoWrapper,
 			Question,
 			InfoBar,
-			Modal,
-			Confirm,
+			ModalContainer,
+			ConfirmDialog,
 			VideoRecorder,
 			VideoPlayer,
-			// Comment,
+			CommentDialog,
 		},
 
 		props: {
@@ -172,6 +179,8 @@
 			const state = reactive({
 				mode: MODE_RECORDING,
 				isUploading: false,
+				showConfirmDialog: false,
+				showCommentDialog: false,
 			});
 
 			const userName = computed(() => store.state.user.user.given_name);
@@ -212,8 +221,6 @@
 				};
 			});
 
-			const confirmRetake = () => store.commit('app/toggleModal');
-
 			const onRecorderStart = () => {};
 
 			const onRecorderStop = () => {
@@ -232,7 +239,28 @@
 				setMode(MODE_RECORDING);
 			};
 
+			const onTriggerRetake = () => {
+				state.showConfirmDialog = true;
+				store.dispatch('app/openModal');
+			};
+
+			const closeConfirmModal = () => {
+				state.showConfirmDialog = false;
+				store.dispatch('app/closeModal');
+			}
+
+			const onConfirmRetake = () => {
+				cleanup();
+				setMode(MODE_RECORDING);
+				closeConfirmModal();
+			};
+
+			const onCancelRetake = () => {
+				closeConfirmModal();
+			};
+
 			return {
+				state,
 				toReadableValue,
 				isRecordingMode,
 				isReviewingMode,
@@ -241,11 +269,13 @@
 				readQuestion,
 				readSection,
 				progress,
-				confirmRetake,
 				onRecorderStart,
 				onRecorderStop,
 				playbackURL,
 				onNextQuestion,
+				onTriggerRetake,
+				onConfirmRetake,
+				onCancelRetake,
 				userName,
 			};
 		},

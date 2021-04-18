@@ -25,6 +25,7 @@
 		@scrub="onScrub"
 		@add-more="$emit('addMore')"
 		@progress-question="$emit('progressQuestion')"
+		@retake="$emit('retake')"
 	/>
 </template>
 
@@ -52,6 +53,7 @@
 
 		emits: [
 			'addMore',
+			'retake',
 			'progressQuestion',
 		],
 

@@ -15,20 +15,18 @@ export const app = {
 			state.modalActive = !state.modalActive;
 		},
 
-		setIsAuthenticated(state, isAuthenticated) {
-			state.isAuthenticated = isAuthenticated;
-		},
-
-		setIsAuthLoading(state, isAuthLoading) {
-			state.isAuthLoading = isAuthLoading;
-		},
-
-		setUser(state, user) {
-			state.user = user;
-		},
-
-		setAuthError(state, authError) {
-			state.authError = authError;
+		setModalActive(state, active) {
+			state.modalActive = active;
 		},
 	},
+
+	actions: {
+		openModal: ({ commit }) => {
+			commit('setModalActive', true);
+		},
+
+		closeModal: ({ commit }) => {
+			commit('setModalActive', false);
+		},
+	}
 };
