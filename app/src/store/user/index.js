@@ -5,6 +5,7 @@ export const user = {
 		isAuthenticated: false,
 		isAuthLoading: false,
 		user: {},
+		isInterviewer: false,
 		authError: null,
 	}),
 
@@ -24,5 +25,50 @@ export const user = {
 	},
 	
 	actions: {},
-	getters: {},
+
+	getters: {
+		hasUser (state) {
+			if (!state.isAuthenticated) {
+				return false;
+			}
+
+			if (state.user.name === undefined) {
+				return false;
+			}
+
+			return true;
+		},
+
+		getIdentity (state) {
+			if (state.user.name === undefined) {
+				return null;
+			}
+
+			return state.user.name;
+		},
+
+		getInitials (state) {
+			if (state.user.given_name === undefined || state.user.family_name === undefined) {
+				return null;
+			}
+
+			const first = state.user.given_name
+				.charAt(0)
+				.toUpperCase();
+
+			const last = state.user.family_name
+				.charAt(0)
+				.toUpperCase();
+			
+			return `${first}${last}`;
+		},
+
+		getGivenName (state) {
+			if (state.user.given_name === undefined) {
+				return null;
+			}
+
+			return state.user.given_name;
+		}
+	},
 };

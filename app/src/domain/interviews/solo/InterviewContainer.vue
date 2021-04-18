@@ -72,7 +72,7 @@
 			<div class="rounded-lg overflow-hidden bg-grey-400">
 				<video-recorder
 					v-if="isRecordingMode()"
-					:user-name="userName"
+					:user-name="userGivenName"
 					@started="onRecorderStart"
 					@stopped="onRecorderStop"
 				/>
@@ -134,6 +134,7 @@
 	import { useStore } from 'vuex';
 	import { useQuestions } from './useQuestions';
 	import { useMedia } from './useMedia';
+	import { useUser } from '@/auth/useUser';
 	import { processAnswer } from './selfRecord';
 
 	import Question from '@/domain/interviews/solo/Question';
@@ -188,7 +189,7 @@
 				comments: null,
 			});
 
-			const userName = computed(() => store.state.user.user.given_name);
+			const { userGivenName } = useUser();
 
 			provide('isUploading', state.isUploading);
 
@@ -289,7 +290,7 @@
 
 			return {
 				state,
-				userName,
+				userGivenName,
 				toReadableValue,
 				isRecordingMode,
 				isReviewingMode,

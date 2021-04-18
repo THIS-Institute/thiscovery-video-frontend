@@ -25,27 +25,26 @@
 				</nav>
 			</div>
 
-			<a
-				v-if="user"
+			<span
+				v-if="hasUser"
 				class="bg-white rounded-full border-2 border-red p-1 pr-5 hidden lg:block"
-				href="#"
 			>
 				<div class="flex items-center justify-between space-x-3.5">
-					<img
+					<span
 						:class="[
 							'inline-flex items-center justify-center',
 							'w-8 h-8 text-sm',
 							'rounded-full bg-red text-white',
 						]"
-						:src="user.picture"
-					>
+						v-text="userIntials"
+					/>
 
 					<span
 						class="text-red"
-						v-text="user.given_name"
+						v-text="userGivenName"
 					/>
 				</div>
-			</a>
+			</span>
 
 			<button
 				:class="[
@@ -72,8 +71,8 @@
 </template>
 
 <script>
-	import { computed } from '@vue/runtime-core';
 	import { useStore } from 'vuex';
+	import { useUser } from '@/auth/useUser';
 
 	import NavigationLinks from './NavigationLinks';
 
@@ -86,12 +85,19 @@
 
 		setup() {
 			const store = useStore();
+
+			const {
+				hasUser,
+				userGivenName,
+				userIntials,
+			} = useUser();
+
 			const onToggleNav = () => store.commit('app/toggleNav');
 
-			const user = computed(() => store.state.user.user);
-
 			return {
-				user,
+				hasUser,
+				userGivenName,
+				userIntials,
 				onToggleNav,
 			};
 		},
