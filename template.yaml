@@ -394,6 +394,10 @@ Resources:
         EnvironmentVariables:
           - Name: API_URL
             Value: !Sub https://${BackendApi}.execute-api.${AWS::Region}.amazonaws.com/${BackendApi.Stage}
+          - Name: AUTH0_DOMAIN
+            Value: !Ref EnvConfigauth0domainAsString
+          - Name: AUTH0_CLIENT_ID
+            Value: !Ref EnvConfigauth0clientIdAsString
       ServiceRole: !GetAtt BuildFrontendRole.Arn
       Source:
         Type: NO_SOURCE
@@ -421,7 +425,7 @@ Resources:
                   - npm install
               build:
                 commands:
-                  - "echo \"export default {backendApiHost: '$API_URL'};\" > src/app.env.js"
+                  - "echo \"const getFQDN=()=>{const t=window.location.host;return`${window.location.protocol}//${t}`};export default{domain:getFQDN(),backendApiHost:'$API_URL',auth:{domain:'$AUTH0_DOMAIN',clientId:'$AUTH0_CLIENT_ID'}};\" > src/app.env.js"
                   - ${BuildCommand}
               post_build:
                 commands:
@@ -583,6 +587,12 @@ Parameters:
   EnvConfigtwilioaccountsidAsString:
     Type: AWS::SSM::Parameter::Value<String>
     Default: /<EnvironmentName>/twilio/account-sid
+  EnvConfigauth0domainAsString:
+    Type: AWS::SSM::Parameter::Value<String>
+    Default: /<EnvironmentName>/auth0/domain
+  EnvConfigauth0clientIdAsString:
+    Type: AWS::SSM::Parameter::Value<String>
+    Default: /<EnvironmentName>/auth0/clientId
 Metadata:
   EnvConfigParameters:
     EnvConfigAppointmentsDefaultDaysAsString: appointments.default-days
@@ -591,3 +601,5 @@ Metadata:
     EnvConfigAppointmentsIntervalMinAsString: appointments.interval-min
     EnvConfigAcuityBaseUriAsString: acuity.base-uri
     EnvConfigtwilioaccountsidAsString: twilio.account-sid
+    EnvConfigauth0domainAsString: auth0.domain
+    EnvConfigauth0clientIdAsString: auth0.clientId
