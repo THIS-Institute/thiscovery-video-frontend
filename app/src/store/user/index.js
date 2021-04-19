@@ -28,6 +28,9 @@ export const user = {
 		setAuthAppState(state, returnState) {
 			state.authAppState = returnState;
 		},
+		setInterviewerStatus(state, isInterviewer) {
+			state.isInterviewer = isInterviewer;
+		},
 	},
 
 	getters: {

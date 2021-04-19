@@ -5,6 +5,18 @@ import { appointments } from './appointments';
 import { user } from './user';
 import { interviews } from './interviews';
 
+const interviewerStatusListener = (store) => {
+	const params = new URLSearchParams(window.location.search);
+
+	if (params.has('isInterviewer')) {
+		if (params.get('isInterviewer') === 'false') {
+			store.commit('user/setInterviewerStatus', false);
+		} else {
+			store.commit('user/setInterviewerStatus', true);
+		}
+	}
+}
+
 export const store = createStore({
 	modules: {
 		app,
@@ -13,4 +25,7 @@ export const store = createStore({
 		user,
 		interviews,
 	},
+	plugins: [
+		interviewerStatusListener,
+	],
 });
