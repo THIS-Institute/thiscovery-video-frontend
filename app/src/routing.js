@@ -7,4 +7,4 @@ export const router = createRouter({
 	routes,
 });
 
-router.beforeResolve(authRouteGuard);
+router.beforeEach(authRouteGuard);
