@@ -260,7 +260,7 @@ Resources:
         - Stack ${StackTagName} Environment ${EnvironmentTagName} Function ${ResourceName}
         - ResourceName: Function
       CodeUri: src
-      Handler: log.lambda_handler
+      Handler: create_interview_answer.lambda_handler
       Runtime: python3.8
       MemorySize: 1024
       Timeout: 30
