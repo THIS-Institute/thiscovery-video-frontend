@@ -4,6 +4,10 @@ import { useStore } from 'vuex';
 export function useDevices() {
 	const store = useStore();
 
+	navigator.mediaDevices.ondevicechange = () => {
+		store.dispatch('interviews/updateMediaDevices');
+	};
+
 	return {
         declinedPermission: computed(() => store.state.interviews.declinedPermissions),
         activeCameraName: computed(() => store.getters['interviews/getActiveVideoInputName']),

@@ -23,6 +23,7 @@
 			flipped
 			small
 			pill
+			@click="onSaveExit"
 		/>
 	</div>
 
@@ -72,7 +73,7 @@
 			<div class="rounded-lg overflow-hidden bg-grey-400">
 				<video-recorder
 					v-if="isRecordingMode()"
-					:user-name="userName"
+					:user-name="userGivenName"
 					@started="onRecorderStart"
 					@stopped="onRecorderStop"
 				/>
@@ -87,14 +88,18 @@
 			</div>
 
 			<modal-container
-				v-if="state.showConfirmDialog || state.showCommentDialog"
+				v-if="state.showConfirmDialog
+					|| state.showCommentDialog
+				"
 			>
 				<!-- Are you sure you want to retake? -->
 				<confirm-dialog
 					v-if="state.showConfirmDialog"
 					@confirm="onConfirmRetake"
 					@cancel="onCancelRetake"
-				/>
+				>
+					Are you sure you want to delete your recording and retake?
+				</confirm-dialog>
 
 				<!-- Add a comment -->
 				<comment-dialog
@@ -130,10 +135,13 @@
 </template>
 
 <script>
-	import { computed, reactive, provide } from 'vue';
+	import { computed, ref, reactive, provide } from 'vue';
 	import { useStore } from 'vuex';
+	import { useRouter } from 'vue-router';
+	import { ROUTE_HOME } from '@/routeConstants';
 	import { useQuestions } from './useQuestions';
 	import { useMedia } from './useMedia';
+	import { useUser } from '@/auth/useUser';
 	import { processAnswer } from './selfRecord';
 
 	import Question from '@/domain/interviews/solo/Question';
@@ -168,6 +176,7 @@
 			const MODE_REVIEWING = 'reviewing';
 
 			const store = useStore();
+			const router = useRouter();
 
 			const {
 				startRecording,
@@ -180,17 +189,18 @@
 			provide('stopRecording', stopRecording);
 			provide('playbackURL', playbackURL);
 
+			const isUploading = ref(false);
+
 			const state = reactive({
 				mode: MODE_RECORDING,
-				isUploading: false,
 				showConfirmDialog: false,
 				showCommentDialog: false,
 				comments: null,
 			});
 
-			const userName = computed(() => store.state.user.user.given_name);
+			const { userGivenName } = useUser();
 
-			provide('isUploading', state.isUploading);
+			provide('isUploading', isUploading);
 
 			const isRecordingMode = () => {
 				return state.mode === MODE_RECORDING;
@@ -233,6 +243,8 @@
 			};
 
 			const onNextQuestion = async () => {
+				isUploading.value = true;
+
 				const options = {
 					playbackURL: playbackURL.value,
 				};
@@ -242,6 +254,7 @@
 			};
 
 			const onAnswerProccessed = () => {
+				isUploading.value = false;
 				state.comments = null;
 				cleanup();
 				nextQuestion();
@@ -287,9 +300,13 @@
 				closeCommentsDialog();
 			};
 
+			const onSaveExit = () => {
+				router.push({ name: ROUTE_HOME });
+			};
+
 			return {
 				state,
-				userName,
+				userGivenName,
 				toReadableValue,
 				isRecordingMode,
 				isReviewingMode,
@@ -308,6 +325,7 @@
 				onCancelRetake,
 				onCancelComments,
 				onAddedComments,
+				onSaveExit,
 			};
 		},
 	};

@@ -17,8 +17,7 @@ const PathNotFound = () => import('./views/PathNotFound');
 import FullBackgroundLayout from './layouts/FullBackground';
 import SplitBackgroundLayout from './layouts/SplitBackground';
 
-/* eslint-env node */
-const content = require('../content.json');
+import AuthReturn from './auth/AuthReturn';
 
 export const routes = [
 	/**
@@ -125,9 +124,6 @@ export const routes = [
 		path: '/live/:id/room',
 		component: LiveRoomView,
 		name: constant.ROUTE_LIVE_ROOM,
-		props: {
-			questions: content.live.room.questions,
-		},
 	},
 
 	/**
@@ -136,6 +132,14 @@ export const routes = [
 	{
 		path: '/styleguide',
 		component: Styleguide,
+	},
+
+	/**
+	 * Auth return capture
+	 */
+	{
+		path: '/auth-return',
+		component: AuthReturn,
 	},
 
 	{

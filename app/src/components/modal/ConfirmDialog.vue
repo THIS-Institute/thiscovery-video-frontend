@@ -1,6 +1,6 @@
 <template>
 	<h1	class="e-h3 max-w-sm text-center">
-		Are you sure you want to delete your recording and retake?
+		<slot />
 	</h1>
 
 	<div class="flex items-center justify-center space-x-4 mt-5">

@@ -10,7 +10,7 @@
 					hidden ? 'camera-strike' : null
 				]"
 				:class="hidden ? 'e-button--red' : 'e-button--white-outline'"
-				@click="toggle('hidden')"
+				@click="onToggleCamera"
 			/>
 		</tooltip>
 
@@ -24,7 +24,7 @@
 					muted ? 'audio-off' : 'audio-sound'
 				]"
 				:class="muted ? 'e-button--red' : 'e-button--white-outline'"
-				@click="toggle('muted')"
+				@click="onToggleMute"
 			/>
 		</tooltip>
 
@@ -94,7 +94,12 @@
 	import { useStore } from 'vuex';
 
 	export default {
-		setup() {
+		emits: [
+			'toggleCamera',
+			'toggleMute',
+		],
+
+		setup(props, { emit }) {
 			const state = reactive({
 				muted: false,
 				hidden: false,
@@ -106,10 +111,22 @@
 			const store = useStore();
 			const phone = () => store.commit('app/toggleModal');
 
+			const onToggleCamera = () => {
+				state.hidden = !state.hidden;
+				emit('toggleCamera', state.hidden);
+			};
+
+			const onToggleMute = () => {
+				state.muted = !state.muted;
+				emit('toggleMute', state.muted);
+			};
+
 			return {
 				...toRefs(state),
 				toggle,
 				phone,
+				onToggleMute,
+				onToggleCamera,
 			};
 		},
 	};

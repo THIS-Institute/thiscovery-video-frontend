@@ -58,13 +58,6 @@ Resources:
                 type: aws_proxy
                 uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${CreateInterviewAnswer.Arn}/invocations
               responses: {}
-          /v1/self-record-interview/upload-video:
-            post:
-              x-amazon-apigateway-integration:
-                httpMethod: POST
-                type: aws_proxy
-                uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${UploadVideoAnswer.Arn}/invocations
-              responses: {}
           /v1/task/{key}:
             get:
               x-amazon-apigateway-integration:
@@ -109,6 +102,8 @@ Resources:
       Tracing: Active
       Policies:
         - AWSXrayWriteOnlyAccess
+        - AWSSecretsManagerGetSecretValuePolicy:
+            SecretArn: !Sub arn:${AWS::Partition}:secretsmanager:${AWS::Region}:${AWS::AccountId}:secret:/${EnvironmentTagName}/*
       Events:
         BackendApiPOSTv1roomtoken:
           Type: Api
@@ -116,6 +111,10 @@ Resources:
             Path: /v1/room/token
             Method: POST
             RestApiId: !Ref BackendApi
+      Environment:
+        Variables:
+          SECRETS_NAMESPACE: !Sub /${EnvironmentTagName}/
+          TWILIO_ACCOUNT_SID: !Ref EnvConfigtwilioaccountsidAsString
   GetAppointmentBatchSlots:
     Type: AWS::Serverless::Function
     Properties:
@@ -254,7 +253,7 @@ Resources:
         - Stack ${StackTagName} Environment ${EnvironmentTagName} Function ${ResourceName}
         - ResourceName: Function
       CodeUri: src
-      Handler: log.lambda_handler
+      Handler: create_interview_answer.lambda_handler
       Runtime: python3.8
       MemorySize: 1024
       Timeout: 30
@@ -263,6 +262,8 @@ Resources:
         - AWSXrayWriteOnlyAccess
         - DynamoDBCrudPolicy:
             TableName: !Ref InterviewsTable
+        - S3CrudPolicy:
+            BucketName: !Ref InterviewAssets
       Events:
         BackendApiPOSTv1selfrecordinterviewanswer:
           Type: Api
@@ -274,38 +275,8 @@ Resources:
         Variables:
           TABLE_NAME: !Ref InterviewsTable
           TABLE_ARN: !GetAtt InterviewsTable.Arn
-  UploadVideoAnswer:
-    Type: AWS::Serverless::Function
-    Properties:
-      FunctionName: Interviews-UploadVideoAnswer
-      Description: !Sub
-        - Stack ${StackTagName} Environment ${EnvironmentTagName} Function ${ResourceName}
-        - ResourceName: UploadVideoAnswer
-      CodeUri: src
-      Handler: upload_video_answer.lambda_handler
-      Runtime: python3.8
-      MemorySize: 2048
-      Timeout: 30
-      Tracing: Active
-      Policies:
-        - AWSXrayWriteOnlyAccess
-        - S3CrudPolicy:
-            BucketName: !Ref InterviewAssets
-        - DynamoDBCrudPolicy:
-            TableName: !Ref InterviewsTable
-      Events:
-        BackendApiPOSTv1selfrecordinterviewuploadvideo:
-          Type: Api
-          Properties:
-            Path: /v1/self-record-interview/upload-video
-            Method: POST
-            RestApiId: !Ref BackendApi
-      Environment:
-        Variables:
           BUCKET_NAME: !Ref InterviewAssets
           BUCKET_ARN: !GetAtt InterviewAssets.Arn
-          TABLE_NAME: !Ref InterviewsTable
-          TABLE_ARN: !GetAtt InterviewsTable.Arn
   GetTask:
     Type: AWS::Serverless::Function
     Properties:
@@ -609,6 +580,9 @@ Parameters:
   EnvConfigAcuityBaseUriAsString:
     Type: AWS::SSM::Parameter::Value<String>
     Default: /<EnvironmentName>/acuity/base-uri
+  EnvConfigtwilioaccountsidAsString:
+    Type: AWS::SSM::Parameter::Value<String>
+    Default: /<EnvironmentName>/twilio/account-sid
 Metadata:
   EnvConfigParameters:
     EnvConfigAppointmentsDefaultDaysAsString: appointments.default-days
@@ -616,3 +590,4 @@ Metadata:
     EnvConfigAppointmentsEndHourAsString: appointments.end-hour
     EnvConfigAppointmentsIntervalMinAsString: appointments.interval-min
     EnvConfigAcuityBaseUriAsString: acuity.base-uri
+    EnvConfigtwilioaccountsidAsString: twilio.account-sid

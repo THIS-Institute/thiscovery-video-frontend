@@ -58,7 +58,7 @@ export const authRouteGuard = (to, from, next) => {
         if (isAuthenticated.value) {
             return next();
         }
-
+        
         loginWithRedirect({
             appState: {
                 targetUrl: to.fullPath,
@@ -78,7 +78,7 @@ export const authRouteGuard = (to, from, next) => {
     })
 }
 
-export const setupAuth = async (options, callbackRedirect) => {
+export const setupAuth = async (options) => {
     client = await createAuth0Client({
         ...options,
     });
@@ -93,20 +93,21 @@ export const setupAuth = async (options, callbackRedirect) => {
             // handle the redirect and retrieve tokens
             const { appState } = await client.handleRedirectCallback();
 
+            await store.commit('user/setAuthAppState', appState);
+
             // Notify subscribers that the redirect callback has happened, passing the appState
             // (useful for retrieving any pre-authentication state)
-            callbackRedirect(appState);
+            // callbackRedirect(appState);
         }
     } catch (exception) {
         store.commit('user/setAuthError', exception);
     } finally {
         // Initialize our internal authentication state
         const isAuthenticated = await client.isAuthenticated();
-        store.commit('user/setIsAuthenticated', isAuthenticated);
-
         const user = await client.getUser();
+
+        store.commit('user/setIsAuthenticated', isAuthenticated);
         store.commit('user/setUser', user);
-        
         store.commit('user/setIsAuthLoading', false);
     }
 

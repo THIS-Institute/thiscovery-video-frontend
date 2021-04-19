@@ -5,10 +5,16 @@ import { appointments } from './appointments';
 import { user } from './user';
 import { interviews } from './interviews';
 
-const deviceEventListener = (store) => {
-	navigator.mediaDevices.ondevicechange = () => {
-		store.dispatch('interviews/updateMediaDevices');
-	};
+const interviewerStatusListener = (store) => {
+	let params = new URLSearchParams(window.location.search);
+
+	if (params.has('isInterviewer')) {
+		if (params.get('isInterviewer') === 'false') {
+			store.commit('user/setInterviewerStatus', false);
+		} else {
+			store.commit('user/setInterviewerStatus', true);
+		}
+	}
 }
 
 export const store = createStore({
@@ -20,6 +26,6 @@ export const store = createStore({
 		interviews,
 	},
 	plugins: [
-		deviceEventListener,
+		interviewerStatusListener,
 	],
 });

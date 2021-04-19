@@ -1,13 +1,16 @@
 import json
 import os
+from secrets import SecretsManager
 from twilio.jwt.access_token import AccessToken
 from twilio.jwt.access_token.grants import VideoGrant
 
 def get_access_token(identity, room):
+    secret = SecretsManager(os.environ['SECRETS_NAMESPACE'])
+
     token = AccessToken(
         os.environ['TWILIO_ACCOUNT_SID'],
-        os.environ['TWILIO_API_KEY'],
-        os.environ['TWILIO_API_SECRET']
+        secret.get('twilio-api-key'),
+        secret.get('twilio-api-secret'),
     )
     
     token.identity = identity
@@ -25,6 +28,10 @@ def get_error_response(message):
     }
 
     return {
+        'headers': {
+            'Access-Control-Allow-Origin': '*',
+            'Content-Type': 'application/json'
+        },
         'statusCode': 422,
         'body': json.dumps(response_body)
     }
