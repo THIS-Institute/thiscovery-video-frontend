@@ -9,14 +9,10 @@ export async function creatInterviewAnswer (data) {
 }
 
 export async function putAnswerVideo (presignedUrl, blob) {
-    const data = new FormData();
-
-    data.append('file', blob);
-
 	const response = await fetch(presignedUrl, {
 		method: 'PUT',
-		body: data,
+		body: blob,
 	});
 
-	return response.json();
+	return response;
 }

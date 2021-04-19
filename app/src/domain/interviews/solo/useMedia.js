@@ -29,10 +29,7 @@ export function useMedia() {
 		const tracks = await stream.value.getTracks();
 
 		if (tracks.length) {
-			await new Promise((resolve) => {
-				tracks.forEach((track) => track.stop());
-				resolve
-			});
+			await tracks.forEach((track) => track.stop());
 		}
 	};
 
@@ -94,6 +91,7 @@ export function useMedia() {
 	provide('stream', stream);
 
 	return {
+		destroyMediaStream,
 		startRecording,
 		stopRecording,
 		playbackURL,

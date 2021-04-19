@@ -8,11 +8,16 @@ export async function processAnswer(options) {
 
     console.log(`Binary blob filesize: ~${Math.round(blob.size/1e+6)} MB`)
 
-    const answerResponse = await creatInterviewAnswer({});
+    const answerResponse = await creatInterviewAnswer({
+        'contentType': blob.type,
+    });
 
     const presignedUrl = answerResponse.videoUploadUrl;
-
     const response = await putAnswerVideo(presignedUrl, blob);
 
-    return response;
+    if (!response.ok) {
+        throw response;
+    }
+
+    return answerResponse;
 }

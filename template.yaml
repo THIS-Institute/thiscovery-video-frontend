@@ -58,13 +58,6 @@ Resources:
                 type: aws_proxy
                 uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${CreateInterviewAnswer.Arn}/invocations
               responses: {}
-          /v1/self-record-interview/upload-video:
-            post:
-              x-amazon-apigateway-integration:
-                httpMethod: POST
-                type: aws_proxy
-                uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${UploadVideoAnswer.Arn}/invocations
-              responses: {}
           /v1/task/{key}:
             get:
               x-amazon-apigateway-integration:
@@ -284,38 +277,6 @@ Resources:
           TABLE_ARN: !GetAtt InterviewsTable.Arn
           BUCKET_NAME: !Ref InterviewAssets
           BUCKET_ARN: !GetAtt InterviewAssets.Arn
-  UploadVideoAnswer:
-    Type: AWS::Serverless::Function
-    Properties:
-      FunctionName: Interviews-UploadVideoAnswer
-      Description: !Sub
-        - Stack ${StackTagName} Environment ${EnvironmentTagName} Function ${ResourceName}
-        - ResourceName: UploadVideoAnswer
-      CodeUri: src
-      Handler: upload_video_answer.lambda_handler
-      Runtime: python3.8
-      MemorySize: 2048
-      Timeout: 30
-      Tracing: Active
-      Policies:
-        - AWSXrayWriteOnlyAccess
-        - S3CrudPolicy:
-            BucketName: !Ref InterviewAssets
-        - DynamoDBCrudPolicy:
-            TableName: !Ref InterviewsTable
-      Events:
-        BackendApiPOSTv1selfrecordinterviewuploadvideo:
-          Type: Api
-          Properties:
-            Path: /v1/self-record-interview/upload-video
-            Method: POST
-            RestApiId: !Ref BackendApi
-      Environment:
-        Variables:
-          BUCKET_NAME: !Ref InterviewAssets
-          BUCKET_ARN: !GetAtt InterviewAssets.Arn
-          TABLE_NAME: !Ref InterviewsTable
-          TABLE_ARN: !GetAtt InterviewsTable.Arn
   GetTask:
     Type: AWS::Serverless::Function
     Properties:

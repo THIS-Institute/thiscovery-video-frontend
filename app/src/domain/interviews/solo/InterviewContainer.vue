@@ -23,6 +23,7 @@
 			flipped
 			small
 			pill
+			@click="onSaveExit"
 		/>
 	</div>
 
@@ -87,14 +88,18 @@
 			</div>
 
 			<modal-container
-				v-if="state.showConfirmDialog || state.showCommentDialog"
+				v-if="state.showConfirmDialog
+					|| state.showCommentDialog
+				"
 			>
 				<!-- Are you sure you want to retake? -->
 				<confirm-dialog
 					v-if="state.showConfirmDialog"
 					@confirm="onConfirmRetake"
 					@cancel="onCancelRetake"
-				/>
+				>
+					Are you sure you want to delete your recording and retake?
+				</confirm-dialog>
 
 				<!-- Add a comment -->
 				<comment-dialog
@@ -132,6 +137,8 @@
 <script>
 	import { computed, reactive, provide } from 'vue';
 	import { useStore } from 'vuex';
+	import { useRouter, onBeforeRouteLeave } from 'vue-router';
+	import { ROUTE_HOME } from '@/routeConstants';
 	import { useQuestions } from './useQuestions';
 	import { useMedia } from './useMedia';
 	import { useUser } from '@/auth/useUser';
@@ -169,8 +176,10 @@
 			const MODE_REVIEWING = 'reviewing';
 
 			const store = useStore();
+			const router = useRouter();
 
 			const {
+				destroyMediaStream,
 				startRecording,
 				stopRecording,
 				playbackURL,
@@ -288,6 +297,10 @@
 				closeCommentsDialog();
 			};
 
+			const onSaveExit = () => {
+				router.push({ name: ROUTE_HOME });
+			};
+
 			return {
 				state,
 				userGivenName,
@@ -309,6 +322,7 @@
 				onCancelRetake,
 				onCancelComments,
 				onAddedComments,
+				onSaveExit,
 			};
 		},
 	};
