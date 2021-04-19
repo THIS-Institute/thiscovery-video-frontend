@@ -8,17 +8,15 @@ export async function creatInterviewAnswer (data) {
 	return response;
 }
 
-export async function uploadInterviewAnswerVideo (blob) {
-    const formData = new FormData();
+export async function putAnswerVideo (presignedUrl, blob) {
+    const data = new FormData();
 
-    formData.append('video', blob);
+    data.append('file', blob);
 
-	const response = await client.postRaw(
-            `self-record-interview/upload-video`,
-            formData,
-        )
-		.then((response) => response)
-		.catch((error) => console.error(error));
+	const response = await fetch(presignedUrl, {
+		method: 'PUT',
+		body: data,
+	});
 
-	return response;
+	return response.json();
 }

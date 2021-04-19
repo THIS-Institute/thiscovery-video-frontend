@@ -269,6 +269,8 @@ Resources:
         - AWSXrayWriteOnlyAccess
         - DynamoDBCrudPolicy:
             TableName: !Ref InterviewsTable
+        - S3CrudPolicy:
+            BucketName: !Ref InterviewAssets
       Events:
         BackendApiPOSTv1selfrecordinterviewanswer:
           Type: Api
@@ -280,6 +282,8 @@ Resources:
         Variables:
           TABLE_NAME: !Ref InterviewsTable
           TABLE_ARN: !GetAtt InterviewsTable.Arn
+          BUCKET_NAME: !Ref InterviewAssets
+          BUCKET_ARN: !GetAtt InterviewAssets.Arn
   UploadVideoAnswer:
     Type: AWS::Serverless::Function
     Properties:
