@@ -137,7 +137,7 @@
 <script>
 	import { computed, reactive, provide } from 'vue';
 	import { useStore } from 'vuex';
-	import { useRouter, onBeforeRouteLeave } from 'vue-router';
+	import { useRouter } from 'vue-router';
 	import { ROUTE_HOME } from '@/routeConstants';
 	import { useQuestions } from './useQuestions';
 	import { useMedia } from './useMedia';
@@ -179,7 +179,6 @@
 			const router = useRouter();
 
 			const {
-				destroyMediaStream,
 				startRecording,
 				stopRecording,
 				playbackURL,
