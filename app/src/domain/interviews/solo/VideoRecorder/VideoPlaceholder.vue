@@ -21,7 +21,6 @@
 			name: {
 				type: String,
 				default: null,
-				required: true,
 			},
 		},
 	};
