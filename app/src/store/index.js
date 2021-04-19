@@ -6,7 +6,7 @@ import { user } from './user';
 import { interviews } from './interviews';
 
 const interviewerStatusListener = (store) => {
-	const params = new URLSearchParams(window.location.search);
+	let params = new URLSearchParams(window.location.search);
 
 	if (params.has('isInterviewer')) {
 		if (params.get('isInterviewer') === 'false') {
