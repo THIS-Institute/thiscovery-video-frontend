@@ -5,7 +5,12 @@
 	>
 		<video
 			ref="video"
-			class="absolute inset-0 w-full h-full object-cover"
+			:class="[
+				'absolute inset-0 w-full h-full object-cover',
+				{
+					'opacity-20': isUploading,
+				},
+			]"
 			:src="videoPlaybackUrl"
 			@timeupdate="onTimeUpdate"
 			@ended="onVideoEnd"
@@ -19,6 +24,10 @@
 			@toggle-playback="onTogglePlayback"
 			@add-comments="$emit('addComments')"
 		/>
+
+		<loading-spinner
+			v-if="isUploading"
+		/>
 	</placeholder>
 
 	<video-controls
@@ -29,11 +38,12 @@
 </template>
 
 <script>
-	import { ref, reactive, provide } from 'vue';
+	import { ref, reactive, provide, inject } from 'vue';
 	import getBlobDuration from './getBlobDuration';
 
 	import InlineControls from './InlineControls';
 	import VideoControls from './VideoControls';
+	import LoadingSpinner from '@/components/LoadingSpinner';
 
 	export default {
 		name: 'VideoPlayer',
@@ -41,6 +51,7 @@
 		components: {
 			InlineControls,
 			VideoControls,
+			LoadingSpinner,
 		},
 
 		props: {
@@ -66,6 +77,8 @@
 				isReviewing: false,
 				canPlay: false,
 			});
+
+			const isUploading = inject('isUploading');
 
 			provide('state', state);
 
@@ -127,6 +140,7 @@
 				onDurationChange,
 				onCanPlay,
 				onMetadataLoaded,
+				isUploading,
 			}
 		}
 	};

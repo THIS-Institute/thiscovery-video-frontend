@@ -135,7 +135,7 @@
 </template>
 
 <script>
-	import { computed, reactive, provide } from 'vue';
+	import { computed, ref, reactive, provide } from 'vue';
 	import { useStore } from 'vuex';
 	import { useRouter } from 'vue-router';
 	import { ROUTE_HOME } from '@/routeConstants';
@@ -189,9 +189,10 @@
 			provide('stopRecording', stopRecording);
 			provide('playbackURL', playbackURL);
 
+			const isUploading = ref(false);
+
 			const state = reactive({
 				mode: MODE_RECORDING,
-				isUploading: false,
 				showConfirmDialog: false,
 				showCommentDialog: false,
 				comments: null,
@@ -199,7 +200,7 @@
 
 			const { userGivenName } = useUser();
 
-			provide('isUploading', state.isUploading);
+			provide('isUploading', isUploading);
 
 			const isRecordingMode = () => {
 				return state.mode === MODE_RECORDING;
@@ -242,6 +243,8 @@
 			};
 
 			const onNextQuestion = async () => {
+				isUploading.value = true;
+
 				const options = {
 					playbackURL: playbackURL.value,
 				};
@@ -251,6 +254,7 @@
 			};
 
 			const onAnswerProccessed = () => {
+				isUploading.value = false;
 				state.comments = null;
 				cleanup();
 				nextQuestion();
