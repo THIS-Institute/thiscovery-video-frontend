@@ -19,9 +19,6 @@ import SplitBackgroundLayout from './layouts/SplitBackground';
 
 import AuthReturn from './auth/AuthReturn';
 
-/* eslint-env node */
-const content = require('../content.json');
-
 export const routes = [
 	/**
 	 * Method selection
@@ -127,9 +124,6 @@ export const routes = [
 		path: '/live/:id/room',
 		component: LiveRoomView,
 		name: constant.ROUTE_LIVE_ROOM,
-		props: {
-			questions: content.live.room.questions,
-		},
 	},
 
 	/**
