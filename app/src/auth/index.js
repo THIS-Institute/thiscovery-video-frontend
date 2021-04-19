@@ -97,7 +97,7 @@ export const setupAuth = async (options) => {
 
             // Notify subscribers that the redirect callback has happened, passing the appState
             // (useful for retrieving any pre-authentication state)
-            callbackRedirect(appState);
+            // callbackRedirect(appState);
         }
     } catch (exception) {
         store.commit('user/setAuthError', exception);
