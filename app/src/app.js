@@ -14,15 +14,6 @@ const RootComponent = {};
 
 const app = createApp(RootComponent);
 
-const callbackRedirect = (appState) => {
-    console.log('here');
-    router.push(
-        appState && appState.targetUrl
-            ? appState.targetUrl
-            : '/'
-    );
-}
-
 app.component('EButton', EButton);
 app.component('Icon', Icon);
 app.component('Placeholder', Placeholder);
@@ -37,7 +28,7 @@ const authOptions = {
     redirect_uri: `${env.domain}/auth-return`,
 };
 
-setupAuth(authOptions, callbackRedirect)
+setupAuth(authOptions)
     .then((auth) => app.use(auth))
     .finally(() => {
         app.use(router);

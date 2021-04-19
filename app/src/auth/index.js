@@ -78,7 +78,7 @@ export const authRouteGuard = (to, from, next) => {
     })
 }
 
-export const setupAuth = async (options, callbackRedirect) => {
+export const setupAuth = async (options) => {
     client = await createAuth0Client({
         ...options,
     });
