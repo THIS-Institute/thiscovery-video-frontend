@@ -60,6 +60,9 @@
 			if (!taskInitialised.value) {
 				store.dispatch('task/initalise');
 			}
+
+			const user = computed(() => store.state.user.user);
+			console.dir(user);
 			
 			return {
 				message,

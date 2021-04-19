@@ -17,6 +17,8 @@ const PathNotFound = () => import('./views/PathNotFound');
 import FullBackgroundLayout from './layouts/FullBackground';
 import SplitBackgroundLayout from './layouts/SplitBackground';
 
+import AuthReturn from './auth/AuthReturn';
+
 /* eslint-env node */
 const content = require('../content.json');
 
@@ -136,6 +138,14 @@ export const routes = [
 	{
 		path: '/styleguide',
 		component: Styleguide,
+	},
+
+	/**
+	 * Auth return capture
+	 */
+	{
+		path: '/auth-return',
+		component: AuthReturn,
 	},
 
 	{

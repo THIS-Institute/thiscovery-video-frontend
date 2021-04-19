@@ -14,13 +14,8 @@ const RootComponent = {};
 
 const app = createApp(RootComponent);
 
-app.component('EButton', EButton);
-app.component('Icon', Icon);
-app.component('Placeholder', Placeholder);
-app.component('IconText', IconText);
-app.component('Tooltip', Tooltip);
-
 const callbackRedirect = (appState) => {
+    console.log('here');
     router.push(
         appState && appState.targetUrl
             ? appState.targetUrl
@@ -28,15 +23,23 @@ const callbackRedirect = (appState) => {
     );
 }
 
-app.use(router);
+app.component('EButton', EButton);
+app.component('Icon', Icon);
+app.component('Placeholder', Placeholder);
+app.component('IconText', IconText);
+app.component('Tooltip', Tooltip);
+
 app.use(store);
 
 const authOptions = {
     domain: env.auth.domain,
     client_id: env.auth.clientId,
-    redirect_uri: `${env.domain}/`,
+    redirect_uri: `${env.domain}/auth-return`,
 };
 
 setupAuth(authOptions, callbackRedirect)
     .then((auth) => app.use(auth))
-    .finally(() => app.mount('#app'));
+    .finally(() => {
+        app.use(router);
+        app.mount('#app');
+    });

@@ -24,7 +24,12 @@ export const user = {
 		},
 	},
 	
-	actions: {},
+	actions: {
+		handleAuthReturn: async ({ state }, ephemeralState) => {
+			state;
+			console.log(ephemeralState);
+		}
+	},
 
 	getters: {
 		hasUser (state) {

@@ -93,6 +93,8 @@ export const setupAuth = async (options, callbackRedirect) => {
             // handle the redirect and retrieve tokens
             const { appState } = await client.handleRedirectCallback();
 
+            await store.dispatch('user/handleAuthReturn', appState);
+
             // Notify subscribers that the redirect callback has happened, passing the appState
             // (useful for retrieving any pre-authentication state)
             callbackRedirect(appState);
@@ -102,11 +104,10 @@ export const setupAuth = async (options, callbackRedirect) => {
     } finally {
         // Initialize our internal authentication state
         const isAuthenticated = await client.isAuthenticated();
-        store.commit('user/setIsAuthenticated', isAuthenticated);
-
         const user = await client.getUser();
+
+        store.commit('user/setIsAuthenticated', isAuthenticated);
         store.commit('user/setUser', user);
-        
         store.commit('user/setIsAuthLoading', false);
     }
 
