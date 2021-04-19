@@ -1,3 +1,5 @@
+const ID_NAMESPACE = 'https://thiscovery.org/';
+
 export const user = {
 	namespaced: true,
 
@@ -50,15 +52,16 @@ export const user = {
 		},
 
 		getInitials (state) {
-			if (state.user.given_name === undefined || state.user.family_name === undefined) {
+			if (state.user[ID_NAMESPACE + 'first_name'] === undefined || 
+				state.user[ID_NAMESPACE + 'last_name'] === undefined) {
 				return null;
 			}
 
-			const first = state.user.given_name
+			const first = state.user[ID_NAMESPACE + 'first_name']
 				.charAt(0)
 				.toUpperCase();
 
-			const last = state.user.family_name
+			const last = state.user[ID_NAMESPACE + 'last_name']
 				.charAt(0)
 				.toUpperCase();
 			
@@ -66,11 +69,11 @@ export const user = {
 		},
 
 		getGivenName (state) {
-			if (state.user.given_name === undefined) {
+			if (state.user[ID_NAMESPACE + 'first_name'] === undefined) {
 				return null;
 			}
 
-			return state.user.given_name;
+			return state.user[ID_NAMESPACE + 'first_name'];
 		},
 
 		getAuthTargetUrl (state) {
