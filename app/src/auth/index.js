@@ -58,7 +58,7 @@ export const authRouteGuard = (to, from, next) => {
         if (isAuthenticated.value) {
             return next();
         }
-
+        
         loginWithRedirect({
             appState: {
                 targetUrl: to.fullPath,
@@ -93,7 +93,7 @@ export const setupAuth = async (options, callbackRedirect) => {
             // handle the redirect and retrieve tokens
             const { appState } = await client.handleRedirectCallback();
 
-            await store.dispatch('user/handleAuthReturn', appState);
+            await store.commit('user/setAuthAppState', appState);
 
             // Notify subscribers that the redirect callback has happened, passing the appState
             // (useful for retrieving any pre-authentication state)

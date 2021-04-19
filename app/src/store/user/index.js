@@ -7,6 +7,7 @@ export const user = {
 		user: {},
 		isInterviewer: false,
 		authError: null,
+		authAppState: null,
 	}),
 
 	mutations: {
@@ -22,13 +23,9 @@ export const user = {
 		setAuthError(state, authError) {
 			state.authError = authError;
 		},
-	},
-	
-	actions: {
-		handleAuthReturn: async ({ state }, ephemeralState) => {
-			state;
-			console.log(ephemeralState);
-		}
+		setAuthAppState(state, returnState) {
+			state.authAppState = returnState;
+		},
 	},
 
 	getters: {
@@ -74,6 +71,18 @@ export const user = {
 			}
 
 			return state.user.given_name;
-		}
+		},
+
+		getAuthTargetUrl (state) {
+			if (!state.authAppState) {
+				return null;
+			}
+
+			if (!state.authAppState.targetUrl) {
+				return null;
+			}
+
+			return state.authAppState.targetUrl;
+		},
 	},
 };
