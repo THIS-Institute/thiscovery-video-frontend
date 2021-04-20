@@ -6,6 +6,12 @@
 			playsinline
 			class="absolute inset-0 w-full h-full object-cover max-h-screen"
 		/>
+
+		<p
+			v-if="participant.identity"
+			class="fixed bottom-0 left-0 p-4 text-white"
+			v-text="participant.identity"
+		/>
 	</div>
 
 	<audio
