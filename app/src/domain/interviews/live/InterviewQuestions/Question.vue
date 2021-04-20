@@ -1,7 +1,7 @@
 <template>
 	<div class="flex items-center justify-between space-x-6 sm:space-x-12">
 		<icon-text
-			:text="title"
+			:text="question.name"
 			:text-class="hidden ? 'hidden sm:block' : ''"
 			:icon="{
 				name: 'question',
@@ -25,20 +25,15 @@
 	<p
 		v-if="!hidden"
 		class="mt-7 text-black"
-		v-text="question"
+		v-text="question.title"
 	/>
 </template>
 
 <script>
 	export default {
 		props: {
-			title: {
-				type: String,
-				required: true,
-			},
-
 			question: {
-				type: String,
+				type: Object,
 				required: true,
 			},
 

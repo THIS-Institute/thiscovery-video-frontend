@@ -6,6 +6,7 @@
 					v-for="participant in remoteParticipants"
 					:key="participant.sid"
 					:participant="participant"
+					@question-received="onQuestionReceived"
 				/>
 			</div>
 
@@ -59,31 +60,26 @@
 					</div>
 				</div>
 
-				<!-- <div
-					v-if="interviewer"
-					class="flex items-end mt-auto p-2.5 pl-4"
-				>
-					<p
-						class="absolute e-h4 my-6"
-						v-text="interviewer.name"
-					/>
-
-					<question-wrapper
+				<div class="flex items-end mt-auto p-2.5 pl-4">
+					<interview-questions
 						class="ml-auto z-1"
-						:questions="questions"
-						:participant="false"
+						:questions="interviewerQuestions"
+						:is-interviewer="isInterviewer"
+						:remote-question="remoteQuestion"
+						@ask-question="onInterviewerAskQuestion"
+						@stop-asking="onInterviewStopAsking"
 					/>
-				</div> -->
+				</div>
 			</div>
 		</main>
 	</div>
 </template>
 
 <script>
-	import { ref, toRefs, computed, shallowRef, reactive, shallowReactive } from 'vue';
+	import { ref, computed, shallowRef, shallowReactive } from 'vue';
 	import { useRoute } from 'vue-router';
 	import { useStore } from 'vuex';
-	import { connect } from 'twilio-video';
+	import { connect, LocalDataTrack } from 'twilio-video';
 
 	import LocalVideo from './LocalVideo';
 	import RemoteVideo from './RemoteVideo';
@@ -92,7 +88,7 @@
 	import Timer from '@/components/Timer';
 	import ModalContainer from '@/components/modal/ModalContainer';
 	import JoinByPhone from '@/components/modal/JoinByPhone';
-	// import QuestionWrapper from './QuestionWrapper';
+	import InterviewQuestions from './InterviewQuestions';
 
 	export default {
 		components: {
@@ -103,7 +99,7 @@
 			Timer,
 			ModalContainer,
 			JoinByPhone,
-			// QuestionWrapper,
+			InterviewQuestions,
 		},
 
 		setup() {
@@ -115,6 +111,27 @@
 			const remoteParticipants = shallowReactive([]);
 			const accessToken = store.state.interviews.token;
 			const profile = computed(() => store.state.user.profile);
+			const isInterviewer = computed(() => store.state.user.isInterviewer);
+			const hasInterviewerQuestions = computed(() => store.getters['interviews/hasInterviewerQuestions']);
+			const interviewerQuestions = computed(() => store.state.interviews.interviewerQuestions);
+			const remoteQuestion = ref(null);
+
+			if (isInterviewer.value && !hasInterviewerQuestions.value) {
+				store.dispatch('interviews/getInterviewerQuestions');
+			}
+
+			const questionTrack = new LocalDataTrack();
+			const questionTrackPublished = {};
+
+			questionTrackPublished.promise = new Promise((resolve, reject) => {
+				questionTrackPublished.resolve = resolve;
+				questionTrackPublished.reject = reject;
+			});
+
+			const sendQuestionData = (message) => {
+				const payload = JSON.stringify(message);
+				questionTrackPublished.promise.then(() => questionTrack.send(payload));
+			}
 
 			const onRoomConnect = (roomResponse) => {
 				localParticipant.value = roomResponse.localParticipant;
@@ -123,8 +140,14 @@
 
 				room.value.participants.forEach(initParticipant);
 
+				if (isInterviewer.value) {
+					room.value.localParticipant.publishTrack(questionTrack);
+				}
+				
 				room.value.on('participantConnected', initParticipant);
 				room.value.on('participantDisconnected', onParticipantDisconnect);
+				room.value.localParticipant.on('trackPublished', onTrackPublished);
+				room.value.localParticipant.on('trackPublicationFailed', onTrackPublicationFailed);
 
 				console.log(`Successfully joined a Room: ${room.value}`);
 			};
@@ -145,6 +168,18 @@
 				console.log(error);
 			};
 
+			const onTrackPublished = (publication) => {
+				if (publication.track === questionTrack) {
+					questionTrackPublished.resolve();
+				}
+			};
+
+			const onTrackPublicationFailed = (error, track) => {
+				if (track === questionTrack) {
+					questionTrackPublished.reject(error);
+				}
+			};
+
 			const settings = {
 				name: route.params.id,
 			};
@@ -154,13 +189,6 @@
 					.then(onRoomConnect)
 					.catch(onConnectError);
 			}
-
-			// To refactor
-			const state = reactive({
-				interviewer: {
-					name: "Cameron Williamson",
-				},
-			});
 
 			const onToggleCamera = (enabled) => {
 				const participant = localParticipant.value;
@@ -181,15 +209,36 @@
 			const toggleLocalTrack = (track, enabled) => {
 				(enabled) ? track.disable() : track.enabled();
 			};
+
+			const onInterviewerAskQuestion = (question) => {
+				sendQuestionData({
+					question: question.value,
+				});
+			};
+
+			const onInterviewStopAsking = () => {
+				sendQuestionData({
+					question: null,
+				});
+			};
+
+			const onQuestionReceived = (question) => {
+				remoteQuestion.value = question;
+			}
 			
 			return {
-				...toRefs(state),
 				hasLocalFeed,
 				localParticipant,
 				remoteParticipants,
 				profile,
 				onToggleCamera,
 				onToggleMute,
+				isInterviewer,
+				interviewerQuestions,
+				onInterviewerAskQuestion,
+				onInterviewStopAsking,
+				onQuestionReceived,
+				remoteQuestion,
 			}
 		},
 	};

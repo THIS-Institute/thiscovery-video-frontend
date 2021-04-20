@@ -175,8 +175,11 @@ export const interviews = {
 
 		getInterviewerQuestions: async ({ commit, rootState }) => {
 			const taskID = rootState.task.id;
-			const questions = await getInterviewersQuestions(taskID);
-			commit('setInterviewerQuestions', questions);
+			const response = await getInterviewersQuestions(taskID);
+
+			if (response.questions !== undefined) {
+				commit('setInterviewerQuestions', response.questions);
+			}
 		},
 	},
 
@@ -223,5 +226,12 @@ export const interviews = {
 			return state.activeAudioInput.label;
 		},
 
+		hasInterviewerQuestions (state) {
+			return (
+				state.interviewerQuestions &&
+				Array.isArray(state.interviewerQuestions) &&
+				(state.interviewerQuestions.length > 0)
+			);
+		},
 	},
 };

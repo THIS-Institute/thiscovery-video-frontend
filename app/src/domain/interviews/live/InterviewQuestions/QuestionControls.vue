@@ -2,7 +2,6 @@
 	<div class="bg-white rounded-lg">
 		<div class="p-5">
 			<question
-				:title="`Question ${index + 1}`"
 				:question="activeQuestion"
 				:hidden="hidden"
 				@toggle-hidden="hidden = !hidden"
@@ -20,7 +19,7 @@
 					class="e-button--green"
 					pill
 					small
-					@click="active = null"
+					@click="onStopAsking"
 				/>
 
 				<e-button
@@ -29,7 +28,7 @@
 					class="e-button--red-outline"
 					small
 					pill
-					@click="active = index"
+					@click="onAskQuestion"
 				/>
 
 				<div class="flex items-center space-x-1">
@@ -51,7 +50,7 @@
 <script>
 	import { reactive, toRefs, computed } from 'vue';
 
-	import Question from '@/domain/interviews/live/questions/Question';
+	import Question from './Question';
 
 	export default {
 		components: {
@@ -65,22 +64,45 @@
 			},
 		},
 
-		setup(props) {
+		emits: [
+			'askQuestion',
+			'stopAsking',
+		],
+
+		setup(props, { emit }) {
 			const state = reactive({
 				index: 0,
 				active: null,
 				hidden: true,
 			});
 
-			const activeQuestion = computed(() => props.questions[state.index].text);
+			const activeQuestion = computed(() => {
+				if (props.questions.length == 0) {
+					return null;
+				}
+
+				return props.questions[state.index];
+			});
 
 			const onSkip = (next) => state.index += next ? 1 : -1;
 
 			const upperLimit = computed(() => (state.index + 1) === props.questions.length);
 			const lowerLimit = computed(() => state.index === 0);
 
+			const onAskQuestion = () => {
+				state.active = state.index;
+				emit('askQuestion', activeQuestion);
+			};
+
+			const onStopAsking = () => {
+				state.active = null;
+				emit('stopAsking');
+			};
+
 			return {
 				...toRefs(state),
+				onAskQuestion,
+				onStopAsking,
 				activeQuestion,
 				upperLimit,
 				lowerLimit,
