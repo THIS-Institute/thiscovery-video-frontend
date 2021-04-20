@@ -1,7 +1,9 @@
 <template>
-	<div class="bg-white rounded-lg p-5">
+	<div
+		v-if="question"
+		class="bg-white rounded-lg p-5"
+	>
 		<question
-			title="Current question"
 			:question="question"
 			:hidden="hidden"
 			@toggle-hidden="hidden = !hidden"
@@ -10,9 +12,9 @@
 </template>
 
 <script>
-	import { reactive, toRefs } from 'vue';
+	import { ref } from 'vue';
 
-	import Question from '@/domain/interviews/live/questions/Question';
+	import Question from './Question';
 
 	export default {
 		components: {
@@ -22,17 +24,15 @@
 		props: {
 			question: {
 				type: Object,
-				required: true,
+				default: null,
 			},
 		},
 
 		setup() {
-			const state = reactive({
-				hidden: true,
-			});
+			const hidden = ref(false);
 
 			return {
-				...toRefs(state),
+				hidden,
 			};
 		},
 	};

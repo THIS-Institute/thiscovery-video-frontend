@@ -25,7 +25,11 @@
 			},
 		},
 
-		setup(props) {
+		emits: [
+			'questionReceived',
+		],
+
+		setup(props, { emit }) {
 			const videoFeed = ref(null);
 			const audioFeed = ref(null);
 			const isMuted = ref(false);
@@ -45,6 +49,10 @@
 				if (track.kind === 'audio') {
 					setAudioTrack(track);
 				}
+
+				if (track.kind === 'data') {
+					setDataTrack(track);
+				}
 			};
 
 			const setVideoTrack = (track) => {
@@ -60,6 +68,18 @@
 
 				track.on('disabled', onAudioMute);
 				track.on('enabled', onAudioUnmute);
+			};
+
+			const setDataTrack = (track) => {
+				track.on('message', onMessageReceived);
+			};
+
+			const onMessageReceived = (message) => {
+				const response = JSON.parse(message);
+				
+				if (response.question !== undefined) {
+					emit('questionReceived', response.question);
+				}
 			};
 
 			const onAudioMute = (track) => {
