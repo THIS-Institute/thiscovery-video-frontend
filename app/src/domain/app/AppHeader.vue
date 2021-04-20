@@ -1,5 +1,10 @@
 <template>
-	<header class="relative flex items-center h-24 z-site-header">
+	<header
+		:class="[
+			'flex items-center h-24 z-site-header',
+			$props.navActive ? 'fixed inset-x-0' : 'relative',
+		]"
+	>
 		<div class="e-container w-full flex items-center justify-between">
 			<div class="inline-flex items-center w-full">
 				<div class="flex-shrink-0 w-full max-w-logo">
