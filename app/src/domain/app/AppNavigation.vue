@@ -1,5 +1,5 @@
 <template>
-	<div class="absolute inset-0 w-full h-full bg-white z-site-navigation lg:hidden">
+	<div class="fixed inset-0 w-full h-full bg-white z-site-navigation lg:hidden">
 		<div class="e-container h-full flex items-center">
 			<nav>
 				<navigation-links mobile-layout />
