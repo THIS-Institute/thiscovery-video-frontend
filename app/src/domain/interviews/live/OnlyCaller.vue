@@ -8,7 +8,7 @@
 			/>
 
 			<h2 class="e-h3 mt-7">
-				You're the first here
+				You're the only one here
 			</h2>
 
 			<p class="mt-1 text-sm md:text-lg">

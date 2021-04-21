@@ -1,5 +1,8 @@
 <template>
-	<div class="bg-black">
+	<div
+		v-show="hasVideo"
+		class="bg-black"
+	>
 		<video
 			ref="videoFeed"
 			autoplay
@@ -12,6 +15,25 @@
 			class="fixed bottom-0 left-0 p-4 text-white"
 			v-text="participant.identity"
 		/>
+	</div>
+
+	<div
+		v-show="!hasVideo"
+		class="bg-grey-400"
+	>
+		<div
+			:class="[
+				'flex items-center justify-center',
+				'bg-grey-300 text-white rounded-full',
+				'w-32 h-32',
+			]"
+		>
+			<h1
+				v-if="participant.identity"
+				class="e-h4"
+				v-text="participant.identity"
+			/>
+		</div>
 	</div>
 
 	<audio
@@ -39,6 +61,7 @@
 			const videoFeed = ref(null);
 			const audioFeed = ref(null);
 			const isMuted = ref(false);
+			const hasVideo = ref(false);
 
 			const setRemoteTrack = (publication) => {
 				if (publication.isSubscribed) {
@@ -62,6 +85,9 @@
 
 			const setVideoTrack = (track) => {
 				track.attach(videoFeed.value);
+				hasVideo.value = track.isEnabled;
+				track.on('disabled', onVideoHide);
+				track.on('enabled', onVideoUnhide);
 			};
 
 			const setAudioTrack = (track) => {
@@ -97,6 +123,14 @@
 				isMuted.value = false;
 			};
 
+			const onVideoHide = () => {
+				hasVideo.value = false;
+			};
+
+			const onVideoUnhide = () => {
+				hasVideo.value = true;
+			};
+
 			onMounted(() => {
 				if (props.participant.tracks) {
 					props.participant.tracks.forEach(setRemoteTrack);
@@ -106,6 +140,7 @@
 			});
 
 			return {
+				hasVideo,
 				videoFeed,
 				audioFeed,
 			}
