@@ -1,7 +1,7 @@
 <template>
 	<div class="flex flex-col min-h-screen h-full bg-grey-400">
 		<main class="flex items-center justify-center flex-auto z-site-content">
-			<div v-if="remoteParticipants.length">
+			<div v-if="participantCount">
 				<remote-video
 					v-for="participant in remoteParticipants"
 					:key="participant.sid"
@@ -25,8 +25,8 @@
 								pill
 							/>
 
-							<timer
-								from="01:56"
+							<interview-timer
+								from="00:00"
 							/>
 						</div>
 
@@ -76,7 +76,13 @@
 </template>
 
 <script>
-	import { ref, computed, shallowRef, shallowReactive } from 'vue';
+	import {
+		ref,
+		computed,
+		shallowRef,
+		shallowReactive,
+		onBeforeUnmount,
+	} from 'vue';
 	import { useRoute } from 'vue-router';
 	import { useStore } from 'vuex';
 	import { connect, LocalDataTrack } from 'twilio-video';
@@ -85,7 +91,7 @@
 	import RemoteVideo from './RemoteVideo';
 	import OnlyCaller from './OnlyCaller';
 	import UserControls from './UserControls';
-	import Timer from '@/components/Timer';
+	import InterviewTimer from './InterviewTimer';
 	import ModalContainer from '@/components/modal/ModalContainer';
 	import JoinByPhone from '@/components/modal/JoinByPhone';
 	import InterviewQuestions from './InterviewQuestions';
@@ -96,7 +102,7 @@
 			RemoteVideo,
 			OnlyCaller,
 			UserControls,
-			Timer,
+			InterviewTimer,
 			ModalContainer,
 			JoinByPhone,
 			InterviewQuestions,
@@ -108,13 +114,27 @@
 			const hasLocalFeed = ref(false);
 			const room = shallowRef({});
 			const localParticipant = shallowRef({});
-			const remoteParticipants = shallowReactive([]);
+			const remoteParticipants = shallowReactive({});
 			const accessToken = store.state.interviews.token;
 			const profile = computed(() => store.state.user.profile);
 			const isInterviewer = computed(() => store.state.user.isInterviewer);
 			const hasInterviewerQuestions = computed(() => store.getters['interviews/hasInterviewerQuestions']);
 			const interviewerQuestions = computed(() => store.state.interviews.interviewerQuestions);
 			const remoteQuestion = ref(null);
+
+			const onBeforeUnload = (event) => {
+				event.preventDefault();
+
+				if (room.value) {
+					room.value.disconnect();
+				}
+			}
+
+			onBeforeUnmount(() => {
+				window.removeEventListener('beforeunload', onBeforeUnload);
+			});
+
+			window.addEventListener('beforeunload', onBeforeUnload);
 
 			if (isInterviewer.value && !hasInterviewerQuestions.value) {
 				store.dispatch('interviews/getInterviewerQuestions');
@@ -153,14 +173,17 @@
 			};
 
 			const initParticipant = (participant) => {
-				remoteParticipants.push(participant);
-				console.log(`"Connected to ${participant.identity}"`);
+				remoteParticipants[participant.sid] = participant;
+				console.log(`Connected to ${participant.identity}`);
 			};
 
-			const onParticipantDisconnect = (participant) => {
-				remoteParticipants.value = remoteParticipants
-					.filter(rParticipant => rParticipant.sid !== participant.sid);
+			const participantCount = computed(() => Object.keys(remoteParticipants).length);
 
+			const onParticipantDisconnect = (participant) => {
+				if (remoteParticipants[participant.sid] !== undefined) {
+					delete remoteParticipants[participant.sid];
+				}
+				
 				console.log(`Participant disconnected: ${participant.identity}`);
 			};
 
@@ -229,6 +252,7 @@
 			return {
 				hasLocalFeed,
 				localParticipant,
+				participantCount,
 				remoteParticipants,
 				profile,
 				onToggleCamera,
