@@ -47,7 +47,6 @@
 			};
 
 			const setMediaTrack = (track) => {
-				console.log(track);
 				if (track.kind === 'video') {
 					setVideoTrack(track);
 				}
