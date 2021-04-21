@@ -214,23 +214,19 @@
 			}
 
 			const onToggleCamera = (enabled) => {
-				const participant = localParticipant.value;
-
-				participant.videoTracks.forEach((publication) => {
+				localParticipant.value.videoTracks.forEach((publication) => {
 					toggleLocalTrack(publication.track, enabled);
 				});
 			};
 
 			const onToggleMute = (enabled) => {
-				const participant = localParticipant.value;
-
-				participant.audioTracks.forEach((publication) => {
+				localParticipant.value.audioTracks.forEach((publication) => {
 					toggleLocalTrack(publication.track, enabled);
 				});
 			};
 
 			const toggleLocalTrack = (track, enabled) => {
-				(enabled) ? track.disable() : track.enabled();
+				(enabled) ? track.disable() : track.enable();
 			};
 
 			const onInterviewerAskQuestion = (question) => {
