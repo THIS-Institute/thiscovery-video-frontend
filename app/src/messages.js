@@ -153,6 +153,10 @@ export default Object.freeze({
 			change: 'You can change or cancel this slot later if you need to.',
 			confirmation: 'Your interview is booked for…',
 		},
+
+		preSettings: {
+			continueButtonText: 'Join live interview',
+		}
 	},
 
 	preSettings: {
@@ -190,6 +194,7 @@ export default Object.freeze({
 			instructions: selfRecordInstructions,
 		},
 		preSettings: {
+			continueButtonText: 'See the first question',
 			title: 'All set to begin?',
 			content: 'Access to your microphone is required. Video access is encouraged but you can disable your camera using the controls above if you wish.',
 			cta: {

@@ -41,7 +41,7 @@
 
 								<e-button
 									v-if="hasMicrophone"
-									:title="msgs.cta.title"
+									:title="message(domain + '.preSettings.continueButtonText')"
 									icon="chevron-right"
 									class="e-button--red mt-5"
 									:url="{ name: nextRoute }"
@@ -122,6 +122,7 @@
 			const { hasMicrophone, hasCamera } = useDevices();
 
 			return {
+				message,
 				hasCamera,
 				hasMicrophone,
 				msgs,

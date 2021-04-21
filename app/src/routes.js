@@ -70,7 +70,7 @@ export const routes = [
 				name: constant.ROUTE_SELF_SETTINGS,
 				component: PreSettingsView,
 				props: {
-					domain: 'solo',
+					domain: 'selfRecord',
 					nextRoute: constant.ROUTE_SELF_INTERVIEW,
 				},
 			},
