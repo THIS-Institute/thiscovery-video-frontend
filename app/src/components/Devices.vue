@@ -46,7 +46,7 @@
 					return `No ${device.type.toLowerCase()} available`;
 				}
 
-				return `${device.type}: ${device.label} is availble`;
+				return `${device.type}: ${device.label} is available`;
 			};
 
 			const devices = reactive({
