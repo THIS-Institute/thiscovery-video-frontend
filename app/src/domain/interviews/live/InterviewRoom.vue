@@ -26,7 +26,7 @@
 							/>
 
 							<interview-timer
-								from="00:00"
+								v-if="participantCount && isInterviewer"
 							/>
 						</div>
 

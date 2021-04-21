@@ -11,17 +11,34 @@
 			name="clock"
 		/>
 
-		<p v-text="from" />
+		<p v-text="time" />
 	</div>
 </template>
 
 <script>
+	import { ref } from 'vue';
+
 	export default {
-		props: {
-			from: {
-				type: String,
-				default: '00:00',
-			},
-		},
+		setup() {
+			const time = ref('00:00');
+
+			const start = Date.now();
+			
+			setInterval(function() {
+				const delta = Date.now() - start;
+				const totalSeconds = Math.floor(delta/1000);
+				const minutes = Math.floor(totalSeconds/60);
+				const seconds = totalSeconds - minutes * 60;
+
+				const formattedMinutes = String(minutes).padStart(2, '0');
+				const formattedSeconds = String(seconds).padStart(2, '0');
+
+				time.value = `${formattedMinutes}:${formattedSeconds}`;
+			}, 1000);
+
+			return {
+				time,
+			}
+		}
 	};
 </script>
