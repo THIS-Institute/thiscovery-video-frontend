@@ -20,11 +20,11 @@
 							},
 						]"
 					>
-						<video-wrapper
-							v-if="hasCamera"
+						<div
 							class="rounded-lg overflow-hidden"
-							pre-record
-						/>
+						>
+							<video-preview />
+						</div>
 
 						<div class="max-w-86 mx-auto">
 							<div class="flex flex-col items-center mt-12">
@@ -81,9 +81,10 @@
 	import messages from '@/messages';
 	import { useMessages } from '@/composables/useMessages';
 	import { useStore } from 'vuex';
+	import { useUser } from '@/auth/useUser';
 	import { useDevices } from '@/domain/interviews/settings/useDevices';
 
-	import VideoWrapper from '@/domain/interviews/settings/VideoWrapper';
+	import VideoPreview from '@/domain/interviews/settings/VideoPreview';
 	import InfoBar from '@/components/InfoBar';
 	import Devices from '@/components/Devices';
 	import ModalContainer from '@/components/modal/ModalContainer';
@@ -91,7 +92,7 @@
 
 	export default {
 		components: {
-			VideoWrapper,
+			VideoPreview,
 			InfoBar,
 			Devices,
 			ModalContainer,
@@ -113,6 +114,8 @@
 		setup() {
 			const store = useStore();
 			const { message } = useMessages(messages);
+			const { userGivenName } = useUser();
+			
 			const msgs = message(`preSettings`);
 
 			store.dispatch('interviews/updateMediaDevices');
@@ -125,6 +128,7 @@
 				message,
 				hasCamera,
 				hasMicrophone,
+				userGivenName,
 				msgs,
 				troubleShoot,
 			};
