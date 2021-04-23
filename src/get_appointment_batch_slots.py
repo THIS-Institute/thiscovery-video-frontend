@@ -44,7 +44,7 @@ def lambda_handler(event, context):
     acuity = get_acuity_client()
     timeslots = Timeslots(acuity_client=acuity)
 
-    if 'offset' in query_parameters:
+    if query_parameters and 'offset' in query_parameters:
         date_offset = datetime.strptime(query_parameters['offset'], '%Y-%m-%d')
     else:
         date_offset = datetime.today()
