@@ -7,6 +7,7 @@
 			ref="video"
 			:class="[
 				'absolute inset-0 w-full h-full object-cover',
+				'transform -scale-x-100',
 				{
 					'opacity-20': isUploading,
 				},
