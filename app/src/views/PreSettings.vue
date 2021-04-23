@@ -16,7 +16,7 @@
 						:class="[
 							'flex flex-col p-2.5 w-full',
 							{
-								'pb-16': !msgs.infoBar,
+								'pb-16': !msgs.infoBar || !isLive(),
 							},
 						]"
 					>
@@ -66,7 +66,7 @@
 						</div>
 
 						<info-bar
-							v-if="msgs.infoBar"
+							v-if="isLive() && msgs.infoBar"
 							class="mt-12"
 							v-bind="msgs.infoBar"
 						/>
@@ -111,7 +111,7 @@
 			},
 		},
 
-		setup() {
+		setup(props) {
 			const store = useStore();
 			const { message } = useMessages(messages);
 			const { userGivenName } = useUser();
@@ -124,6 +124,10 @@
 
 			const { hasMicrophone, hasCamera } = useDevices();
 
+			const isLive = () => {
+				return props.domain === 'live';
+			}
+
 			return {
 				message,
 				hasCamera,
@@ -131,6 +135,7 @@
 				userGivenName,
 				msgs,
 				troubleShoot,
+				isLive,
 			};
 		},
 	};
