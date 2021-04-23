@@ -51,10 +51,13 @@ def lambda_handler(event, context):
     if datetime.today() >= date:
         return build_error_response('Date parameter must be in the future')
 
+    try:
+        appointment_type_id = path_parameters['typeId']
+    except KeyError:
+        return build_error_response('Missing appointment type id')
+
     acuity = get_acuity_client()
     timeslots = Timeslots(acuity_client=acuity)
-    
-    appointment_type_id = os.environ['ACUITY_APPOINTMENT_TYPE_ID']
 
     available_timeslots = timeslots.get_date(
         date=date,

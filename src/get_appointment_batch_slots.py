@@ -17,13 +17,34 @@ def get_acuity_client():
 
     return acuity_client
 
+def build_error_response(message):
+    response = {
+        'error': True,
+        'message': message,
+    }
+
+    return {
+        'headers': {
+            'Access-Control-Allow-Origin': '*',
+            'Content-Type': 'application/json'
+        },
+        'statusCode': 422,
+        'body': json.dumps(response)
+    }
+
 def lambda_handler(event, context):
+    path_parameters = event['pathParameters']
+
+    try:
+        appointment_type_id = path_parameters['typeId']
+    except KeyError:
+        return build_error_response('Missing appointment type id')
+
     acuity = get_acuity_client()
     timeslots = Timeslots(acuity_client=acuity)
 
     date_offset = datetime.today()
     days = int(os.environ['APPOINTMENT_DEFAULT_DAYS'])
-    appointment_type_id = os.environ['ACUITY_APPOINTMENT_TYPE_ID']
 
     available_timeslots = timeslots.get_batch_dates(
         days=days,
