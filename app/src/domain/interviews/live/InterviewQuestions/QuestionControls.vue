@@ -4,6 +4,7 @@
 			<question
 				:question="activeQuestion"
 				:hidden="hidden"
+				is-interviewer
 				@toggle-hidden="hidden = !hidden"
 			/>
 		</div>

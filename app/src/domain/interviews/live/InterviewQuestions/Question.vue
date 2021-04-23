@@ -1,7 +1,7 @@
 <template>
 	<div class="flex items-center justify-between space-x-6 sm:space-x-12">
 		<icon-text
-			:text="question.name"
+			:text="(isInterviewer) ? question.name : `Current Question`"
 			:text-class="hidden ? 'hidden sm:block' : ''"
 			:icon="{
 				name: 'question',
@@ -35,6 +35,11 @@
 			question: {
 				type: Object,
 				required: true,
+			},
+
+			isInterviewer: {
+				type: Boolean,
+				default: false,
 			},
 
 			hidden: Boolean,
