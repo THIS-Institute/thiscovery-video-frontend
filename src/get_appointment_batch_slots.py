@@ -34,6 +34,7 @@ def build_error_response(message):
 
 def lambda_handler(event, context):
     path_parameters = event['pathParameters']
+    query_parameters = event['queryStringParameters']
 
     try:
         appointment_type_id = path_parameters['typeId']
@@ -43,7 +44,11 @@ def lambda_handler(event, context):
     acuity = get_acuity_client()
     timeslots = Timeslots(acuity_client=acuity)
 
-    date_offset = datetime.today()
+    if 'offset' in query_parameters:
+        date_offset = datetime.strptime(query_parameters['offset'], '%Y-%m-%d')
+    else:
+        date_offset = datetime.today()
+    
     days = int(os.environ['APPOINTMENT_DEFAULT_DAYS'])
 
     available_timeslots = timeslots.get_batch_dates(
