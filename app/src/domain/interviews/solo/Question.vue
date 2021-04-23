@@ -5,7 +5,7 @@
 			name: 'question',
 			size: 'w-6 h-6',
 		}"
-		:text="`Question ${number}`"
+		:text="name"
 		class="e-h4"
 	/>
 
