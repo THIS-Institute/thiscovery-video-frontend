@@ -13,20 +13,24 @@ def lambda_handler(event, context):
         'body': json.dumps({
             'questions': [
                 {
-                    'name': 'Q1',
-                    'title': 'How are you this morning?',
+                    'name': 'Question 1',
+                    'title': 'Think about the last time you had coffee. How did it make you feel?',
                 },
                 {
-                    'name': 'Q2',
-                    'title': 'What are you planning to do this afternoon?',
+                    'name': 'Question 2',
+                    'title': 'Do you associate any rituals with your coffee consumption?',
                 },
                 {
-                    'name': 'Q3',
-                    'title': 'How many thiscovery tasks have you completed to date?',
+                    'name': 'Question 3',
+                    'title': 'Think about a time when you were unable to have access to coffee. How did this make you feel?',
                 },
                 {
-                    'name': 'Q4',
-                    'title': 'Would you recommend thiscovery to a friend?',
+                    'name': 'Question 4',
+                    'title': 'Do you have any concerns about your coffee consumption?',
+                },
+                {
+                    'name': 'Question 5',
+                    'title': 'What would persuade you to stop consuming coffee?',
                 }
             ],
         }),
