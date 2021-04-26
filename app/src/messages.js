@@ -137,7 +137,7 @@ export default Object.freeze({
 			title: 'Live Interview',
 			content: 'Suggestion recommendations for good practice',
 			due: 'Your appointment is due to start…',
-			date: 'Thu 02 Dec 2020, 08:15am',
+			date: 'Mon 26 Apr 2021, 11:30am',
 			cancel: 'No longer able to make this appointment?',
 		},
 
