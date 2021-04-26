@@ -13,7 +13,7 @@ def lambda_handler(event, context):
             'acuityTypeId': '20973054',
             'onDemandAvailable': True,
             'liveAvailable': True,
-            'title': 'Suggest recommendation for good practice',
+            'title': 'Learning from intensive caffeine experiences',
             'completionUrl': 'https://www.thiscovery.org/',
         }),
     }
