@@ -1,27 +1,14 @@
 import os
-import json, sys
+import json
 from datetime import datetime
 from appointments.acuity import Acuity, AcuityAuth
 from appointments.timeslots import Timeslots
 from secrets import SecretsManager
+from api import constants
+from api.responses import ApiGatewayResponse, ApiGatewayErrorResponse
 
 def parse_date(date):
         return datetime.strptime(date, '%Y-%m-%d')
-
-def build_error_response(message):
-    response = {
-        'error': True,
-        'message': message,
-    }
-
-    return {
-        'headers': {
-            'Access-Control-Allow-Origin': '*',
-            'Content-Type': 'application/json'
-        },
-        'statusCode': 422,
-        'body': json.dumps(response)
-    }
 
 def get_acuity_client():
     secret = SecretsManager(os.environ['SECRETS_NAMESPACE'])
@@ -41,20 +28,40 @@ def lambda_handler(event, context):
     try:
         date = path_parameters['date']
     except KeyError:
-        return build_error_response('Missing date parameter')
+        error = ApiGatewayErrorResponse(
+            exception=constants.EXCEPTION_MISSING_PARAM,
+            message='date is a required parameter',
+        )
+
+        return error.response()
 
     try:
         date = parse_date(date)
     except ValueError:
-        return build_error_response('Invalid date parameter')
+        error = ApiGatewayErrorResponse(
+            exception=constants.EXCEPTION_INVALID_PARAM,
+            message='data parameter could not be parsed from a valid date string',
+        )
+
+        return error.response()
 
     if datetime.today() >= date:
-        return build_error_response('Date parameter must be in the future')
+        error = ApiGatewayErrorResponse(
+            exception=constants.EXCEPTION_INVALID_PARAM,
+            message='date parameter must be in the future',
+        )
+
+        return error.response()
 
     try:
         appointment_type_id = path_parameters['typeId']
     except KeyError:
-        return build_error_response('Missing appointment type id')
+        error = ApiGatewayErrorResponse(
+            exception=constants.EXCEPTION_MISSING_PARAM,
+            message='typeId is a required parameter',
+        )
+
+        return error.response()
 
     acuity = get_acuity_client()
     timeslots = Timeslots(acuity_client=acuity)
@@ -64,11 +71,4 @@ def lambda_handler(event, context):
         appointment_type_id=appointment_type_id,
     )
 
-    return {
-        'headers': {
-            'Access-Control-Allow-Origin': '*',
-            'Content-Type': 'application/json'
-        },
-        'statusCode': 200,
-        'body': json.dumps(available_timeslots)
-    }
+    return ApiGatewayResponse(data=available_timeslots).response()

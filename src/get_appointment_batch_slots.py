@@ -4,6 +4,8 @@ from datetime import datetime
 from appointments.acuity import Acuity, AcuityAuth
 from appointments.timeslots import Timeslots
 from secrets import SecretsManager
+from api import constants
+from api.responses import ApiGatewayResponse, ApiGatewayErrorResponse
 
 def get_acuity_client():
     secret = SecretsManager(os.environ['SECRETS_NAMESPACE'])
@@ -17,21 +19,6 @@ def get_acuity_client():
 
     return acuity_client
 
-def build_error_response(message):
-    response = {
-        'error': True,
-        'message': message,
-    }
-
-    return {
-        'headers': {
-            'Access-Control-Allow-Origin': '*',
-            'Content-Type': 'application/json'
-        },
-        'statusCode': 422,
-        'body': json.dumps(response)
-    }
-
 def lambda_handler(event, context):
     path_parameters = event['pathParameters']
     query_parameters = event['queryStringParameters']
@@ -39,7 +26,12 @@ def lambda_handler(event, context):
     try:
         appointment_type_id = path_parameters['typeId']
     except KeyError:
-        return build_error_response('Missing appointment type id')
+        error = ApiGatewayErrorResponse(
+            exception=constants.EXCEPTION_MISSING_PARAM,
+            message='typeId is a required parameter',
+        )
+
+        return error.response()
 
     acuity = get_acuity_client()
     timeslots = Timeslots(acuity_client=acuity)
@@ -61,11 +53,4 @@ def lambda_handler(event, context):
         'dates': available_timeslots,
     }
 
-    return {
-        'headers': {
-            'Access-Control-Allow-Origin': '*',
-            'Content-Type': 'application/json'
-        },
-        'statusCode': 200,
-        'body': json.dumps(response)
-    }
+    return ApiGatewayResponse(data=response).response()

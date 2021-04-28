@@ -1,22 +1,7 @@
 import os
-from functools import wraps
+from api.decorators import decodes_response
 from requests import Session
 from requests.auth import HTTPBasicAuth
-
-def decodes_response(function):
-    @wraps(function)
-    def wrapper(*args, **kwargs):
-        response = function(*args, **kwargs)
-
-        if response.ok:
-            try:
-                return response.json()
-            except ValueError:
-                return response.text
-
-        response.raise_for_status()
-
-    return wrapper
 
 class Acuity:
     def __init__(self, auth, base_uri=None):

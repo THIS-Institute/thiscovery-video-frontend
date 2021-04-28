@@ -3,7 +3,7 @@ import json
 import uuid
 import boto3
 from datetime import datetime
-from models import interview
+from api.responses import ApiGatewayResponse
 
 def lambda_handler(event, context):
     request = json.loads(event['body'])
@@ -28,11 +28,4 @@ def lambda_handler(event, context):
         'videoUploadUrl': presigned_url,
     }
 
-    return {
-        'headers': {
-            'Access-Control-Allow-Origin': '*',
-            'Content-Type': 'application/json'
-        },
-        'statusCode': 200,
-        'body': json.dumps(response)
-    }
+    return ApiGatewayResponse(data=response).response()
