@@ -1,26 +1,15 @@
 import os
 import json
 from datetime import datetime
-from appointments.acuity import Acuity, AcuityAuth
+
+from appointments.utils import AcuityClientFactory
 from appointments.timeslots import Timeslots
-from secrets import SecretsManager
+
 from api import constants
 from api.responses import ApiGatewayResponse, ApiGatewayErrorResponse
 
 def parse_date(date):
         return datetime.strptime(date, '%Y-%m-%d')
-
-def get_acuity_client():
-    secret = SecretsManager(os.environ['SECRETS_NAMESPACE'])
-
-    auth = AcuityAuth(
-        uid=secret.get('acuity-uid'),
-        api_key=secret.get('acuity-api-key')
-    )
-
-    acuity_client = Acuity(auth=auth)
-
-    return acuity_client
 
 def lambda_handler(event, context):
     path_parameters = event['pathParameters']
@@ -63,7 +52,7 @@ def lambda_handler(event, context):
 
         return error.response()
 
-    acuity = get_acuity_client()
+    acuity = AcuityClientFactory.create_client()
     timeslots = Timeslots(acuity_client=acuity)
 
     available_timeslots = timeslots.get_date(

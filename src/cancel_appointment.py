@@ -1,22 +1,42 @@
 import json
-import os
-import requests
 
-def cancel_appointment(appointment_id):
-    response = make_request(endpoint='appointments/' + str(appointment_id) + '/cancel')
-    if response.status_code == 200:
-        print('Booking cancelled for appointment id: ' + str(appointment_id))
-    else:
-        print('Booking could not be cancelled: ' + response.json()['message'])
+from appointments.utils import AcuityClientFactory
+from appointments.bookings import Bookings
+from appointments.exceptions import CancellationError
 
-    return
-
-def make_request(endpoint):
-    url = 'https://acuityscheduling.com/api/v1/'
-
-    return requests.put(url + endpoint, auth=(os.environ['ACUITY_UID'], os.environ['ACUITY_API_KEY']))
+from api import constants
+from api.responses import ApiGatewayResponse, ApiGatewayErrorResponse
 
 def lambda_handler(event, context):
-    appointment_id = 544549674
+    request = json.loads(event['body'])
 
-    return cancel_appointment(appointment_id=appointment_id)
+    try:
+        appointment_id = request['appointmentId']
+    except KeyError:
+        return ApiGatewayErrorResponse(
+            exception=constants.EXCEPTION_MISSING_PARAM,
+            message='appointmentId is required',
+        ).response()
+
+    acuity = AcuityClientFactory.create_client()
+    bookings = Bookings(acuity_client=acuity)
+
+    try:
+        bookings.cancel(
+            appointment_id=appointment_id
+        )
+
+    except CancellationError:
+        return ApiGatewayErrorResponse(
+            exception=constants.EXCEPTION_MISSING_PARAM,
+            message='Could not cancel appointment',
+        ).response()
+    
+    except:
+        raise
+
+    response = {
+        'message': 'Appointment cancelled',
+    }
+
+    return ApiGatewayResponse(data=response).response()
