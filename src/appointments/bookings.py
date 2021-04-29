@@ -26,6 +26,17 @@ class Bookings:
 
         return appointment
 
+    def reschedule(self, appointment_id, appointment_time):
+        appointment = self.acuity.reschedule_appointment(
+            appointment_id=appointment_id,
+            appointment_time=appointment_time,
+        )
+
+        if 'id' not in appointment:
+            raise BookingError
+
+        return appointment
+
     def cancel(self, appointment_id):
         self.acuity.cancel_appointment(
             appointment_id=appointment_id,

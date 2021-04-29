@@ -1,28 +1,42 @@
 import json
-import os
-import requests
-from datetime import datetime, timedelta
+from datetime import datetime
 
-def reschedule_appointment(appointment_id, appointment_data):
-    response = make_request(endpoint='appointments/' + str(appointment_id) + '/reschedule', data=appointment_data)
-    if response.status_code == 200:
-        print('Booking for appointment id: ' + str(appointment_id) + ' rescheduled to: ' + appointment_data['datetime'])
-    else:
-        print('Booking could not be rescheduled: ' + response.json()['message'])
+from appointments.utils import AcuityClientFactory
+from appointments.bookings import Bookings
+from appointments.exceptions import BookingError
 
-    return
-
-def make_request(endpoint, data):
-    url = 'https://acuityscheduling.com/api/v1/'
-
-    return requests.put(url + endpoint, data=json.dumps(data), auth=(os.environ['ACUITY_UID'], os.environ['ACUITY_API_KEY']))
+from api import constants
+from api.responses import ApiGatewayResponse, ApiGatewayErrorResponse
 
 def lambda_handler(event, context):
-    appointment_id = 544674332
-    tomorrow = datetime.now() + timedelta(days=2)
-    appointment_time = tomorrow.strftime('%Y-%m-%dT15:00:00%z')
-    appointment_data = {
-        'datetime': appointment_time,
-    }
+    request = json.loads(event['body'])
 
-    return reschedule_appointment(appointment_id=appointment_id, appointment_data=appointment_data)
+    try:
+        appointment_id = request['appointmentId']
+    except KeyError:
+        return ApiGatewayErrorResponse(
+            exception=constants.EXCEPTION_MISSING_PARAM,
+            message='appointmentId is required',
+        ).response()
+
+    appointment_time = datetime.strptime(request['time'], '%Y-%m-%d')
+
+    acuity = AcuityClientFactory.create_client()
+    bookings = Bookings(acuity_client=acuity)
+
+    try:
+        appointment = bookings.reschedule(
+            appointment_id=appointment_id,
+            appointment_time=appointment_time,
+        )
+
+    except BookingError:
+        return ApiGatewayErrorResponse(
+            exception=constants.EXCEPTION_MISSING_PARAM,
+            message='Could not cancel appointment',
+        ).response()
+    
+    except:
+        raise
+
+    return ApiGatewayResponse(data=appointment).response()
