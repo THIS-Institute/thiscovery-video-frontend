@@ -26,7 +26,15 @@ class Bookings:
 
         return appointment
 
-    def reschedule(self, appointment_id, appointment_time):
+    def reschedule(self, appointment_id, appointment_type_id, appointment_time):
+        availability = self.acuity.check_availability(
+            appointment_type_id=appointment_type_id,
+            appointment_time=appointment_time,
+        )
+    
+        if not availability['valid']:
+            raise InvalidTimeslot
+        
         appointment = self.acuity.reschedule_appointment(
             appointment_id=appointment_id,
             appointment_time=appointment_time,
