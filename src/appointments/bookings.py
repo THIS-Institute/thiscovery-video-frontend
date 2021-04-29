@@ -46,6 +46,6 @@ class Bookings:
         return appointment
 
     def cancel(self, appointment_id):
-        self.acuity.cancel_appointment(
+        return self.acuity.cancel_appointment(
             appointment_id=appointment_id,
         )
