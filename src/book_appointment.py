@@ -1,5 +1,4 @@
 import json
-import requests
 from datetime import datetime
 
 from appointments.utils import AcuityClientFactory
@@ -24,7 +23,7 @@ def lambda_handler(event, context):
         ).response()
 
     try:
-        appointment_time = datetime.strptime(request['time'], '%Y-%m-%d')
+        appointment_time = datetime.strptime(request['time'], '%Y-%m-%dT%H:%M:%S%z')
     except KeyError:
         return ApiGatewayErrorResponse(
             exception=ResponseException.EXCEPTION_MISSING_PARAM,
@@ -32,7 +31,7 @@ def lambda_handler(event, context):
         ).response()
     except ValueError:
         return ApiGatewayErrorResponse(
-            exception=ResponseException.EXCEPTION_MISSING_PARAM,
+            exception=ResponseException.EXCEPTION_INVALID_TIME,
             message='There was an error when trying to parse the time string',
         ).response()
 
@@ -45,19 +44,16 @@ def lambda_handler(event, context):
             appointment_time=appointment_time,
             user=request,
         )
-
     except InvalidTimeslot:
         return ApiGatewayErrorResponse(
             exception=ResponseException.EXCEPTION_INVALID_TIMESLOT,
             message='Timeslot is not valid',
         ).response()
-
     except BookingError:
         return ApiGatewayErrorResponse(
             exception=ResponseException.EXCEPTION_APPOINTMENT_FAILED,
             message='Appointment booking failed',
         ).response()
-
     except:
         raise
 

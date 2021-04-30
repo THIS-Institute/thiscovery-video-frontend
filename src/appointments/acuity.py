@@ -1,4 +1,5 @@
 import os
+import json
 from api.decorators import decodes_response
 from requests import Session
 from requests.auth import HTTPBasicAuth
@@ -83,3 +84,20 @@ class Acuity:
 class AcuityAuth(HTTPBasicAuth):
     def __init__(self, uid, api_key):
         super().__init__(uid, api_key)
+
+class AcuityError(Exception):
+    """Generic Acuity error response."""
+
+    def __init__(self, response):
+        self.message = self.get_message(response)
+    
+    def get_message(self, response):
+        try:
+            response_info = response.json()
+        except json.JSONDecodeError:
+            response_info = response.text
+
+        if isinstance(response_info, dict):
+            return response_info['error']
+
+        return response_info
