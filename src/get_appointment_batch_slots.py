@@ -5,8 +5,11 @@ from datetime import datetime
 from appointments.utils import AcuityClientFactory
 from appointments.timeslots import Timeslots
 
-from api import constants
-from api.responses import ApiGatewayResponse, ApiGatewayErrorResponse
+from api.responses import (
+    ApiGatewayResponse,
+    ApiGatewayErrorResponse,
+    ResponseException,
+)
 
 def lambda_handler(event, context):
     path_parameters = event['pathParameters']
@@ -16,7 +19,7 @@ def lambda_handler(event, context):
         appointment_type_id = path_parameters['typeId']
     except KeyError:
         error = ApiGatewayErrorResponse(
-            exception=constants.EXCEPTION_MISSING_PARAM,
+            exception=ResponseException.EXCEPTION_MISSING_PARAM,
             message='typeId is a required parameter',
         )
 

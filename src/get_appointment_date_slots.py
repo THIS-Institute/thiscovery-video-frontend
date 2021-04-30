@@ -5,48 +5,39 @@ from datetime import datetime
 from appointments.utils import AcuityClientFactory
 from appointments.timeslots import Timeslots
 
-from api import constants
-from api.responses import ApiGatewayResponse, ApiGatewayErrorResponse
-
-def parse_date(date):
-        return datetime.strptime(date, '%Y-%m-%d')
+from api.responses import (
+    ApiGatewayResponse,
+    ApiGatewayErrorResponse,
+    ResponseException,
+)
 
 def lambda_handler(event, context):
     path_parameters = event['pathParameters']
 
     try:
-        date = path_parameters['date']
+        date = datetime.strptime(path_parameters['date'], '%Y-%m-%d')
     except KeyError:
-        error = ApiGatewayErrorResponse(
-            exception=constants.EXCEPTION_MISSING_PARAM,
+        return ApiGatewayErrorResponse(
+            exception=ResponseException.EXCEPTION_MISSING_PARAM,
             message='date is a required parameter',
-        )
-
-        return error.response()
-
-    try:
-        date = parse_date(date)
+        ).response()
     except ValueError:
-        error = ApiGatewayErrorResponse(
-            exception=constants.EXCEPTION_INVALID_PARAM,
+        return ApiGatewayErrorResponse(
+            exception=ResponseException.EXCEPTION_INVALID_TIME,
             message='data parameter could not be parsed from a valid date string',
-        )
-
-        return error.response()
+        ).response()
 
     if datetime.today() >= date:
-        error = ApiGatewayErrorResponse(
-            exception=constants.EXCEPTION_INVALID_PARAM,
+        return ApiGatewayErrorResponse(
+            exception=ResponseException.EXCEPTION_INVALID_PARAM,
             message='date parameter must be in the future',
-        )
-
-        return error.response()
+        ).response()
 
     try:
         appointment_type_id = path_parameters['typeId']
     except KeyError:
         error = ApiGatewayErrorResponse(
-            exception=constants.EXCEPTION_MISSING_PARAM,
+            exception=ResponseException.EXCEPTION_MISSING_PARAM,
             message='typeId is a required parameter',
         )
 

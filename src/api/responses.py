@@ -28,3 +28,10 @@ class ApiGatewayErrorResponse(ApiGatewayResponse):
             'exception': self.exception,
             'message': self.message,
         }
+
+class ResponseException(Exception):
+    EXCEPTION_MISSING_PARAM = 'MISSING_PARAM'
+    EXCEPTION_INVALID_PARAM = 'INVALID_PARAM'
+    EXCEPTION_INVALID_TIMESLOT = 'INVALID_TIMESLOT'
+    EXCEPTION_APPOINTMENT_FAILED = 'APPOINTMENT_FAILED'
+    EXCEPTION_INVALID_TIME = 'INVALID_TIME'

@@ -5,8 +5,11 @@ from appointments.utils import AcuityClientFactory
 from appointments.bookings import Bookings
 from appointments.exceptions import InvalidTimeslot, BookingError
 
-from api import constants
-from api.responses import ApiGatewayResponse, ApiGatewayErrorResponse
+from api.responses import (
+    ApiGatewayResponse,
+    ApiGatewayErrorResponse,
+    ResponseException,
+)
 
 def lambda_handler(event, context):
     request = json.loads(event['body'])
@@ -15,7 +18,7 @@ def lambda_handler(event, context):
         appointment_id = request['appointmentId']
     except KeyError:
         return ApiGatewayErrorResponse(
-            exception=constants.EXCEPTION_MISSING_PARAM,
+            exception=ResponseException.EXCEPTION_MISSING_PARAM,
             message='appointmentId is required',
         ).response()
     
@@ -23,11 +26,22 @@ def lambda_handler(event, context):
         appointment_type_id = request['appointmentTypeId']
     except KeyError:
         return ApiGatewayErrorResponse(
-            exception=constants.EXCEPTION_MISSING_PARAM,
+            exception=ResponseException.EXCEPTION_MISSING_PARAM,
             message='appointmentTypeId is required',
         ).response()
 
-    appointment_time = datetime.strptime(request['time'], '%Y-%m-%d')
+    try:
+        appointment_time = datetime.strptime(request['time'], '%Y-%m-%d')
+    except KeyError:
+        return ApiGatewayErrorResponse(
+            exception=ResponseException.EXCEPTION_MISSING_PARAM,
+            message='time is required',
+        ).response()
+    except ValueError:
+        return ApiGatewayErrorResponse(
+            exception=ResponseException.EXCEPTION_MISSING_PARAM,
+            message='There was an error when trying to parse the time string',
+        ).response()
 
     acuity = AcuityClientFactory.create_client()
     bookings = Bookings(acuity_client=acuity)
@@ -41,13 +55,13 @@ def lambda_handler(event, context):
     
     except InvalidTimeslot:
         return ApiGatewayErrorResponse(
-            exception=constants.EXCEPTION_INVALID_TIMESLOT,
+            exception=ResponseException.EXCEPTION_INVALID_TIMESLOT,
             message='Timeslot is not valid',
         ).response()
 
     except BookingError:
         return ApiGatewayErrorResponse(
-            exception=constants.EXCEPTION_MISSING_PARAM,
+            exception=ResponseException.EXCEPTION_MISSING_PARAM,
             message='Could not cancel appointment',
         ).response()
     

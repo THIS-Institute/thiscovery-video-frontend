@@ -4,8 +4,11 @@ from appointments.utils import AcuityClientFactory
 from appointments.bookings import Bookings
 from appointments.exceptions import CancellationError
 
-from api import constants
-from api.responses import ApiGatewayResponse, ApiGatewayErrorResponse
+from api.responses import (
+    ApiGatewayResponse,
+    ApiGatewayErrorResponse,
+    ResponseException,
+)
 
 def lambda_handler(event, context):
     request = json.loads(event['body'])
@@ -14,7 +17,7 @@ def lambda_handler(event, context):
         appointment_id = request['appointmentId']
     except KeyError:
         return ApiGatewayErrorResponse(
-            exception=constants.EXCEPTION_MISSING_PARAM,
+            exception=ResponseException.EXCEPTION_MISSING_PARAM,
             message='appointmentId is required',
         ).response()
 
@@ -28,7 +31,7 @@ def lambda_handler(event, context):
 
     except CancellationError:
         return ApiGatewayErrorResponse(
-            exception=constants.EXCEPTION_MISSING_PARAM,
+            exception=ResponseException.EXCEPTION_MISSING_PARAM,
             message='Could not cancel appointment',
         ).response()
     
