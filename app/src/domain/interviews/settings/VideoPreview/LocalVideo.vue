@@ -1,16 +1,14 @@
 <template>
-	<div>
-		<video
-			ref="localVideoElement"
-			autoplay
-			playsinline
-			class="transform -scale-x-100"
-			@play="onVideoPlay"
-		/>
-		<loading-spinner
-			v-if="!videoReady"
-		/>
-	</div>
+	<video
+		ref="localVideoElement"
+		autoplay
+		playsinline
+		class="transform -scale-x-100"
+		@play="onVideoPlay"
+	/>
+	<loading-spinner
+		v-if="!videoReady"
+	/>
 </template>
 
 <script>
