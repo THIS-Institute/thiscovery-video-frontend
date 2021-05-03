@@ -557,14 +557,14 @@ Resources:
     Properties:
       TableName: Interviews
       KeySchema:
-        - AttributeName: userId
+        - AttributeName: pk
           KeyType: HASH
-        - AttributeName: interviewId
+        - AttributeName: sk
           KeyType: RANGE
       AttributeDefinitions:
-        - AttributeName: userId
+        - AttributeName: pk
           AttributeType: S
-        - AttributeName: interviewId
+        - AttributeName: sk
           AttributeType: S
       BillingMode: PAY_PER_REQUEST
       StreamSpecification:
