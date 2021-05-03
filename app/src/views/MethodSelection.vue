@@ -53,13 +53,8 @@
 			const store = useStore();
 			const { message } = useMessages(messages);
 
-			const taskInitialised = computed(() => store.state.task.initalised);
 			const isLiveAvailable = computed(() => store.state.task.liveAvailable);
 			const isOnDemandAvailable = computed(() => store.state.task.onDemandAvailable);
-
-			if (!taskInitialised.value) {
-				store.dispatch('task/initalise');
-			}
 			
 			return {
 				message,

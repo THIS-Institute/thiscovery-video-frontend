@@ -2,6 +2,7 @@ import { createApp } from 'vue';
 import { router } from './routing';
 import { store } from './store';
 import { setupAuth } from './auth';
+import { setupTask } from './store/task/setupTask';
 import env from './app.env';
 
 import EButton from './components/Button';
@@ -30,6 +31,7 @@ const authOptions = {
 
 setupAuth(authOptions)
     .then((auth) => app.use(auth))
+    .then(() => setupTask())
     .finally(() => {
         app.use(router);
         app.mount('#app');

@@ -34,15 +34,18 @@ export const task = {
 	},
 
 	actions: {
-		initalise: async ({ commit }) => {
-			const task = await getTask('somekey');
+		initalise: async ({ commit }, taskId) => {
+			const task = await getTask(taskId);
 
-			commit('setId', task.id);
-			commit('appointments/setBookingTypeId', task.acuityTypeId, { root: true });
-			commit('setOnDemandAvailable', task.onDemandAvailable);
-			commit('setLiveAvailable', task.liveAvailable);
-			commit('setTitle', task.title);
-			commit('setInitalised', true);
+			if (task) {
+				sessionStorage.setItem('task_id', taskId);
+				commit('setId', task.id);
+				commit('appointments/setBookingTypeId', task.acuityTypeId, { root: true });
+				commit('setOnDemandAvailable', task.onDemandAvailable);
+				commit('setLiveAvailable', task.liveAvailable);
+				commit('setTitle', task.title);
+				commit('setInitalised', true);
+			}
 		},
 	},
 };

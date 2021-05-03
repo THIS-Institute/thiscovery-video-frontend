@@ -27,6 +27,7 @@ export const routes = [
 		path: '/',
 		component: FullBackgroundLayout,
 		props: { backgroundType: 'waves', hasBack: false },
+		meta: { requiresTaskInit: true },
 		children: [
 			{
 				path: '',
@@ -43,6 +44,7 @@ export const routes = [
 		path: '/appointments',
 		component: SplitBackgroundLayout,
 		props: { backgroundType: 'curls' },
+		meta: { requiresTaskInit: true },
 		children: [
 			{
 				path: '',
@@ -59,6 +61,7 @@ export const routes = [
 		path: '/self-record',
 		component: FullBackgroundLayout,
 		props: { backgroundType: 'scratches' },
+		meta: { requiresTaskInit: true },
 		children: [
 			{
 				path: '',
@@ -84,6 +87,7 @@ export const routes = [
 			hasNav: false,
 			hasBack: false,
 		},
+		meta: { requiresTaskInit: true },
 		children: [
 			{
 				path: 'interview',
