@@ -6,6 +6,7 @@ export const user = {
 	state: () => ({
 		isAuthenticated: false,
 		isAuthLoading: false,
+		userId: null,
 		user: {},
 		isInterviewer: false,
 		authError: null,
@@ -16,18 +17,31 @@ export const user = {
 		setIsAuthenticated(state, isAuthenticated) {
 			state.isAuthenticated = isAuthenticated;
 		},
+
 		setIsAuthLoading(state, isAuthLoading) {
 			state.isAuthLoading = isAuthLoading;
 		},
+
+		setUserId(state, userId) {
+			state.userId = userId;
+		},
+
 		setUser(state, user) {
 			state.user = user;
+
+			if (typeof user.sub !== 'undefined') {
+				state.userId = user.sub;
+			}
 		},
+
 		setAuthError(state, authError) {
 			state.authError = authError;
 		},
+
 		setAuthAppState(state, returnState) {
 			state.authAppState = returnState;
 		},
+
 		setInterviewerStatus(state, isInterviewer) {
 			state.isInterviewer = isInterviewer;
 		},
