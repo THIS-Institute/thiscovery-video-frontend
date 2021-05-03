@@ -4,6 +4,12 @@ from secrets import SecretsManager
 from twilio.jwt.access_token import AccessToken
 from twilio.jwt.access_token.grants import VideoGrant
 
+from api.responses import (
+    ApiGatewayResponse,
+    ApiGatewayErrorResponse,
+    ResponseException,
+)
+
 def get_access_token(identity, room):
     secret = SecretsManager(os.environ['SECRETS_NAMESPACE'])
 
@@ -21,44 +27,32 @@ def get_access_token(identity, room):
     
     return token.to_jwt()
 
-def get_error_response(message):
-    response_body = {
-        'error': True,
-        'message': message
-    }
+def lambda_handler(event, context):
+    request = json.loads(event['body'])
 
-    return {
-        'headers': {
-            'Access-Control-Allow-Origin': '*',
-            'Content-Type': 'application/json'
-        },
-        'statusCode': 422,
-        'body': json.dumps(response_body)
-    }
+    try:
+        identity = request['identity']
+    except KeyError:
+        return ApiGatewayErrorResponse(
+            exception=ResponseException.EXCEPTION_MISSING_PARAM,
+            message='identity is required',
+        ).response()
 
-def get_token_response(token):
+    try:
+        room = request['room']
+    except KeyError:
+        return ApiGatewayErrorResponse(
+            exception=ResponseException.EXCEPTION_MISSING_PARAM,
+            message='room is required',
+        ).response()
+
+    token = get_access_token(
+        identity=identity,
+        room=room
+    )
+
     response = {
         'access_token': token.decode('utf-8')
     }
 
-    return {
-        'headers': {
-            'Access-Control-Allow-Origin': '*',
-            'Content-Type': 'application/json'
-        },
-        'statusCode': 200,
-        'body': json.dumps(response)
-    }
-
-def lambda_handler(event, context):
-    request_body = json.loads(event['body'])
-
-    if not 'identity' in request_body:
-        return get_error_response(message='Request must contain identity')
-
-    if not 'room' in request_body:
-        return get_error_response(message='Request must contain room UUID')
-
-    token = get_access_token(identity=request_body['identity'], room=request_body['room'])
-
-    return get_token_response(token=token)
+    return ApiGatewayResponse(data=response).response()
