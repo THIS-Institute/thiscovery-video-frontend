@@ -29,23 +29,46 @@ export async function fetchNextAppointmentDate (appointmentTypeId, date) {
 }
 
 export async function createAppointmentBooking (data) {
-	await client.post('appointments', data)
-		.then((response) => console.log(response))
-		.catch((error) => console.error(error));
+	const response = await client.post('appointments', data);
+	
+	if (typeof response.id === 'undefined') {
+		throw new AppointmentError('Failed to create appointment');
+	}
+
+	return response;
 }
 
-export async function rescheduleAppointmentBooking (appointmentId, datetime) {
+export async function rescheduleAppointmentBooking (options) {
 	const data = {
-		datetime: datetime,
+		appointmentTypeId: options.appointmentTypeId,
+		time: options.time,
 	};
 
-	await client.patch(`appointments/${appointmentId}}`, data)
-		.then((response) => console.log(response))
-		.catch((error) => console.error(error));
+	const response = await client.patch(`appointments/${options.appointmentId}`, data);
+
+	if (typeof response.id === 'undefined') {
+		throw new AppointmentError('Failed to reschedule appointment');
+	}
+
+	return response;
 }
 
-export async function cancelAppointmentBooking (appointmentId) {
-	await client.delete(`appointments/${appointmentId}}`)
-		.then((response) => console.log(response))
-		.catch((error) => console.error(error));
+export async function cancelAppointmentBooking (options) {
+	const response = await client.delete(`appointments/${options.appointmentId}`);
+
+	if (typeof response.message === 'undefined') {
+		throw new AppointmentError('Failed to cancel appointment');
+	}
+
+	return response
+}
+
+class AppointmentError extends Error {
+	constructor(...params) {
+		super(...params);
+
+		if (Error.captureStackTrace) {
+			Error.captureStackTrace(this, AppointmentError)
+		}
+	}
 }

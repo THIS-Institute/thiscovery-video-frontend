@@ -45,12 +45,13 @@ BackendClient.prototype.postRaw = async function (endpoint, data, requestOptions
 	return await this._request(endpoint, options);
 }
 
-BackendClient.prototype.patch = async function (endpoint, requestOptions = {}) {
+BackendClient.prototype.patch = async function (endpoint, data = {}, requestOptions = {}) {
 	const options = Object.assign({
 		method: 'PATCH',
 		headers: {
 			'Content-Type': 'application/json',
 		},
+		body: JSON.stringify(data),
 	}, requestOptions);
 
 	return await this._request(endpoint, options);

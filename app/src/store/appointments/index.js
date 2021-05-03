@@ -1,6 +1,8 @@
 import * as constants from './statusConstants';
 import {
 	createAppointmentBooking,
+	cancelAppointmentBooking,
+	rescheduleAppointmentBooking,
 	fetchInitialAppointmentCalendar,
 	fetchNextAppointmentDate,
 } from '@/api/appointments';
@@ -16,6 +18,7 @@ export const appointments = {
 		availability: [],
 		nextFetchDate: null,
 		isWaiting: false,
+		appointmentId: null,
 	}),
 
 	mutations: {
@@ -50,6 +53,10 @@ export const appointments = {
 		setWaiting(state, isWaiting) {
 			state.isWaiting = isWaiting;
 		},
+
+		setAppointmentId(state, appointmentId) {
+			state.appointmentId = appointmentId;
+		},
 	},
 
 	actions: {
@@ -57,14 +64,19 @@ export const appointments = {
 			commit('setStatus', constants.STATUS_RESCHEDULING);
 		},
 
-		cancel: async ({ commit, dispatch }) => {
+		cancel: async ({ state, commit, dispatch }) => {
 			commit('setWaiting', true);
 
-			setTimeout(() => {
+			const cancellation = await cancelAppointmentBooking({
+				appointmentId: state.appointmentId,
+			});
+
+			if (cancellation.message) {
 				commit('setStatus', constants.STATUS_CANCELLED);
 				dispatch('resetBookingState');
-				commit('setWaiting', false);
-			}, 2000);
+			}
+
+			commit('setWaiting', false);
 		},
 
 		selectTimeslot: ({ commit, getters, dispatch }, timeslot) => {
@@ -86,7 +98,7 @@ export const appointments = {
 		},
 
 		pushNextAppointmentDate: async ({ commit, state, dispatch }) => {
-			if (!state.nextFetchDate || state.nextFetchDate === undefined) {
+			if (!state.nextFetchDate || typeof state.nextFetchDate === 'undefined') {
 				return;
 			}
 
@@ -118,17 +130,29 @@ export const appointments = {
 		confirmSelectedSlot: async ({ state, commit, rootState, rootGetters }) => {
 			commit('setWaiting', true);
 
-			await createAppointmentBooking({
-				appointmentTypeId: state.bookingTypeId,
-				time: state.selection,
-				email: rootState.user.user.email,
-				firstName: rootGetters['user/getGivenName'],
-				lastName: rootGetters['user/getFamilyName'],
-			})
-			.then(() => {
+			let appointment = null;
+
+			if (state.appointmentId) {
+				appointment = await rescheduleAppointmentBooking({
+					appointmentId: state.appointmentId,
+					appointmentTypeId: state.bookingTypeId,
+					time: state.selection,
+				});
+			} else {
+				appointment = await createAppointmentBooking({
+					appointmentTypeId: state.bookingTypeId,
+					time: state.selection,
+					email: rootState.user.user.email,
+					firstName: rootGetters['user/getGivenName'],
+					lastName: rootGetters['user/getFamilyName'],
+				});
+			}
+
+			if (typeof appointment.id !== 'undefined' && appointment.id) {
+				commit('setAppointmentId', appointment.id);
 				commit('updateIsConfirmed', true);
 				commit('setStatus', constants.STATUS_BOOKED);
-			});
+			}
 
 			commit('setWaiting', false);
 		},
@@ -144,6 +168,7 @@ export const appointments = {
 		resetBookingState: ({ commit }) => {
 			commit('updateSelectionTimeslot', null);
 			commit('updateIsConfirmed', false);
+			commit('setAppointmentId', null);
 		},
 	},
 
