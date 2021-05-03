@@ -278,8 +278,8 @@ Resources:
       Tracing: Active
       Policies:
         - AWSXrayWriteOnlyAccess
-        - DynamoDBCrudPolicy:
-            TableName: !Ref InterviewsTable
+        # - DynamoDBCrudPolicy:
+        #     TableName: !Ref InterviewsTable
         - S3CrudPolicy:
             BucketName: !Ref InterviewAssets
       Events:
@@ -291,8 +291,8 @@ Resources:
             RestApiId: !Ref BackendApi
       Environment:
         Variables:
-          TABLE_NAME: !Ref InterviewsTable
-          TABLE_ARN: !GetAtt InterviewsTable.Arn
+          # TABLE_NAME: !Ref InterviewsTable
+          # TABLE_ARN: !GetAtt InterviewsTable.Arn
           BUCKET_NAME: !Ref InterviewAssets
           BUCKET_ARN: !GetAtt InterviewAssets.Arn
   GetTask:
@@ -552,23 +552,23 @@ Resources:
     Type: AWS::S3::Bucket
     Properties:
       BucketName: !Sub interview-assets-${AWS::AccountId}
-  InterviewsTable:
-    Type: AWS::DynamoDB::Table
-    Properties:
-      TableName: Interviews
-      KeySchema:
-        - AttributeName: pk
-          KeyType: HASH
-        - AttributeName: sk
-          KeyType: RANGE
-      AttributeDefinitions:
-        - AttributeName: pk
-          AttributeType: S
-        - AttributeName: sk
-          AttributeType: S
-      BillingMode: PAY_PER_REQUEST
-      StreamSpecification:
-        StreamViewType: NEW_AND_OLD_IMAGES
+  # InterviewsTable:
+  #   Type: AWS::DynamoDB::Table
+  #   Properties:
+  #     TableName: Interviews
+  #     KeySchema:
+  #       - AttributeName: pk
+  #         KeyType: HASH
+  #       - AttributeName: sk
+  #         KeyType: RANGE
+  #     AttributeDefinitions:
+  #       - AttributeName: pk
+  #         AttributeType: S
+  #       - AttributeName: sk
+  #         AttributeType: S
+  #     BillingMode: PAY_PER_REQUEST
+  #     StreamSpecification:
+  #       StreamViewType: NEW_AND_OLD_IMAGES
 Parameters:
   StackTagName:
     Type: String
