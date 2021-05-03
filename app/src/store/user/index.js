@@ -29,8 +29,8 @@ export const user = {
 		setUser(state, user) {
 			state.user = user;
 
-			if (typeof user.sub !== 'undefined') {
-				state.userId = user.sub;
+			if (typeof user.sub === 'string') {
+				state.userId = user.sub.replace(/^(auth0\|)/,'');
 			}
 		},
 
