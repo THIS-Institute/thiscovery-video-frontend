@@ -194,6 +194,8 @@ Resources:
       Tracing: Active
       Policies:
         - AWSXrayWriteOnlyAccess
+        - AWSSecretsManagerGetSecretValuePolicy:
+            SecretArn: !Sub arn:${AWS::Partition}:secretsmanager:${AWS::Region}:${AWS::AccountId}:secret:/${EnvironmentTagName}/*
       Events:
         BackendApiDELETEv1appointmentsid:
           Type: Api
@@ -201,6 +203,9 @@ Resources:
             Path: /v1/appointments/{id}
             Method: DELETE
             RestApiId: !Ref BackendApi
+      Environment:
+        Variables:
+          SECRETS_NAMESPACE: !Sub /${EnvironmentTagName}/
   RescheduleAppointmentById:
     Type: AWS::Serverless::Function
     Properties:
@@ -216,6 +221,8 @@ Resources:
       Tracing: Active
       Policies:
         - AWSXrayWriteOnlyAccess
+        - AWSSecretsManagerGetSecretValuePolicy:
+            SecretArn: !Sub arn:${AWS::Partition}:secretsmanager:${AWS::Region}:${AWS::AccountId}:secret:/${EnvironmentTagName}/*
       Events:
         BackendApiPATCHv1appointmentsid:
           Type: Api
@@ -223,6 +230,9 @@ Resources:
             Path: /v1/appointments/{id}
             Method: PATCH
             RestApiId: !Ref BackendApi
+      Environment:
+        Variables:
+          SECRETS_NAMESPACE: !Sub /${EnvironmentTagName}/
   CreateAppointment:
     Type: AWS::Serverless::Function
     Properties:
@@ -238,6 +248,8 @@ Resources:
       Tracing: Active
       Policies:
         - AWSXrayWriteOnlyAccess
+        - AWSSecretsManagerGetSecretValuePolicy:
+            SecretArn: !Sub arn:${AWS::Partition}:secretsmanager:${AWS::Region}:${AWS::AccountId}:secret:/${EnvironmentTagName}/*
       Events:
         BackendApiPOSTv1appointments:
           Type: Api
@@ -245,6 +257,9 @@ Resources:
             Path: /v1/appointments/
             Method: POST
             RestApiId: !Ref BackendApi
+      Environment:
+        Variables:
+          SECRETS_NAMESPACE: !Sub /${EnvironmentTagName}/
   CreateInterviewAnswer:
     Type: AWS::Serverless::Function
     Properties:
