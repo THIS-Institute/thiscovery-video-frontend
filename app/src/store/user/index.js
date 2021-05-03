@@ -79,6 +79,14 @@ export const user = {
 			return state.user[ID_NAMESPACE + 'first_name'];
 		},
 
+		getFamilyName (state) {
+			if (state.user[ID_NAMESPACE + 'last_name'] === undefined) {
+				return null;
+			}
+
+			return state.user[ID_NAMESPACE + 'last_name'];
+		},
+
 		getAuthTargetUrl (state) {
 			if (!state.authAppState) {
 				return null;

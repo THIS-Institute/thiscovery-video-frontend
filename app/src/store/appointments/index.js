@@ -118,7 +118,7 @@ export const appointments = {
 		confirmSelectedSlot: async ({ state, commit, rootState, rootGetters }) => {
 			commit('setWaiting', true);
 
-			const response = await createAppointmentBooking({
+			await createAppointmentBooking({
 				appointmentTypeId: state.bookingTypeId,
 				time: state.selection,
 				email: rootState.user.user.email,
@@ -126,10 +126,8 @@ export const appointments = {
 				lastName: rootGetters['user/getFamilyName'],
 			})
 			.then(() => {
-				if (response) {
-					commit('updateIsConfirmed', true);
-					commit('setStatus', constants.STATUS_BOOKED);
-				}
+				commit('updateIsConfirmed', true);
+				commit('setStatus', constants.STATUS_BOOKED);
 			});
 
 			commit('setWaiting', false);
