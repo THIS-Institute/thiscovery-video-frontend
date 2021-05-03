@@ -187,7 +187,7 @@ Resources:
         - Stack ${StackTagName} Environment ${EnvironmentTagName} Function ${ResourceName}
         - ResourceName: CancelAppointmentById
       CodeUri: src
-      Handler: log.lambda_handler
+      Handler: cancel_appointment.lambda_handler
       Runtime: python3.8
       MemorySize: 1024
       Timeout: 30
@@ -209,7 +209,7 @@ Resources:
         - Stack ${StackTagName} Environment ${EnvironmentTagName} Function ${ResourceName}
         - ResourceName: RescheduleAppointmentById
       CodeUri: src
-      Handler: log.lambda_handler
+      Handler: reschedule_appointment.lambda_handler
       Runtime: python3.8
       MemorySize: 1024
       Timeout: 30
@@ -231,7 +231,7 @@ Resources:
         - Stack ${StackTagName} Environment ${EnvironmentTagName} Function ${ResourceName}
         - ResourceName: CreateAppointment
       CodeUri: src
-      Handler: log.lambda_handler
+      Handler: book_appointment.lambda_handler
       Runtime: python3.8
       MemorySize: 1024
       Timeout: 30
