@@ -1,5 +1,6 @@
 from .exceptions import BookingError, InvalidTimeslot, AppointmentNotFound
 from .acuity import AcuityError
+from dynamodb import DynamoDB
 
 from requests import Response
 
@@ -28,6 +29,22 @@ class Bookings:
 
         if 'id' not in appointment:
             raise BookingError
+
+        user_id = user['userId']
+        task_id = user['taskId']
+
+        db = DynamoDB().client()
+
+        response = db.put_item(
+            Item={
+                'pk': f'USER#{user_id}',
+                'sk': f'TASK#{task_id}',
+                'appointment_id': appointment['id'],
+                'appointment_time': appointment['datetime'],
+            }
+        )
+
+        print(response)
 
         return appointment
 
