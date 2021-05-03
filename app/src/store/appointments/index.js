@@ -1,5 +1,6 @@
 import * as constants from './statusConstants';
 import {
+	createAppointmentBooking,
 	fetchInitialAppointmentCalendar,
 	fetchNextAppointmentDate,
 } from '@/api/appointments';
@@ -114,14 +115,24 @@ export const appointments = {
 			commit('setNextFetchDate', lastItem.next);
 		},
 
-		confirmSelectedSlot: ({ commit }) => {
+		confirmSelectedSlot: async ({ state, commit, rootState, rootGetters }) => {
 			commit('setWaiting', true);
 
-			setTimeout(() => {
-				commit('updateIsConfirmed', true);
-				commit('setStatus', constants.STATUS_BOOKED);
-				commit('setWaiting', false);
-			}, 2000);
+			const response = await createAppointmentBooking({
+				appointmentTypeId: state.bookingTypeId,
+				time: state.selection,
+				email: rootState.user.user.email,
+				firstName: rootGetters['user/getGivenName'],
+				lastName: rootGetters['user/getFamilyName'],
+			})
+			.then(() => {
+				if (response) {
+					commit('updateIsConfirmed', true);
+					commit('setStatus', constants.STATUS_BOOKED);
+				}
+			});
+
+			commit('setWaiting', false);
 		},
 
 		syncBookedStatus: ({ state, commit }) => {
