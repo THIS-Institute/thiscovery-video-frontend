@@ -322,6 +322,8 @@ Resources:
       Tracing: Active
       Policies:
         - AWSXrayWriteOnlyAccess
+        - DynamoDBCrudPolicy:
+            TableName: !Ref InterviewsTable
       Events:
         BackendApiGETv1gettask:
           Type: Api
@@ -329,6 +331,10 @@ Resources:
             Path: /v1/task/{key}
             Method: GET
             RestApiId: !Ref BackendApi
+      Environment:
+        Variables:
+          TABLE_NAME: !Ref InterviewsTable
+          TABLE_ARN: !GetAtt InterviewsTable.Arn
   GetSelfRecordQuestions:
     Type: AWS::Serverless::Function
     Properties:
