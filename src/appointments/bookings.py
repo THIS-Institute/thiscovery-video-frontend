@@ -1,12 +1,13 @@
 from .exceptions import BookingError, InvalidTimeslot, AppointmentNotFound
 from .acuity import AcuityError
-from dynamodb import DynamoDB
 
+from dynamodb import DynamoDB
 from requests import Response
 
 class Bookings:
     def __init__(self, acuity_client):
         self.acuity = acuity_client
+        self.db = DynamoDB().client()
 
     def create(self, appointment_type_id, appointment_time, user):
         time_string = appointment_time.strftime('%Y-%m-%dT%H:%M:%S%z')
@@ -32,19 +33,28 @@ class Bookings:
 
         user_id = user['userId']
         task_id = user['taskId']
+        appointment_id = str(appointment['id'])
+        appointment_time = str(appointment['datetime'])
 
-        db = DynamoDB().client()
-
-        response = db.put_item(
+        self.db.put_item(
             Item={
                 'pk': f'USER#{user_id}',
                 'sk': f'TASK#{task_id}',
-                'appointment_id': appointment['id'],
-                'appointment_time': appointment['datetime'],
+                'appointment_id': appointment_id,
+                'appointment_time': appointment_time,
             }
         )
 
-        print(response)
+        self.db.put_item(
+            Item={
+                'pk': f'APPOINTMENT#{appointment_id}',
+                'sk': 'INFO',
+                'user': f'USER#{user_id}',
+                'task': f'TASK#{task_id}',
+                'appointment_id': appointment_id,
+                'appointment_time': appointment_time,
+            }
+        )
 
         return appointment
 
@@ -72,6 +82,33 @@ class Bookings:
 
         if 'id' not in appointment:
             raise BookingError
+        
+        appointment_id = str(appointment['id'])
+        appointment_time = str(appointment['datetime'])
+
+        appointment_info = self.db.get_item(Key={
+            'pk': f'APPOINTMENT#{appointment_id}',
+            'sk': 'INFO',
+        })
+
+        user = appointment_info['Item']['user']
+        task = appointment_info['Item']['task']
+
+        self.db.put_item(
+            Item={
+                'pk': f'APPOINTMENT#{appointment_id}',
+                'sk': 'INFO',
+                'appointment_time': appointment_time,
+            }
+        )
+
+        self.db.put_item(
+            Item={
+                'pk': user,
+                'sk': task,
+                'appointment_time': appointment_time,
+            }
+        )
 
         return appointment
 
@@ -85,5 +122,25 @@ class Bookings:
                 raise AppointmentNotFound
             else:
                 raise AcuityError(cancellation)
+
+        appointment_info = self.db.get_item(Key={
+            'pk': f'APPOINTMENT#{appointment_id}',
+            'sk': 'INFO',
+        })
+
+        print(appointment_info)
+
+        user = appointment_info['Item']['user']
+        task = appointment_info['Item']['task']
+
+        self.db.update_item(
+            Key={ 'pk': user, 'sk': task },
+            UpdateExpression='REMOVE appointment_id, appointment_time',
+        )
+
+        self.db.delete_item(Key={
+            'pk': f'APPOINTMENT#{appointment_id}',
+            'sk': 'INFO',
+        })
 
         return cancellation

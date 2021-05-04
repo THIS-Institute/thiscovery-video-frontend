@@ -34,8 +34,13 @@ export const task = {
 	},
 
 	actions: {
-		initalise: async ({ commit }, taskId) => {
-			const task = await getTask(taskId);
+		initalise: async ({ commit, rootState }, taskId) => {
+			const userId = rootState.user.userId;
+
+			const task = await getTask({
+				taskId: taskId,
+				userId: userId,
+			});
 
 			if (task) {
 				sessionStorage.setItem('task_id', taskId);

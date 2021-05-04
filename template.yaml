@@ -59,7 +59,7 @@ Resources:
                 uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${CreateInterviewAnswer.Arn}/invocations
               responses: {}
           /v1/task/{key}:
-            get:
+            post:
               x-amazon-apigateway-integration:
                 httpMethod: POST
                 type: aws_proxy
@@ -196,6 +196,8 @@ Resources:
         - AWSXrayWriteOnlyAccess
         - AWSSecretsManagerGetSecretValuePolicy:
             SecretArn: !Sub arn:${AWS::Partition}:secretsmanager:${AWS::Region}:${AWS::AccountId}:secret:/${EnvironmentTagName}/*
+        - DynamoDBCrudPolicy:
+            TableName: !Ref InterviewsTable
       Events:
         BackendApiDELETEv1appointmentsid:
           Type: Api
@@ -205,6 +207,8 @@ Resources:
             RestApiId: !Ref BackendApi
       Environment:
         Variables:
+          TABLE_NAME: !Ref InterviewsTable
+          TABLE_ARN: !GetAtt InterviewsTable.Arn
           ACUITY_BASE_URI: !Ref EnvConfigAcuityBaseUriAsString
           SECRETS_NAMESPACE: !Sub /${EnvironmentTagName}/
   RescheduleAppointmentById:
@@ -224,6 +228,8 @@ Resources:
         - AWSXrayWriteOnlyAccess
         - AWSSecretsManagerGetSecretValuePolicy:
             SecretArn: !Sub arn:${AWS::Partition}:secretsmanager:${AWS::Region}:${AWS::AccountId}:secret:/${EnvironmentTagName}/*
+        - DynamoDBCrudPolicy:
+            TableName: !Ref InterviewsTable
       Events:
         BackendApiPATCHv1appointmentsid:
           Type: Api
@@ -233,6 +239,8 @@ Resources:
             RestApiId: !Ref BackendApi
       Environment:
         Variables:
+          TABLE_NAME: !Ref InterviewsTable
+          TABLE_ARN: !GetAtt InterviewsTable.Arn
           ACUITY_BASE_URI: !Ref EnvConfigAcuityBaseUriAsString
           SECRETS_NAMESPACE: !Sub /${EnvironmentTagName}/
   CreateAppointment:
