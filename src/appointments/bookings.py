@@ -94,20 +94,23 @@ class Bookings:
         user = appointment_info['Item']['user']
         task = appointment_info['Item']['task']
 
-        self.db.put_item(
-            Item={
+        self.db.update_item(
+            Key={
                 'pk': f'APPOINTMENT#{appointment_id}',
                 'sk': 'INFO',
-                'appointment_time': appointment_time,
-            }
+            },
+            UpdateExpression='SET appointment_time = :time',
+            ExpressionAttributeNames={
+                ':time': appointment_time,
+            },
         )
 
-        self.db.put_item(
-            Item={
-                'pk': user,
-                'sk': task,
-                'appointment_time': appointment_time,
-            }
+        self.db.update_item(
+            Key={ 'pk': user, 'sk': task },
+            UpdateExpression='SET appointment_time = :time',
+            ExpressionAttributeNames={
+                ':time': appointment_time,
+            },
         )
 
         return appointment
