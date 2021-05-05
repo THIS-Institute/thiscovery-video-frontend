@@ -26,6 +26,8 @@ def lambda_handler(event, context):
             user_task = None
         else:
             raise
+    except KeyError:
+        user_task = None
     except:
         raise
     
