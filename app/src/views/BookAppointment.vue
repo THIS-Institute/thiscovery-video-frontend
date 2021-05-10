@@ -17,6 +17,7 @@
 
 			<div class="e-content relative gap-5 mt-12 col-span-12 xl:mt-7 xl:col-start-2 xl:col-span-10">
 				<appointment-slots v-if="!isLoading" />
+
 				<loading-spinner v-else />
 			</div>
 

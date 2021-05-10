@@ -1,7 +1,7 @@
 <template>
 	<section
 		:class="[
-			'grid grid-cols-10 gap-y-7.5 gap-x-5 items-center',
+			'grid grid-cols-10 gap-y-7.5 gap-x-5 items-start',
 			'xl:rounded-lg xl:bg-white',
 			'xl:px-17 xl:py-8',
 			{
@@ -9,7 +9,7 @@
 			},
 		]"
 	>
-		<div class="col-span-10 space-y-5 md:col-span-4 xl:max-w-83">
+		<div class="col-span-10 space-y-5 md:col-span-4 md:mt-10 xl:max-w-83">
 			<icon-text
 				class="e-h4"
 				:icon="{
