@@ -41,7 +41,7 @@
 			:class="[
 				'grid grid-cols-3 relative mt-4 px-5',
 				'max-h-date-picker overflow-y-scroll',
-				'border border-grey-100 rounded-lg',
+				'border border-grey-400 border-opacity-25 rounded-lg',
 				'xl:grid-cols-4',
 				{
 					'opacity-25': submitting,
