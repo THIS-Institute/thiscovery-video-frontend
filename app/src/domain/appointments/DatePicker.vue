@@ -39,7 +39,7 @@
 
 		<div
 			:class="[
-				'grid grid-cols-3 mt-4 px-5',
+				'grid grid-cols-3 relative mt-4 px-5',
 				'max-h-date-picker overflow-y-scroll',
 				'border border-grey-100 rounded-lg',
 				'xl:grid-cols-4',
@@ -77,6 +77,16 @@
 					</li>
 				</ol>
 			</div>
+
+			<div
+				:class="[
+					'sticky bottom-0',
+					'col-span-3 -mx-5 h-10',
+					'bg-gradient-to-t from-white',
+					'pointer-events-none',
+					'xl:col-span-4',
+				]"
+			/>
 		</div>
 
 		<loading-spinner v-if="isWaiting" />
