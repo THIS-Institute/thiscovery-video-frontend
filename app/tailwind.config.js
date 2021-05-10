@@ -85,6 +85,7 @@ module.exports = {
 			maxWidth: {
 				'36': relative(144),
 				logo: relative(150),
+				'64': relative(256),
 				'83': relative(332),
 				'86': relative(344),
 				container: relative(1440),
@@ -96,6 +97,7 @@ module.exports = {
 				instruction: ratio(275, 428),
 
 				'doctor': ratio(191, 526),
+				'doctor-wave': ratio(234, 565),
 				'paramedic': ratio(355, 344),
 				'nurse': ratio(344, 526),
 				'clipboard': ratio(286, 526),

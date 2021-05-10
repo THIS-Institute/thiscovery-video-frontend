@@ -1,10 +1,10 @@
 <template>
 	<section class="e-container my-12 md:my-18 xl:my-24">
 		<div class="grid grid-cols-12 gap-5 w-full">
-			<div class="col-span-3 hidden items-end relative transform translate-y-24 xl:flex">
-				<placeholder ratio="pt-surgeon">
+			<div class="col-start-2 col-span-3 max-w-64 hidden items-end relative transform translate-y-24 xl:flex">
+				<placeholder ratio="pt-doctor-wave">
 					<img
-						src="/static/img/decorations/surgeon.svg"
+						src="/static/img/decorations/doctor--wave.svg"
 						alt="Medical professional at work"
 					>
 				</placeholder>
@@ -20,9 +20,7 @@
 							},
 						]"
 					>
-						<div
-							class="rounded-lg overflow-hidden"
-						>
+						<div class="rounded-lg overflow-hidden">
 							<video-preview />
 						</div>
 
@@ -41,7 +39,7 @@
 
 								<e-button
 									v-if="hasMicrophone"
-									:title="message(domain + '.preSettings.continueButtonText')"
+									:title="message(`${domain}.preSettings.continueButtonText`)"
 									icon="chevron-right"
 									class="e-button--red mt-5"
 									:url="{ name: nextRoute }"
