@@ -99,17 +99,17 @@ class Bookings:
                 'pk': f'APPOINTMENT#{appointment_id}',
                 'sk': 'INFO',
             },
-            UpdateExpression='SET appointment_time = :time',
-            ExpressionAttributeNames={
-                ':time': appointment_time,
+            UpdateExpression='SET appointment_time = :t',
+            ExpressionAttributeValues={
+                ':t': appointment_time,
             },
         )
 
         self.db.update_item(
             Key={ 'pk': user, 'sk': task },
-            UpdateExpression='SET appointment_time = :time',
-            ExpressionAttributeNames={
-                ':time': appointment_time,
+            UpdateExpression='SET appointment_time = :t',
+            ExpressionAttributeValues={
+                ':t': appointment_time,
             },
         )
 
