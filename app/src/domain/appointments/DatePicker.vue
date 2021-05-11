@@ -10,7 +10,7 @@
 				class="px-2"
 			>
 				<p
-					class="text-center"
+					class="text-center text-sm xl:text-base"
 					v-text="asFormattedDate(date.date)"
 				/>
 			</div>
