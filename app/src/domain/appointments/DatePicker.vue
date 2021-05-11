@@ -62,6 +62,7 @@
 						class="flex justify-center"
 					>
 						<e-button
+							:sr-only="asFormattedDate(date.date)"
 							:title="asFormattedTime(timeslot.time)"
 							:class="[
 								'e-button--time justify-center',
