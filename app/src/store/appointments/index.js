@@ -60,6 +60,12 @@ export const appointments = {
 	},
 
 	actions: {
+		initExisting: ({ commit }, appointment) => { 
+			commit('setAppointmentId', appointment.id);
+			commit('updateSelectionTimeslot', appointment.time);
+			commit('setStatus', constants.STATUS_BOOKED);
+		},
+
 		reschedule: ({ commit }) => {
 			commit('setStatus', constants.STATUS_RESCHEDULING);
 		},
