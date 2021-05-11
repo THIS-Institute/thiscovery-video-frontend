@@ -34,7 +34,7 @@ export const task = {
 	},
 
 	actions: {
-		initalise: async ({ commit, rootState }, taskId) => {
+		initalise: async ({ commit, dispatch, rootState }, taskId) => {
 			const userId = rootState.user.userId;
 
 			const task = await getTask({
@@ -44,6 +44,11 @@ export const task = {
 
 			if (task) {
 				sessionStorage.setItem('task_id', taskId);
+
+				if (task.appointment) {
+					dispatch('appointments/initExisting', task.appointment, { root: true });
+				}
+
 				commit('setId', task.id);
 				commit('appointments/setBookingTypeId', task.acuityTypeId, { root: true });
 				commit('setOnDemandAvailable', task.onDemandAvailable);
