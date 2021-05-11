@@ -247,6 +247,9 @@
 
 				const options = {
 					playbackURL: playbackURL.value,
+					userId: store.state.user.userId,
+					taskId: store.state.task.taskId,
+					questionId: activeSection.value.questions[readQuestion.value],
 				};
 
 				await processAnswer(options)
