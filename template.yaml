@@ -596,14 +596,6 @@ Resources:
                   - Name: prefix
                     Value: unprocessed/
             Function: !GetAtt HandleUploadedVideo.Arn
-  InterviewAssetsPermission:
-    Type: AWS::Lambda::Permission
-    Properties:
-      Action: 'lambda:InvokeFunction'
-      FunctionName: !Ref HandleUploadedVideo
-      Principal: s3.amazonaws.com
-      SourceAccount: !Ref "AWS::AccountId"
-      SourceArn: !Sub "arn:aws:s3:::interview-assets-${AWS::AccountId}"
   InterviewsTable:
     Type: AWS::DynamoDB::Table
     Properties:
