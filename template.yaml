@@ -595,7 +595,7 @@ Resources:
                 Rules:
                   - Name: prefix
                     Value: unprocessed/
-            Function: !GetAtt HandleUploadedVideo.Arn
+            Function: !Sub ${HandleUploadedVideo.Arn}
   InterviewsTable:
     Type: AWS::DynamoDB::Table
     Properties:
