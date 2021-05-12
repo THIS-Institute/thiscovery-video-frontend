@@ -8,16 +8,21 @@
 			},
 		]"
 	>
-		<loading-spinner v-if="loading" />
+		<transition
+			leave-active-class="transition-opacity delay-200 duration-500"
+			leave-to-class="opacity-0"
+		>
+			<loading-spinner
+				v-if="loading"
+				class="bg-white z-2"
+			/>
+		</transition>
 
 		<div
 			:class="[
 				'col-span-10 space-y-5',
 				'md:col-span-4 md:mt-10',
 				'xl:max-w-83',
-				{
-					'opacity-0': loading,
-				},
 			]"
 		>
 			<icon-text
@@ -47,11 +52,9 @@
 			/>
 		</div>
 
-		<div
-			v-if="!loading"
-			class="col-span-10 h-full md:col-span-6 md:col-start-5"
-		>
+		<div class="col-span-10 h-full min-h-date-picker z-0 md:col-span-6 md:col-start-5">
 			<date-picker
+				v-if="!loading"
 				class="h-full"
 				:submitting="isWaiting"
 				:calendar="calendar"

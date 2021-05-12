@@ -19,7 +19,7 @@
 				:class="[
 					'e-content relative gap-5 mt-12 col-span-12',
 					'xl:mt-7 xl:col-start-2 xl:col-span-10',
-					'xl:rounded-lg xl:bg-white',
+					'xl:rounded-lg xl:overflow-hidden xl:bg-white',
 				]"
 			>
 				<status />

@@ -79,6 +79,9 @@ module.exports = {
 				...widths,
 				...(negative(widths)),
 			}),
+			minHeight: {
+				'date-picker': relative(485),
+			},
 			maxHeight: {
 				'date-picker': relative(445),
 			},
