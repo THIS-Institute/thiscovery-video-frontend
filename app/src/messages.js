@@ -116,8 +116,14 @@ export default Object.freeze({
 			title: 'Book a live interview',
 			content: 'Pick from the available dates and times',
 			info: {
-				title: 'What happens next?',
-				content: 'You will receive confirmation and reminder emails. When it\'s nearly time for your appointment, click the link in your email to enter the meeting room.',
+				cancelled: {
+					title: 'Want to book another?',
+					content: 'Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Fusce dapibus, tellus ac cursus commodo, tortor mauris.',
+				},
+				confirmed: {
+					title: 'What happens next?',
+					content: 'You will receive confirmation and reminder emails. When it\'s nearly time for your appointment, click the link in your email to enter the meeting room.',
+				},
 			},
 		},
 

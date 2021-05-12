@@ -44,15 +44,8 @@
 			]"
 		>
 			<appointment-info
-				v-if="isStatusBooked"
 				class="h-full"
-				@reschedule="invokeReschedule"
-				@cancel="invokeCancellation"
-			/>
-
-			<appointment-info
-				v-else
-				class="h-full"
+				:booked="isStatusBooked"
 				@reschedule="invokeReschedule"
 				@cancel="invokeCancellation"
 			/>
@@ -64,6 +57,7 @@
 	import { useStore } from 'vuex';
 	import { computed } from 'vue';
 	import { onBeforeRouteLeave } from 'vue-router';
+
 	import messages from '@/messages';
 	import { useMessages } from '@/composables/useMessages';
 	import { useAppointmentStatus } from './useAppointmentStatus';
