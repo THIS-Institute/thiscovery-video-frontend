@@ -15,43 +15,53 @@ def lambda_handler(event, context):
     question_id = request['questionId']
 
     uid = uuid.uuid4()
-
-    answer = {
-        'uuid': uid,
-        'question_id': question_id,
-        'notes': None,
-        'video_url': None,
-        'uploaded': False,
-    }
+    uuid_string = str(uid)
 
     db = DynamoDB().client()
+
     db.update_item(
         Key={
             'pk': f'USER#{user_id}',
             'sk': f'TASK#{task_id}',
         },
-        UpdateExpression='SET answers.#uid = :answer',
+        UpdateExpression='SET #answers = list_append(if_not_exists(#answers, :empty_list), :answer_key)',
         ExpressionAttributeNames={
-            '#uid': uid,
+            '#answers': 'answers',
         },
         ExpressionAttributeValues={
-            ':key': uid,
-            ':answer': answer,
+            ':answer_key': [uuid_string],
+            ':empty_list': [],
         },
+    )
+
+    db.put_item(
+        Item={
+            'pk': f'USER#{user_id}',
+            'sk': f'ANSWER#{uuid_string}',
+            'uuid': uuid_string,
+            'task': task_id,
+            'user': user_id,
+            'question_id': question_id,
+        }
     )
 
     s3 = boto3.client('s3')
 
     params = {
         'Bucket': os.environ['BUCKET_NAME'],
-        'Key': f'unprocessed/{str(uid)}',
+        'Key': f'unprocessed/{str(uuid_string)}',
         'ContentType': request['contentType'],
+        'Metadata': {
+            'user_id': user_id,
+            'task_id': task_id,
+            'question_id': question_id,
+        },
     }
 
     presigned_url = s3.generate_presigned_url(
         ClientMethod='put_object',
         Params=params,
-        ExpiresIn=900,
+        ExpiresIn=900
     )
 
     response = {
