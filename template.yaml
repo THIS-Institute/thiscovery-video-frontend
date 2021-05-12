@@ -379,6 +379,23 @@ Resources:
             Path: /v1/interviewers-questions/{taskId}
             Method: GET
             RestApiId: !Ref BackendApi
+  HandleUploadedVideo:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: Interviews-HandleUploadedVideo
+      Description: !Sub
+        - Stack ${StackTagName} Environment ${EnvironmentTagName} Function ${ResourceName}
+        - ResourceName: HandleUploadedVideo
+      CodeUri: src
+      Handler: log.lambda_handler
+      Runtime: python3.8
+      MemorySize: 1024
+      Timeout: 10
+      Tracing: Active
+      Policies:
+        - AWSXrayWriteOnlyAccess
+        - S3CrudPolicy:
+            BucketName: !Ref InterviewAssets
   Cdn:
     Type: AWS::CloudFront::Distribution
     Properties:
@@ -570,6 +587,23 @@ Resources:
     Type: AWS::S3::Bucket
     Properties:
       BucketName: !Sub interview-assets-${AWS::AccountId}
+    NotificationConfiguration:
+      LambdaConfigurations:
+        - Event: 's3:ObjectCreated:*'
+          Filter:
+            S3Key:
+              Rules:
+                - Name: prefix
+                  Value: unprocessed/
+          Function: !GetAtt HandleUploadedVideo.Arn
+  InterviewAssetsPermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: 'lambda:InvokeFunction'
+      FunctionName: !Ref HandleUploadedVideo
+      Principal: s3.amazonaws.com
+      SourceAccount: !Ref "AWS::AccountId"
+      SourceArn: !Sub "arn:aws:s3:::interview-assets-${AWS::AccountId}"
   InterviewsTable:
     Type: AWS::DynamoDB::Table
     Properties:
