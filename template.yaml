@@ -400,7 +400,7 @@ Resources:
         Upload:
           Type: S3
           Properties:
-            Bucket: !Ref InterviewAssets
+            Bucket: !Sub "arn:aws:s3:::interview-assets-${AWS::AccountId}"
             Events: s3:ObjectCreated:*
             Filter:
               S3Key:
