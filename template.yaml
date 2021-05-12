@@ -396,17 +396,6 @@ Resources:
         - AWSXrayWriteOnlyAccess
         - S3CrudPolicy:
             BucketName: !Ref InterviewAssets
-      Events:
-        Upload:
-          Type: S3
-          Properties:
-            Bucket: !Ref InterviewAssets.Arn
-            Events: s3:ObjectCreated:*
-            Filter:
-              S3Key:
-                Rules:
-                  - Name: prefix
-                    Value: unprocessed/
   Cdn:
     Type: AWS::CloudFront::Distribution
     Properties:
