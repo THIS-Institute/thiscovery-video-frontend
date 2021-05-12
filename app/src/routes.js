@@ -7,6 +7,7 @@ const Styleguide = () => import('./views/Styleguide');
 const MethodSelectionView = () => import('./views/MethodSelection');
 const MethodOverviewView = () => import('./views/MethodOverview');
 const BookAppointmentView = () => import('./views/BookAppointment');
+const AppointmentStatusView = () => import('./views/AppointmentStatus');
 const PreSettingsView = () => import('./views/PreSettings');
 const SelfRecordView = () => import('./views/SelfRecord');
 const LiveRoomView = () => import('./views/LiveRoom');
@@ -50,6 +51,23 @@ export const routes = [
 				path: '',
 				name: constant.ROUTE_APPOINTMENTS,
 				component: BookAppointmentView,
+			},
+		],
+	},
+
+	/**
+	 * Appointment booking
+	 */
+	{
+		path: '/appointments',
+		component: SplitBackgroundLayout,
+		props: { backgroundType: 'curls' },
+		meta: { requiresTaskInit: true },
+		children: [
+			{
+				path: 'status',
+				name: constant.ROUTE_APPOINTMENT_STATUS,
+				component: AppointmentStatusView,
 			},
 		],
 	},

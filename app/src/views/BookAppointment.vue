@@ -15,22 +15,14 @@
 
 			<hr class="e-divider mt-5 border-0 xl:hidden">
 
-			<div class="e-content relative gap-5 mt-12 col-span-12 xl:mt-7 xl:col-start-2 xl:col-span-10">
-				<appointment-slots v-if="!isLoading" />
-
-				<loading-spinner v-else />
-			</div>
-
 			<div
-				v-if="isConfirmed"
-				class="hidden relative col-span-3 col-start-10 -mt-32 pointer-events-none xl:block"
+				:class="[
+					'e-content relative gap-5 mt-12 col-span-12',
+					'xl:mt-7 xl:col-start-2 xl:col-span-10',
+					'xl:rounded-lg xl:bg-white',
+				]"
 			>
-				<placeholder ratio="pt-paramedic">
-					<img
-						src="/static/img/decorations/paramedic.svg"
-						alt="Paramedic carrying sign reading 'See you soon!'"
-					>
-				</placeholder>
+				<appointment-slots :loading="isLoading" />
 			</div>
 		</div>
 	</section>
@@ -42,10 +34,11 @@
 	import messages from '@/messages';
 	import { useMessages } from '@/composables/useMessages';
 	import AppointmentSlots from '@/domain/appointments/AppointmentSlots';
-	import LoadingSpinner from '@/components/LoadingSpinner';
 
 	export default {
-		components: { LoadingSpinner, AppointmentSlots },
+		components: {
+			AppointmentSlots,
+		},
 
 		setup() {
 			const store = useStore();

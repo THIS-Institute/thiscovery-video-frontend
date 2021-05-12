@@ -1,15 +1,25 @@
 <template>
 	<section
 		:class="[
-			'grid grid-cols-10 gap-y-7.5 gap-x-5 items-start',
-			'xl:rounded-lg xl:bg-white',
+			'relative grid grid-cols-10 gap-y-7.5 gap-x-5 items-start',
 			'xl:px-17 xl:py-8',
 			{
 				'pb-16 md:pb-0': isStatusReady,
 			},
 		]"
 	>
-		<div class="col-span-10 space-y-5 md:col-span-4 md:mt-10 xl:max-w-83">
+		<loading-spinner v-if="loading" />
+
+		<div
+			:class="[
+				'col-span-10 space-y-5',
+				'md:col-span-4 md:mt-10',
+				'xl:max-w-83',
+				{
+					'opacity-0': loading,
+				},
+			]"
+		>
 			<icon-text
 				class="e-h4"
 				:icon="{
@@ -24,25 +34,11 @@
 				v-text="taskTitle"
 			/>
 
-			<booking-status
-				v-if="isStatusBooked"
-				:message="message('live.bookingStatus.success')"
-			/>
-
-			<booking-status
-				v-if="isStatusCancelled"
-				:message="message('live.bookingStatus.cancelled')"
-				error
-			/>
-
-			<selected-slot
-				:selection="selection"
-				:confirmed="isConfirmed"
-			/>
+			<selected-slot :selection="selection" />
 
 			<e-button
 				v-if="!isStatusBooked"
-				:title="(isStatusRescheduling) ? 'Reschedule appointment' : 'Book appointment'"
+				title="Book appointment"
 				icon="chevron-right"
 				class="e-button--red hidden md:inline-block"
 				:disabled="!selection"
@@ -52,22 +48,10 @@
 		</div>
 
 		<div
-			:class="[
-				'col-span-10 h-full',
-				isStatusBooked
-					? 'md:col-span-5 md:col-start-6'
-					: 'md:col-span-6 md:col-start-5',
-			]"
+			v-if="!loading"
+			class="col-span-10 h-full md:col-span-6 md:col-start-5"
 		>
-			<appointment-info
-				v-if="isStatusBooked"
-				class="h-full"
-				@reschedule="invokeReschedule"
-				@cancel="invokeCancellation"
-			/>
-
 			<date-picker
-				v-else
 				class="h-full"
 				:submitting="isWaiting"
 				:calendar="calendar"
@@ -76,11 +60,11 @@
 	</section>
 
 	<div
-		v-if="!isStatusBooked"
+		v-if="!loading && !isStatusBooked"
 		class="sticky bottom-0 bg-white p-5 -mx-5 sm:-mx-10 shadow-sticky md:hidden"
 	>
 		<e-button
-			:title="(isStatusRescheduling) ? 'Reschedule appointment' : 'Book appointment'"
+			title="Book appointment"
 			icon="chevron-right"
 			class="e-button--red"
 			:disabled="!selection"
@@ -92,26 +76,32 @@
 
 <script>
 	import { useStore } from 'vuex';
-	import { computed } from 'vue';
-	import { onBeforeRouteLeave } from 'vue-router';
+	import { computed, watch } from 'vue';
+	import { onBeforeRouteLeave, useRouter } from 'vue-router';
+
 	import messages from '@/messages';
 	import { useMessages } from '@/composables/useMessages';
 	import { useAppointmentStatus } from './useAppointmentStatus';
+	import { ROUTE_APPOINTMENT_STATUS } from '@/routeConstants';
+
 	import DatePicker from './DatePicker';
 	import SelectedSlot from './SelectedSlot';
-	import BookingStatus from './BookingStatus';
-	import AppointmentInfo from './AppointmentInfo';
+	import LoadingSpinner from '@/components/LoadingSpinner';
 
 	export default {
 		components: {
 			DatePicker,
 			SelectedSlot,
-			BookingStatus,
-			AppointmentInfo,
+			LoadingSpinner,
+		},
+
+		props: {
+			loading: Boolean,
 		},
 
 		setup() {
 			const store = useStore();
+			const router = useRouter();
 			const calendar = computed(() => store.state.appointments.availability);
 			const isWaiting = computed(() => store.state.appointments.isWaiting);
 			const isConfirmed = computed(() => store.state.appointments.isConfirmed);
@@ -120,33 +110,22 @@
 
 			onBeforeRouteLeave(() => {
 				store.dispatch('appointments/syncBookedStatus');
-			})
+			});
 
-			const confirmSelection = () => store.dispatch('appointments/confirmSelectedSlot');
-
-			const invokeReschedule = () => {
-				store.dispatch('appointments/reschedule');
+			const confirmSelection = () => {
+				store.dispatch('appointments/confirmSelectedSlot');
 			};
-
-			const invokeCancellation = () => {
-				if (!confirm('Are you sure you want to cancel your appointment?')) {
-					return;
-				}
-
-				store.dispatch('appointments/cancel')
-					.then(onAppointmentCancelled)
-			};
-
-			const onAppointmentCancelled = () => {};
 
 			const {
 				isStatusReady,
 				isStatusBooked,
-				isStatusRescheduling,
-				isStatusCancelled,
 			} = useAppointmentStatus();
 
 			const { message } = useMessages(messages);
+
+			watch(isStatusBooked, () => {
+				router.push({ name: ROUTE_APPOINTMENT_STATUS });
+			});
 
 			return {
 				message,
@@ -156,12 +135,8 @@
 				confirmSelection,
 				selection,
 				calendar,
-				invokeReschedule,
-				invokeCancellation,
 				isStatusReady,
 				isStatusBooked,
-				isStatusRescheduling,
-				isStatusCancelled,
 			};
 		},
 	};
