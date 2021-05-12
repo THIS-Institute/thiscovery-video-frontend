@@ -248,8 +248,8 @@
 				const options = {
 					playbackURL: playbackURL.value,
 					userId: store.state.user.userId,
-					taskId: store.state.task.taskId,
-					questionId: activeSection.value.questions[readQuestion.value],
+					taskId: store.state.task.id,
+					questionId: activeSection.value.questions[readQuestion.value].id,
 				};
 
 				await processAnswer(options)
