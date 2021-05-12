@@ -383,6 +383,7 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       FunctionName: Interviews-HandleUploadedVideo
+      DependsOn: !Ref InterviewAssets
       Description: !Sub
         - Stack ${StackTagName} Environment ${EnvironmentTagName} Function ${ResourceName}
         - ResourceName: HandleUploadedVideo
@@ -400,7 +401,7 @@ Resources:
         Upload:
           Type: S3
           Properties:
-            Bucket: !Sub "arn:aws:s3:::interview-assets-${AWS::AccountId}"
+            Bucket: !Ref InterviewAssets
             Events: s3:ObjectCreated:*
             Filter:
               S3Key:
