@@ -1,5 +1,6 @@
 export const ROUTE_HOME = 'home';
 export const ROUTE_APPOINTMENTS = 'appointments';
+export const ROUTE_APPOINTMENT_STATUS = 'appointment_status';
 export const ROUTE_SELF_HOWTO = 'self_howto';
 export const ROUTE_SELF_SETTINGS = 'self_settings';
 export const ROUTE_SELF_INTERVIEW = 'self_interview';

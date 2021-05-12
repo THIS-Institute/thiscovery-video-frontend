@@ -19,10 +19,18 @@
 		]"
 		:disabled="$attrs.disabled"
 	>
-		<span
+		<div
 			v-if="title"
-			v-text="title"
-		/>
+			class="inline-block"
+		>
+			<span
+				v-if="srOnly"
+				class="sr-only"
+				v-text="srOnly"
+			/>
+
+			<span v-text="title" />
+		</div>
 
 		<icon
 			v-if="icon || icons"
@@ -36,6 +44,11 @@
 	export default {
 		props: {
 			title: {
+				type: String,
+				default: null,
+			},
+
+			srOnly: {
 				type: String,
 				default: null,
 			},

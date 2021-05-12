@@ -4,12 +4,12 @@
 			<div class="col-span-12 xl:col-start-2">
 				<h1
 					class="e-h2"
-					v-text="message('live.appointments.title')"
+					v-text="`Appointment ${ isConfirmed ? 'confirmed' : 'cancelled' }`"
 				/>
 
 				<p
 					class="mt-2"
-					v-text="message('live.appointments.content')"
+					v-text="'Donec ullamcorper nulla non metus auctor fringilla.'"
 				/>
 			</div>
 
@@ -22,49 +22,36 @@
 					'xl:rounded-lg xl:overflow-hidden xl:bg-white',
 				]"
 			>
-				<appointment-slots :loading="isLoading" />
+				<status />
 			</div>
 		</div>
 	</section>
 </template>
 
 <script>
-	import { ref, computed } from 'vue';
+	import { computed } from 'vue';
 	import { useStore } from 'vuex';
-	import messages from '@/messages';
+
 	import { useMessages } from '@/composables/useMessages';
-	import AppointmentSlots from '@/domain/appointments/AppointmentSlots';
+	import messages from '@/messages';
+
+	import Status from '@/domain/appointments/Status';
 
 	export default {
 		components: {
-			AppointmentSlots,
+			Status,
 		},
 
 		setup() {
 			const store = useStore();
 			const { message } = useMessages(messages);
-			const isLoading = ref(false);
-			const calendar = computed(() => store.state.appointments.availability);
+
 			const isConfirmed = computed(() => store.state.appointments.isConfirmed);
-
-			const onCalendarInitialised = () => {
-				isLoading.value = false;
-			};
-
-			if (calendar.value && calendar.value.length == 0) {
-				isLoading.value = true;
-
-				store
-					.dispatch('appointments/initAppointmentCalendar')
-					.then(onCalendarInitialised);
-			}
 
 			return {
 				message,
 				isConfirmed,
-				isLoading,
-				calendar,
-			}
+			};
 		},
 	};
 </script>

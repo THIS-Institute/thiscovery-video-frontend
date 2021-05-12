@@ -6,32 +6,45 @@
 		>
 			<h3
 				class="e-h3"
-				v-text="message('live.appointments.info.title')"
+				v-text="message(`${messagePath}.title`)"
 			/>
 
 			<p
 				class="mt-5"
-				v-text="message('live.appointments.info.content')"
+				v-text="message(`${messagePath}.content`)"
 			/>
 
 			<div class="flex flex-col items-start space-y-5 mt-10">
-				<e-button
-					title="Reschedule appointment"
-					icon="edit"
-					class="text-red hover:text-black focus:text-black"
-					flipped
-					:disabled="isWaiting"
-					@click="$emit('reschedule')"
-				/>
+				<template v-if="booked">
+					<e-button
+						title="Reschedule appointment"
+						icon="edit"
+						class="text-red hover:text-black focus:text-black"
+						flipped
+						:disabled="isWaiting"
+						@click="$emit('reschedule')"
+					/>
 
-				<e-button
-					title="Cancel appointment"
-					icon="close"
-					class="text-red hover:text-black focus:text-black"
-					flipped
-					:disabled="isWaiting"
-					@click="$emit('cancel')"
-				/>
+					<e-button
+						title="Cancel appointment"
+						icon="close"
+						class="text-red hover:text-black focus:text-black"
+						flipped
+						:disabled="isWaiting"
+						@click="$emit('cancel')"
+					/>
+				</template>
+
+				<template v-else>
+					<e-button
+						title="Book an appointment"
+						icon="calendar"
+						class="text-red hover:text-black focus:text-black"
+						flipped
+						:disabled="isWaiting"
+						url="/appointments"
+					/>
+				</template>
 			</div>
 
 			<e-button
@@ -58,19 +71,30 @@
 	export default {
 		components: { LoadingSpinner },
 
+		props: {
+			booked: Boolean,
+		},
+
 		emits: [
 			'reschedule',
 			'cancel',
 		],
 
-		setup() {
+		setup(props) {
 			const store = useStore();
 			const { message } = useMessages(messages);
+
 			const isWaiting = computed(() => store.state.appointments.isWaiting);
+			const messagePath = computed(() => {
+				const state = props.booked ? 'confirmed' : 'cancelled';
+
+				return `live.appointments.info.${state}`;
+			});
 
 			return {
 				message,
 				isWaiting,
+				messagePath,
 			}
 		},
 	};

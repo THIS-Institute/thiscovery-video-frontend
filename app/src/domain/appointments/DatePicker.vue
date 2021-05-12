@@ -10,7 +10,7 @@
 				class="px-2"
 			>
 				<p
-					class="text-center"
+					class="text-center text-sm xl:text-base"
 					v-text="asFormattedDate(date.date)"
 				/>
 			</div>
@@ -39,9 +39,9 @@
 
 		<div
 			:class="[
-				'grid grid-cols-3 mt-4 px-5',
+				'grid grid-cols-3 relative mt-4 px-5',
 				'max-h-date-picker overflow-y-scroll',
-				'border border-grey-100 rounded-lg',
+				'border border-grey-400 border-opacity-25 rounded-lg',
 				'xl:grid-cols-4',
 				{
 					'opacity-25': submitting,
@@ -62,6 +62,7 @@
 						class="flex justify-center"
 					>
 						<e-button
+							:sr-only="asFormattedDate(date.date)"
 							:title="asFormattedTime(timeslot.time)"
 							:class="[
 								'e-button--time justify-center',
@@ -77,6 +78,16 @@
 					</li>
 				</ol>
 			</div>
+
+			<div
+				:class="[
+					'sticky bottom-0',
+					'col-span-3 -mx-5 h-10',
+					'bg-gradient-to-t from-white',
+					'pointer-events-none',
+					'xl:col-span-4',
+				]"
+			/>
 		</div>
 
 		<loading-spinner v-if="isWaiting" />
