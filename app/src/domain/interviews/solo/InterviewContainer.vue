@@ -88,9 +88,7 @@
 			</div>
 
 			<modal-container
-				v-if="state.showConfirmDialog
-					|| state.showCommentDialog
-				"
+				:show="state.showConfirmDialog || state.showCommentDialog"
 			>
 				<!-- Are you sure you want to retake? -->
 				<confirm-dialog
