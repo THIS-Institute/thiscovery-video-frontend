@@ -6,9 +6,19 @@
 		class="transform -scale-x-100"
 		@play="onVideoPlay"
 	/>
-	<loading-spinner
-		v-if="!videoReady"
-	/>
+
+	<transition
+		enter-active-class="transition-opacity ease-out duration-300"
+		leave-active-class="transition-opacity ease-in delay-100 duration-300"
+		enter-from-class="opacity-0"
+		leave-to-class="opacity-0"
+	>
+		<loading-spinner
+			v-if="!videoReady"
+			class="bg-grey-400 z-1"
+			:light="true"
+		/>
+	</transition>
 </template>
 
 <script>

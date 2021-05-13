@@ -57,10 +57,20 @@
 				'lg:col-span-6 lg:col-start-1 lg:mx-3.5',
 			]"
 		>
-			<question
-				:number="toReadableValue(readQuestion)"
-				v-bind="activeSection.questions[readQuestion]"
-			/>
+			<transition
+				enter-active-class="transform transition-all ease-out delay-150 duration-300"
+				leave-active-class="transform transition-all ease-in duration-200"
+				enter-from-class="opacity-0 translate-y-4 sm:scale-95"
+				leave-to-class="opacity-0 translate-y-4 sm:scale-95"
+				mode="out-in"
+			>
+				<aside :key="toReadableValue(readQuestion)">
+					<question
+						:number="toReadableValue(readQuestion)"
+						v-bind="activeSection.questions[readQuestion]"
+					/>
+				</aside>
+			</transition>
 		</div>
 
 		<div
@@ -88,9 +98,7 @@
 			</div>
 
 			<modal-container
-				v-if="state.showConfirmDialog
-					|| state.showCommentDialog
-				"
+				:show="state.showConfirmDialog || state.showCommentDialog"
 			>
 				<!-- Are you sure you want to retake? -->
 				<confirm-dialog
