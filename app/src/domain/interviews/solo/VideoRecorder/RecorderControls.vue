@@ -1,5 +1,5 @@
 <template>
-	<div class="flex flex-wrap items-center justify-between gap-y-5 px-5 my-5">
+	<div class="flex flex-wrap items-center justify-between min-h-controls gap-y-5 px-5 my-5">
 		<e-button
 			v-if="isReady"
 			title="Click to record your answer"
