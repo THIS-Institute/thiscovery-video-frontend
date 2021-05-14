@@ -20,7 +20,7 @@
 					appear
 				>
 					<method-card
-						class="col-span-8 sm:col-span-8 md:col-span-5 xl:col-span-4"
+						class="col-span-8 sm:col-span-8 md:col-span-5 lg:col-span-4"
 						v-bind="message('landing.paths.live')"
 						:available="isLiveAvailable"
 					/>
@@ -32,7 +32,7 @@
 					appear
 				>
 					<method-card
-						class="col-span-8 sm:col-span-8 md:col-span-5 xl:col-span-4"
+						class="col-span-8 sm:col-span-8 md:col-span-5 lg:col-span-4"
 						v-bind="message('landing.paths.selfRecord')"
 						:available="isOnDemandAvailable"
 					/>
