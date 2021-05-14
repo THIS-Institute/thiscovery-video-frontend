@@ -14,17 +14,29 @@
 			</div>
 
 			<div class="relative grid grid-cols-8 gap-5 mt-7 col-span-12 xl:col-start-2 xl:col-span-8">
-				<method-card
-					class="col-span-8 sm:col-span-8 md:col-span-5 xl:col-span-4"
-					v-bind="message('landing.paths.live')"
-					:available="isLiveAvailable"
-				/>
+				<transition
+					enter-active-class="transform transition-all ease-out duration-300"
+					enter-from-class="opacity-0 translate-y-4 sm:scale-95"
+					appear
+				>
+					<method-card
+						class="col-span-8 sm:col-span-8 md:col-span-5 xl:col-span-4"
+						v-bind="message('landing.paths.live')"
+						:available="isLiveAvailable"
+					/>
+				</transition>
 
-				<method-card
-					class="col-span-8 sm:col-span-8 md:col-span-5 xl:col-span-4"
-					v-bind="message('landing.paths.selfRecord')"
-					:available="isOnDemandAvailable"
-				/>
+				<transition
+					enter-active-class="transform transition-all delay-150 ease-out duration-300"
+					enter-from-class="opacity-0 translate-y-4 sm:scale-95"
+					appear
+				>
+					<method-card
+						class="col-span-8 sm:col-span-8 md:col-span-5 xl:col-span-4"
+						v-bind="message('landing.paths.selfRecord')"
+						:available="isOnDemandAvailable"
+					/>
+				</transition>
 			</div>
 
 			<div class="hidden col-start-11 col-span-2 items-end relative transform translate-y-24 xl:flex">
