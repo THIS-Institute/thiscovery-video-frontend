@@ -1,32 +1,33 @@
 <template>
-	<div class="flex items-center space-x-2.5 mt-5">
+	<div class="flex items-center mt-5">
 		<e-button
 			v-if="!lowerLimit"
 			title="Back"
 			icon="chevron-left"
-			class="e-button--red-outline"
+			class="text-red hover:text-black focus:text-black"
 			flipped
-			pill
 			@click="moveTo(index - 1)"
 		/>
 
-		<e-button
-			v-if="!upperLimit"
-			title="Next"
-			icon="chevron-right"
-			class="e-button--red-outline"
-			pill
-			@click="moveTo(index + 1)"
-		/>
+		<div class="pl-2.5 ml-auto">
+			<e-button
+				v-if="!upperLimit"
+				title="Next"
+				icon="chevron-right"
+				class="e-button--red-outline"
+				pill
+				@click="moveTo(index + 1)"
+			/>
 
-		<e-button
-			v-else
-			title="Continue"
-			icon="chevron-right"
-			class="e-button--red"
-			:url="{ name: ROUTE_SELF_SETTINGS }"
-			pill
-		/>
+			<e-button
+				v-else
+				title="Continue"
+				icon="chevron-right"
+				class="e-button--red"
+				:url="{ name: ROUTE_SELF_SETTINGS }"
+				pill
+			/>
+		</div>
 	</div>
 
 	<ul class="flex items-center space-x-2 mt-7.5">
