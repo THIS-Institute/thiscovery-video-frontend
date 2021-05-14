@@ -5,6 +5,7 @@
 				'flex items-center space-x-1',
 				'px-1.5 py-1 rounded-full',
 				'bg-red text-white text-sm',
+				'animate-pulse',
 			]"
 		>
 			<icon name="record" />

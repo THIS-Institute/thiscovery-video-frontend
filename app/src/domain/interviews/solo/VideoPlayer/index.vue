@@ -26,9 +26,17 @@
 			@add-comments="$emit('addComments')"
 		/>
 
-		<loading-spinner
-			v-if="isUploading"
-		/>
+		<transition
+			enter-active-class="transition-opacity ease-out duration-300"
+			leave-active-class="transition-opacity ease-in delay-100 duration-300"
+			enter-from-class="opacity-0"
+			leave-to-class="opacity-0"
+		>
+			<loading-spinner
+				v-if="isUploading"
+				:light="true"
+			/>
+		</transition>
 	</placeholder>
 
 	<video-controls
