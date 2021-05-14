@@ -4,6 +4,7 @@
 			<question
 				:question="activeQuestion"
 				:hidden="hidden"
+				:right="right"
 				is-interviewer
 				@toggle-hidden="hidden = !hidden"
 			/>
@@ -73,6 +74,7 @@
 		setup(props, { emit }) {
 			const state = reactive({
 				index: 0,
+				right: true,
 				active: null,
 				hidden: true,
 			});
@@ -85,7 +87,10 @@
 				return props.questions[state.index];
 			});
 
-			const onSkip = (next) => state.index += next ? 1 : -1;
+			const onSkip = (next) => {
+				state.right = next;
+				state.index += next ? 1 : -1;
+			};
 
 			const upperLimit = computed(() => (state.index + 1) === props.questions.length);
 			const lowerLimit = computed(() => state.index === 0);
