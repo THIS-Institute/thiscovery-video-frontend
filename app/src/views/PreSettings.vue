@@ -11,65 +11,71 @@
 			</div>
 
 			<div class="col-span-12 sm:col-span-8 sm:col-start-3 lg:col-span-4 lg:col-start-5">
-				<div class="bg-white rounded-lg w-full">
-					<div
-						:class="[
-							'flex flex-col p-2.5 w-full',
-							{
-								'pb-16': !msgs.infoBar || !isLive(),
-							},
-						]"
-					>
-						<div class="rounded-lg overflow-hidden">
-							<video-preview />
-						</div>
-
-						<div class="max-w-86 mx-auto">
-							<div class="flex flex-col items-center mt-12">
-								<h2
-									class="e-h3 text-center"
-									v-text="msgs.title"
-								/>
-
-								<p
-									v-if="msgs.content"
-									class="text-sm text-center mt-1.5"
-									v-text="msgs.content"
-								/>
-
-								<e-button
-									v-if="hasMicrophone"
-									:title="message(`${domain}.preSettings.continueButtonText`)"
-									icon="chevron-right"
-									class="e-button--red mt-5"
-									:url="{ name: nextRoute }"
-									pill
-								/>
-
-								<e-button
-									v-else
-									title="How to fix this"
-									icon="chevron-right"
-									class="e-button--red mt-5"
-									pill
-									@click="troubleShoot"
-								/>
-
-								<modal-container wrapper-class="max-w-xl">
-									<trouble-shooting />
-								</modal-container>
+				<transition
+					enter-active-class="transform transition-all ease-out delay-150 duration-300"
+					enter-from-class="opacity-0 translate-y-4 sm:scale-95"
+					appear
+				>
+					<div class="bg-white rounded-lg w-full">
+						<div
+							:class="[
+								'flex flex-col p-2.5 w-full',
+								{
+									'pb-16': !msgs.infoBar || !isLive(),
+								},
+							]"
+						>
+							<div class="rounded-lg overflow-hidden">
+								<video-preview />
 							</div>
 
-							<devices class="mt-5" />
-						</div>
+							<div class="max-w-86 mx-auto">
+								<div class="flex flex-col items-center mt-12">
+									<h2
+										class="e-h3 text-center"
+										v-text="msgs.title"
+									/>
 
-						<info-bar
-							v-if="isLive() && msgs.infoBar"
-							class="mt-12"
-							v-bind="msgs.infoBar"
-						/>
+									<p
+										v-if="msgs.content"
+										class="text-sm text-center mt-1.5"
+										v-text="msgs.content"
+									/>
+
+									<e-button
+										v-if="hasMicrophone"
+										:title="message(`${domain}.preSettings.continueButtonText`)"
+										icon="chevron-right"
+										class="e-button--red mt-5"
+										:url="{ name: nextRoute }"
+										pill
+									/>
+
+									<e-button
+										v-else
+										title="How to fix this"
+										icon="chevron-right"
+										class="e-button--red mt-5"
+										pill
+										@click="troubleShoot"
+									/>
+
+									<modal-container wrapper-class="max-w-xl">
+										<trouble-shooting />
+									</modal-container>
+								</div>
+
+								<devices class="mt-5" />
+							</div>
+
+							<info-bar
+								v-if="isLive() && msgs.infoBar"
+								class="mt-12"
+								v-bind="msgs.infoBar"
+							/>
+						</div>
 					</div>
-				</div>
+				</transition>
 			</div>
 		</div>
 	</section>
