@@ -11,56 +11,84 @@
 			</div>
 
 			<div class="col-span-12 lg:col-span-8 lg:col-start-2 xl:col-span-6 xl:col-start-4">
-				<div
-					:class="[
-						'grid grid-cols-6 gap-x-5 items-center',
-						'bg-white rounded-lg w-full',
-					]"
+				<transition
+					enter-active-class="transform transition-all ease-out duration-300"
+					enter-from-class="opacity-0 translate-y-4 sm:scale-95"
+					appear
 				>
-					<div class="col-span-6 p-4 sm:col-span-4 sm:pl-6 sm:pr-9">
-						<icon-text
-							tag="h2"
-							class="e-h4"
-							text="Self record"
-							:icon="{
-								name: 'video',
-								size: 'w-6 h-6',
-							}"
-						/>
-
-						<h2
-							class="e-h3 mt-5"
-							v-text="active.title"
-						/>
-
-						<p
-							class="mt-5"
-							v-text="active.content"
-						/>
-
-						<instructions-nav
-							:total="instructionsLength"
-							:index="index"
-							@move="setInstruction"
-						/>
-					</div>
-
 					<div
 						:class="[
-							'row-end-1 col-span-6 pt-4 px-4',
-							'sm:px-0 py-4',
-							'sm:col-span-2 sm:col-start-1 sm:row-end-1 sm:-ml-8',
-							'md:-ml-14',
+							'grid grid-cols-6 gap-x-5 items-center',
+							'bg-white rounded-lg w-full',
 						]"
 					>
-						<placeholder
-							ratio="pt-instruction"
-							class="rounded-lg overflow-hidden"
+						<div class="col-span-6 p-4 sm:col-span-4 sm:pl-6 sm:pr-9">
+							<transition
+								enter-active-class="transform transition-all ease-out duration-300"
+								leave-active-class="transform transition-opacity ease-in duration-200"
+								:enter-from-class="`opacity-0 ${ right ? 'translate-x-4' : '-translate-x-4' }`"
+								leave-to-class="opacity-0"
+								mode="out-in"
+							>
+								<div
+									:key="index"
+									class="flex flex-col space-y-5"
+								>
+									<icon-text
+										tag="h2"
+										class="e-h4"
+										text="Self record"
+										:icon="{
+											name: 'video',
+											size: 'w-6 h-6',
+										}"
+									/>
+
+									<h2
+										class="e-h3 mt-5"
+										v-text="active.title"
+									/>
+
+									<p
+										class="mt-5"
+										v-text="active.content"
+									/>
+								</div>
+							</transition>
+
+							<instructions-nav
+								:total="instructionsLength"
+								:index="index"
+								@move="setInstruction"
+							/>
+						</div>
+
+						<div
+							:class="[
+								'row-end-1 col-span-6 pt-4 px-4',
+								'sm:px-0 py-4',
+								'sm:col-span-2 sm:col-start-1 sm:row-end-1 sm:-ml-8',
+								'md:-ml-14',
+							]"
 						>
-							<img v-bind="active.img">
-						</placeholder>
+							<transition
+								enter-active-class="transform transition-all ease-out duration-300"
+								leave-active-class="transform transition-opacity ease-in duration-200"
+								:enter-from-class="`opacity-0 ${ right ? 'translate-x-4' : '-translate-x-4' }`"
+								leave-to-class="opacity-0"
+								mode="out-in"
+							>
+								<placeholder
+									:key="index"
+									ratio="pt-instruction"
+									class="rounded-lg overflow-hidden"
+								>
+									<img v-bind="active.img">
+								</placeholder>
+							</transition>
+						</div>
 					</div>
-				</div>
+				</transition>
 			</div>
 		</div>
 	</section>
@@ -80,6 +108,7 @@
 
 			const state = reactive({
 				index: 0,
+				right: true,
 			});
 
 			const instructions = message('selfRecord.methodOverview.instructions');
@@ -87,7 +116,10 @@
 
 			const active = computed(() => instructions[state.index]);
 
-			const setInstruction = (index) => state.index = index;
+			const setInstruction = (index) => {
+				state.right = index > state.index;
+				state.index = index;
+			};
 
 			return {
 				...toRefs(state),

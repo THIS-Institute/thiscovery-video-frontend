@@ -10,10 +10,19 @@
 				v-text="toReadableValue(readSection)"
 			/>
 
-			<h2
-				class="e-h3"
-				v-text="activeSection.title"
-			/>
+			<transition
+				enter-active-class="transform transition-all ease-out duration-300"
+				leave-active-class="transform transition-all ease-in duration-200"
+				enter-from-class="opacity-0 translate-x-4 sm:scale-95"
+				leave-to-class="opacity-0 translate-x-4 sm:scale-95"
+				mode="out-in"
+			>
+				<h2
+					:key="activeSection.title"
+					class="e-h3"
+					v-text="activeSection.title"
+				/>
+			</transition>
 		</div>
 
 		<e-button
@@ -43,103 +52,109 @@
 		/>
 	</div>
 
-	<div
-		:class="[
-			'grid grid-cols-12 gap-5',
-			'bg-white mt-10',
-			'-mx-gutter p-5 sm:p-7.5 sm:mx-0 sm:rounded-lg',
-		]"
+	<transition
+		enter-active-class="transform transition-all ease-out duration-300"
+		enter-from-class="opacity-0 translate-y-4 sm:scale-95"
+		appear
 	>
-		<div
+		<section
 			:class="[
-				'col-span-12',
-				'sm:col-span-10 sm:col-start-2',
-				'lg:col-span-6 lg:col-start-1 lg:mx-3.5',
+				'grid grid-cols-12 gap-5',
+				'bg-white mt-10',
+				'-mx-gutter p-5 sm:p-7.5 sm:mx-0 sm:rounded-lg',
 			]"
 		>
-			<transition
-				enter-active-class="transform transition-all ease-out delay-150 duration-300"
-				leave-active-class="transform transition-all ease-in duration-200"
-				enter-from-class="opacity-0 translate-y-4 sm:scale-95"
-				leave-to-class="opacity-0 translate-y-4 sm:scale-95"
-				mode="out-in"
+			<div
+				:class="[
+					'col-span-12',
+					'sm:col-span-10 sm:col-start-2',
+					'lg:col-span-6 lg:col-start-1 lg:mx-3.5',
+				]"
 			>
-				<aside :key="toReadableValue(readQuestion)">
-					<question
-						:number="toReadableValue(readQuestion)"
-						v-bind="activeSection.questions[readQuestion]"
-					/>
-				</aside>
-			</transition>
-		</div>
-
-		<div
-			:class="[
-				'col-span-12 row-start-1',
-				'sm:col-span-10 sm:col-start-2',
-				'lg:col-span-6 lg:col-start-7',
-			]"
-		>
-			<div class="rounded-lg overflow-hidden bg-grey-400">
-				<video-recorder
-					v-if="isRecordingMode()"
-					:user-name="userGivenName"
-					@started="onRecorderStart"
-					@stopped="onRecorderStop"
-				/>
-
-				<video-player
-					v-if="isReviewingMode() && playbackURL"
-					:video-playback-url="playbackURL"
-					@progress-question="onNextQuestion"
-					@retake="openConfirmDialog"
-					@add-comments="openCommentsDialog"
-				/>
+				<transition
+					enter-active-class="transform transition-all ease-out delay-150 duration-300"
+					leave-active-class="transform transition-all ease-in duration-200"
+					enter-from-class="opacity-0 translate-y-4 sm:scale-95"
+					leave-to-class="opacity-0 translate-y-4 sm:scale-95"
+					mode="out-in"
+				>
+					<aside :key="toReadableValue(readQuestion)">
+						<question
+							:number="toReadableValue(readQuestion)"
+							v-bind="activeSection.questions[readQuestion]"
+						/>
+					</aside>
+				</transition>
 			</div>
 
-			<modal-container
-				:show="state.showConfirmDialog || state.showCommentDialog"
+			<div
+				:class="[
+					'col-span-12 row-start-1',
+					'sm:col-span-10 sm:col-start-2',
+					'lg:col-span-6 lg:col-start-7',
+				]"
 			>
-				<!-- Are you sure you want to retake? -->
-				<confirm-dialog
-					v-if="state.showConfirmDialog"
-					@confirm="onConfirmRetake"
-					@cancel="onCancelRetake"
+				<div class="rounded-lg overflow-hidden bg-grey-400">
+					<video-recorder
+						v-if="isRecordingMode()"
+						:user-name="userGivenName"
+						@started="onRecorderStart"
+						@stopped="onRecorderStop"
+					/>
+
+					<video-player
+						v-if="isReviewingMode() && playbackURL"
+						:video-playback-url="playbackURL"
+						@progress-question="onNextQuestion"
+						@retake="openConfirmDialog"
+						@add-comments="openCommentsDialog"
+					/>
+				</div>
+
+				<modal-container
+					:show="state.showConfirmDialog || state.showCommentDialog"
 				>
-					Are you sure you want to delete your recording and retake?
-				</confirm-dialog>
+					<!-- Are you sure you want to retake? -->
+					<confirm-dialog
+						v-if="state.showConfirmDialog"
+						@confirm="onConfirmRetake"
+						@cancel="onCancelRetake"
+					>
+						Are you sure you want to delete your recording and retake?
+					</confirm-dialog>
 
-				<!-- Add a comment -->
-				<comment-dialog
-					v-if="state.showCommentDialog"
-					:comments="state.comments"
-					@save="onAddedComments"
-					@cancel="onCancelComments"
+					<!-- Add a comment -->
+					<comment-dialog
+						v-if="state.showCommentDialog"
+						:comments="state.comments"
+						@save="onAddedComments"
+						@cancel="onCancelComments"
+					/>
+				</modal-container>
+
+				<info-bar
+					v-if="isRecordingMode()"
+					class="mt-2.5"
+					title="Having trouble recording?"
+					:cta="{
+						title: 'See how to fix this',
+						url: '#',
+					}"
 				/>
-			</modal-container>
 
-			<info-bar
-				v-if="isRecordingMode()"
-				class="mt-2.5"
-				title="Having trouble recording?"
-				:cta="{
-					title: 'See how to fix this',
-					url: '#',
-				}"
-			/>
-
-			<info-bar
-				v-if="isReviewingMode()"
-				class="mt-2.5"
-				title="Not happy with your answer?"
-				:cta="{
-					title: 'Click here to retake it',
-				}"
-				modal
-				@open-modal="openConfirmDialog"
-			/>
-		</div>
-	</div>
+				<info-bar
+					v-if="isReviewingMode()"
+					class="mt-2.5"
+					title="Not happy with your answer?"
+					:cta="{
+						title: 'Click here to retake it',
+					}"
+					modal
+					@open-modal="openConfirmDialog"
+				/>
+			</div>
+		</section>
+	</transition>
 </template>
 
 <script>

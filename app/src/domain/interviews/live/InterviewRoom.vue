@@ -10,7 +10,17 @@
 				/>
 			</div>
 
-			<only-caller v-else />
+			<template v-else>
+				<transition
+					enter-active-class="transform transition-all ease-out duration-300"
+					leave-active-class="transform transition-all ease-in duration-200"
+					enter-from-class="opacity-0 translate-y-4 sm:scale-95"
+					leave-to-class="opacity-0 translate-y-4 sm:scale-95"
+					appear
+				>
+					<only-caller />
+				</transition>
+			</template>
 
 			<div class="flex flex-col absolute inset-0 w-full h-full">
 				<div class="p-2.5 pl-4 w-full bg-gradient-to-b from-black-25">
