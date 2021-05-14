@@ -10,7 +10,15 @@
 				</placeholder>
 			</div>
 
-			<interview-overview />
+			<transition
+				enter-active-class="transform transition-all ease-out delay-200 duration-300"
+				leave-active-class="transform transition-all ease-in duration-200"
+				enter-from-class="opacity-0 translate-y-4 sm:scale-95"
+				leave-to-class="opacity-0 translate-y-4 sm:scale-95"
+				appear
+			>
+				<interview-overview />
+			</transition>
 		</div>
 	</section>
 </template>
