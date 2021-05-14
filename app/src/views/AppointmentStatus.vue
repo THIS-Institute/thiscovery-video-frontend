@@ -15,15 +15,23 @@
 
 			<hr class="e-divider mt-5 border-0 xl:hidden">
 
-			<div
-				:class="[
-					'e-content relative gap-5 mt-12 col-span-12',
-					'xl:mt-7 xl:col-start-2 xl:col-span-10',
-					'xl:rounded-lg xl:overflow-hidden xl:bg-white',
-				]"
+			<transition
+				enter-active-class="transform transition-all ease-out duration-300"
+				leave-active-class="transform transition-all ease-in duration-200"
+				enter-from-class="opacity-0 translate-y-4 sm:scale-95"
+				leave-to-class="opacity-0 translate-y-4 sm:scale-95"
+				appear
 			>
-				<status />
-			</div>
+				<div
+					:class="[
+						'e-content relative gap-5 mt-12 col-span-12',
+						'xl:mt-7 xl:col-start-2 xl:col-span-10',
+						'xl:rounded-lg xl:overflow-hidden xl:bg-white',
+					]"
+				>
+					<status />
+				</div>
+			</transition>
 		</div>
 	</section>
 </template>
