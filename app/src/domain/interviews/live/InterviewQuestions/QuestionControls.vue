@@ -1,6 +1,6 @@
 <template>
-	<div class="bg-white rounded-lg">
-		<div class="p-5">
+	<div class="bg-white rounded-lg overflow-hidden">
+		<div class="p-5 overflow-hidden">
 			<question
 				:question="activeQuestion"
 				:hidden="hidden"
@@ -10,42 +10,54 @@
 			/>
 		</div>
 
-		<template v-if="!hidden">
-			<hr class="border-opacity-25 border-grey-400">
+		<transition
+			enter-active-class="transition-all ease-out duration-1000"
+			leave-active-class="transition-all ease-in duration-500"
+			enter-from-class="max-h-0"
+			enter-to-class="max-h-live-questions"
+			leave-from-class="max-h-live-questions"
+			leave-to-class="max-h-0"
+		>
+			<div
+				v-show="!hidden"
+				class="max-h-0"
+			>
+				<hr class="border-opacity-25 border-grey-400">
 
-			<div class="flex items-center justify-between flex-wrap gap-y-2 p-5">
-				<e-button
-					v-if="(active !== null) && (active === index)"
-					title="Active"
-					icon="check"
-					class="e-button--green"
-					pill
-					small
-					@click="onStopAsking"
-				/>
-
-				<e-button
-					v-else
-					title="Ask this question"
-					class="e-button--red-outline"
-					small
-					pill
-					@click="onAskQuestion"
-				/>
-
-				<div class="flex items-center space-x-1">
+				<div class="flex items-center justify-between flex-wrap gap-y-2 p-5">
 					<e-button
-						v-for="(next, i) in [false, true]"
-						:key="i"
-						:icon="next ? 'chevron-right' : 'chevron-left'"
-						class="e-button--red-outline"
-						:disabled="next ? upperLimit : lowerLimit"
+						v-if="(active !== null) && (active === index)"
+						title="Active"
+						icon="check"
+						class="e-button--green"
+						pill
 						small
-						@click="onSkip(next)"
+						@click="onStopAsking"
 					/>
+
+					<e-button
+						v-else
+						title="Ask this question"
+						class="e-button--red-outline"
+						small
+						pill
+						@click="onAskQuestion"
+					/>
+
+					<div class="flex items-center space-x-1">
+						<e-button
+							v-for="(next, i) in [false, true]"
+							:key="i"
+							:icon="next ? 'chevron-right' : 'chevron-left'"
+							class="e-button--red-outline"
+							:disabled="next ? upperLimit : lowerLimit"
+							small
+							@click="onSkip(next)"
+						/>
+					</div>
 				</div>
 			</div>
-		</template>
+		</transition>
 	</div>
 </template>
 
