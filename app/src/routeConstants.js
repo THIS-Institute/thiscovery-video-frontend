@@ -7,3 +7,4 @@ export const ROUTE_SELF_INTERVIEW = 'self_interview';
 export const ROUTE_LIVE_LANDING = 'live_landing';
 export const ROUTE_LIVE_SETTINGS = 'live_settings';
 export const ROUTE_LIVE_ROOM = 'live_room';
+export const ROUTE_NO_TASK = 'no_task';
