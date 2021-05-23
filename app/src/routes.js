@@ -12,6 +12,7 @@ const PreSettingsView = () => import('./views/PreSettings');
 const SelfRecordView = () => import('./views/SelfRecord');
 const LiveRoomView = () => import('./views/LiveRoom');
 const LiveLandingView = () => import('./views/LiveLanding');
+const TaskNotFound = () => import('./views/TaskNotFound');
 const PathNotFound = () => import('./views/PathNotFound');
 
 // Layouts
@@ -162,6 +163,23 @@ export const routes = [
 	{
 		path: '/auth-return',
 		component: AuthReturn,
+	},
+
+	{
+		path: '/no-task',
+		component: FullBackgroundLayout,
+		props: {
+			backgroundType: 'curls',
+			hasNav: false,
+			hasBack: false,
+		},
+		children: [
+			{
+				path: '',
+				name: constant.ROUTE_NO_TASK,
+				component: TaskNotFound,
+			},
+		],
 	},
 
 	{

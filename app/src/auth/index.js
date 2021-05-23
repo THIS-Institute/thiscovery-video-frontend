@@ -38,7 +38,7 @@ function logout(options) {
 
 const authPlugin = {
     isAuthenticated: computed(() => store.state.user.isAuthenticated),
-    loading: computed(() => store.state.user.isAuthLoading),
+    loading: computed(() => store.state.app.loading),
     user: computed(() => store.state.user.user),
     getIdTokenClaims,
     getTokenSilently,
@@ -70,12 +70,11 @@ export const authRouteGuard = (to, from, next) => {
         return verify();
     }
 
-    // Watch for the loading property to change before we check isAuthenticated
     watchEffect(() => {
-        if (loading.value === false) {
+        if (!loading.value) {
             return verify();
         }
-    })
+    });
 }
 
 export const setupAuth = async (options) => {
@@ -83,37 +82,23 @@ export const setupAuth = async (options) => {
         ...options,
     });
 
-    try {
-        // If the user is returning to the app after authentication
-
-        if (
-            window.location.search.includes('code=')
-            && window.location.search.includes('state=')
-        ) {
-            // handle the redirect and retrieve tokens
+    if (
+        window.location.search.includes('code=')
+        && window.location.search.includes('state=')
+    ) {
+        try {
             const { appState } = await client.handleRedirectCallback();
-
             await store.commit('user/setAuthAppState', appState);
+        } catch (exception) {
+            store.commit('user/setAuthError', exception);
+        } finally {
+            const isAuthenticated = await client.isAuthenticated();
+            const user = await client.getUser();
 
-            // Notify subscribers that the redirect callback has happened, passing the appState
-            // (useful for retrieving any pre-authentication state)
-            // callbackRedirect(appState);
+            store.dispatch('user/authenticate', {
+                isAuthenticated: isAuthenticated,
+                user: user,
+            });
         }
-    } catch (exception) {
-        store.commit('user/setAuthError', exception);
-    } finally {
-        // Initialize our internal authentication state
-        const isAuthenticated = await client.isAuthenticated();
-        const user = await client.getUser();
-
-        store.commit('user/setIsAuthenticated', isAuthenticated);
-        store.commit('user/setUser', user);
-        store.commit('user/setIsAuthLoading', false);
-    }
-
-    return {
-        install: (app) => {
-            app.config.globalProperties.$auth = authPlugin
-        },
     }
 }

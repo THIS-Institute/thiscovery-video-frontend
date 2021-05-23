@@ -2,6 +2,7 @@ export const app = {
 	namespaced: true,
 
 	state: () => ({
+		loading: false,
 		modalActive: false,
 		navActive: false,
 	}),
@@ -18,6 +19,10 @@ export const app = {
 		setModalActive(state, active) {
 			state.modalActive = active;
 		},
+
+		setLoading(state, loading) {
+			state.loading = loading;
+		},
 	},
 
 	actions: {
@@ -28,5 +33,5 @@ export const app = {
 		closeModal: ({ commit }) => {
 			commit('setModalActive', false);
 		},
-	}
-};
+	},
+}

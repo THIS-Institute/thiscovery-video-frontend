@@ -9,4 +9,4 @@ export const router = createRouter({
 });
 
 router.beforeEach(authRouteGuard);
-router.beforeResolve(taskInitGuard);
+router.beforeEach(taskInitGuard);

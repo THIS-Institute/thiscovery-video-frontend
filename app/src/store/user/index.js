@@ -47,6 +47,14 @@ export const user = {
 		},
 	},
 
+	actions: {
+		authenticate ({ commit }, authentication) {
+			commit('setIsAuthenticated', authentication.isAuthenticated);
+			commit('setUser', authentication.user);
+			commit('setIsAuthLoading', false);
+		},
+	},
+
 	getters: {
 		hasUser (state) {
 			if (!state.isAuthenticated) {
