@@ -60,6 +60,7 @@ class Bookings:
         )
 
         event = Event(
+            source='thiscovery_video',
             detail_type= 'interview_booked',
             detail={
                 'appointment_datetime': appointment['datetime'],
