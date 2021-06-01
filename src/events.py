@@ -3,9 +3,7 @@ import json
 import boto3
 
 class EventBridge:
-    def __init__(self, namespace):
-        self.namespace = namespace
-
+    def __init__(self):
         kwargs = {'service_name': 'events'}
 
         if 'LOCAL_AWS_ENDPOINT' in os.environ:
