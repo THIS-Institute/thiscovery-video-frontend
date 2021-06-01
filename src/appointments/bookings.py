@@ -37,7 +37,6 @@ class Bookings:
         task_id = user['taskId']
         appointment_id = str(appointment['id'])
         appointment_time = str(appointment['datetime'])
-        app_base_url = os.environ['APP_BASE_URL']
 
         self.db.put_item(
             Item={
@@ -59,22 +58,10 @@ class Bookings:
             }
         )
 
-        event = Event(
-            source='thiscovery_video',
-            detail_type= 'interview_booked',
-            detail={
-                'appointment_datetime': appointment['datetime'],
-                'calendar_name': appointment['calendar'],
-                'calendar_id': appointment['calendarID'],
-                'appointment_type': appointment['type'],
-                'appointment_id': appointment['id'],
-                'appointment_duration': appointment['duration'],
-                'appointment_timezone': appointment['timezone'],
-                'interview_room_url': f'{app_base_url}/live/{appointment_id}',
-            },
+        self.create_event(
+            event_type='interview_booked',
+            appointment=appointment,
         )
-
-        self.event_bridge.put_event(event)
 
         return appointment
 
@@ -133,6 +120,11 @@ class Bookings:
             },
         )
 
+        self.create_event(
+            event_type='interview_rescheduled',
+            appointment=appointment,
+        )
+
         return appointment
 
     def cancel(self, appointment_id):
@@ -164,4 +156,31 @@ class Bookings:
             'sk': 'INFO',
         })
 
+        self.create_event(
+            event_type='interview_cancelled',
+            appointment=cancellation,
+        )
+
         return cancellation
+
+    def create_event(self, event_type, appointment):
+        appointment_id = str(appointment['id'])
+        app_base_url = os.environ['APP_BASE_URL']
+    
+        event = Event(
+            source='thiscovery_video',
+            detail_type=event_type,
+            detail={
+                'appointment_datetime': appointment['datetime'],
+                'calendar_name': appointment['calendar'],
+                'calendar_id': appointment['calendarID'],
+                'appointment_type': appointment['type'],
+                'appointment_type_id': appointment['appointmentTypeID'],
+                'appointment_id': appointment['id'],
+                'appointment_duration': appointment['duration'],
+                'appointment_timezone': appointment['timezone'],
+                'interview_room_url': f'{app_base_url}/live/{appointment_id}',
+            },
+        )
+
+        self.event_bridge.put_event(event)
