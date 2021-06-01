@@ -1,13 +1,15 @@
+import os
 from .exceptions import BookingError, InvalidTimeslot, AppointmentNotFound
 from .acuity import AcuityError
-
 from dynamodb import DynamoDB
+from events import Event, EventBridge
 from requests import Response
 
 class Bookings:
     def __init__(self, acuity_client):
         self.acuity = acuity_client
         self.db = DynamoDB().client()
+        self.event_bridge = EventBridge()
 
     def create(self, appointment_type_id, appointment_time, user):
         time_string = appointment_time.strftime('%Y-%m-%dT%H:%M:%S%z')
@@ -54,6 +56,11 @@ class Bookings:
                 'appointment_id': appointment_id,
                 'appointment_time': appointment_time,
             }
+        )
+
+        self.create_event(
+            event_type='interview_booked',
+            appointment=appointment,
         )
 
         return appointment
@@ -113,6 +120,11 @@ class Bookings:
             },
         )
 
+        self.create_event(
+            event_type='interview_rescheduled',
+            appointment=appointment,
+        )
+
         return appointment
 
     def cancel(self, appointment_id):
@@ -131,8 +143,6 @@ class Bookings:
             'sk': 'INFO',
         })
 
-        print(appointment_info)
-
         user = appointment_info['Item']['user']
         task = appointment_info['Item']['task']
 
@@ -146,4 +156,31 @@ class Bookings:
             'sk': 'INFO',
         })
 
+        self.create_event(
+            event_type='interview_cancelled',
+            appointment=cancellation,
+        )
+
         return cancellation
+
+    def create_event(self, event_type, appointment):
+        appointment_id = str(appointment['id'])
+        app_base_url = os.environ['APP_BASE_URL']
+    
+        event = Event(
+            source='thiscovery_video',
+            detail_type=event_type,
+            detail={
+                'appointment_datetime': appointment['datetime'],
+                'calendar_name': appointment['calendar'],
+                'calendar_id': appointment['calendarID'],
+                'appointment_type': appointment['type'],
+                'appointment_type_id': appointment['appointmentTypeID'],
+                'appointment_id': appointment['id'],
+                'appointment_duration': appointment['duration'],
+                'appointment_timezone': appointment['timezone'],
+                'interview_room_url': f'{app_base_url}/live/{appointment_id}',
+            },
+        )
+
+        self.event_bridge.put_event(event)

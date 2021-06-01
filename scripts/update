@@ -41,3 +41,17 @@ if [ -n "$LOCAL_AWS_ENDPOINT" ]; then
 
     echo ""
 fi
+
+#
+# Creates EventBridge
+#
+export $(grep LOCAL_AWS_ENDPOINT .lambda.env)
+if [ -n "$LOCAL_AWS_ENDPOINT" ]; then
+    echo -e "--> "$COLOUR_GREEN"Creating local AWS EventBridge bus"$COLOUR_RESET
+
+    docker-compose exec awslocal awslocal events create-event-bus \
+        --name thiscovery-event-bus \
+        --output text
+
+    echo ""
+fi
