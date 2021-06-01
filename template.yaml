@@ -262,6 +262,8 @@ Resources:
             SecretArn: !Sub arn:${AWS::Partition}:secretsmanager:${AWS::Region}:${AWS::AccountId}:secret:/${EnvironmentTagName}/*
         - DynamoDBCrudPolicy:
             TableName: !Ref InterviewsTable
+        - EventBridgePutEventsPolicy:
+            EventBusName: thiscovery-event-bus
       Events:
         BackendApiPOSTv1appointments:
           Type: Api
