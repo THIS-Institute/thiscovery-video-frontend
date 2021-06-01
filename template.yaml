@@ -275,6 +275,7 @@ Resources:
           TABLE_ARN: !GetAtt InterviewsTable.Arn
           ACUITY_BASE_URI: !Ref EnvConfigAcuityBaseUriAsString
           SECRETS_NAMESPACE: !Sub /${EnvironmentTagName}/
+          APP_BASE_URL: !Ref EnvConfigappbaseurlAsString
   CreateInterviewAnswer:
     Type: AWS::Serverless::Function
     Properties:
@@ -641,6 +642,9 @@ Parameters:
   EnvConfigjsbuildAsString:
     Type: AWS::SSM::Parameter::Value<String>
     Default: /<EnvironmentName>/js-build
+  EnvConfigappbaseurlAsString:
+    Type: AWS::SSM::Parameter::Value<String>
+    Default: /<EnvironmentName>/app/base-url
 Metadata:
   EnvConfigParameters:
     EnvConfigAppointmentsDefaultDaysAsString: appointments.default-days
@@ -650,3 +654,4 @@ Metadata:
     EnvConfigAcuityBaseUriAsString: acuity.base-uri
     EnvConfigtwilioaccountsidAsString: twilio.account-sid
     EnvConfigjsbuildAsString: js-build
+    EnvConfigappbaseurlAsString: app.base-url

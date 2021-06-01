@@ -1,4 +1,5 @@
 import os
+import json
 import boto3
 
 class EventBridge:
@@ -20,7 +21,10 @@ class EventBridge:
         )
 
 class Event:
-    def __init__(self, time=None, source=None, resources=None, detail_type=None, detail=None):
+    DEFAULT_EVENT_BUS_NAME = 'thiscovery-event-bus'
+
+    def __init__(self, event_bus=None, time=None, source=None, resources=None, detail_type=None, detail=None):
+        self.event_bus = event_bus
         self.time = time
         self.source = source
         self.resources = resources
@@ -29,6 +33,11 @@ class Event:
 
     def get_dict(self):
         dict = {}
+
+        if self.event_bus:
+            dict['EventBusName'] = self.event_bus
+        else:
+            dict['EventBusName'] = self.DEFAULT_EVENT_BUS_NAME
 
         if self.time:
             dict['Time'] = self.time
@@ -43,7 +52,7 @@ class Event:
             dict['DetailType'] = self.detail_type
 
         if self.detail:
-            dict['Detail'] = self.detail
+            dict['Detail'] = json.dumps(self.detail)
 
         return dict
 

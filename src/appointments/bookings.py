@@ -1,13 +1,15 @@
+import os
 from .exceptions import BookingError, InvalidTimeslot, AppointmentNotFound
 from .acuity import AcuityError
-
 from dynamodb import DynamoDB
+from events import Event, EventBridge
 from requests import Response
 
 class Bookings:
     def __init__(self, acuity_client):
         self.acuity = acuity_client
         self.db = DynamoDB().client()
+        self.event_bridge = EventBridge()
 
     def create(self, appointment_type_id, appointment_time, user):
         time_string = appointment_time.strftime('%Y-%m-%dT%H:%M:%S%z')
@@ -35,6 +37,7 @@ class Bookings:
         task_id = user['taskId']
         appointment_id = str(appointment['id'])
         appointment_time = str(appointment['datetime'])
+        app_base_url = os.environ['APP_BASE_URL']
 
         self.db.put_item(
             Item={
@@ -55,6 +58,22 @@ class Bookings:
                 'appointment_time': appointment_time,
             }
         )
+
+        event = Event(
+            detail_type= 'interview_booked',
+            detail={
+                'appointment_datetime': appointment['datetime'],
+                'calendar_name': appointment['calendar'],
+                'calendar_id': appointment['calendarID'],
+                'appointment_type': appointment['type'],
+                'appointment_id': appointment['id'],
+                'appointment_duration': appointment['duration'],
+                'appointment_timezone': appointment['timezone'],
+                'interview_room_url': f'{app_base_url}/live/{appointment_id}',
+            },
+        )
+
+        self.event_bridge.put_event(event)
 
         return appointment
 
@@ -130,8 +149,6 @@ class Bookings:
             'pk': f'APPOINTMENT#{appointment_id}',
             'sk': 'INFO',
         })
-
-        print(appointment_info)
 
         user = appointment_info['Item']['user']
         task = appointment_info['Item']['task']

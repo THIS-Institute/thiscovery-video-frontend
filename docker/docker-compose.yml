@@ -38,7 +38,7 @@ services:
     image: localstack/localstack
     restart: unless-stopped
     environment:
-      - SERVICES=secretsmanager,dynamodb
+      - SERVICES=secretsmanager,dynamodb,events
       - DEFAULT_REGION=eu-west-1
     volumes:
       - "${TMPDIR:-/tmp/localstack}:/tmp/localstack"
