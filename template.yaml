@@ -198,6 +198,8 @@ Resources:
             SecretArn: !Sub arn:${AWS::Partition}:secretsmanager:${AWS::Region}:${AWS::AccountId}:secret:/${EnvironmentTagName}/*
         - DynamoDBCrudPolicy:
             TableName: !Ref InterviewsTable
+        - EventBridgePutEventsPolicy:
+            EventBusName: thiscovery-event-bus
       Events:
         BackendApiDELETEv1appointmentsid:
           Type: Api
@@ -211,6 +213,7 @@ Resources:
           TABLE_ARN: !GetAtt InterviewsTable.Arn
           ACUITY_BASE_URI: !Ref EnvConfigAcuityBaseUriAsString
           SECRETS_NAMESPACE: !Sub /${EnvironmentTagName}/
+          APP_BASE_URL: !Ref EnvConfigappbaseurlAsString
   RescheduleAppointmentById:
     Type: AWS::Serverless::Function
     Properties:
@@ -230,6 +233,8 @@ Resources:
             SecretArn: !Sub arn:${AWS::Partition}:secretsmanager:${AWS::Region}:${AWS::AccountId}:secret:/${EnvironmentTagName}/*
         - DynamoDBCrudPolicy:
             TableName: !Ref InterviewsTable
+        - EventBridgePutEventsPolicy:
+            EventBusName: thiscovery-event-bus
       Events:
         BackendApiPATCHv1appointmentsid:
           Type: Api
@@ -243,6 +248,7 @@ Resources:
           TABLE_ARN: !GetAtt InterviewsTable.Arn
           ACUITY_BASE_URI: !Ref EnvConfigAcuityBaseUriAsString
           SECRETS_NAMESPACE: !Sub /${EnvironmentTagName}/
+          APP_BASE_URL: !Ref EnvConfigappbaseurlAsString
   CreateAppointment:
     Type: AWS::Serverless::Function
     Properties:
