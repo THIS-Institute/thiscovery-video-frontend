@@ -56,7 +56,8 @@
 <script>
 	import { useStore } from 'vuex';
 	import { computed } from 'vue';
-	import { onBeforeRouteLeave } from 'vue-router';
+	import { useRouter } from 'vue-router';
+	import { ROUTE_APPOINTMENTS } from '@/routeConstants';
 
 	import messages from '@/messages';
 	import { useMessages } from '@/composables/useMessages';
@@ -75,17 +76,15 @@
 
 		setup() {
 			const store = useStore();
+			const router = useRouter();
 			const isWaiting = computed(() => store.state.appointments.isWaiting);
 			const isConfirmed = computed(() => store.state.appointments.isConfirmed);
 			const taskTitle = computed(() => store.state.task.title);
 			const selection = computed(() => store.state.appointments.selection);
 
-			onBeforeRouteLeave(() => {
-				store.dispatch('appointments/syncBookedStatus');
-			})
-
 			const invokeReschedule = () => {
 				store.dispatch('appointments/reschedule');
+				router.push({ name: ROUTE_APPOINTMENTS });
 			};
 
 			const invokeCancellation = () => {
@@ -102,7 +101,6 @@
 			const {
 				isStatusReady,
 				isStatusBooked,
-				isStatusRescheduling,
 				isStatusCancelled,
 			} = useAppointmentStatus();
 
@@ -118,7 +116,6 @@
 				invokeCancellation,
 				isStatusReady,
 				isStatusBooked,
-				isStatusRescheduling,
 				isStatusCancelled,
 			};
 		},

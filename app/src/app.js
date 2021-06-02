@@ -1,9 +1,10 @@
+import env from './app.env';
+
 import { createApp } from 'vue';
 import { router } from './routing';
 import { store } from './store';
 import { setupAuth } from './auth';
-import { setupTask } from './store/task/setupTask';
-import env from './app.env';
+import { setupThiscoveryResponse } from './store/task/setup';
 
 import AppContainer from './domain/app/AppContainer';
 import EButton from './components/Button';
@@ -23,7 +24,7 @@ const setupApp = async () => {
         redirect_uri: `${env.domain}/auth-return`,
     });
     
-    await setupTask();
+    await setupThiscoveryResponse();
     
     store.commit('app/setLoading', false);
 };

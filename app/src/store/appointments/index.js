@@ -63,6 +63,7 @@ export const appointments = {
 		initExisting: ({ commit }, appointment) => { 
 			commit('setAppointmentId', appointment.id);
 			commit('updateSelectionTimeslot', appointment.time);
+			commit('updateIsConfirmed', true);
 			commit('setStatus', constants.STATUS_BOOKED);
 		},
 

@@ -34,16 +34,16 @@ export const task = {
 	},
 
 	actions: {
-		initalise: async ({ commit, dispatch, rootState }, taskId) => {
+		initalise: async ({ commit, dispatch, rootState }, responseId) => {
 			const userId = rootState.user.userId;
 
 			const task = await getTask({
-				taskId: taskId,
+				taskId: responseId,
 				userId: userId,
 			});
 
 			if (task) {
-				sessionStorage.setItem('task_id', taskId);
+				sessionStorage.setItem('response_id', responseId);
 
 				if (task.appointment) {
 					dispatch('appointments/initExisting', task.appointment, { root: true });
