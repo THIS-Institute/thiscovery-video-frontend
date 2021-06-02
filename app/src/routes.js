@@ -1,5 +1,7 @@
 import * as constant from './routeConstants';
 
+import { hasAppointmentGuard } from '@/domain/appointments/routeGuards';
+
 // Tools
 const Styleguide = () => import('./views/Styleguide');
 
@@ -52,19 +54,8 @@ export const routes = [
 				path: '',
 				name: constant.ROUTE_APPOINTMENTS,
 				component: BookAppointmentView,
+				beforeEnter: [ hasAppointmentGuard ],
 			},
-		],
-	},
-
-	/**
-	 * Appointment booking
-	 */
-	{
-		path: '/appointments',
-		component: SplitBackgroundLayout,
-		props: { backgroundType: 'curls' },
-		meta: { requiresTaskInit: true },
-		children: [
 			{
 				path: 'status',
 				name: constant.ROUTE_APPOINTMENT_STATUS,
