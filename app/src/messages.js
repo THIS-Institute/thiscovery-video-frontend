@@ -18,7 +18,7 @@ const userInterviewPaths = Object.freeze({
 			title: 'Want to know more?',
 			cta: {
 				title: 'See how an appointment works',
-				route: route.ROUTE_HOME,
+				route: route.ROUTE_LIVE_HOWTO,
 			}
 		},
 	},
@@ -51,7 +51,7 @@ const selfRecordInstructions = Object.freeze([
 		title: 'You\'ll be asked a series of questions',
 		content: 'We are interested in learning about your views and experiences.',
 		img: {
-			src: '//placehold.it/275x428?text=1',
+			src: '/static/img/tutorial/placeholder.jpg',
 			alt: 'Placeholder image',
 		},
 	},
@@ -59,7 +59,7 @@ const selfRecordInstructions = Object.freeze([
 		title: 'You can record answers in your own time',
 		content: 'Audio recording is required but you can disable your camera.',
 		img: {
-			src: '//placehold.it/275x428?text=2',
+			src: '/static/img/tutorial/placeholder.jpg',
 			alt: 'Placeholder image',
 		},
 	},
@@ -67,7 +67,7 @@ const selfRecordInstructions = Object.freeze([
 		title: 'Review the recording before it is sent',
 		content: 'You can play it back, type comments, or start again.',
 		img: {
-			src: '//placehold.it/275x428?text=3',
+			src: '/static/img/tutorial/placeholder.jpg',
 			alt: 'Placeholder image',
 		},
 	}
@@ -75,26 +75,26 @@ const selfRecordInstructions = Object.freeze([
 
 const liveInterviewInstructions = Object.freeze([
 	{
-		title: 'You\'ll be asked a series of questions',
+		title: 'Book your appointment with a researcher',
 		content: 'Nullam quis risus eget urna mollis ornare vel eu leo. Macenas faucibus mollis interdum',
 		img: {
-			src: '//placehold.it/275x428?text=1',
+			src: '/static/img/tutorial/placeholder.jpg',
 			alt: 'Placeholder image',
 		},
 	},
 	{
-		title: 'Mollis ornare vel eu leo',
+		title: 'Join on the day of your interview',
 		content: 'Doloremque tenetur nobis quas optio! Assumenda esse iure, dolorum porro ex eum doloribus itaque fugit soluta architecto quae.',
 		img: {
-			src: '//placehold.it/275x428?text=2',
+			src: '/static/img/tutorial/placeholder.jpg',
 			alt: 'Placeholder image',
 		},
 	},
 	{
-		title: 'Doloribus itaque fugit soluta architecto',
+		title: 'You\'ll speak directly to a researcher',
 		content: 'Repellendus suscipit in quam recusandae architecto illum mollitia molestias, excepturi dolore sunt, hic totam ab quod id ut numquam ad quibusdam.',
 		img: {
-			src: '//placehold.it/275x428?text=3',
+			src: '/static/img/tutorial/placeholder.jpg',
 			alt: 'Placeholder image',
 		},
 	}
@@ -108,6 +108,9 @@ export default Object.freeze({
 	},
 
 	live: {
+		title: 'Live interview',
+		icon: 'camera',
+
 		methodOverview: {
 			instructions: liveInterviewInstructions,
 		},
@@ -196,6 +199,9 @@ export default Object.freeze({
 	},
 
 	selfRecord: {
+		title: 'Self-record',
+		icon: 'video',
+
 		methodOverview: {
 			instructions: selfRecordInstructions,
 		},

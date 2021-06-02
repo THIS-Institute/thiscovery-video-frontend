@@ -77,6 +77,9 @@ export const routes = [
 				path: '',
 				name: constant.ROUTE_SELF_HOWTO,
 				component: MethodOverviewView,
+				props: {
+					domain: 'selfRecord',
+				},
 			},
 			{
 				path: 'settings',
@@ -138,6 +141,21 @@ export const routes = [
 		path: '/live/:id/room',
 		component: LiveRoomView,
 		name: constant.ROUTE_LIVE_ROOM,
+	},
+	{
+		path: '/live',
+		component: FullBackgroundLayout,
+		props: { backgroundType: 'curls' },
+		children: [
+			{
+				path: '',
+				name: constant.ROUTE_LIVE_HOWTO,
+				component: MethodOverviewView,
+				props: {
+					domain: 'live',
+				},
+			},
+		],
 	},
 
 	/**
