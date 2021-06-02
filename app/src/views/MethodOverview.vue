@@ -37,9 +37,9 @@
 									<icon-text
 										tag="h2"
 										class="e-h4"
-										text="Self record"
+										:text="title"
 										:icon="{
-											name: 'video',
+											name: icon,
 											size: 'w-6 h-6',
 										}"
 									/>
@@ -59,6 +59,7 @@
 							<instructions-nav
 								:total="instructionsLength"
 								:index="index"
+								:next-route="nextRoute"
 								@move="setInstruction"
 							/>
 						</div>
@@ -96,6 +97,7 @@
 
 <script>
 	import { computed, reactive, toRefs } from 'vue';
+	import { ROUTE_HOME, ROUTE_SELF_SETTINGS } from '@/routeConstants';
 	import messages from '@/messages';
 	import { useMessages } from '@/composables/useMessages';
 	import InstructionsNav from '@/domain/methods/InstructionsNav';
@@ -103,7 +105,14 @@
 	export default {
 		components: { InstructionsNav },
 
-		setup() {
+		props: {
+			domain: {
+				type: String,
+				required: true,
+			},
+		},
+
+		setup(props) {
 			const { message } = useMessages(messages);
 
 			const state = reactive({
@@ -111,7 +120,23 @@
 				right: true,
 			});
 
-			const instructions = message('selfRecord.methodOverview.instructions');
+			let title;
+			let icon;
+			let instructions;
+			let nextRoute;
+
+			if (props.domain === 'live') {
+				title = message('live.title');
+				icon = message('live.icon');
+				instructions = message('live.methodOverview.instructions');
+				nextRoute = ROUTE_HOME;
+			} else {
+				title = message('selfRecord.title');
+				icon = message('live.icon');
+				instructions = message('selfRecord.methodOverview.instructions');
+				nextRoute = ROUTE_SELF_SETTINGS;
+			}
+			
 			const instructionsLength = instructions.length;
 
 			const active = computed(() => instructions[state.index]);
@@ -123,6 +148,9 @@
 
 			return {
 				...toRefs(state),
+				title,
+				icon,
+				nextRoute,
 				instructionsLength,
 				setInstruction,
 				active,

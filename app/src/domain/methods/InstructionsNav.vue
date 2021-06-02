@@ -24,7 +24,7 @@
 				title="Continue"
 				icon="chevron-right"
 				class="e-button--red"
-				:url="{ name: ROUTE_SELF_SETTINGS }"
+				:url="{ name: nextRoute }"
 				pill
 			/>
 		</div>
@@ -51,7 +51,6 @@
 
 <script>
 	import { computed } from 'vue';
-	import { ROUTE_SELF_SETTINGS } from '@/routeConstants';
 
 	export default {
 		props: {
@@ -62,6 +61,11 @@
 
 			index: {
 				type: Number,
+				required: true,
+			},
+
+			nextRoute: {
+				type: String,
 				required: true,
 			},
 		},
@@ -82,7 +86,6 @@
 			const moveTo = (value) => emit('move', value);
 		
 			return {
-				ROUTE_SELF_SETTINGS,
 				lowerLimit,
 				upperLimit,
 				moveTo,
