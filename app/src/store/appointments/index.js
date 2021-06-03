@@ -3,8 +3,7 @@ import {
 	createAppointmentBooking,
 	cancelAppointmentBooking,
 	rescheduleAppointmentBooking,
-	fetchInitialAppointmentCalendar,
-	fetchNextAppointmentBatch,
+	fetchAppointmentSlots,
 } from '@/api/appointments';
 
 export const appointments = {
@@ -101,7 +100,7 @@ export const appointments = {
 		initAppointmentCalendar: async ({ commit, dispatch, state }) => {
 			commit('setWaiting', true);
 
-			const availability = await fetchInitialAppointmentCalendar(state.bookingTypeId);
+			const availability = await fetchAppointmentSlots(state.bookingTypeId);
 
 			if (availability[0]) {
 				availability[0]['limit'] = true;
@@ -120,7 +119,7 @@ export const appointments = {
 			commit('setWaiting', true);
 
 			const dateOffset = getters['getLastDate'];
-			const dates = await fetchNextAppointmentBatch(state.bookingTypeId, dateOffset);
+			const dates = await fetchAppointmentSlots(state.bookingTypeId, dateOffset);
 
 			commit('pushBatchAvailability', dates);
 			commit('setWaiting', false);

@@ -1,31 +1,22 @@
 import { client } from './backend';
 
-export async function fetchInitialAppointmentCalendar (appointmentTypeId) {
-	let calendar = [];
+export async function fetchAppointmentSlots (appointmentTypeId, dateOffset = null) {
+	let slots = [];
+	let endpoint = `appointment-slots/${appointmentTypeId}`;
 
-	await client.get(`appointment-slots/${appointmentTypeId}`)
-		.then((response) => {
-			if (response.dates) {
-				calendar = response.dates;
-			}
-		})
-		.catch((error) => console.error(error));
-
-	return calendar;
-}
-
-export async function fetchNextAppointmentBatch (appointmentTypeId, dateOffset) {
-	let calendar = [];
+	if (dateOffset) {
+		endpoint += `?offset=${dateOffset}`;
+	}
 	
-	await client.get(`appointment-slots/${appointmentTypeId}/?offset=${dateOffset}`)
+	await client.get(endpoint)
 		.then((response) => {
 			if (response.dates) {
-				calendar = response.dates;
+				slots = response.dates;
 			}
 		})
 		.catch((error) => console.error(error));
 
-	return calendar;
+	return slots;
 }
 
 export async function fetchNextAppointmentDate (appointmentTypeId, date) {
