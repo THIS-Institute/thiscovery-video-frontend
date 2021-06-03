@@ -31,9 +31,6 @@ class Timeslots:
         sorted_dates = self.sort_dictionary_by_date(dates)
         timeslots = list(sorted_dates.values())
 
-        if timeslots[0]:
-            timeslots[0]['limit'] = True
-
         return timeslots
 
     def get_date(self, date, appointment_type_id):

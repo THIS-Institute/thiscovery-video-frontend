@@ -3,8 +3,7 @@ import {
 	createAppointmentBooking,
 	cancelAppointmentBooking,
 	rescheduleAppointmentBooking,
-	fetchInitialAppointmentCalendar,
-	fetchNextAppointmentDate,
+	fetchAppointmentSlots,
 } from '@/api/appointments';
 
 export const appointments = {
@@ -44,6 +43,10 @@ export const appointments = {
 
 		pushAvailability(state, date) {
 			state.availability.push(date);
+		},
+
+		pushBatchAvailability(state, dates) {
+			state.availability = state.availability.concat(dates);
 		},
 
 		setNextFetchDate(state, date) {
@@ -97,23 +100,28 @@ export const appointments = {
 		initAppointmentCalendar: async ({ commit, dispatch, state }) => {
 			commit('setWaiting', true);
 
-			const availability = await fetchInitialAppointmentCalendar(state.bookingTypeId);
+			const availability = await fetchAppointmentSlots(state.bookingTypeId);
+
+			if (availability[0]) {
+				availability[0]['limit'] = true;
+			}
 
 			commit('updateAvailability', availability);
 			commit('setWaiting', false);
 			dispatch('nextFetchDate');
 		},
 
-		pushNextAppointmentDate: async ({ commit, state, dispatch }) => {
+		pushNextAppointmentDate: async ({ commit, state, dispatch, getters }) => {
 			if (!state.nextFetchDate || typeof state.nextFetchDate === 'undefined') {
 				return;
 			}
 
 			commit('setWaiting', true);
 
-			const date = await fetchNextAppointmentDate(state.bookingTypeId, state.nextFetchDate);
+			const dateOffset = getters['getLastDate'];
+			const dates = await fetchAppointmentSlots(state.bookingTypeId, dateOffset);
 
-			commit('pushAvailability', date);
+			commit('pushBatchAvailability', dates);
 			commit('setWaiting', false);
 			dispatch('nextFetchDate');
 		},
@@ -196,6 +204,18 @@ export const appointments = {
 
 		isStatusCancelled (state) {
 			return state.status === constants.STATUS_CANCELLED;
+		},
+
+		getLastDate (state) {
+			const datesCount = state.availability.length;
+
+			if (!datesCount) {
+				return;
+			}
+
+			const lastItem = state.availability[datesCount-1]
+
+			return lastItem.date;
 		},
 	},
 };
