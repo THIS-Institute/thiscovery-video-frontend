@@ -132,7 +132,7 @@
 				nextRoute = ROUTE_HOME;
 			} else {
 				title = message('selfRecord.title');
-				icon = message('live.icon');
+				icon = message('selfRecord.icon');
 				instructions = message('selfRecord.methodOverview.instructions');
 				nextRoute = ROUTE_SELF_SETTINGS;
 			}
