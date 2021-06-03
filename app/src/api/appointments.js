@@ -14,6 +14,20 @@ export async function fetchInitialAppointmentCalendar (appointmentTypeId) {
 	return calendar;
 }
 
+export async function fetchNextAppointmentBatch (appointmentTypeId, dateOffset) {
+	let calendar = [];
+	
+	await client.get(`appointment-slots/${appointmentTypeId}/?offset=${dateOffset}`)
+		.then((response) => {
+			if (response.dates) {
+				calendar = response.dates;
+			}
+		})
+		.catch((error) => console.error(error));
+
+	return calendar;
+}
+
 export async function fetchNextAppointmentDate (appointmentTypeId, date) {
 	let availability = [];
 
