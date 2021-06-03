@@ -65,8 +65,8 @@
 			const store = useStore();
 			const { message } = useMessages(messages);
 
-			const isLiveAvailable = computed(() => store.state.task.liveAvailable);
-			const isOnDemandAvailable = computed(() => store.state.task.onDemandAvailable);
+			const isLiveAvailable = computed(() => store.getters['task/isLiveAvailable']);
+			const isOnDemandAvailable = computed(() => store.getters['task/isOnDemandAvailable']);
 			
 			return {
 				message,

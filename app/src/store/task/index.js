@@ -58,4 +58,18 @@ export const task = {
 			}
 		},
 	},
+
+	getters: {
+		isLiveAvailable (state) {
+			return state.liveAvailable;
+		},
+
+		isOnDemandAvailable (state) {
+			if (!window.MediaRecorder) {
+				return false;
+			}
+
+			return state.onDemandAvailable;
+		},
+	}
 };
