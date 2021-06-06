@@ -51,9 +51,9 @@
 			</ul>
 
 			<e-button
-				v-if="cta && available"
-				:title="cta.title"
-				:url="{ name: cta.route }"
+				v-if="ctaTitle && ctaRoute && available"
+				:title="ctaTitle"
+				:url="{ name: ctaRoute }"
 				icon="chevron-right"
 				class="e-button--red mt-12"
 				pill
@@ -103,8 +103,13 @@
 				default: null,
 			},
 
-			cta: {
-				type: Object,
+			ctaTitle: {
+				type: String,
+				default: null,
+			},
+
+			ctaRoute: {
+				type: String,
 				default: null,
 			},
 

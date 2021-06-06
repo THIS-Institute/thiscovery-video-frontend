@@ -10,14 +10,13 @@ const userInterviewPaths = Object.freeze({
 			'At a time that suits you',
 			'Video or audio-only call',
 		],
-		cta: {
-			title: 'Make an appointment',
-			route: route.ROUTE_APPOINTMENTS,
-		},
+		ctaTitleHasBooking: 'View your booking',
+		ctaTitleNoBooking: 'Make an appointment',
+		ctaRoute: route.ROUTE_APPOINTMENTS,
 		tutorial: {
 			title: 'Want to know more?',
 			cta: {
-				title: 'See how an appointment works',
+				title: 'See how a live interview works',
 				route: route.ROUTE_LIVE_HOWTO,
 			}
 		},
@@ -32,10 +31,8 @@ const userInterviewPaths = Object.freeze({
 			'Read and respond at your leisure',
 			'Pause and resume on any device',
 		],
-		cta: {
-			title: 'Record responses',
-			route: route.ROUTE_SELF_SETTINGS,
-		},
+		ctaTitle: 'Record responses',
+		ctaRoute: route.ROUTE_SELF_SETTINGS,
 		tutorial: {
 			title: 'Want to know more?',
 			cta: {

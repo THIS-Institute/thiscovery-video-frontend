@@ -22,6 +22,11 @@
 					<method-card
 						class="col-span-8 sm:col-span-8 md:col-span-5 lg:col-span-4"
 						v-bind="message('landing.paths.live')"
+						:cta-title="
+							(hasBooking)
+								? message('landing.paths.live.ctaTitleHasBooking')
+								: message('landing.paths.live.ctaTitleNoBooking')
+						"
 						:available="isLiveAvailable"
 					/>
 				</transition>
@@ -65,11 +70,13 @@
 			const store = useStore();
 			const { message } = useMessages(messages);
 
+			const hasBooking = computed(() => store.state.appointments.isConfirmed);
 			const isLiveAvailable = computed(() => store.getters['task/isLiveAvailable']);
 			const isOnDemandAvailable = computed(() => store.getters['task/isOnDemandAvailable']);
 			
 			return {
 				message,
+				hasBooking,
 				isLiveAvailable,
 				isOnDemandAvailable,
 			}
