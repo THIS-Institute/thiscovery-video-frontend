@@ -158,7 +158,7 @@
 </template>
 
 <script>
-	import { computed, ref, reactive, provide } from 'vue';
+	import { computed, ref, reactive, provide, watch } from 'vue';
 	import { useStore } from 'vuex';
 	import { useRouter } from 'vue-router';
 	import { ROUTE_HOME } from '@/routeConstants';
@@ -245,7 +245,16 @@
 				nextQuestion,
 				readQuestion,
 				readSection,
+				isComplete,
 			} = useQuestions(props.questions, 0, 0);
+
+			watch(isComplete, () => {
+				const completionUrl = store.state.task.completionUrl;
+
+				if(isComplete.value && completionUrl) {
+					window.location.href = completionUrl;
+				}
+			});
 
 			// Percentage progress through all questions
 			const progress = computed(() => {

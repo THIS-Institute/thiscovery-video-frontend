@@ -4,6 +4,7 @@ export function useQuestions(items, initialSection, initialQuestion) {
 	// Reactive & readonly instances of Section index
 	let section = ref(initialSection);
 	const readSection = readonly(section);
+	const isComplete = ref(false);
 
 	// Reactive & readonly instances of Question index
 	let question = ref(initialQuestion);
@@ -38,7 +39,7 @@ export function useQuestions(items, initialSection, initialQuestion) {
 				section.value++;
 				question.value = 0;
 			} else {
-				console.log('finished');
+				isComplete.value = true;
 			}
 		}
 	};
@@ -51,5 +52,6 @@ export function useQuestions(items, initialSection, initialQuestion) {
 		nextQuestion,
 		readQuestion,
 		readSection,
+		isComplete,
 	};
 }

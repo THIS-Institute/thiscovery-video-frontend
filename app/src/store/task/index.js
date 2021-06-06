@@ -9,6 +9,7 @@ export const task = {
 		onDemandAvailable: false,
 		liveAvailable: false,
 		title: null,
+		completionUrl: null,
 	}),
 
 	mutations: {
@@ -30,6 +31,10 @@ export const task = {
 
 		setTitle(state, title) {
 			state.title = title;
+		},
+
+		setCompletionUrl(state, url) {
+			state.completionUrl = url;
 		},
 	},
 
@@ -55,6 +60,7 @@ export const task = {
 				commit('setLiveAvailable', task.liveAvailable);
 				commit('setTitle', task.title);
 				commit('setInitalised', true);
+				commit('setCompletionUrl', task.completionUrl);
 			}
 		},
 	},
