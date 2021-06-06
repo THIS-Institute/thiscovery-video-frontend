@@ -83,6 +83,9 @@ export function useMedia() {
 	const cleanup = () => {
 		URL.revokeObjectURL(playbackURL.value);
 		playbackURL.value = null;
+		stream.value = {};
+		recorder.value = {};
+		recordingBuffer.value = [];
 	};
 
 	provide('videoElementRef', videoElementRef);
