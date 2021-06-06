@@ -2,10 +2,21 @@ import os
 import json
 import uuid
 import boto3
-from datetime import datetime
 from api.responses import ApiGatewayResponse
-
 from dynamodb import DynamoDB
+
+def guess_extension(content_type):
+    content_type_map = {
+        'video/webm': '.webm',
+        'video/mp4': '.mp4',
+        'video/x-matroska': '.mkv',
+    }
+
+    for type in content_type_map:
+        if type in content_type:
+            return content_type_map[type]
+    
+    return None
 
 def lambda_handler(event, context):
     request = json.loads(event['body'])
@@ -47,10 +58,18 @@ def lambda_handler(event, context):
 
     s3 = boto3.client('s3')
 
+    content_type = request['contentType']
+    object_key = f'unprocessed/{str(uuid_string)}'
+
+    possible_file_extension  = guess_extension(content_type)
+
+    if possible_file_extension:
+        object_key += f'.{possible_file_extension}'
+
     params = {
         'Bucket': os.environ['BUCKET_NAME'],
         'Key': f'unprocessed/{str(uuid_string)}',
-        'ContentType': request['contentType'],
+        'ContentType': content_type,
         'Metadata': {
             'user_id': user_id,
             'task_id': task_id,
