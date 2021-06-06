@@ -68,7 +68,7 @@ def lambda_handler(event, context):
 
     params = {
         'Bucket': os.environ['BUCKET_NAME'],
-        'Key': f'unprocessed/{str(uuid_string)}',
+        'Key': object_key,
         'ContentType': content_type,
         'Metadata': {
             'user_id': user_id,
