@@ -5,6 +5,7 @@ import shlex
 import boto3
 
 OUTPUT_EXTENSION = 'mp4'
+OUTPUT_TYPE = 'video/mp4'
 
 def lambda_handler(event, context):
     event_record = event['Records'][0]
@@ -23,9 +24,6 @@ def lambda_handler(event, context):
     )
 
     metadata = s3_object['Metadata']
-
-    if 'Content-Type' in metadata:
-        del metadata['Content-Type']
 
     s3_source_signed_url = s3.generate_presigned_url(
         'get_object',
@@ -49,7 +47,10 @@ def lambda_handler(event, context):
         Filename=temp_file_path,
         Bucket=bucket_name,
         Key=f'{s3_destination_dir}/{s3_destination_filename}',
-        ExtraArgs={'Metadata': metadata},
+        ExtraArgs={
+            'ContentType': OUTPUT_TYPE,
+            'Metadata': metadata,
+        },
     )
 
     os.remove(temp_file_path)
