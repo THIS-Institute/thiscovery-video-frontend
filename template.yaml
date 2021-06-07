@@ -405,6 +405,8 @@ Resources:
         - AWSXrayWriteOnlyAccess
         - S3CrudPolicy:
             BucketName: !Ref InterviewAssets
+      Layers:
+        - arn:aws:lambda:eu-west-1:762781284726:layer:ffmpeg-test:1
   Cdn:
     Type: AWS::CloudFront::Distribution
     Properties:
