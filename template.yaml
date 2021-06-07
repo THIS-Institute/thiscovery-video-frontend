@@ -17,6 +17,15 @@ Resources:
                 type: aws_proxy
                 uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${RoomCreateToken.Arn}/invocations
               responses: {}
+          /v1/live-recording:
+            post:
+              x-amazon-apigateway-integration:
+                httpMethod: POST
+                type: aws
+                uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${LiveRecordingReady.Arn}/invocations
+                requestTemplates:
+                  "application/x-www-form-urlencoded": "{ \"values\": \"$input.json('$')\" }",
+              responses: {}
           /v1/appointments/{id}:
             patch:
               x-amazon-apigateway-integration:
@@ -407,6 +416,45 @@ Resources:
             BucketName: !Ref InterviewAssets
       Layers:
         - arn:aws:lambda:eu-west-1:762781284726:layer:ffmpeg-test:1
+  LiveRecordingReady:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: Interviews-LiveRecordingReady
+      Description: !Sub
+        - Stack ${StackTagName} Environment ${EnvironmentTagName} Function ${ResourceName}
+        - ResourceName: LiveRecordingReady
+      CodeUri: src
+      Handler: live_recording_ready.lambda_handler
+      Runtime: python3.8
+      MemorySize: 1024
+      Timeout: 5
+      Tracing: Active
+      Policies:
+        - AWSXrayWriteOnlyAccess
+      Events:
+        BackendApiPOSTv1liverecording:
+          Type: Api
+          Properties:
+            Path: /v1/live-recording
+            Method: POST
+            RestApiId: !Ref BackendApi
+  HandleLiveRecording:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: Interviews-HandleLiveRecording
+      Description: !Sub
+        - Stack ${StackTagName} Environment ${EnvironmentTagName} Function ${ResourceName}
+        - ResourceName: HandleLiveRecording
+      CodeUri: src
+      Handler: live_recording.lambda_handler
+      Runtime: python3.8
+      MemorySize: 2048
+      Timeout: 60
+      Tracing: Active
+      Policies:
+        - AWSXrayWriteOnlyAccess
+        - S3CrudPolicy:
+            BucketName: !Ref InterviewAssets
   Cdn:
     Type: AWS::CloudFront::Distribution
     Properties:
