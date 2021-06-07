@@ -24,7 +24,8 @@ Resources:
                 type: aws
                 uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${LiveRecordingReady.Arn}/invocations
                 requestTemplates:
-                  "application/x-www-form-urlencoded": "{ \"values\": \"$input.json('$')\" }",
+                  "application/x-www-form-urlencoded":
+                    "{ \"values\": \"$input.json('$')\" }",
               responses: {}
           /v1/appointments/{id}:
             patch:
