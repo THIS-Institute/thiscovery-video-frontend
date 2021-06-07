@@ -64,7 +64,7 @@ def lambda_handler(event, context):
     possible_file_extension  = guess_extension(content_type)
 
     if possible_file_extension:
-        object_key += f'.{possible_file_extension}'
+        object_key += possible_file_extension
 
     params = {
         'Bucket': os.environ['BUCKET_NAME'],

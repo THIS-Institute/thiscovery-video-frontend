@@ -396,10 +396,10 @@ Resources:
         - Stack ${StackTagName} Environment ${EnvironmentTagName} Function ${ResourceName}
         - ResourceName: HandleUploadedVideo
       CodeUri: src
-      Handler: log.lambda_handler
+      Handler: video_handler.lambda_handler
       Runtime: python3.8
-      MemorySize: 1024
-      Timeout: 10
+      MemorySize: 2048
+      Timeout: 60
       Tracing: Active
       Policies:
         - AWSXrayWriteOnlyAccess
