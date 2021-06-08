@@ -459,6 +459,7 @@ Resources:
         EventRule:
           Type: EventBridgeRule
           Properties:
+            EventBusName: thiscovery-event-bus
             Pattern:
               detail-type:
                 - twilio_composition_available
