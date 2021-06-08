@@ -455,6 +455,13 @@ Resources:
         - AWSXrayWriteOnlyAccess
         - S3CrudPolicy:
             BucketName: !Ref InterviewAssets
+      Events:
+        EventRule:
+          Type: EventBridgeRule
+          Properties:
+            Pattern:
+              detail-type:
+                - twilio_composition_available
   Cdn:
     Type: AWS::CloudFront::Distribution
     Properties:
