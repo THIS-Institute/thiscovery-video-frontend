@@ -461,6 +461,8 @@ Resources:
           Properties:
             EventBusName: thiscovery-event-bus
             Pattern:
+              source:
+                - thiscovery_video
               detail-type:
                 - twilio_composition_available
   Cdn:
