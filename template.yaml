@@ -429,6 +429,8 @@ Resources:
       Tracing: Active
       Policies:
         - AWSXrayWriteOnlyAccess
+        - EventBridgePutEventsPolicy:
+            EventBusName: thiscovery-event-bus
       Events:
         BackendApiPOSTv1TwilioEvent:
           Type: Api
