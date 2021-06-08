@@ -35,10 +35,10 @@ def lambda_handler(event, context):
 
     print(status_callback)
 
-    if status_callback['StatusCallbackEvent'] is 'composition-available':
+    if status_callback['StatusCallbackEvent'] == 'composition-available':
         dispatch(status_callback, 'twilio_composition_available')
 
-    if status_callback['StatusCallbackEvent'] is 'composition-failed':
+    if status_callback['StatusCallbackEvent'] == 'composition-failed':
         dispatch(status_callback, 'twilio_composition_failure')
 
     return {
