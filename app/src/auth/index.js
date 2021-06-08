@@ -61,6 +61,7 @@ export const authRouteGuard = (to, from, next) => {
         
         loginWithRedirect({
             appState: {
+                fullUrl: window.location.href,
                 targetUrl: to.fullPath,
             },
         });
