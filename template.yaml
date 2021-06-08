@@ -460,7 +460,8 @@ Resources:
           Type: EventBridgeRule
           Properties:
             Pattern:
-              detail-type: twilio_composition_available
+              detail-type:
+                - twilio_composition_available
   Cdn:
     Type: AWS::CloudFront::Distribution
     Properties:
