@@ -21,11 +21,8 @@ Resources:
             post:
               x-amazon-apigateway-integration:
                 httpMethod: POST
-                type: aws
+                type: aws_proxy
                 uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${LiveRecordingReady.Arn}/invocations
-                requestTemplates:
-                  "application/x-www-form-urlencoded": "{ \"values\": \"$input.json('$')\" }"
-                passthroughBehavior: when_no_match
               responses: {}
           /v1/appointments/{id}:
             patch:
