@@ -38,7 +38,7 @@ def lambda_handler(event, context):
 
     os.remove(temp_file)
 
-    client.video.compositions(detail['CompositionSid']).delete()
+    # client.video.compositions(detail['CompositionSid']).delete()
 
     return {
         'statusCode': 200,
