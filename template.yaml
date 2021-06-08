@@ -17,12 +17,12 @@ Resources:
                 type: aws_proxy
                 uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${RoomCreateToken.Arn}/invocations
               responses: {}
-          /v1/live-recording:
+          /v1/twilio-event:
             post:
               x-amazon-apigateway-integration:
                 httpMethod: POST
                 type: aws_proxy
-                uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${LiveRecordingReady.Arn}/invocations
+                uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${TwilioDispatcher.Arn}/invocations
               responses: {}
           /v1/appointments/{id}:
             patch:
@@ -414,26 +414,26 @@ Resources:
             BucketName: !Ref InterviewAssets
       Layers:
         - arn:aws:lambda:eu-west-1:762781284726:layer:ffmpeg-test:1
-  LiveRecordingReady:
+  TwilioDispatcher:
     Type: AWS::Serverless::Function
     Properties:
-      FunctionName: Interviews-LiveRecordingReady
+      FunctionName: Interviews-TwilioDispatcher
       Description: !Sub
         - Stack ${StackTagName} Environment ${EnvironmentTagName} Function ${ResourceName}
-        - ResourceName: LiveRecordingReady
+        - ResourceName: TwilioDispatcher
       CodeUri: src
-      Handler: live_recording_ready.lambda_handler
+      Handler: twilio_event_dispatcher.lambda_handler
       Runtime: python3.8
-      MemorySize: 1024
+      MemorySize: 512
       Timeout: 5
       Tracing: Active
       Policies:
         - AWSXrayWriteOnlyAccess
       Events:
-        BackendApiPOSTv1liverecording:
+        BackendApiPOSTv1TwilioEvent:
           Type: Api
           Properties:
-            Path: /v1/live-recording
+            Path: /v1/twilio-event
             Method: POST
             RestApiId: !Ref BackendApi
   HandleLiveRecording:
