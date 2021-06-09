@@ -1,6 +1,7 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 Resources:
+
   BackendApi:
     Type: AWS::Serverless::Api
     Properties:
@@ -100,6 +101,7 @@ Resources:
         AllowOrigin: '''*'''
       BinaryMediaTypes:
         - multipart~1*form-data
+
   RoomCreateToken:
     Type: AWS::Serverless::Function
     Properties:
@@ -128,6 +130,7 @@ Resources:
         Variables:
           SECRETS_NAMESPACE: !Sub /${EnvironmentTagName}/
           TWILIO_ACCOUNT_SID: !Ref EnvConfigtwilioaccountsidAsString
+
   GetAppointmentBatchSlots:
     Type: AWS::Serverless::Function
     Properties:
@@ -192,6 +195,7 @@ Resources:
           APPOINTMENT_INTERVAL_MIN: !Ref EnvConfigAppointmentsIntervalMinAsString
           ACUITY_BASE_URI: !Ref EnvConfigAcuityBaseUriAsString
           SECRETS_NAMESPACE: !Sub /${EnvironmentTagName}/
+
   CancelAppointmentById:
     Type: AWS::Serverless::Function
     Properties:
@@ -227,6 +231,7 @@ Resources:
           ACUITY_BASE_URI: !Ref EnvConfigAcuityBaseUriAsString
           SECRETS_NAMESPACE: !Sub /${EnvironmentTagName}/
           APP_BASE_URL: !Ref EnvConfigappbaseurlAsString
+
   RescheduleAppointmentById:
     Type: AWS::Serverless::Function
     Properties:
@@ -262,6 +267,7 @@ Resources:
           ACUITY_BASE_URI: !Ref EnvConfigAcuityBaseUriAsString
           SECRETS_NAMESPACE: !Sub /${EnvironmentTagName}/
           APP_BASE_URL: !Ref EnvConfigappbaseurlAsString
+
   CreateAppointment:
     Type: AWS::Serverless::Function
     Properties:
@@ -297,6 +303,7 @@ Resources:
           ACUITY_BASE_URI: !Ref EnvConfigAcuityBaseUriAsString
           SECRETS_NAMESPACE: !Sub /${EnvironmentTagName}/
           APP_BASE_URL: !Ref EnvConfigappbaseurlAsString
+
   GetAppointmentById:
     Type: AWS::Serverless::Function
     Properties:
@@ -326,6 +333,7 @@ Resources:
           TABLE_NAME: !Ref InterviewsTable
           TABLE_ARN: !GetAtt InterviewsTable.Arn
           APP_BASE_URL: !Ref EnvConfigappbaseurlAsString
+
   CreateInterviewAnswer:
     Type: AWS::Serverless::Function
     Properties:
@@ -358,6 +366,7 @@ Resources:
           TABLE_ARN: !GetAtt InterviewsTable.Arn
           BUCKET_NAME: !Ref InterviewAssets
           BUCKET_ARN: !GetAtt InterviewAssets.Arn
+
   GetTask:
     Type: AWS::Serverless::Function
     Properties:
@@ -386,6 +395,7 @@ Resources:
         Variables:
           TABLE_NAME: !Ref InterviewsTable
           TABLE_ARN: !GetAtt InterviewsTable.Arn
+
   GetSelfRecordQuestions:
     Type: AWS::Serverless::Function
     Properties:
@@ -408,6 +418,7 @@ Resources:
             Path: /v1/self-record-questions/{taskId}
             Method: GET
             RestApiId: !Ref BackendApi
+
   GetInterviewersQuestions:
     Type: AWS::Serverless::Function
     Properties:
@@ -430,6 +441,7 @@ Resources:
             Path: /v1/interviewers-questions/{taskId}
             Method: GET
             RestApiId: !Ref BackendApi
+
   HandleUploadedVideo:
     Type: AWS::Serverless::Function
     Properties:
@@ -449,6 +461,7 @@ Resources:
             BucketName: !Ref InterviewAssets
       Layers:
         - arn:aws:lambda:eu-west-1:762781284726:layer:ffmpeg-test:1
+
   TwilioDispatcher:
     Type: AWS::Serverless::Function
     Properties:
@@ -473,6 +486,7 @@ Resources:
             Path: /v1/twilio-event
             Method: POST
             RestApiId: !Ref BackendApi
+
   HandleLiveRecording:
     Type: AWS::Serverless::Function
     Properties:
@@ -507,6 +521,7 @@ Resources:
                 - thiscovery_video
               detail-type:
                 - twilio_composition_available
+
   Cdn:
     Type: AWS::CloudFront::Distribution
     Properties:
@@ -537,11 +552,13 @@ Resources:
               OriginAccessIdentity: !Sub
                 - origin-access-identity/cloudfront/${OriginAccessIdentity}
                 - OriginAccessIdentity: !Ref CdnOriginAccessIdentity
+
   CdnOriginAccessIdentity:
     Type: AWS::CloudFront::CloudFrontOriginAccessIdentity
     Properties:
       CloudFrontOriginAccessIdentityConfig:
         Comment: FrontendAssetsIdentity
+
   BuildFrontend:
     Type: AWS::CodeBuild::Project
     Metadata:
@@ -607,6 +624,7 @@ Resources:
       Tags:
         - Key: Stackery Project Type
           Value: Website Builder
+
   BuildFrontendEvents:
     Type: AWS::Events::Rule
     Properties:
@@ -627,6 +645,7 @@ Resources:
       Targets:
         - Arn: !Sub arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:stackery-agent-commander
           Id: StackeryAgentCommander
+
   BuildFrontendEventsPermission:
     Type: AWS::Lambda::Permission
     DependsOn: BuildFrontendEvents
@@ -635,6 +654,7 @@ Resources:
       FunctionName: !Sub arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:stackery-agent-commander
       Principal: events.amazonaws.com
       SourceArn: !GetAtt BuildFrontendEvents.Arn
+
   BuildFrontendRole:
     Type: AWS::IAM::Role
     Properties:
@@ -680,6 +700,7 @@ Resources:
                 Resource:
                   - !Sub ${FrontendAssets.Arn}/*
                   - !Sub ${FrontendAssets.Arn}
+
   BuildFrontendBuildTrigger:
     Type: Custom::StackeryWebsiteBuildTrigger
     DependsOn: BuildFrontendEvents
@@ -688,16 +709,19 @@ Resources:
       Type: website
       ProjectName: !Ref BuildFrontend
       SourceVersion: !Ref SourceVersion
+
   FrontendAssets:
     Type: AWS::S3::Bucket
     Properties:
       BucketName: !Sub frontend-assets-${AWS::AccountId}
       WebsiteConfiguration:
         IndexDocument: index.html
+
   InterviewAssets:
     Type: AWS::S3::Bucket
     Properties:
       BucketName: !Sub interview-assets-${AWS::AccountId}
+
   InterviewsTable:
     Type: AWS::DynamoDB::Table
     Properties:
@@ -715,6 +739,7 @@ Resources:
       BillingMode: PAY_PER_REQUEST
       StreamSpecification:
         StreamViewType: NEW_AND_OLD_IMAGES
+
 Parameters:
   StackTagName:
     Type: String
@@ -755,6 +780,7 @@ Parameters:
   EnvConfigappbaseurlAsString:
     Type: AWS::SSM::Parameter::Value<String>
     Default: /<EnvironmentName>/app/base-url
+
 Metadata:
   EnvConfigParameters:
     EnvConfigAppointmentsDefaultDaysAsString: appointments.default-days
