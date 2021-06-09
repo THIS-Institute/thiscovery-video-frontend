@@ -25,6 +25,12 @@ Resources:
                 uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${TwilioDispatcher.Arn}/invocations
               responses: {}
           /v1/appointments/{id}:
+            get:
+              x-amazon-apigateway-integration:
+                httpMethod: POST
+                type: aws_proxy
+                uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${GetAppointmentById.Arn}/invocations
+              responses: {}
             patch:
               x-amazon-apigateway-integration:
                 httpMethod: POST
@@ -290,6 +296,35 @@ Resources:
           TABLE_ARN: !GetAtt InterviewsTable.Arn
           ACUITY_BASE_URI: !Ref EnvConfigAcuityBaseUriAsString
           SECRETS_NAMESPACE: !Sub /${EnvironmentTagName}/
+          APP_BASE_URL: !Ref EnvConfigappbaseurlAsString
+  GetAppointmentById:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: Appointments-GetAppointmentById
+      Description: !Sub
+        - Stack ${StackTagName} Environment ${EnvironmentTagName} Function ${ResourceName}
+        - ResourceName: GetAppointmentById
+      CodeUri: src
+      Handler: get_appointment.lambda_handler
+      Runtime: python3.8
+      MemorySize: 1024
+      Timeout: 5
+      Tracing: Active
+      Policies:
+        - AWSXrayWriteOnlyAccess
+        - DynamoDBCrudPolicy:
+            TableName: !Ref InterviewsTable
+      Events:
+        BackendApiGETv1appointments:
+          Type: Api
+          Properties:
+            Path: /v1/appointments/{id}
+            Method: GET
+            RestApiId: !Ref BackendApi
+      Environment:
+        Variables:
+          TABLE_NAME: !Ref InterviewsTable
+          TABLE_ARN: !GetAtt InterviewsTable.Arn
           APP_BASE_URL: !Ref EnvConfigappbaseurlAsString
   CreateInterviewAnswer:
     Type: AWS::Serverless::Function
