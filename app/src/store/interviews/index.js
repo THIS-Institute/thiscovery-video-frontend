@@ -156,8 +156,9 @@ export const interviews = {
 			}
 		},
 
-		getAppointment: async ({ commit }, data) => {
+		getAppointment: async ({ state }, data) => {
 			const appointment = await fetchAppointment(data.room);
+			console.log(state.declinedPermissions);
 			console.log(appointment);
 		},
 
