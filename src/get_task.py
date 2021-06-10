@@ -1,18 +1,33 @@
 import os
 import json
-
+from thiscovery.user_response import UserResponseService, ResponseNotFound
 from dynamodb import DynamoDB
 from botocore.exceptions import ClientError
-from api.responses import ApiGatewayResponse
+
+from api.responses import (
+    ApiGatewayResponse,
+    ApiGatewayErrorResponse,
+    ResponseException,
+)
 
 def lambda_handler(event, context):
     request = json.loads(event['body'])
 
-    task_id = '0fda6eff-b1e5-44df-93b4-3d71c03adeff'
+    response_id = request['responseId']
     user_id = request['userId']
 
-    table = DynamoDB().client()
+    try:
+        user_responses = UserResponseService()
+        response = user_responses.get(response_id)
+    except (ResponseNotFound, KeyError):
+        return ApiGatewayErrorResponse(
+            exception=ResponseException.EXCEPTION_NOT_FOUND,
+            message='Response not found',
+            http_code=404
+        ).response()
 
+    task_id = response['interview_task_id']
+    table = DynamoDB().client()
     appointment = None
 
     try:
@@ -41,12 +56,12 @@ def lambda_handler(event, context):
             appointment = None
 
     response = {
-        'id': task_id,
-        'acuityTypeId': '20973054',
-        'onDemandAvailable': True,
-        'liveAvailable': True,
-        'title': 'Learning from intensive caffeine experiences',
-        'completionUrl': 'https://www.thiscovery.org/',
+        'id': response['interview_task_id'],
+        'acuityTypeId': response['appointment_type_id'],
+        'onDemandAvailable': response['on_demand_available'],
+        'liveAvailable': response['live_available'],
+        'title': response['name'],
+        'completionUrl': response['completion_url'],
         'appointment': appointment,
     }
 

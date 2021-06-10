@@ -33,7 +33,6 @@ class ThiscoveryClient:
 
     def auth(self):
         api_key = self.fetch_secret('thiscovery-api-key')
-        print(api_key)
         return ApiKeyAuth(key=api_key)
 
     def fetch_secret(self, secret):

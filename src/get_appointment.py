@@ -44,7 +44,7 @@ def lambda_handler(event, context):
 
     response_data = {
         'appointment': {
-            'id': appointment['id'],
+            'id': appointment['appointment_id'],
             'time': appointment['appointment_time'],
         },
         'task': {
