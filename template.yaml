@@ -105,7 +105,7 @@ Resources:
                 uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${GetInterviewersQuestions.Arn}/invocations
               responses: {}
 
-          /v1/thiscovery/user-interview-tasks/{id}:
+          /thiscovery/v1/user-interview-tasks/{id}:
             get:
               x-amazon-apigateway-integration:
                 httpMethod: POST
@@ -113,7 +113,7 @@ Resources:
                 uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${MockUserTask.Arn}/invocations
               responses: {}
           
-          /v1/thiscovery/interview-tasks/{id}:
+          /thiscovery/v1/interview-tasks/{id}:
             get:
               x-amazon-apigateway-integration:
                 httpMethod: POST
@@ -578,7 +578,7 @@ Resources:
         BackendApiGETv1thisusertasks:
           Type: Api
           Properties:
-            Path: /v1/thiscovery/user-interview-tasks/{id}
+            Path: /thiscovery/v1/user-interview-tasks/{id}
             Method: GET
             RestApiId: !Ref BackendApi
   
@@ -601,7 +601,7 @@ Resources:
         BackendApiGETv1thistasks:
           Type: Api
           Properties:
-            Path: /v1/thiscovery/interview-tasks/{id}
+            Path: /thiscovery/v1/interview-tasks/{id}
             Method: GET
             RestApiId: !Ref BackendApi
 
