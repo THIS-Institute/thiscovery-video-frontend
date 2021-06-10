@@ -19,6 +19,14 @@ Resources:
                 uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${RoomCreateToken.Arn}/invocations
               responses: {}
 
+          /v1/room/link:
+            post:
+              x-amazon-apigateway-integration:
+                httpMethod: POST
+                type: aws_proxy
+                uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${LinkRoomUser.Arn}/invocations
+              responses: {}
+
           /v1/twilio-event:
             post:
               x-amazon-apigateway-integration:
@@ -156,6 +164,39 @@ Resources:
             RestApiId: !Ref BackendApi
       Environment:
         Variables:
+          SECRETS_NAMESPACE: !Sub /${EnvironmentTagName}/
+          TWILIO_ACCOUNT_SID: !Ref EnvConfigtwilioaccountsidAsString
+
+  LinkRoomUser:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: Rooms-LinkRoomUser
+      Description: !Sub
+        - Stack ${StackTagName} Environment ${EnvironmentTagName} Function ${ResourceName}
+        - ResourceName: LinkRoomUser
+      CodeUri: src
+      Handler: room_link.lambda_handler
+      Runtime: python3.8
+      MemorySize: 1024
+      Timeout: 30
+      Tracing: Active
+      Policies:
+        - AWSXrayWriteOnlyAccess
+        - DynamoDBCrudPolicy:
+            TableName: !Ref InterviewsTable
+        - AWSSecretsManagerGetSecretValuePolicy:
+            SecretArn: !Sub arn:${AWS::Partition}:secretsmanager:${AWS::Region}:${AWS::AccountId}:secret:/${EnvironmentTagName}/*
+      Events:
+        BackendApiPOSTv1roomlink:
+          Type: Api
+          Properties:
+            Path: /v1/room/link
+            Method: POST
+            RestApiId: !Ref BackendApi
+      Environment:
+        Variables:
+          TABLE_NAME: !Ref InterviewsTable
+          TABLE_ARN: !GetAtt InterviewsTable.Arn
           SECRETS_NAMESPACE: !Sub /${EnvironmentTagName}/
           TWILIO_ACCOUNT_SID: !Ref EnvConfigtwilioaccountsidAsString
 
