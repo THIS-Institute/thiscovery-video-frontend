@@ -1,4 +1,3 @@
-import os
 import json
 from thiscovery.user_response import UserResponseService, ResponseNotFound
 from dynamodb import DynamoDB
@@ -11,9 +10,15 @@ from api.responses import (
 )
 
 def lambda_handler(event, context):
+    try:
+        response_id = event['pathParameters']['key']
+    except KeyError:
+        return ApiGatewayErrorResponse(
+            exception=ResponseException.EXCEPTION_MISSING_PARAM,
+            message='response id is required',
+        ).response()
+        
     request = json.loads(event['body'])
-
-    response_id = request['responseId']
     user_id = request['userId']
 
     try:

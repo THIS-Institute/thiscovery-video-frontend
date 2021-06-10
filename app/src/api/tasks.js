@@ -1,7 +1,7 @@
 import { client } from './backend';
 
 export async function getTask (options) {
-	const response = await client.post(`task/${options.taskId}`, {
+	const response = await client.post(`task/${options.responseId}`, {
 			userId: options.userId,
 		})
 		.then((response) => response)

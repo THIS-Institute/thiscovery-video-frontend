@@ -43,7 +43,7 @@ export const task = {
 			const userId = rootState.user.userId;
 
 			const task = await getTask({
-				taskId: responseId,
+				responseId: responseId,
 				userId: userId,
 			});
 
