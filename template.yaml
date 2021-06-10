@@ -413,6 +413,7 @@ Resources:
           TABLE_NAME: !Ref InterviewsTable
           TABLE_ARN: !GetAtt InterviewsTable.Arn
           SECRETS_NAMESPACE: !Sub /${EnvironmentTagName}/
+          THISCOVERY_API_BASE_URL: !Ref EnvConfigthiscourlAsString
 
   GetSelfRecordQuestions:
     Type: AWS::Serverless::Function

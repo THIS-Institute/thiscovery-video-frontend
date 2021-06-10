@@ -23,7 +23,7 @@ def lambda_handler(event, context):
 
     try:
         user_responses = UserResponseService()
-        response = user_responses.get(response_id)
+        thiscovery_response = user_responses.get(response_id)
     except ResponseNotFound:
         return ApiGatewayErrorResponse(
             exception=ResponseException.EXCEPTION_NOT_FOUND,
@@ -31,7 +31,7 @@ def lambda_handler(event, context):
             http_code=404
         ).response()
 
-    task_id = response['interview_task_id']
+    task_id = thiscovery_response['interview_task_id']
     table = DynamoDB().client()
     appointment = None
 
@@ -60,13 +60,15 @@ def lambda_handler(event, context):
         except KeyError:
             appointment = None
 
+    task = thiscovery_response['interview_task']
+
     response = {
-        'id': response['interview_task_id'],
-        'acuityTypeId': response['appointment_type_id'],
-        'onDemandAvailable': response['on_demand_available'],
-        'liveAvailable': response['live_available'],
-        'title': response['name'],
-        'completionUrl': response['completion_url'],
+        'id': task_id,
+        'acuityTypeId': task['appointment_type_id'],
+        'onDemandAvailable': task['on_demand_available'],
+        'liveAvailable': task['live_available'],
+        'title': task['name'],
+        'completionUrl': task['completion_url'],
         'appointment': appointment,
     }
 
