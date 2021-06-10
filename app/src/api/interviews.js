@@ -1,5 +1,15 @@
 import { client } from './backend';
 
+export async function fetchRoomToken (data) {
+	const response = await client.post(`room/token`, data);
+
+	if (response.access_token) {
+		return response.access_token;
+	}
+
+	return response;
+}
+
 export async function creatInterviewAnswer (data) {
 	const response = await client.post(`self-record-interview/answer`, data)
 		.then((response) => response)

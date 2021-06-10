@@ -9,6 +9,10 @@ import {
 	fetchAppointment,
 } from '@/api/appointments';
 
+import {
+	fetchRoomToken,
+} from '@/api/interviews';
+
 export const interviews = {
 	namespaced: true,
 
@@ -160,20 +164,8 @@ export const interviews = {
 		},
 
 		getAccessToken: async ({ commit }, data) => {
-			await fetch(`${env.backendApiHost}/v1/room/token`, {
-					method: 'POST',
-					headers: {
-						'Content-Type': 'application/json',
-					},
-					body: JSON.stringify(data)
-				})
-				.then(response => response.json())
-				.then((response) => {
-					if (response && response.access_token) {
-						commit('setAccessToken', response.access_token);
-					}
-				})
-				.catch((error) => console.error(error));
+			const accessToken = await fetchRoomToken(data);
+			commit('setAccessToken', accessToken);
 		},
 
 		getSelfRecordQuestions: async ({ commit, rootState }) => {
