@@ -104,6 +104,23 @@ Resources:
                 type: aws_proxy
                 uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${GetInterviewersQuestions.Arn}/invocations
               responses: {}
+
+          /v1/thiscovery/user-interview-tasks/{id}:
+            post:
+              x-amazon-apigateway-integration:
+                httpMethod: POST
+                type: aws_proxy
+                uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${MockUserTask.Arn}/invocations
+              responses: {}
+          
+          /v1/thiscovery/interview-tasks/{id}:
+            post:
+              x-amazon-apigateway-integration:
+                httpMethod: POST
+                type: aws_proxy
+                uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${MockTask.Arn}/invocations
+              responses: {}
+
       EndpointConfiguration: REGIONAL
       TracingEnabled: true
       MinimumCompressionSize: 1000
@@ -174,6 +191,7 @@ Resources:
           APPOINTMENT_INTERVAL_MIN: !Ref EnvConfigAppointmentsIntervalMinAsString
           ACUITY_BASE_URI: !Ref EnvConfigAcuityBaseUriAsString
           SECRETS_NAMESPACE: !Sub /${EnvironmentTagName}/
+
   GetAppointmentDateSlots:
     Type: AWS::Serverless::Function
     Properties:
@@ -540,6 +558,52 @@ Resources:
                 - thiscovery_video
               detail-type:
                 - twilio_composition_available
+  
+  MockUserTask:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: Mock-UserTask
+      Description: !Sub
+        - Stack ${StackTagName} Environment ${EnvironmentTagName} Function ${ResourceName}
+        - ResourceName: MockUserTask
+      CodeUri: src
+      Handler: thiscovery_test.user_interview_tasks
+      Runtime: python3.8
+      MemorySize: 512
+      Timeout: 1
+      Tracing: Active
+      Policies:
+        - AWSXrayWriteOnlyAccess
+      Events:
+        BackendApiGETv1thisusertasks:
+          Type: Api
+          Properties:
+            Path: /v1/thiscovery/user-interview-tasks/{id}
+            Method: GET
+            RestApiId: !Ref BackendApi
+  
+  MockTask:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: Mock-Task
+      Description: !Sub
+        - Stack ${StackTagName} Environment ${EnvironmentTagName} Function ${ResourceName}
+        - ResourceName: MockTask
+      CodeUri: src
+      Handler: thiscovery_test.interview_tasks
+      Runtime: python3.8
+      MemorySize: 512
+      Timeout: 1
+      Tracing: Active
+      Policies:
+        - AWSXrayWriteOnlyAccess
+      Events:
+        BackendApiGETv1thistasks:
+          Type: Api
+          Properties:
+            Path: /v1/thiscovery/interview-tasks/{id}
+            Method: GET
+            RestApiId: !Ref BackendApi
 
   Cdn:
     Type: AWS::CloudFront::Distribution
