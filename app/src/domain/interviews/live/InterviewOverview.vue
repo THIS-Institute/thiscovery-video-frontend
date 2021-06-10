@@ -2,7 +2,7 @@
 	<div class="col-span-12 sm:col-span-8 sm:col-start-3 lg:col-span-4 lg:col-start-5">
 		<section class="relative bg-white rounded-lg">
 			<div
-				v-if="!isLoading"
+				v-if="!isLoading && !isError"
 				class="flex flex-col px-5 md:px-11.25 py-6 md:py-10"
 			>
 				<icon-text
@@ -39,13 +39,29 @@
 					@click="onContinue"
 				/>
 			</div>
+			<div
+				v-if="isError"
+				class="flex flex-col px-5 md:px-11.25 py-6 md:py-10"
+			>
+				<h1
+					class="text-red text-xl"
+				>
+					Error
+				</h1>
+
+				<p
+					class="text-lg font-bold mt-2.5"
+				>
+					Something has gone wrong
+				</p>
+			</div>
 			<loading-spinner
 				v-if="isLoading"
 			/>
 		</section>
 
 		<div
-			v-if="!isLoading"
+			v-if="!isLoading && !isError"
 			class="flex flex-col items-center text-center mt-12"
 		>
 			<h2
@@ -82,6 +98,7 @@
 
 		setup() {
 			const isLoading = ref(true);
+			const isError = ref(false);
 			const store = useStore();
 			const route = useRoute();
 			const router = useRouter();
@@ -98,16 +115,22 @@
 				isLoading.value = false;
 			};
 
+			const onCatch = () => {
+				isLoading.value = false;
+				isError.value = true;
+			};
+
 			const options = {
 				identity: store.getters['user/getIdentity'],
 				room: route.params.id,
 			};
 
-			store.dispatch('interviews/getAppointment', options)
-				.then(onHasRoomToken);
-
-			store.dispatch('interviews/getAccessToken', options)
-				.then(onHasRoomToken);
+			Promise.all([
+					store.dispatch('interviews/getAppointment', options),
+					store.dispatch('interviews/getAccessToken', options),
+				])
+				.then(onHasRoomToken)
+				.catch(onCatch);
 
 			const {
 				asFormattedDate,
@@ -128,6 +151,7 @@
 
 			return {
 				isLoading,
+				isError,
 				onContinue,
 				message,
 				appointmentTitle,

@@ -161,9 +161,11 @@ export const interviews = {
 			
 			dispatch('appointments/initExisting', appointment.appointment, { root: true});
 
-			commit('task/setId', appointment.task.id, { root: true });
-			commit('task/setTitle', appointment.task.title, { root: true });
-			commit('task/setCompletionUrl', appointment.task.completionUrl, { root: true });
+			if (appointment.task && appointment.task.id) {
+				commit('task/setId', appointment.task.id, { root: true });
+				commit('task/setTitle', appointment.task.title, { root: true });
+				commit('task/setCompletionUrl', appointment.task.completionUrl, { root: true });
+			}
 		},
 
 		getAccessToken: async ({ commit }, data) => {
