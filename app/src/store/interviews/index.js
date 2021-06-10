@@ -1,5 +1,3 @@
-import env from '@/app.env';
-
 import {
 	getSelfRecordQuestions,
 	getInterviewersQuestions,
