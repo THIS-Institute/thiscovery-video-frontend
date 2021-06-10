@@ -1,5 +1,19 @@
 import { client } from './backend';
 
+export async function fetchAppointment (appointmentId) {
+	let appointment = {};
+
+	await client.get(`appointments/${appointmentId}`)
+		.then((response) => {
+			if (response.appointment) {
+				appointment = response;
+			}
+		})
+		.catch((error) => console.error(error));
+
+	return appointment;
+}
+
 export async function fetchAppointmentSlots (appointmentTypeId, dateOffset = null) {
 	let slots = [];
 	let endpoint = `appointment-slots/${appointmentTypeId}`;

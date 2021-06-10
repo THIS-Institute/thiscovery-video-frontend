@@ -5,6 +5,10 @@ import {
 	getInterviewersQuestions,
 } from '@/api/tasks';
 
+import {
+	fetchAppointment,
+} from '@/api/appointments';
+
 export const interviews = {
 	namespaced: true,
 
@@ -148,6 +152,11 @@ export const interviews = {
 					commit('setActiveAudioOutput', state.availableAudioOutput[0]);
 				}
 			}
+		},
+
+		getAppointment: async ({ commit }, data) => {
+			const appointment = await fetchAppointment(data.room);
+			console.log(appointment);
 		},
 
 		getAccessToken: async ({ commit }, data) => {

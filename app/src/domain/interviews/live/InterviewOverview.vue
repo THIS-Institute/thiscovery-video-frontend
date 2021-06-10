@@ -102,6 +102,9 @@
 				room: route.params.id,
 			};
 
+			store.dispatch('interviews/getAppointment', options)
+				.then(onHasRoomToken);
+
 			store.dispatch('interviews/getAccessToken', options)
 				.then(onHasRoomToken);
 
