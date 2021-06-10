@@ -24,7 +24,7 @@ def lambda_handler(event, context):
     try:
         user_responses = UserResponseService()
         response = user_responses.get(response_id)
-    except (ResponseNotFound, KeyError):
+    except ResponseNotFound:
         return ApiGatewayErrorResponse(
             exception=ResponseException.EXCEPTION_NOT_FOUND,
             message='Response not found',

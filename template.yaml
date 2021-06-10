@@ -399,6 +399,8 @@ Resources:
         - AWSXrayWriteOnlyAccess
         - DynamoDBCrudPolicy:
             TableName: !Ref InterviewsTable
+        - AWSSecretsManagerGetSecretValuePolicy:
+            SecretArn: !Sub arn:${AWS::Partition}:secretsmanager:${AWS::Region}:${AWS::AccountId}:secret:/${EnvironmentTagName}/*
       Events:
         BackendApiGETv1gettask:
           Type: Api
@@ -410,6 +412,7 @@ Resources:
         Variables:
           TABLE_NAME: !Ref InterviewsTable
           TABLE_ARN: !GetAtt InterviewsTable.Arn
+          SECRETS_NAMESPACE: !Sub /${EnvironmentTagName}/
 
   GetSelfRecordQuestions:
     Type: AWS::Serverless::Function
