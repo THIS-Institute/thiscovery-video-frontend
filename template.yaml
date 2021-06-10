@@ -332,6 +332,8 @@ Resources:
         - AWSXrayWriteOnlyAccess
         - DynamoDBCrudPolicy:
             TableName: !Ref InterviewsTable
+        - AWSSecretsManagerGetSecretValuePolicy:
+            SecretArn: !Sub arn:${AWS::Partition}:secretsmanager:${AWS::Region}:${AWS::AccountId}:secret:/${EnvironmentTagName}/*
       Events:
         BackendApiGETv1appointments:
           Type: Api
@@ -344,14 +346,16 @@ Resources:
           TABLE_NAME: !Ref InterviewsTable
           TABLE_ARN: !GetAtt InterviewsTable.Arn
           APP_BASE_URL: !Ref EnvConfigappbaseurlAsString
+          THISCOVERY_API_BASE_URL: !Ref EnvConfigthiscourlAsString
+          SECRETS_NAMESPACE: !Sub /${EnvironmentTagName}/
 
   CreateInterviewAnswer:
     Type: AWS::Serverless::Function
     Properties:
-      FunctionName: Interviews-CreateAnswer
+      FunctionName: Interviews-CreateInterviewAnswer
       Description: !Sub
         - Stack ${StackTagName} Environment ${EnvironmentTagName} Function ${ResourceName}
-        - ResourceName: Function
+        - ResourceName: CreateInterviewAnswer
       CodeUri: src
       Handler: create_interview_answer.lambda_handler
       Runtime: python3.8
@@ -791,6 +795,9 @@ Parameters:
   EnvConfigappbaseurlAsString:
     Type: AWS::SSM::Parameter::Value<String>
     Default: /<EnvironmentName>/app/base-url
+  EnvConfigthiscourlAsString:
+    Type: AWS::SSM::Parameter::Value<String>
+    Default: /<EnvironmentName>/app/thiscovery-base-url
 
 Metadata:
   EnvConfigParameters:
@@ -802,3 +809,4 @@ Metadata:
     EnvConfigtwilioaccountsidAsString: twilio.account-sid
     EnvConfigjsbuildAsString: js-build
     EnvConfigappbaseurlAsString: app.base-url
+    EnvConfigthiscourlAsString: app.thiscovery-base-url

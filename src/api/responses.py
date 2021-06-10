@@ -30,6 +30,7 @@ class ApiGatewayErrorResponse(ApiGatewayResponse):
         }
 
 class ResponseException(Exception):
+    EXCEPTION_NOT_FOUND = 'NOT_FOUND'
     EXCEPTION_MISSING_PARAM = 'MISSING_PARAM'
     EXCEPTION_INVALID_PARAM = 'INVALID_PARAM'
     EXCEPTION_INVALID_TIMESLOT = 'INVALID_TIMESLOT'
