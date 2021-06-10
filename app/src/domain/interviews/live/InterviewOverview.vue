@@ -61,7 +61,7 @@
 		</section>
 
 		<div
-			v-if="!isLoading && !isError"
+			v-if="!isLoading && !isError && !isInterviewer"
 			class="flex flex-col items-center text-center mt-12"
 		>
 			<h2
@@ -139,6 +139,8 @@
 
 			const appointmentTitle = computed(() => store.state.task.title);
 
+			const isInterviewer = computed(() => store.state.user.isInterviewer);
+
 			const appointmentDate = computed(() => {
 				const datetime = store.state.appointments.selection;
 
@@ -156,6 +158,7 @@
 				message,
 				appointmentTitle,
 				appointmentDate,
+				isInterviewer,
 			}
 		},
 	};
