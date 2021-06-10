@@ -106,7 +106,7 @@ Resources:
               responses: {}
 
           /v1/thiscovery/user-interview-tasks/{id}:
-            post:
+            get:
               x-amazon-apigateway-integration:
                 httpMethod: POST
                 type: aws_proxy
@@ -114,7 +114,7 @@ Resources:
               responses: {}
           
           /v1/thiscovery/interview-tasks/{id}:
-            post:
+            get:
               x-amazon-apigateway-integration:
                 httpMethod: POST
                 type: aws_proxy
