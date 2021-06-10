@@ -11,12 +11,12 @@
 						name: 'camera',
 						size: 'w-6 h-6',
 					}"
-					:text="message('live.landing.title')"
+					:text="message('live.title')"
 				/>
 				
 				<h2
 					class="e-h-interview mt-5"
-					v-text="message('live.landing.content')"
+					v-text="appointmentTitle"
 				/>
 
 				<aside class="py-7 px-7 5 border border-grey-200 rounded-lg mt-5">
@@ -27,7 +27,7 @@
 
 					<p
 						class="text-lg font-bold mt-2.5"
-						v-text="message('live.landing.date')"
+						v-text="appointmentDate"
 					/>
 				</aside>
 
@@ -67,13 +67,14 @@
 </template>
 
 <script>
-	import { ref } from 'vue';
+	import { ref, computed } from 'vue';
 	import { useStore } from 'vuex';
 	import { useRoute, useRouter } from 'vue-router'
 	import { ROUTE_LIVE_SETTINGS } from '@/routeConstants';
 
 	import messages from '@/messages';
 	import { useMessages } from '@/composables/useMessages';
+	import { useDates } from '@/domain/appointments/useDates';
 	import LoadingSpinner from '@/components/LoadingSpinner';
 
 	export default {
@@ -108,10 +109,29 @@
 			store.dispatch('interviews/getAccessToken', options)
 				.then(onHasRoomToken);
 
+			const {
+				asFormattedDate,
+				asFormattedTime,
+			} = useDates();
+
+			const appointmentTitle = computed(() => store.state.task.title);
+
+			const appointmentDate = computed(() => {
+				const datetime = store.state.appointments.selection;
+
+				if (!datetime) {
+					return null;
+				}
+
+				return `${asFormattedDate(datetime)}, ${asFormattedTime(datetime)}`;
+			});
+
 			return {
 				isLoading,
 				onContinue,
 				message,
+				appointmentTitle,
+				appointmentDate,
 			}
 		},
 	};

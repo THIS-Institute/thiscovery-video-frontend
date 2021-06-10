@@ -140,10 +140,7 @@ export default Object.freeze({
 		},
 
 		landing: {
-			title: 'Live Interview',
-			content: 'Learning from intensive caffeine experiences',
-			due: 'Your appointment is due to start…',
-			date: 'Mon 26 Apr 2021, 11:30am',
+			due: 'Your appointment is…',
 			cancel: 'No longer able to make this appointment?',
 		},
 

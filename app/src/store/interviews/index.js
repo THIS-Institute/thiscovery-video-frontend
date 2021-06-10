@@ -156,10 +156,14 @@ export const interviews = {
 			}
 		},
 
-		getAppointment: async ({ state }, data) => {
+		getAppointment: async ({ commit, dispatch }, data) => {
 			const appointment = await fetchAppointment(data.room);
-			console.log(state.declinedPermissions);
-			console.log(appointment);
+			
+			dispatch('appointments/initExisting', appointment.appointment, { root: true});
+
+			commit('task/setId', appointment.task.id, { root: true });
+			commit('task/setTitle', appointment.task.title, { root: true });
+			commit('task/setCompletionUrl', appointment.task.completionUrl, { root: true });
 		},
 
 		getAccessToken: async ({ commit }, data) => {
