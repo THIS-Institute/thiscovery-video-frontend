@@ -15,7 +15,7 @@ EXAMPLE_TASK = {
     'project_task_id': 'testtec46a-bc1b-4f3d-ad0f-0b8d0826a908'
 }
 
-def user_interview_tasks(event):
+def user_interview_tasks(event, context):
     response_id = event['pathParameters']['id']
 
     return ApiGatewayResponse(data={
@@ -27,5 +27,5 @@ def user_interview_tasks(event):
         'response_id': response_id
     }).response()
 
-def interview_tasks(event):
+def interview_tasks(event, context):
     return ApiGatewayResponse(data=EXAMPLE_TASK).response()
