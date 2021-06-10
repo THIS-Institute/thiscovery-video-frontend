@@ -52,7 +52,9 @@ class Bookings:
                 'pk': f'APPOINTMENT#{appointment_id}',
                 'sk': 'INFO',
                 'user': f'USER#{user_id}',
+                'user_id': user_id,
                 'task': f'TASK#{task_id}',
+                'task_id': task_id,
                 'appointment_id': appointment_id,
                 'appointment_time': appointment_time,
             }

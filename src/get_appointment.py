@@ -34,7 +34,7 @@ def lambda_handler(event, context):
 
     try:
         thiscovery_tasks = TaskService()
-        task = thiscovery_tasks.get(appointment['task'])
+        task = thiscovery_tasks.get(appointment['task_id'])
     except (TaskNotFound, KeyError):
         return ApiGatewayErrorResponse(
             exception=ResponseException.EXCEPTION_NOT_FOUND,
@@ -48,7 +48,7 @@ def lambda_handler(event, context):
             'time': appointment['appointment_time'],
         },
         'task': {
-            'id': appointment['task'],
+            'id': appointment['task_id'],
             'title': task['name'],
             'completionUrl': task['completion_url'],
         },
