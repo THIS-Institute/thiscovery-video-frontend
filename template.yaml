@@ -653,9 +653,9 @@ Resources:
       Description: !Sub
         - Stack ${StackTagName} Environment ${EnvironmentTagName} Layer ${ResourceName}
         - ResourceName: VideoProccessingLayer
-      Content:
-        S3Bucket: util-762781284726
-        S3Key: ffmpeg.zip
+      ContentUri: layers/video_proccessing
+      Metadata:
+        BuildMethod: makefile
       CompatibleRuntimes:
         - python3.8
       RetentionPolicy: Retain
