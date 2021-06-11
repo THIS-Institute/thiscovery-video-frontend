@@ -653,7 +653,9 @@ Resources:
       Description: !Sub
         - Stack ${StackTagName} Environment ${EnvironmentTagName} Layer ${ResourceName}
         - ResourceName: VideoProccessingLayer
-      ContentUri: https://util-762781284726.s3.eu-west-1.amazonaws.com/ffmpeg.zip
+      Content:
+        S3Bucket: util-762781284726
+        S3Key: ffmpeg.zip
       CompatibleRuntimes:
         - python3.8
       RetentionPolicy: Retain
