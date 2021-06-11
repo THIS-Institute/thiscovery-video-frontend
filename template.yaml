@@ -923,7 +923,7 @@ Parameters:
     Default: /<EnvironmentName>/app/thiscovery-base-url
   EnvConfigPostmarkTokenAsString:
     Type: AWS::SSM::Parameter::Value<String>
-    Default: /<EnvironmentName>/app/postmark-token
+    Default: /<EnvironmentName>/postmark/token
 
 Metadata:
   EnvConfigParameters:
