@@ -33,6 +33,7 @@
 								flipped
 								small
 								pill
+								@click="onLeave"
 							/>
 
 							<interview-timer
@@ -261,6 +262,18 @@
 			const onQuestionReceived = (question) => {
 				remoteQuestion.value = question;
 			}
+
+			const onLeave = () => {
+				if (room.value) {
+					room.value.disconnect();
+				}
+
+				const completionUrl = store.state.task.completionUrl;
+
+				if(completionUrl) {
+					window.location.href = completionUrl;
+				}
+			}
 			
 			return {
 				hasLocalFeed,
@@ -276,6 +289,7 @@
 				onInterviewStopAsking,
 				onQuestionReceived,
 				remoteQuestion,
+				onLeave,
 			}
 		},
 	};
