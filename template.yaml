@@ -373,6 +373,7 @@ Resources:
           ACUITY_BASE_URI: !Ref EnvConfigAcuityBaseUriAsString
           SECRETS_NAMESPACE: !Sub /${EnvironmentTagName}/
           APP_BASE_URL: !Ref EnvConfigappbaseurlAsString
+          POSTMARK_TOKEN: !Ref EnvConfigPostmarkTokenAsString
 
   GetAppointmentById:
     Type: AWS::Serverless::Function
@@ -920,6 +921,9 @@ Parameters:
   EnvConfigthiscourlAsString:
     Type: AWS::SSM::Parameter::Value<String>
     Default: /<EnvironmentName>/app/thiscovery-base-url
+  EnvConfigPostmarkTokenAsString:
+    Type: AWS::SSM::Parameter::Value<String>
+    Default: /<EnvironmentName>/app/postmark-token
 
 Metadata:
   EnvConfigParameters:
@@ -932,3 +936,4 @@ Metadata:
     EnvConfigjsbuildAsString: js-build
     EnvConfigappbaseurlAsString: app.base-url
     EnvConfigthiscourlAsString: app.thiscovery-base-url
+    EnvConfigPostmarkTokenAsString: postmark.token

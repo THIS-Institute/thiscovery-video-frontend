@@ -4,6 +4,7 @@ from .acuity import AcuityError
 from dynamodb import DynamoDB
 from events import Event, EventBridge
 from requests import Response
+from postmarker.core import PostmarkClient
 
 class Bookings:
     def __init__(self, acuity_client):
@@ -63,6 +64,28 @@ class Bookings:
         self.create_event(
             event_type='interview_booked',
             appointment=appointment,
+        )
+
+        base_url = os.environ['APP_BASE_URL']
+        first_name = user['firstName']
+        
+        html_body = f"""
+        <html>
+            <body>
+                <p><b>Hello {first_name},</b></p>
+                <p>This is a test email, that provides interview room links to support testing.</p>
+                <p>Interviewee's link:{base_url}/live/{appointment_id}</p>
+                <p>Interviewer's link:{base_url}/live/{appointment_id}?isInterviewer</p>
+            </body>
+        </html>
+        """
+
+        postmark = PostmarkClient(server_token=os.environ['POSTMARK_TOKEN'])
+        postmark.emails.send(
+            From='thiscovery@engageinteractive.co.uk',
+            To=user['email'],
+            Subject='Your Thiscovery Remote Interview',
+            HtmlBody=html_body,
         )
 
         return appointment
