@@ -654,11 +654,10 @@ Resources:
         - Stack ${StackTagName} Environment ${EnvironmentTagName} Layer ${ResourceName}
         - ResourceName: VideoProccessingLayer
       ContentUri: layers/video_proccessing
-      Metadata:
-        BuildMethod: makefile
       CompatibleRuntimes:
         - python3.8
-      RetentionPolicy: Retain
+    Metadata:
+      BuildMethod: makefile
 
   Cdn:
     Type: AWS::CloudFront::Distribution
