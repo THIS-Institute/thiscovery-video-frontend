@@ -9,6 +9,7 @@ import {
 
 import {
 	fetchRoomToken,
+	linkInterviewRoom,
 } from '@/api/interviews';
 
 export const interviews = {
@@ -186,6 +187,10 @@ export const interviews = {
 			if (response.questions !== undefined) {
 				commit('setInterviewerQuestions', response.questions);
 			}
+		},
+
+		linkRoom: async (context, options) => {
+			await linkInterviewRoom(options);
 		},
 	},
 

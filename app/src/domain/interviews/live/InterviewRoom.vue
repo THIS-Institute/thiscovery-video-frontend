@@ -179,6 +179,13 @@
 				room.value.localParticipant.on('trackPublished', onTrackPublished);
 				room.value.localParticipant.on('trackPublicationFailed', onTrackPublicationFailed);
 
+				if (!isInterviewer.value) {
+					store.dispatch('interviews/linkRoom', {
+						roomSid: room.value.sid,
+						appointmentId: route.params.id,
+					})
+				}
+
 				console.log(`Successfully joined a Room: ${room.value}`);
 			};
 
