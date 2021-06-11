@@ -538,7 +538,7 @@ Resources:
         - S3CrudPolicy:
             BucketName: !Ref InterviewAssets
       Layers:
-        - arn:aws:lambda:eu-west-1:762781284726:layer:ffmpeg-test:1
+        - !Ref VideoProccessingLayer
 
   TwilioDispatcher:
     Type: AWS::Serverless::Function
@@ -645,6 +645,18 @@ Resources:
             Path: /thiscovery/v1/interview-tasks/{id}
             Method: GET
             RestApiId: !Ref BackendApi
+
+  VideoProccessingLayer:
+    Type: AWS::Serverless::LayerVersion
+    Properties:
+      LayerName: VideoProccessingLayer
+      Description: !Sub
+        - Stack ${StackTagName} Environment ${EnvironmentTagName} Layer ${ResourceName}
+        - ResourceName: VideoProccessingLayer
+      ContentUri: https://util-762781284726.s3.eu-west-1.amazonaws.com/ffmpeg.zip
+      CompatibleRuntimes:
+        - python3.8
+      RetentionPolicy: Retain
 
   Cdn:
     Type: AWS::CloudFront::Distribution
