@@ -10,8 +10,8 @@ def lambda_handler(event, context):
     request = json.loads(event['body'])
 
     try:
-        room_sid = request['room_sid']
-        appointment_id = request['appointment_id']
+        room_sid = request['roomSid']
+        appointment_id = request['appointmentId']
     except KeyError:
         return ApiGatewayErrorResponse(
             exception=ResponseException.EXCEPTION_MISSING_PARAM,
