@@ -21,7 +21,7 @@
 							:class="[
 								'flex flex-col p-2.5 w-full',
 								{
-									'pb-16': !msgs.infoBar || !isLive(),
+									'pb-16': !isLive(),
 								},
 							]"
 						>
