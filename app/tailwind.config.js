@@ -71,7 +71,8 @@ module.exports = {
 		},
 		extend: {
 			animation: {
-				spinner: 'spinner 1.3s infinite linear'
+				spinner: 'spinner 1.3s infinite linear',
+				countdown: 'countdown 3s infinite linear forwards',
 			},
 			keyframes: {
 				spinner: {
@@ -98,6 +99,14 @@ module.exports = {
 					},
 					'87.5%': {
 						boxShadow: '0em -3em 0 0, 2em -2em 0 -1em, 3em 0 0 -1em, 2em 2em 0 -1em, 0 3em 0 -1em, -2em 2em 0 0, -3em 0em 0 0, -2em -2em 0 0.2em',
+					},
+				},
+				countdown: {
+					'from': {
+						strokeDashoffset: '0px',
+					},
+					'to': {
+						strokeDashoffset: '113px',
 					},
 				},
 			},
@@ -144,6 +153,7 @@ module.exports = {
 			},
 			scale: {
 				'-100': '-1',
+				'175': '1.75',
 			},
 			spacing: {
 				em: '1em',

@@ -22,10 +22,18 @@
 			v-if="isRecording"
 		/>
 
-		<recording-countdown
-			v-if="isCountdown"
-			@finish="onCountdownFinish"
-		/>
+		<transition
+			enter-active-class="transition-opacity ease-out duration-300"
+			leave-active-class="transition-opacity ease-in duration-200"
+			enter-from-class="opacity-0"
+			leave-to-class="opacity-0"
+			appear
+		>
+			<recording-countdown
+				v-if="isCountdown"
+				@finish="onCountdownFinish"
+			/>
+		</transition>
 
 		<inline-controls
 			:state="state"
