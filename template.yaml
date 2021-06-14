@@ -129,6 +129,14 @@ Resources:
                 uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${MockTask.Arn}/invocations
               responses: {}
 
+          /thiscovery/v1/interview-questions/{id}:
+            get:
+              x-amazon-apigateway-integration:
+                httpMethod: POST
+                type: aws_proxy
+                uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${MockQuestions.Arn}/invocations
+              responses: {}
+
       EndpointConfiguration: REGIONAL
       TracingEnabled: true
       MinimumCompressionSize: 1000
@@ -644,6 +652,29 @@ Resources:
           Type: Api
           Properties:
             Path: /thiscovery/v1/interview-tasks/{id}
+            Method: GET
+            RestApiId: !Ref BackendApi
+
+  MockQuestions:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: Mock-Questions
+      Description: !Sub
+        - Stack ${StackTagName} Environment ${EnvironmentTagName} Function ${ResourceName}
+        - ResourceName: MockQuestions
+      CodeUri: src
+      Handler: thiscovery_test.interview_questions
+      Runtime: python3.8
+      MemorySize: 512
+      Timeout: 1
+      Tracing: Active
+      Policies:
+        - AWSXrayWriteOnlyAccess
+      Events:
+        BackendApiGETv1thistasks:
+          Type: Api
+          Properties:
+            Path: /thiscovery/v1/interview-questions/{id}
             Method: GET
             RestApiId: !Ref BackendApi
 
