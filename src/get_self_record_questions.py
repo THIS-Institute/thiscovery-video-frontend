@@ -21,7 +21,7 @@ def lambda_handler(event, context):
     questions  = thiscovery_questions.format_as_self_record(survey)
 
     response = {
-        'questions': questions,
+        'blocks': questions,
     }
 
     return ApiGatewayResponse(data=response).response()
