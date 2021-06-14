@@ -3,7 +3,7 @@
 		:class="[
 			'flex items-center justify-end space-x-4',
 			'flex-row-reverse space-x-reverse',
-			'rounded-lg text-white py-4 px-8',
+			'rounded-lg text-white py-4 px-6',
 			error ? 'bg-red' : 'bg-green',
 		]"
 	>

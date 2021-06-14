@@ -70,6 +70,46 @@ module.exports = {
 			'-1': -1,
 		},
 		extend: {
+			animation: {
+				spinner: 'spinner 1.3s infinite linear',
+				countdown: 'countdown 3.2s infinite linear forwards',
+			},
+			keyframes: {
+				spinner: {
+					'0%, 100%': {
+						boxShadow: '0 -3em 0 0.2em, 2em -2em 0 0em, 3em 0 0 -1em, 2em 2em 0 -1em, 0 3em 0 -1em, -2em 2em 0 -1em, -3em 0 0 -1em, -2em -2em 0 0',
+					},
+					'12.5%': {
+						boxShadow: '0 -3em 0 0, 2em -2em 0 0.2em, 3em 0 0 0, 2em 2em 0 -1em, 0 3em 0 -1em, -2em 2em 0 -1em, -3em 0 0 -1em, -2em -2em 0 -1em',
+					},
+					'25%': {
+						boxShadow: '0 -3em 0 -0.5em, 2em -2em 0 0, 3em 0 0 0.2em, 2em 2em 0 0, 0 3em 0 -1em, -2em 2em 0 -1em, -3em 0 0 -1em, -2em -2em 0 -1em',
+					},
+					'37.5%': {
+						boxShadow: '0 -3em 0 -1em, 2em -2em 0 -1em, 3em 0em 0 0, 2em 2em 0 0.2em, 0 3em 0 0em, -2em 2em 0 -1em, -3em 0em 0 -1em, -2em -2em 0 -1em',
+					},
+					'50%': {
+						boxShadow: '0 -3em 0 -1em, 2em -2em 0 -1em, 3em 0 0 -1em, 2em 2em 0 0em, 0 3em 0 0.2em, -2em 2em 0 0, -3em 0em 0 -1em, -2em -2em 0 -1em',
+					},
+					'62.5%': {
+						boxShadow: '0 -3em 0 -1em, 2em -2em 0 -1em, 3em 0 0 -1em, 2em 2em 0 -1em, 0 3em 0 0, -2em 2em 0 0.2em, -3em 0 0 0, -2em -2em 0 -1em',
+					},
+					'75%': {
+						boxShadow: '0em -3em 0 -1em, 2em -2em 0 -1em, 3em 0em 0 -1em, 2em 2em 0 -1em, 0 3em 0 -1em, -2em 2em 0 0, -3em 0em 0 0.2em, -2em -2em 0 0',
+					},
+					'87.5%': {
+						boxShadow: '0em -3em 0 0, 2em -2em 0 -1em, 3em 0 0 -1em, 2em 2em 0 -1em, 0 3em 0 -1em, -2em 2em 0 0, -3em 0em 0 0, -2em -2em 0 0.2em',
+					},
+				},
+				countdown: {
+					'from': {
+						strokeDashoffset: '0px',
+					},
+					'to': {
+						strokeDashoffset: '113px',
+					},
+				},
+			},
 			backgroundSize: {
 				'100': relative(400),
 				'200': relative(800),
@@ -113,6 +153,7 @@ module.exports = {
 			},
 			scale: {
 				'-100': '-1',
+				'175': '1.75',
 			},
 			spacing: {
 				em: '1em',
