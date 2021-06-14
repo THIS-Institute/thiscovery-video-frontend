@@ -26,6 +26,7 @@ module.exports = {
 			...variables.colors,
 		},
 		boxShadow: {
+			md: '0 25px 50px -12px rgba(0, 0, 0, 1)',
 			sticky: '0px 4px 50px rgba(0, 0, 0, 0.25)',
 		},
 		fontSize: {
@@ -85,7 +86,6 @@ module.exports = {
 			},
 			maxHeight: {
 				'date-picker': relative(445),
-				'live-questions': relative(150),
 			},
 			maxWidth: {
 				'36': relative(144),

@@ -4,6 +4,7 @@
 			'flex items-center rounded-lg shadow-sticky',
 			'bg-grey-400 text-white',
 			'px-5 py-4 space-x-2 e-h4',
+			'w-32',
 		]"
 	>
 		<icon

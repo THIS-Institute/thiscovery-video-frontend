@@ -24,6 +24,7 @@
 			@watch-answer="onWatchAnswer"
 			@toggle-playback="onTogglePlayback"
 			@add-comments="$emit('addComments')"
+			@stop="$emit('progressQuestion')"
 		/>
 
 		<transition

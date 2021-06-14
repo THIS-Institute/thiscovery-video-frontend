@@ -16,6 +16,7 @@
 		"black": "#000",
 		"black-25": "rgba(0, 0, 0, .25)",
 		"white": "#fff",
+		"blue": "#005fcc",
 		"grey": {
 			"100": "#efeff0",
 			"200": "#d2d4d3",

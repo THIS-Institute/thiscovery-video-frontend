@@ -2,55 +2,55 @@
 	@apply
 		bg-red text-white border-red
 		hover:bg-white hover:text-red
-		focus:bg-white focus:text-red;
+		focus:ring-4 focus:ring-blue;
 }
 
 .e-button--red-outline {
 	@apply
 		bg-white text-red border-red
 		hover:bg-red hover:text-white
-		focus:bg-red focus:text-white;
+		focus:ring-4 focus:ring-blue;
 }
 
 .e-button--green {
 	@apply
 		bg-green text-white border-green
 		hover:bg-white hover:text-green
-		focus:bg-white focus:text-green;
+		focus:ring-4 focus:ring-blue;
 }
 
 .e-button--green-outline {
 	@apply
 		bg-white text-green border-green
 		hover:bg-green hover:text-white
-		focus:bg-green focus:text-white;
+		focus:ring-4 focus:ring-blue;
 }
 
 .e-button--white-outline {
 	@apply
 		bg-transparent text-white border-white border-opacity-50
 		hover:bg-white hover:text-black
-		focus:bg-white focus:text-black;
+		focus:ring-4 focus:ring-blue;
 }
 
 .e-button--white {
 	@apply
 		bg-white text-red border-white
 		hover:bg-red hover:text-white
-		focus:bg-red focus:text-white;
+		focus:ring-4 focus:ring-blue;
 }
 
 .e-button--black-outline {
 	@apply
 		bg-transparent text-black border-black
 		hover:bg-black hover:text-white
-		focus:bg-black focus:text-white;
+		focus:ring-4 focus:ring-blue;
 }
 
 .e-button--time {
 	@apply
 		bg-white text-red border-red border-2
 		hover:bg-red hover:text-white
-		focus:bg-red focus:text-white
+		focus:ring-4 focus:ring-blue
 		disabled:border-transparent;
 }
