@@ -72,7 +72,7 @@ module.exports = {
 		extend: {
 			animation: {
 				spinner: 'spinner 1.3s infinite linear',
-				countdown: 'countdown 3s infinite linear forwards',
+				countdown: 'countdown 3.2s infinite linear forwards',
 			},
 			keyframes: {
 				spinner: {

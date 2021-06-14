@@ -133,24 +133,13 @@
 				</modal-container>
 
 				<info-bar
-					v-if="isRecordingMode()"
+					v-if="isRecordingMode() || isReviewingMode()"
 					class="mt-2.5"
 					title="Having trouble recording?"
 					:cta="{
 						title: 'See how to fix this',
 						url: '#',
 					}"
-				/>
-
-				<info-bar
-					v-if="isReviewingMode()"
-					class="mt-2.5"
-					title="Not happy with your answer?"
-					:cta="{
-						title: 'Click here to retake it',
-					}"
-					modal
-					@open-modal="openConfirmDialog"
 				/>
 			</div>
 		</section>
