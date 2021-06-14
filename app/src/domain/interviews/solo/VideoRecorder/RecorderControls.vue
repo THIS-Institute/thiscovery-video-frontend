@@ -1,5 +1,12 @@
 <template>
-	<div class="flex flex-wrap items-center justify-between min-h-controls gap-y-5 px-5 my-5">
+	<div
+		:class="[
+			'relative z-10',
+			'flex flex-wrap items-center justify-between',
+			'min-h-controls',
+			'gap-y-5 p-5 shadow-md',
+		]"
+	>
 		<e-button
 			v-if="isReady"
 			title="Click to record your answer"
