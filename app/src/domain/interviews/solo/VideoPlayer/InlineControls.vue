@@ -19,12 +19,22 @@
 		</template>
 
 		<template v-else>
-			<e-button
-				:icon="isPlaying ? 'pause' : 'play'"
-				class="e-button--white"
-				:disabled="!canPlay"
-				@click="$emit('togglePlayback')"
-			/>
+			<tooltip :text="isPlaying ? 'Pause' : 'Play'">
+				<e-button
+					:icon="isPlaying ? 'pause' : 'play'"
+					class="e-button--white"
+					:disabled="!canPlay"
+					@click="$emit('togglePlayback')"
+				/>
+			</tooltip>
+
+			<tooltip text="Stop">
+				<e-button
+					icon="stop"
+					class="e-button--white"
+					@click="$emit('stop')"
+				/>
+			</tooltip>
 		</template>
 	</div>
 </template>
@@ -37,6 +47,7 @@
 			'watchAnswer',
 			'addComments',
 			'togglePlayback',
+			'stop',
 		],
 
 		setup() {
