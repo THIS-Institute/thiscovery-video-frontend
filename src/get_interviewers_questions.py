@@ -1,37 +1,27 @@
-import json
-from time import sleep
+from interviews.questions import Questions
+
+from api.responses import (
+    ApiGatewayResponse,
+    ApiGatewayErrorResponse,
+    ResponseException,
+)
 
 def lambda_handler(event, context):
-    sleep(0.1)
+    try:
+        survey_id = event['pathParameters']['taskId']
+    except KeyError:
+        return ApiGatewayErrorResponse(
+            exception=ResponseException.EXCEPTION_MISSING_PARAM,
+            message='survey id in path is required',
+        ).response()
 
-    return {
-        'headers': {
-            'Access-Control-Allow-Origin': '*',
-            'Content-Type': 'application/json'
-        },
-        'statusCode': 200,
-        'body': json.dumps({
-            'questions': [
-                {
-                    'name': 'Question 1',
-                    'title': 'Think about the last time you had coffee. How did it make you feel?',
-                },
-                {
-                    'name': 'Question 2',
-                    'title': 'Do you associate any rituals with your coffee consumption?',
-                },
-                {
-                    'name': 'Question 3',
-                    'title': 'Think about a time when you were unable to have access to coffee. How did this make you feel?',
-                },
-                {
-                    'name': 'Question 4',
-                    'title': 'Do you have any concerns about your coffee consumption?',
-                },
-                {
-                    'name': 'Question 5',
-                    'title': 'What would persuade you to stop consuming coffee?',
-                }
-            ],
-        }),
+    thiscovery_questions = Questions(survey_id)
+
+    survey = thiscovery_questions.get_task_survey()
+    questions  = thiscovery_questions.format_as_interviewers(survey)
+
+    response = {
+        'questions': questions,
     }
+
+    return ApiGatewayResponse(data=response).response()
