@@ -1,7 +1,7 @@
 <template>
 	<question-controls
 		v-if="isInterviewer && (questions && questions.length > 0)"
-		class="max-w-xs w-full shadow-sticky"
+		class="max-w-xs sm:w-full shadow-sticky"
 		:questions="questions"
 		@ask-question="$emit('askQuestion', $event)"
 		@stop-asking="$emit('stopAsking')"
@@ -9,7 +9,7 @@
 
 	<question-preview
 		v-else-if="remoteQuestion"
-		class="max-w-xs w-full shadow-sticky"
+		class="max-w-xs sm:w-full shadow-sticky"
 		:question="remoteQuestion"
 	/>
 </template>
