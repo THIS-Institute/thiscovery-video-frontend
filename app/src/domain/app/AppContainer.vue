@@ -3,11 +3,11 @@
 
 	<div
 		v-if="isAppLoading"
-		class="relative flex items-center h-screen"
+		class="relative h-screen"
 	>
-		<div class="w-full flex-initial text-center text-4xl animate-bounce font-bold text-red">
-			Placeholder loading animation
-		</div>
+		<div class="e-background e-background--waves" />
+
+		<loading-spinner />
 	</div>
 </template>
 
@@ -15,7 +15,13 @@
 	import { computed } from 'vue';
 	import { useStore } from 'vuex';
 
+	import LoadingSpinner from '@/components/LoadingSpinner';
+
 	export default {
+		components: {
+			LoadingSpinner,
+		},
+
 		setup() {
 			const store = useStore();
 
