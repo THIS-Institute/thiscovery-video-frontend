@@ -32,6 +32,23 @@
 					<status />
 				</div>
 			</transition>
+
+			<div
+				v-if="isConfirmed"
+				:class="[
+					'hidden pointer-events-none lg:block',
+					'absolute -right-1/24 -bottom-6/24',
+					'transform -translate-1/2 w-64',
+					'xl:right-2/24 xl:-bottom-4/24',
+				]"
+			>
+				<placeholder ratio="pt-paramedic">
+					<img
+						src="/static/img/decorations/paramedic.svg"
+						alt="See you soon"
+					>
+				</placeholder>
+			</div>
 		</div>
 	</section>
 </template>
