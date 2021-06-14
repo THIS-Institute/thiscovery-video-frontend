@@ -12,7 +12,7 @@
 
 		<p
 			v-if="participant.identity"
-			class="fixed bottom-0 left-0 p-4 text-white"
+			class="fixed bottom-0 left-0 p-4 text-white z-1"
 			v-text="participant.identity"
 		/>
 	</div>
