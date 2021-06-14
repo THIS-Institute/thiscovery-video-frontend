@@ -86,7 +86,6 @@ module.exports = {
 			},
 			maxHeight: {
 				'date-picker': relative(445),
-				'live-questions': relative(150),
 			},
 			maxWidth: {
 				'36': relative(144),

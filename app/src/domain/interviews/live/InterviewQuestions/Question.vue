@@ -24,7 +24,7 @@
 		</div>
 
 		<button
-			class="flex items-center focus:outline-none"
+			class="flex items-center focus:outline-none focus:ring-2 focus:ring-blue"
 			@click="$emit('toggle-hidden')"
 		>
 			<icon
@@ -36,33 +36,21 @@
 		</button>
 	</div>
 
-	<transition
-		enter-active-class="transition-all ease-out duration-1000"
-		leave-active-class="transition-all ease-in duration-500"
-		enter-from-class="max-h-0"
-		enter-to-class="max-h-live-questions"
-		leave-from-class="max-h-live-questions"
-		leave-to-class="max-h-0"
-	>
-		<div
-			v-show="!hidden"
-			class="max-h-0"
+	<div v-show="!hidden">
+		<transition
+			enter-active-class="transform transition-all ease-out duration-300"
+			leave-active-class="transform transition-opacity ease-in duration-200"
+			:enter-from-class="`opacity-0 ${ right ? 'translate-x-2' : '-translate-x-2' }`"
+			leave-to-class="opacity-0"
+			mode="out-in"
 		>
-			<transition
-				enter-active-class="transform transition-all ease-out duration-300"
-				leave-active-class="transform transition-opacity ease-in duration-200"
-				:enter-from-class="`opacity-0 ${ right ? 'translate-x-2' : '-translate-x-2' }`"
-				leave-to-class="opacity-0"
-				mode="out-in"
-			>
-				<p
-					:key="question.title"
-					class="mt-7 text-black"
-					v-text="question.title"
-				/>
-			</transition>
-		</div>
-	</transition>
+			<p
+				:key="question.title"
+				class="mt-7 text-black"
+				v-text="question.title"
+			/>
+		</transition>
+	</div>
 </template>
 
 <script>
