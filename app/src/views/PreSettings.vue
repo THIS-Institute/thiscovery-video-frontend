@@ -65,7 +65,10 @@
 									</modal-container>
 								</div>
 
-								<devices class="mt-5" />
+								<devices
+									v-if="!hasCamera || !hasMicrophone"
+									class="mt-5"
+								/>
 							</div>
 
 							<info-bar
