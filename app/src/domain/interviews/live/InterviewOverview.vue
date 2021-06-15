@@ -2,62 +2,66 @@
 	<div class="col-span-12 sm:col-span-8 sm:col-start-3 lg:col-span-4 lg:col-start-5">
 		<section class="relative bg-white rounded-lg">
 			<div
-				v-if="!isLoading && !isError"
 				class="flex flex-col px-5 md:px-11.25 py-6 md:py-10"
+				:class="{
+					'min-h-104.5': isLoading,
+				}"
 			>
-				<icon-text
-					class="e-h4"
-					:icon="{
-						name: 'camera',
-						size: 'w-6 h-6',
-					}"
-					:text="message('live.title')"
-				/>
-				
-				<h2
-					class="e-h-interview mt-5"
-					v-text="appointmentTitle"
-				/>
-
-				<aside class="py-7 px-7 5 border border-grey-200 rounded-lg mt-5">
-					<h1
-						class="text-red text-sm"
-						v-text="message('live.landing.due')"
+				<template v-if="!isLoading && !isError">
+					<icon-text
+						class="e-h4"
+						:icon="{
+							name: 'camera',
+							size: 'w-6 h-6',
+						}"
+						:text="message('live.title')"
 					/>
+					
+					<h2
+						class="e-h-interview mt-5"
+						v-text="appointmentTitle"
+					/>
+
+					<aside class="py-7 px-7 5 border border-grey-200 rounded-lg mt-5">
+						<h1
+							class="text-red text-sm"
+							v-text="message('live.landing.due')"
+						/>
+
+						<p
+							class="text-lg font-bold mt-2.5"
+							v-text="appointmentDate"
+						/>
+					</aside>
+
+					<e-button
+						title="Continue"
+						class="e-button--red mx-auto mt-6 self-center"
+						pill
+						:disabled="isLoading"
+						@click="onContinue"
+					/>
+				</template>
+
+				<loading-spinner v-if="isLoading" />
+
+				<div
+					v-if="isError"
+					class="flex flex-col px-5 md:px-11.25 py-6 md:py-10"
+				>
+					<h1
+						class="text-red text-xl"
+					>
+						Error
+					</h1>
 
 					<p
 						class="text-lg font-bold mt-2.5"
-						v-text="appointmentDate"
-					/>
-				</aside>
-
-				<e-button
-					title="Continue"
-					class="e-button--red mx-auto mt-6 self-center"
-					pill
-					:disabled="isLoading"
-					@click="onContinue"
-				/>
+					>
+						Something has gone wrong
+					</p>
+				</div>
 			</div>
-			<div
-				v-if="isError"
-				class="flex flex-col px-5 md:px-11.25 py-6 md:py-10"
-			>
-				<h1
-					class="text-red text-xl"
-				>
-					Error
-				</h1>
-
-				<p
-					class="text-lg font-bold mt-2.5"
-				>
-					Something has gone wrong
-				</p>
-			</div>
-			<loading-spinner
-				v-if="isLoading"
-			/>
 		</section>
 
 		<div
