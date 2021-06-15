@@ -97,7 +97,7 @@
 
 <script>
 	import { computed, reactive, toRefs } from 'vue';
-	import { ROUTE_HOME, ROUTE_SELF_SETTINGS } from '@/routeConstants';
+	import { ROUTE_HOME } from '@/routeConstants';
 	import messages from '@/messages';
 	import { useMessages } from '@/composables/useMessages';
 	import InstructionsNav from '@/domain/methods/InstructionsNav';
