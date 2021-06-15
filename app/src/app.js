@@ -6,6 +6,8 @@ import { store } from './store';
 import { setupAuth } from './auth';
 import { setupThiscoveryResponse } from './store/task/setup';
 
+import envPlugin from './plugins/environment';
+
 import AppContainer from './domain/app/AppContainer';
 import EButton from './components/Button';
 import Icon from './components/Icon';
@@ -58,6 +60,7 @@ app.component('Placeholder', Placeholder);
 app.component('IconText', IconText);
 app.component('Tooltip', Tooltip);
 
+app.use(envPlugin);
 app.use(store);
 app.use(router);
 app.mount('#app');

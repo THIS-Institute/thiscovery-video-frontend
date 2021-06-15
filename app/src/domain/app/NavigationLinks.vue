@@ -8,21 +8,21 @@
 		<li>
 			<nav-link
 				title="Home"
-				url="https://www.thiscovery.org/"
+				:url="`${ $env('parentDomain') }/`"
 			/>
 		</li>
 
 		<li>
 			<nav-link
 				title="About"
-				url="https://www.thiscovery.org/about"
+				:url="`${ $env('parentDomain') }/about`"
 			/>
 		</li>
 
 		<li>
 			<nav-link
 				title="Contact us"
-				url="https://www.thiscovery.org/contact-us"
+				:url="`${ $env('parentDomain') }/contact-us`"
 			/>
 		</li>
 	</ul>
