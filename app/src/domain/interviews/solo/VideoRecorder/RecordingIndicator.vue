@@ -8,8 +8,13 @@
 				paused ? 'bg-grey-300' : 'bg-red animate-pulse',
 			]"
 		>
-			<icon name="record" />
-			<span>Rec</span>
+			<icon
+				:name="(paused) ? 'pause' : 'record'"
+			/>
+
+			<span
+				v-text="(paused) ? 'Paused' : 'Rec'"
+			/>
 		</div>
 	</div>
 </template>

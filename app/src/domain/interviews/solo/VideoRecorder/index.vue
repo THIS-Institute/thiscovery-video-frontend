@@ -28,7 +28,10 @@
 			leave-to-class="opacity-0"
 			appear
 		>
-			<recording-indicator v-if="isRecording && !state.isPaused" />
+			<recording-indicator
+				v-if="isRecording"
+				:paused="state.isPaused"
+			/>
 		</transition>
 
 		<transition
