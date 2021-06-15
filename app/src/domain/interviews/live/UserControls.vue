@@ -35,56 +35,57 @@
 				bottom
 			>
 				<e-button
+					v-click-outside="closeOptions"
 					icon="options"
 					:class="options ? 'e-button--white' : 'e-button--white-outline'"
-					@click="toggle('options')"
+					@keyup.esc="closeOptions"
+					@click="onToggleOptions"
 				/>
 			</tooltip>
 
-			<div
-				v-if="options"
-				:class="[
-					'absolute bg-white whitespace-nowrap rounded-lg',
-					'top-24 left-1/2 transform -translate-x-1/2',
-					'shadow-sticky',
-				]"
+			<transition
+				enter-active-class="transition-all ease-out duration-300"
+				leave-active-class="transition-all ease-in duration-200"
+				enter-from-class="opacity-0 translate-y-4 sm:scale-95"
+				leave-to-class="opacity-0 translate-y-4 sm:scale-95"
 			>
-				<icon
-					name="triangle"
-					class="text-white absolute -top-3 left-1/2 transform -translate-x-1/2"
-				/>
-
-				<ul class="flex flex-col px-8 py-7 space-y-4">
-					<li>
-						<e-button
-							title="Settings"
-							icon="settings"
-							flipped
-							url="/"
-						/>
-					</li>
-
-					<li>
-						<e-button
-							title="Join by phone"
-							icon="phone"
-							flipped
-							@click="phone"
-						/>
-					</li>
-				</ul>
-
-				<hr class="border-opacity-25 border-grey-400">
-
-				<div class="px-8 py-4">
-					<e-button
-						title="Get help"
-						class="e-button--red-outline"
-						small
-						pill
+				<div
+					v-if="options"
+					:class="[
+						'absolute bg-white whitespace-nowrap rounded-lg',
+						'top-24 left-1/2 transform -translate-x-1/2',
+						'shadow-sticky',
+					]"
+				>
+					<icon
+						name="triangle"
+						class="text-white absolute -top-3 left-1/2 transform -translate-x-1/2"
 					/>
+
+					<ul class="flex flex-col px-8 py-7 space-y-4">
+						<li>
+							<e-button
+								title="Join by phone"
+								icon="phone"
+								class="hover:text-red"
+								flipped
+								@click="phone"
+							/>
+						</li>
+					</ul>
+
+					<hr class="border-opacity-25 border-grey-400">
+
+					<div class="px-8 py-4">
+						<e-button
+							title="Get help"
+							class="e-button--red-outline"
+							small
+							pill
+						/>
+					</div>
 				</div>
-			</div>
+			</transition>
 		</div>
 	</div>
 </template>
@@ -106,10 +107,14 @@
 				options: false,
 			});
 
-			const toggle = (option) => state[option] = !state[option];
-
 			const store = useStore();
 			const phone = () => store.commit('app/toggleModal');
+
+			const onToggleOptions = () => {
+				state.options = !state.options;
+			};
+
+			const closeOptions = () => state.options = false;
 
 			const onToggleCamera = () => {
 				state.hidden = !state.hidden;
@@ -121,12 +126,16 @@
 				emit('toggleMute', state.muted);
 			};
 
+			const logger = (string) => console.log(string);
+
 			return {
 				...toRefs(state),
-				toggle,
 				phone,
 				onToggleMute,
 				onToggleCamera,
+				onToggleOptions,
+				closeOptions,
+				logger,
 			};
 		},
 	};
