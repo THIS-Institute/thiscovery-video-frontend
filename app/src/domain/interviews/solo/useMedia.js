@@ -72,6 +72,14 @@ export function useMedia() {
 		recorder.value.stop();
 	};
 
+	const pauseRecording = () => {
+		recorder.value.pause();
+	};
+
+	const resumeRecording = () => {
+		recorder.value.resume();
+	};
+
 	const setupLocalVideo = () => {
 		navigator.mediaDevices
 			.getUserMedia(constraints)
@@ -97,6 +105,8 @@ export function useMedia() {
 		destroyMediaStream,
 		startRecording,
 		stopRecording,
+		pauseRecording,
+		resumeRecording,
 		playbackURL,
 		cleanup,
 	}

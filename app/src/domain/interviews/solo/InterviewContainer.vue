@@ -193,6 +193,8 @@
 			const {
 				startRecording,
 				stopRecording,
+				pauseRecording,
+				resumeRecording,
 				playbackURL,
 				cleanup,
 			} = useMedia();
@@ -262,6 +264,14 @@
 			const onRecorderStop = () => {
 				setMode(MODE_REVIEWING);
 			};
+
+			const onRecorderPause = () => {
+				pauseRecording();
+			}
+
+			const onRecorderResume = () => {
+				resumeRecording();
+			}
 
 			const onNextQuestion = async () => {
 				isUploading.value = true;
@@ -341,6 +351,8 @@
 				progress,
 				onRecorderStart,
 				onRecorderStop,
+				onRecorderPause,
+				onRecorderResume,
 				playbackURL,
 				onNextQuestion,
 				openConfirmDialog,
