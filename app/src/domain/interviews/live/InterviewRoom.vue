@@ -152,7 +152,7 @@
 
 			window.addEventListener('beforeunload', onBeforeUnload);
 
-			if (isInterviewer.value && !hasInterviewerQuestions.value) {
+			if (!hasInterviewerQuestions.value) {
 				store.dispatch('interviews/getInterviewerQuestions');
 			}
 
@@ -166,7 +166,8 @@
 
 			const sendQuestionData = (message) => {
 				const payload = JSON.stringify(message);
-				questionTrackPublished.promise.then(() => questionTrack.send(payload));
+				questionTrackPublished.promise.then(() => questionTrack.send(payload))
+					.catch((error) => console.error(error));
 			}
 
 			const onRoomConnect = (roomResponse) => {
