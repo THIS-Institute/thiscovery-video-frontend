@@ -72,7 +72,10 @@
 				</div>
 
 				<div
-					v-if="interviewerQuestions && interviewerQuestions.length"
+					v-if="participantCount
+						&& interviewerQuestions
+						&& interviewerQuestions.length
+					"
 					class="flex items-end mt-auto p-2.5 pl-4"
 				>
 					<div class="fixed bottom-0 w-full -ml-4 -mr-2.5 bg-gradient-to-t from-black-75 h-20 pointer-events-none" />
