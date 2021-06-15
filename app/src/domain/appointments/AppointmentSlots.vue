@@ -52,7 +52,12 @@
 			/>
 		</div>
 
-		<div class="col-span-10 h-full min-h-date-picker z-0 md:col-span-6 md:col-start-5">
+		<div
+			:class="[
+				'col-span-10 h-full min-h-date-picker-small z-0',
+				'md:col-span-6 md:col-start-5 md:min-h-date-picker',
+			]"
+		>
 			<date-picker
 				v-if="!loading"
 				class="h-full"
@@ -64,13 +69,14 @@
 
 	<div
 		v-if="!loading && !isStatusBooked"
-		class="sticky bottom-0 bg-white p-5 -mx-5 sm:-mx-10 shadow-sticky md:hidden"
+		class="sticky bottom-0 bg-white p-5 -mx-5 mt-2 sm:-mx-10 shadow-sticky md:hidden"
 	>
 		<e-button
 			title="Book appointment"
 			icon="chevron-right"
 			class="e-button--red"
 			:disabled="!selection"
+			small
 			pill
 			@click="confirmSelection"
 		/>

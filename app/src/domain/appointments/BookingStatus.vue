@@ -7,12 +7,15 @@
 			error ? 'bg-red' : 'bg-green',
 		]"
 	>
-		<span v-text="message" />
+		<span
+			class="font-bold text-base"
+			v-text="message"
+		/>
 
 		<div
 			:class="[
 				'flex items-center justify-center',
-				'rounded-full border-2 border-white p-2',
+				'rounded-full border-2 border-white p-1',
 			]"
 		>
 			<icon

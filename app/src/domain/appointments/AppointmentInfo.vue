@@ -1,7 +1,7 @@
 <template>
 	<div class="relative">
 		<div
-			class="relative bg-grey-100 rounded-lg px-12 py-14"
+			class="relative bg-grey-100 rounded-lg px-7 py-10 md:px-12 md:py-14"
 			:class="{ 'opacity-75': isWaiting }"
 		>
 			<h3

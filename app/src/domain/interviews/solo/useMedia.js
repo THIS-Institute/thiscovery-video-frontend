@@ -29,7 +29,7 @@ export function useMedia() {
 		const tracks = await stream.value.getTracks();
 
 		if (tracks.length) {
-			await tracks.forEach((track) => track.stop());
+			tracks.forEach((track) => track.stop());
 		}
 	};
 
@@ -54,7 +54,7 @@ export function useMedia() {
 			if (playbackURL.value) {
 				URL.revokeObjectURL(playbackURL.value);
 			}
-			
+
 			playbackURL.value = URL.createObjectURL(blob);
 		}
 	}
@@ -70,6 +70,40 @@ export function useMedia() {
 
 	const stopRecording = () => {
 		recorder.value.stop();
+	};
+
+	const pauseRecording = () => {
+		recorder.value.pause();
+	};
+
+	const resumeRecording = () => {
+		recorder.value.resume();
+	};
+
+	const stopVideoTracks = async () => {
+		const tracks = await stream.value.getVideoTracks();
+
+		if (tracks.length) {
+			tracks.forEach((track) => {
+				track.stop()
+				stream.value.removeTrack(track);
+			});
+			
+		}
+	};
+
+	const startVideoTracks = async () => {
+		const mediaStream = await navigator
+			.mediaDevices
+			.getUserMedia({
+				video: true,
+			});
+
+		const videoTracks = mediaStream.getVideoTracks();
+
+		if (videoTracks.length > 0) {
+			stream.value.addTrack(videoTracks[0]);
+		}
 	};
 
 	const setupLocalVideo = () => {
@@ -97,6 +131,10 @@ export function useMedia() {
 		destroyMediaStream,
 		startRecording,
 		stopRecording,
+		pauseRecording,
+		resumeRecording,
+		stopVideoTracks,
+		startVideoTracks,
 		playbackURL,
 		cleanup,
 	}

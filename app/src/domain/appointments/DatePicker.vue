@@ -40,7 +40,7 @@
 		<div
 			:class="[
 				'grid grid-cols-3 relative mt-4 px-5',
-				'max-h-date-picker overflow-y-scroll',
+				'max-h-date-picker-small overflow-y-scroll md:max-h-date-picker',
 				'border border-grey-400 border-opacity-25 rounded-lg',
 				'xl:grid-cols-4',
 				{

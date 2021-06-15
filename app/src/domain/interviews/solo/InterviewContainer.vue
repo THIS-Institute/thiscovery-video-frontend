@@ -99,7 +99,11 @@
 						v-if="isRecordingMode()"
 						:user-name="userGivenName"
 						@started="onRecorderStart"
+						@pause="onRecorderPause"
+						@resume="onRecorderResume"
 						@stopped="onRecorderStop"
+						@startCamera="onCameraStart"
+						@stopCamera="onCameraStop"
 					/>
 
 					<video-player
@@ -193,8 +197,12 @@
 			const {
 				startRecording,
 				stopRecording,
+				pauseRecording,
+				resumeRecording,
 				playbackURL,
 				cleanup,
+				startVideoTracks,
+				stopVideoTracks,
 			} = useMedia();
 			
 			provide('startRecording', startRecording);
@@ -263,6 +271,14 @@
 				setMode(MODE_REVIEWING);
 			};
 
+			const onRecorderPause = () => {
+				pauseRecording();
+			}
+
+			const onRecorderResume = () => {
+				resumeRecording();
+			}
+
 			const onNextQuestion = async () => {
 				isUploading.value = true;
 
@@ -328,6 +344,14 @@
 				router.push({ name: ROUTE_HOME });
 			};
 
+			const onCameraStart = () => {
+				startVideoTracks();
+			}
+
+			const onCameraStop = () => {
+				stopVideoTracks();
+			}
+
 			return {
 				state,
 				userGivenName,
@@ -341,6 +365,8 @@
 				progress,
 				onRecorderStart,
 				onRecorderStop,
+				onRecorderPause,
+				onRecorderResume,
 				playbackURL,
 				onNextQuestion,
 				openConfirmDialog,
@@ -350,6 +376,8 @@
 				onCancelComments,
 				onAddedComments,
 				onSaveExit,
+				onCameraStart,
+				onCameraStop,
 			};
 		},
 	};
