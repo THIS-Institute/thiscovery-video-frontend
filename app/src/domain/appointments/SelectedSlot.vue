@@ -66,15 +66,6 @@
 			class="font-bold mt-1"
 			v-text="`${asFormattedDate(selection)}, ${asFormattedTime(selection)}`"
 		/>
-
-		<e-button
-			title="Add to calendar"
-			icon="calendar"
-			class="e-button--red-outline mt-2.5"
-			flipped
-			pill
-			@click="$emit('add-to-calendar')"
-		/>
 	</div>
 </template>
 
