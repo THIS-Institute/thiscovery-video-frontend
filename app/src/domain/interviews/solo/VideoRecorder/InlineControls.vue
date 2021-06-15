@@ -17,7 +17,7 @@
 
 			<tooltip
 				v-if="isRecording"
-				:text="options.paused ? 'Play' : 'Pause'"
+				:text="options.paused ? 'Resume' : 'Pause'"
 			>
 				<e-button
 					:icon="options.paused ? 'play' : 'pause'"
@@ -64,8 +64,9 @@
 			};
 
 			const handleTogglePause = () => {
-				emit('togglePause');
 				options.paused = !options.paused;
+
+				emit('togglePause', options.paused);
 			};
 
 			return {

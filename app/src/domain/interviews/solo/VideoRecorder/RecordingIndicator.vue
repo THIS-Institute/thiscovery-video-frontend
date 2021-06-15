@@ -4,8 +4,8 @@
 			:class="[
 				'flex items-center space-x-1',
 				'px-1.5 py-1 rounded-full',
-				'bg-red text-white text-sm',
-				'animate-pulse',
+				'text-white text-sm',
+				paused ? 'bg-grey-300' : 'bg-red animate-pulse',
 			]"
 		>
 			<icon name="record" />
@@ -13,3 +13,11 @@
 		</div>
 	</div>
 </template>
+
+<script>
+	export default {
+		props: {
+			paused: Boolean,
+		},
+	};
+</script>

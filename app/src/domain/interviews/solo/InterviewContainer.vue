@@ -99,6 +99,8 @@
 						v-if="isRecordingMode()"
 						:user-name="userGivenName"
 						@started="onRecorderStart"
+						@pause="onRecorderPause"
+						@resume="onRecorderResume"
 						@stopped="onRecorderStop"
 					/>
 

@@ -11,16 +11,25 @@
 		<video
 			v-show="showVideo"
 			ref="videoElementRef"
-			class="transform -scale-x-100"
+			class="transform -scale-x-100 transition-opacity duration-200"
+			:class="{
+				'opacity-50': state.isPaused,
+			}"
 			preload="auto"
 			autoplay
 			playsinline
 			muted
 		/>
 
-		<recording-indicator
-			v-if="isRecording"
-		/>
+		<transition
+			enter-active-class="transition-opacity ease-out duration-300"
+			leave-active-class="transition-opacity ease-in duration-200"
+			enter-from-class="opacity-0"
+			leave-to-class="opacity-0"
+			appear
+		>
+			<recording-indicator v-if="isRecording && !state.isPaused" />
+		</transition>
 
 		<transition
 			enter-active-class="transition-opacity ease-out duration-300"
@@ -38,7 +47,7 @@
 		<inline-controls
 			:state="state"
 			@toggle-camera="handleToggleCamera"
-			@toggle-paused="handleTogglePaused"
+			@toggle-pause="handleTogglePaused"
 		/>
 	</placeholder>
 
@@ -81,6 +90,8 @@
 
 		emits: [
 			'started',
+			'pause',
+			'resume',
 			'stopped',
 		],
 
@@ -88,6 +99,7 @@
 			const store = useStore();
 			const state = reactive({
 				status: statuses.READY,
+				isPaused: false,
 			});
 
 			const videoElementRef = inject('videoElementRef');
@@ -104,7 +116,7 @@
 			onBeforeUnmount(() => {
 				destroyMediaStream();
 			});
-		
+
 			const {
 				isReady,
 				isRecording,
@@ -119,7 +131,7 @@
 
 			const handleStopRecording = () => {
 				stopRecording();
-				
+
 				store.commit('interviews/setPlaybackURL', playbackURL);
 				state.status = statuses.READY;
 
@@ -140,8 +152,9 @@
 				showVideo.value = !showVideo.value;
 			};
 
-			const handleTogglePaused = () => {
-				state.status = statuses.PAUSED;
+			const handleTogglePaused = (v) => {
+				state.isPaused = v;
+				v ? emit('resume') : emit('pause');
 			};
 
 			return {
