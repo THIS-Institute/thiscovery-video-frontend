@@ -152,9 +152,16 @@
 				showVideo.value = !showVideo.value;
 			};
 
-			const handleTogglePaused = (v) => {
-				state.isPaused = v;
-				v ? emit('resume') : emit('pause');
+			const handleTogglePaused = (isPaused) => {
+				state.isPaused = isPaused;
+
+				if (isPaused) {
+					emit('pause');
+					videoElementRef.value.pause();
+				} else {
+					emit('resume');
+					videoElementRef.value.play();
+				}
 			};
 
 			return {
