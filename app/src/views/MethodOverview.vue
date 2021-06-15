@@ -134,7 +134,7 @@
 				title = message('selfRecord.title');
 				icon = message('selfRecord.icon');
 				instructions = message('selfRecord.methodOverview.instructions');
-				nextRoute = ROUTE_SELF_SETTINGS;
+				nextRoute = ROUTE_HOME;
 			}
 			
 			const instructionsLength = instructions.length;
