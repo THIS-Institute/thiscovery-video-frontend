@@ -31,6 +31,26 @@ const setupApp = async () => {
 
 const app = createApp(RootComponent);
 
+app.directive('click-outside', {
+	beforeMount(el, binding, vnode) {
+        const vm = vnode.context;
+        const callback = binding.value;
+
+        el.clickOutsideEvent = (event) => {
+            if (!(el == event.target || el.contains(event.target))) {
+                return callback.call(vm, event);
+            }
+        };
+
+        document.body.addEventListener('click', el.clickOutsideEvent);
+    },
+
+    beforeUnmount(el) {
+        document.body.removeEventListener('click', el.clickOutsideEvent);
+    },
+});
+
+
 app.component('AppContainer', AppContainer);
 app.component('EButton', EButton);
 app.component('Icon', Icon);
