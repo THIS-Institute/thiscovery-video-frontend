@@ -1,4 +1,4 @@
-import { computed } from 'vue';
+import { computed, onBeforeUnmount } from 'vue';
 import { useStore } from 'vuex';
 
 export function useDevices() {
@@ -7,6 +7,10 @@ export function useDevices() {
 	navigator.mediaDevices.ondevicechange = () => {
 		store.dispatch('interviews/updateMediaDevices');
 	};
+
+	onBeforeUnmount(() => {
+		navigator.mediaDevices.ondevicechange = null;
+	});
 
 	return {
         declinedPermission: computed(() => store.state.interviews.declinedPermissions),

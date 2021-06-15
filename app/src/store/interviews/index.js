@@ -90,17 +90,17 @@ export const interviews = {
 				video: true,
 			};
 
-			await navigator.mediaDevices
-				.getUserMedia(constraints)
-				.then(onUserMedia)
-				.catch((error) => dispatch('handleUserMediaError', error));
-
 			const onUserMedia = (mediaStream) => {
 				commit('setDeclinedPermissions', false);
 
 				const tracks = mediaStream.getTracks();
 				tracks.forEach((track) => track.stop());
 			};
+
+			await navigator.mediaDevices
+				.getUserMedia(constraints)
+				.then(onUserMedia)
+				.catch((error) => dispatch('handleUserMediaError', error));
 
 			await navigator.mediaDevices
 				.enumerateDevices()

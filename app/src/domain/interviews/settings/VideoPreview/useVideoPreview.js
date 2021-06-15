@@ -1,4 +1,5 @@
 import { ref, shallowReactive, onMounted, onBeforeUnmount } from 'vue';
+import { onBeforeRouteLeave } from 'vue-router';
 import { createLocalVideoTrack } from 'twilio-video';
 
 export function useVideoPreview() {
@@ -27,6 +28,9 @@ export function useVideoPreview() {
 
     onMounted(setupLocalVideoTrack);
     onBeforeUnmount(destroyLocalVideoTrack);
+    onBeforeRouteLeave(destroyLocalVideoTrack);
+
+    window.onbeforeunload = () => destroyLocalVideoTrack;
 
     return {
         localVideoElement,
