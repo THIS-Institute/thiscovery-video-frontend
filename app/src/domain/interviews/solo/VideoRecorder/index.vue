@@ -38,7 +38,7 @@
 		<inline-controls
 			:state="state"
 			@toggle-camera="handleToggleCamera"
-			@toggle-microphone="handleToggleMicrophone"
+			@toggle-paused="handleTogglePaused"
 		/>
 	</placeholder>
 
@@ -140,7 +140,9 @@
 				showVideo.value = !showVideo.value;
 			};
 
-			const handleToggleMicrophone = () => {};
+			const handleTogglePaused = () => {
+				state.status = statuses.PAUSED;
+			};
 
 			return {
 				state,
@@ -154,7 +156,7 @@
 				onCountdownFinish,
 				showVideo,
 				handleToggleCamera,
-				handleToggleMicrophone,
+				handleTogglePaused,
 			}
 		},
 	};

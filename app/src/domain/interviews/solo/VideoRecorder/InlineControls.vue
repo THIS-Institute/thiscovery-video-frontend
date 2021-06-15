@@ -1,7 +1,10 @@
 <template v-if="!hideControls">
 	<div class="flex items-end justify-center p-4 space-x-2">
 		<template v-if="isReady || isRecording">
-			<tooltip :text="options.hidden ? 'Show camera' : 'Hide Camera'">
+			<tooltip
+				v-if="isReady"
+				:text="options.hidden ? 'Show camera' : 'Hide Camera'"
+			>
 				<e-button
 					:icons="[
 						'camera',
@@ -12,14 +15,14 @@
 				/>
 			</tooltip>
 
-			<tooltip :text="options.muted ? 'Unmute microphone' : 'Mute microphone'">
+			<tooltip
+				v-if="isRecording"
+				:text="options.paused ? 'Play' : 'Pause'"
+			>
 				<e-button
-					:icons="[
-						'audio-base',
-						options.muted ? 'audio-off' : 'audio-sound'
-					]"
-					:class="options.muted ? 'e-button--red' : 'e-button--white'"
-					@click="handleToggleMicrophone"
+					:icon="options.paused ? 'play' : 'pause'"
+					:class="options.paused ? 'e-button--red' : 'e-button--white'"
+					@click="handleTogglePause"
 				/>
 			</tooltip>
 		</template>
@@ -40,13 +43,13 @@
 
 		emits: [
 			'toggleCamera',
-			'toggleMicrophone',
+			'togglePause',
 		],
 
 		setup(props, { emit }) {
 			const options = reactive({
 				hidden: false,
-				muted: false,
+				paused: false,
 			});
 
 			const {
@@ -60,9 +63,9 @@
 				options.hidden = !options.hidden;
 			};
 
-			const handleToggleMicrophone = () => {
-				emit('toggleMicrophone');
-				options.muted = !options.muted;
+			const handleTogglePause = () => {
+				emit('togglePause');
+				options.paused = !options.paused;
 			};
 
 			return {
@@ -71,7 +74,7 @@
 				isCountdown,
 				isRecording,
 				handleToggleCamera,
-				handleToggleMicrophone,
+				handleTogglePause,
 			}
 		},
 	}
