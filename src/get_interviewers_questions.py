@@ -1,4 +1,5 @@
 from interviews.questions import Questions
+from thiscovery.task import TaskService
 
 from api.responses import (
     ApiGatewayResponse,
@@ -8,14 +9,17 @@ from api.responses import (
 
 def lambda_handler(event, context):
     try:
-        survey_id = event['pathParameters']['taskId']
+        task_id = event['pathParameters']['taskId']
     except KeyError:
         return ApiGatewayErrorResponse(
             exception=ResponseException.EXCEPTION_MISSING_PARAM,
             message='survey id in path is required',
         ).response()
 
-    thiscovery_questions = Questions(survey_id)
+    thiscovery_tasks = TaskService()
+    task = thiscovery_tasks.get(task_id)
+
+    thiscovery_questions = Questions(task['live_survey_id'])
 
     survey = thiscovery_questions.get_task_survey()
     questions  = thiscovery_questions.format_as_interviewers(survey)
