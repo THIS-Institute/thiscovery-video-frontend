@@ -24,7 +24,7 @@
 			@watch-answer="onWatchAnswer"
 			@toggle-playback="onTogglePlayback"
 			@add-comments="$emit('addComments')"
-			@stop="$emit('progressQuestion')"
+			@stop="onStopPlayback"
 		/>
 
 		<transition
@@ -129,6 +129,11 @@
 				video.value.currentTime = 0;
 			};
 
+			const onStopPlayback = () => {
+				video.value.pause();
+				onVideoEnd();
+			};
+
 			const onDurationChange = () => {
 				state.duration = video.value.duration;
 			};
@@ -147,6 +152,7 @@
 				onTogglePlayback,
 				onTimeUpdate,
 				onVideoEnd,
+				onStopPlayback,
 				onDurationChange,
 				onCanPlay,
 				onMetadataLoaded,
