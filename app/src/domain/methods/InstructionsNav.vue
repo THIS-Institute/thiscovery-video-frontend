@@ -2,7 +2,7 @@
 	<div class="flex items-center mt-5">
 		<e-button
 			v-if="!lowerLimit"
-			title="Back"
+			title="Previous"
 			icon="chevron-left"
 			class="text-red hover:text-black focus:text-black"
 			flipped
