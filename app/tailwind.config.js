@@ -122,6 +122,7 @@ module.exports = {
 			}),
 			minHeight: {
 				'date-picker': relative(485),
+				'104.5': relative(418),
 				'controls': relative(48),
 			},
 			maxHeight: {
@@ -157,6 +158,7 @@ module.exports = {
 			},
 			spacing: {
 				em: '1em',
+				'1.25em': '1.25em',
 				'1/2em': '.5em',
 				'1/3em': '.33em',
 				'1.5': relative(6),

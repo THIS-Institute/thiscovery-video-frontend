@@ -12,6 +12,8 @@
 					v-if="hasQuestions"
 					:questions="questions"
 				/>
+
+				<loading-spinner v-else />
 			</div>
 		</div>
 	</section>
@@ -22,20 +24,24 @@
 	import { useStore } from 'vuex';
 
 	import InterviewContainer from '@/domain/interviews/solo/InterviewContainer';
+	import LoadingSpinner from '@/components/LoadingSpinner';
 
 	export default {
-		components: { InterviewContainer },
+		components: {
+			InterviewContainer,
+			LoadingSpinner,
+		},
 
 		setup() {
 			const store = useStore();
 
 			const questions = computed(() => {
 				return store.state.interviews.selfRecordQuestions;
-			})
+			});
 
 			const hasQuestions = computed(() => {
 				return questions.value.length > 0;
-			})
+			});
 
 			store.dispatch('interviews/getSelfRecordQuestions');
 

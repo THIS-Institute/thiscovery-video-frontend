@@ -1,7 +1,10 @@
 <template>
 	<aside>
 		<div class="bg-grey-100 rounded-md">
-			<p class="flex flex-wrap justify-center gap-x-2 p-4 text-sm">
+			<p
+				class="flex flex-wrap justify-center gap-x-2 p-4 text-sm"
+				:class="classList.inner"
+			>
 				<span v-text="title" />
 
 				<button
@@ -35,7 +38,13 @@
 				required: true,
 			},
 
-		
+			classList: {
+				type: Object,
+				default: () => ({
+					inner: null,
+				}),
+			},
+
 			modal: Boolean
 		},
 
