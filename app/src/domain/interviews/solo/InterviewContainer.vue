@@ -102,6 +102,8 @@
 						@pause="onRecorderPause"
 						@resume="onRecorderResume"
 						@stopped="onRecorderStop"
+						@startCamera="onCameraStart"
+						@stopCamera="onCameraStop"
 					/>
 
 					<video-player
@@ -199,6 +201,8 @@
 				resumeRecording,
 				playbackURL,
 				cleanup,
+				startVideoTracks,
+				stopVideoTracks,
 			} = useMedia();
 			
 			provide('startRecording', startRecording);
@@ -340,6 +344,14 @@
 				router.push({ name: ROUTE_HOME });
 			};
 
+			const onCameraStart = () => {
+				startVideoTracks();
+			}
+
+			const onCameraStop = () => {
+				stopVideoTracks();
+			}
+
 			return {
 				state,
 				userGivenName,
@@ -364,6 +376,8 @@
 				onCancelComments,
 				onAddedComments,
 				onSaveExit,
+				onCameraStart,
+				onCameraStop,
 			};
 		},
 	};

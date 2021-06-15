@@ -93,6 +93,8 @@
 			'pause',
 			'resume',
 			'stopped',
+			'startCamera',
+			'stopCamera',
 		],
 
 		setup(props, { emit }) {
@@ -150,6 +152,8 @@
 
 			const handleToggleCamera = () => {
 				showVideo.value = !showVideo.value;
+
+				(showVideo.value) ? emit('startCamera') : emit('stopCamera');
 			};
 
 			const handleTogglePaused = (isPaused) => {
