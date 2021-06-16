@@ -50,13 +50,13 @@
 				</li>
 			</ul>
 
-			<e-button
+			<x-button
 				v-if="ctaTitle && ctaRoute && available"
 				:title="ctaTitle"
 				:url="{ name: ctaRoute }"
 				icon="chevron-right"
 				class="e-button--red mt-12"
-				pill
+				type="pill"
 			/>
 		</div>
 

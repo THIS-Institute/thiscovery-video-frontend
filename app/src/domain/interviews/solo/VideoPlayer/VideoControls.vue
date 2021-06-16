@@ -1,25 +1,25 @@
 <template>
 	<div class="flex flex-wrap items-center justify-between min-h-controls gap-y-5 px-5 my-5">
-		<e-button
+		<x-button
 			v-if="!isReviewing"
 			title="Retake"
 			icon="record"
 			class="e-button--white-outline"
 			flipped
 			small
-			pill
+			type="pill"
 			:disabled="isUploading"
 			@click="$emit('retake')"
 		/>
 
-		<e-button
+		<x-button
 			v-if="!isReviewing"
 			title="Next question"
 			icon="check"
 			class="e-button--green"
 			flipped
 			small
-			pill
+			type="pill"
 			:disabled="isUploading"
 			@click="$emit('progressQuestion')"
 		/>

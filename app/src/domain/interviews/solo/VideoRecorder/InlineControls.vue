@@ -5,12 +5,13 @@
 				v-if="isReady"
 				:text="options.hidden ? 'Show camera' : 'Hide Camera'"
 			>
-				<e-button
+				<x-button
 					:icons="[
 						'camera',
 						options.hidden ? 'camera-strike' : null
 					]"
 					:class="options.hidden ? 'e-button--red' : 'e-button--white'"
+					type="icon"
 					@click="handleToggleCamera"
 				/>
 			</tooltip>
@@ -19,9 +20,10 @@
 				v-if="isRecording"
 				:text="options.paused ? 'Resume' : 'Pause'"
 			>
-				<e-button
+				<x-button
 					:icon="options.paused ? 'play' : 'pause'"
 					:class="options.paused ? 'e-button--red' : 'e-button--white'"
+					type="icon"
 					@click="handleTogglePause"
 				/>
 			</tooltip>

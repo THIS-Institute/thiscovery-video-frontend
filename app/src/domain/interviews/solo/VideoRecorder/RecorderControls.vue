@@ -7,34 +7,34 @@
 			'gap-y-5 p-5 shadow-md',
 		]"
 	>
-		<e-button
+		<x-button
 			v-if="isReady"
 			title="Click to record your answer"
 			icon="record"
 			class="e-button--red mx-auto"
 			flipped
 			small
-			pill
+			type="pill"
 			@click="$emit('startRecording')"
 		/>
 
-		<e-button
+		<x-button
 			v-else-if="isCountdown"
 			title="Cancel"
 			class="e-button--white-outline mx-auto"
 			small
-			pill
+			type="pill"
 			@click="$emit('cancelCountdown')"
 		/>
 
-		<e-button
+		<x-button
 			v-else-if="isRecording"
 			title="Stop recording"
 			icon="stop"
 			class="e-button--white-outline mx-auto"
 			flipped
 			small
-			pill
+			type="pill"
 			@click="$emit('stopRecording')"
 		/>
 	</div>

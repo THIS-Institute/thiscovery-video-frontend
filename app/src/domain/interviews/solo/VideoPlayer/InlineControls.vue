@@ -2,17 +2,19 @@
 	<div class="flex items-end justify-center p-4 space-x-2">
 		<template v-if="!isReviewing">
 			<tooltip text="Watch answer">
-				<e-button
+				<x-button
 					icon="play"
 					class="e-button--white"
+					type="icon"
 					@click="$emit('watchAnswer')"
 				/>
 			</tooltip>
 
 			<tooltip text="Add comments">
-				<e-button
+				<x-button
 					icon="scribe"
 					class="e-button--white"
+					type="icon"
 					@click="$emit('addComments')"
 				/>
 			</tooltip>
@@ -20,18 +22,20 @@
 
 		<template v-else>
 			<tooltip :text="isPlaying ? 'Pause' : 'Play'">
-				<e-button
+				<x-button
 					:icon="isPlaying ? 'pause' : 'play'"
 					class="e-button--white"
 					:disabled="!canPlay"
+					type="icon"
 					@click="$emit('togglePlayback')"
 				/>
 			</tooltip>
 
 			<tooltip text="Stop">
-				<e-button
+				<x-button
 					icon="stop"
 					class="e-button--white"
+					type="icon"
 					@click="$emit('stop')"
 				/>
 			</tooltip>

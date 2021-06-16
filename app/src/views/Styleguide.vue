@@ -39,273 +39,7 @@
 
 		<!-- Buttons -->
 		<div class="mt-10">
-			<div class="flex space-x-2 items-center">
-				<e-button
-					title="Get involved"
-					class="e-button--red"
-					pill
-					:small="button.small"
-					:disabled="button.disabled"
-				/>
-
-				<e-button
-					title="Get involved"
-					icon="chevron-right"
-					class="e-button--red"
-					pill
-					:small="button.small"
-					:disabled="button.disabled"
-				/>
-
-				<e-button
-					title="Get involved"
-					icon="chevron-left"
-					class="e-button--red"
-					flipped
-					pill
-					:small="button.small"
-					:disabled="button.disabled"
-				/>
-
-				<e-button
-					title="Get involved"
-					icon="chevron-left"
-					class="text-red hover:text-black focus:text-black"
-					flipped
-					:small="button.small"
-					:disabled="button.disabled"
-				/>
-			</div>
-
-			<div class="flex space-x-2 mt-10 items-center">
-				<e-button
-					title="Get involved"
-					class="e-button--red-outline"
-					pill
-					:small="button.small"
-					:disabled="button.disabled"
-				/>
-
-				<e-button
-					title="Get involved"
-					icon="chevron-right"
-					class="e-button--red-outline"
-					pill
-					:small="button.small"
-					:disabled="button.disabled"
-				/>
-
-				<e-button
-					title="Get involved"
-					icon="chevron-left"
-					class="e-button--red-outline"
-					flipped
-					pill
-					:small="button.small"
-					:disabled="button.disabled"
-				/>
-			</div>
-
-			<div class="flex space-x-2 mt-10 items-center">
-				<e-button
-					title="Get involved"
-					class="e-button--green"
-					pill
-					:small="button.small"
-					:disabled="button.disabled"
-				/>
-
-				<e-button
-					title="Get involved"
-					icon="chevron-right"
-					class="e-button--green"
-					pill
-					:small="button.small"
-					:disabled="button.disabled"
-				/>
-
-				<e-button
-					title="Get involved"
-					icon="chevron-left"
-					class="e-button--green"
-					flipped
-					pill
-					:small="button.small"
-					:disabled="button.disabled"
-				/>
-
-				<e-button
-					title="Get involved"
-					icon="chevron-left"
-					class="text-green hover:text-black focus:text-black"
-					flipped
-					:small="button.small"
-					:disabled="button.disabled"
-				/>
-			</div>
-
-			<div class="flex space-x-2 mt-10 items-center">
-				<e-button
-					title="Get involved"
-					class="e-button--green-outline"
-					pill
-					:small="button.small"
-					:disabled="button.disabled"
-				/>
-
-				<e-button
-					title="Get involved"
-					icon="chevron-right"
-					class="e-button--green-outline"
-					pill
-					:small="button.small"
-					:disabled="button.disabled"
-				/>
-
-				<e-button
-					title="Get involved"
-					icon="chevron-left"
-					class="e-button--green-outline"
-					flipped
-					pill
-					:small="button.small"
-					:disabled="button.disabled"
-				/>
-			</div>
-
-			<div class="flex space-x-2 mt-10 items-center">
-				<e-button
-					title="Get involved"
-					class="e-button--white-outline"
-					pill
-					:small="button.small"
-					:disabled="button.disabled"
-				/>
-
-				<e-button
-					title="Get involved"
-					icon="chevron-right"
-					class="e-button--white-outline"
-					pill
-					:small="button.small"
-					:disabled="button.disabled"
-				/>
-
-				<e-button
-					title="Get involved"
-					icon="chevron-left"
-					class="e-button--white-outline"
-					flipped
-					pill
-					:small="button.small"
-					:disabled="button.disabled"
-				/>
-
-				<e-button
-					title="Get involved"
-					icon="chevron-left"
-					class="text-white hover:text-black focus:text-black"
-					flipped
-					:small="button.small"
-					:disabled="button.disabled"
-				/>
-			</div>
-
-			<div class="flex space-x-2 mt-10 items-center">
-				<e-button
-					title="Get involved"
-					class="e-button--white"
-					pill
-					:small="button.small"
-					:disabled="button.disabled"
-				/>
-
-				<e-button
-					title="Get involved"
-					icon="chevron-right"
-					class="e-button--white"
-					pill
-					:small="button.small"
-					:disabled="button.disabled"
-				/>
-
-				<e-button
-					title="Get involved"
-					icon="chevron-left"
-					class="e-button--white"
-					flipped
-					pill
-					:small="button.small"
-					:disabled="button.disabled"
-				/>
-			</div>
-
-			<div class="flex space-x-2 mt-10 items-center">
-				<e-button
-					title="Get involved"
-					class="e-button--black-outline"
-					pill
-					:small="button.small"
-					:disabled="button.disabled"
-				/>
-
-				<e-button
-					title="Get involved"
-					icon="chevron-right"
-					class="e-button--black-outline"
-					pill
-					:small="button.small"
-					:disabled="button.disabled"
-				/>
-
-				<e-button
-					title="Get involved"
-					icon="chevron-left"
-					class="e-button--black-outline"
-					flipped
-					pill
-					:small="button.small"
-					:disabled="button.disabled"
-				/>
-
-				<e-button
-					title="Get involved"
-					icon="chevron-left"
-					class="text-black hover:text-red focus:text-red"
-					flipped
-					:small="button.small"
-					:disabled="button.disabled"
-				/>
-			</div>
-
-			<div class="flex space-x-2 mt-10 items-center">
-				<e-button
-					title="07:45am"
-					class="e-button--time"
-					time
-					:small="button.small"
-					:disabled="button.disabled"
-				/>
-
-				<e-button
-					title="07:45am"
-					class="e-button--time"
-					time
-					:small="button.small"
-					:disabled="button.disabled"
-				/>
-
-				<e-button
-					title="07:45am"
-					class="e-button--time"
-					flipped
-					time
-					:small="button.small"
-					:disabled="button.disabled"
-				/>
-			</div>
-
-			<div class="flex items-center space-x-2 mt-5">
+			<div class="flex items-center space-x-2">
 				<label for="small">Small buttons</label>
 
 				<input
@@ -323,6 +57,257 @@
 					type="checkbox"
 					name="disabled"
 				>
+			</div>
+
+			<div class="flex space-x-2 mt-10 items-center">
+				<x-button
+					class="e-button--red"
+					title="Get involved"
+					type="pill"
+					:small="button.small"
+					:disabled="button.disabled"
+				/>
+
+				<x-button
+					class="e-button--red"
+					title="Get involved"
+					type="pill"
+					icon="chevron-right"
+					:small="button.small"
+				/>
+
+				<x-button
+					class="e-button--red"
+					title="Get involved"
+					type="pill"
+					icon="chevron-left"
+					flipped
+					:small="button.small"
+				/>
+
+				<x-button
+					title="Get involved"
+					class="text-red hover:text-black focus:text-black"
+					icon="chevron-left"
+					type="subtle"
+					flipped
+					:small="button.small"
+				/>
+			</div>
+
+			<div class="flex space-x-2 mt-10 items-center">
+				<x-button
+					class="e-button--red-outline"
+					title="Get involved"
+					type="pill"
+					:small="button.small"
+					:disabled="button.disabled"
+				/>
+
+				<x-button
+					class="e-button--red-outline"
+					title="Get involved"
+					type="pill"
+					icon="chevron-right"
+					:small="button.small"
+				/>
+
+				<x-button
+					class="e-button--red-outline"
+					title="Get involved"
+					type="pill"
+					icon="chevron-left"
+					flipped
+					:small="button.small"
+				/>
+			</div>
+
+			<div class="flex space-x-2 mt-10 items-center">
+				<x-button
+					class="e-button--green"
+					title="Get involved"
+					type="pill"
+					:small="button.small"
+					:disabled="button.disabled"
+				/>
+
+				<x-button
+					class="e-button--green"
+					title="Get involved"
+					type="pill"
+					icon="chevron-right"
+					:small="button.small"
+				/>
+
+				<x-button
+					class="e-button--green"
+					title="Get involved"
+					type="pill"
+					icon="chevron-left"
+					flipped
+					:small="button.small"
+				/>
+
+				<x-button
+					title="Get involved"
+					class="text-green hover:text-black focus:text-black"
+					icon="chevron-left"
+					type="subtle"
+					flipped
+					:small="button.small"
+				/>
+			</div>
+
+			<div class="flex space-x-2 mt-10 items-center">
+				<x-button
+					class="e-button--green-outline"
+					title="Get involved"
+					type="pill"
+					:small="button.small"
+					:disabled="button.disabled"
+				/>
+
+				<x-button
+					class="e-button--green-outline"
+					title="Get involved"
+					type="pill"
+					icon="chevron-right"
+					:small="button.small"
+				/>
+
+				<x-button
+					class="e-button--green-outline"
+					title="Get involved"
+					type="pill"
+					icon="chevron-left"
+					flipped
+					:small="button.small"
+				/>
+			</div>
+
+			<div class="flex space-x-2 mt-10 items-center">
+				<x-button
+					class="e-button--white-outline"
+					title="Get involved"
+					type="pill"
+					:small="button.small"
+					:disabled="button.disabled"
+				/>
+
+				<x-button
+					class="e-button--white-outline"
+					title="Get involved"
+					type="pill"
+					icon="chevron-right"
+					:small="button.small"
+				/>
+
+				<x-button
+					class="e-button--white-outline"
+					title="Get involved"
+					type="pill"
+					icon="chevron-left"
+					flipped
+					:small="button.small"
+				/>
+
+				<x-button
+					title="Get involved"
+					class="text-white hover:text-black focus:text-black"
+					icon="chevron-left"
+					type="subtle"
+					flipped
+					:small="button.small"
+				/>
+			</div>
+
+			<div class="flex space-x-2 mt-10 items-center">
+				<x-button
+					class="e-button--white"
+					title="Get involved"
+					type="pill"
+					:small="button.small"
+					:disabled="button.disabled"
+				/>
+
+				<x-button
+					class="e-button--white"
+					title="Get involved"
+					type="pill"
+					icon="chevron-right"
+					:small="button.small"
+				/>
+
+				<x-button
+					class="e-button--white"
+					title="Get involved"
+					type="pill"
+					icon="chevron-left"
+					flipped
+					:small="button.small"
+				/>
+			</div>
+
+			<div class="flex space-x-2 mt-10 items-center">
+				<x-button
+					class="e-button--black-outline"
+					title="Get involved"
+					type="pill"
+					:small="button.small"
+					:disabled="button.disabled"
+				/>
+
+				<x-button
+					class="e-button--black-outline"
+					title="Get involved"
+					type="pill"
+					icon="chevron-right"
+					:small="button.small"
+				/>
+
+				<x-button
+					class="e-button--black-outline"
+					title="Get involved"
+					type="pill"
+					icon="chevron-left"
+					flipped
+					:small="button.small"
+				/>
+
+				<x-button
+					title="Get involved"
+					class="text-black hover:text-red focus:text-red"
+					icon="chevron-left"
+					type="subtle"
+					flipped
+					:small="button.small"
+				/>
+			</div>
+
+			<div class="flex space-x-2 mt-10 items-center">
+				<x-button
+					sr-only="Thursday 2nd December"
+					title="07:45am"
+					type="time"
+					:small="button.small"
+					:disabled="button.disabled"
+				/>
+
+				<x-button
+					sr-only="Friday 3rd December"
+					title="07:45am"
+					type="time"
+					:small="button.small"
+					:disabled="button.disabled"
+				/>
+
+				<x-button
+					sr-only="Monday 6th December"
+					title="07:45am"
+					type="time"
+					:small="button.small"
+					:disabled="button.disabled"
+				/>
 			</div>
 		</div>
 
@@ -390,15 +375,24 @@
 
 <script>
 	import { reactive, toRefs } from 'vue';
+	import XButton from '@/components/xbutton';
+	import Tooltip from '@/components/Tooltip.vue';
 
 	export default {
-		setup () {
-			const state = reactive({
-				message: "This is a new way of doing research",
+		components: {
+			XButton,
+			Tooltip,
+		},
+
+		setup() {
+			const data = reactive({
+				message: 'This is a new way of doing research',
+
 				button: {
 					small: false,
 					disabled: false,
 				},
+
 				icons: [
 					'video',
 					'check',
@@ -420,9 +414,9 @@
 					'camera',
 				],
 			});
-		
+
 			return {
-				...toRefs(state),
+				...toRefs(data),
 			};
 		},
 	};

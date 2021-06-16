@@ -26,13 +26,13 @@
 				<div class="p-2.5 pl-4 w-full bg-gradient-to-b from-black-25">
 					<div class="flex flex-wrap-reverse gap-5">
 						<div class="flex flex-wrap flex-auto justify-between gap-5">
-							<e-button
+							<x-button
 								title="Leave interview"
 								icon="chevron-left"
 								class="e-button--white-outline self-center"
 								flipped
 								small
-								pill
+								type="pill"
 								@click="onLeave"
 							/>
 

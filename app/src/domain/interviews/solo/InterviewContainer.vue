@@ -25,13 +25,13 @@
 			</transition>
 		</div>
 
-		<e-button
+		<x-button
 			title="Save and exit"
 			icon="save"
 			class="e-button--red-outline ml-auto"
 			flipped
 			small
-			pill
+			type="pill"
 			@click="onSaveExit"
 		/>
 	</div>

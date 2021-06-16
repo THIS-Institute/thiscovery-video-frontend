@@ -61,7 +61,7 @@
 						:key="timeslot.time"
 						class="flex justify-center"
 					>
-						<e-button
+						<x-button
 							:sr-only="asFormattedDate(date.date)"
 							:title="asFormattedTime(timeslot.time)"
 							:class="[
@@ -70,7 +70,7 @@
 									'hover:bg-transparent': !timeslot.available,
 								},
 							]"
-							time
+							type="time"
 							:small="total <= 3"
 							:disabled="!timeslot.available"
 							@click="selectTimeslot(timeslot.time)"
