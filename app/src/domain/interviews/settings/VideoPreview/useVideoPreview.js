@@ -30,8 +30,6 @@ export function useVideoPreview() {
     onBeforeUnmount(destroyLocalVideoTrack);
     onBeforeRouteLeave(destroyLocalVideoTrack);
 
-    window.onbeforeunload = () => destroyLocalVideoTrack;
-
     return {
         localVideoElement,
     };
