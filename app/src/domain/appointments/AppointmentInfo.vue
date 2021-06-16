@@ -16,43 +16,46 @@
 
 			<div class="flex flex-col items-start space-y-5 mt-10">
 				<template v-if="booked">
-					<e-button
+					<x-button
 						title="Reschedule appointment"
 						icon="edit"
 						class="text-red hover:text-black focus:text-black"
 						flipped
+						type="subtle"
 						:disabled="isWaiting"
 						@click="$emit('reschedule')"
 					/>
 
-					<e-button
+					<x-button
 						title="Cancel appointment"
 						icon="close"
 						class="text-red hover:text-black focus:text-black"
 						flipped
+						type="subtle"
 						:disabled="isWaiting"
 						@click="$emit('cancel')"
 					/>
 				</template>
 
 				<template v-else>
-					<e-button
+					<x-button
 						title="Book an appointment"
 						icon="calendar"
 						class="text-red hover:text-black focus:text-black"
 						flipped
+						type="subtle"
 						:disabled="isWaiting"
 						url="/appointments"
 					/>
 				</template>
 			</div>
 
-			<e-button
+			<x-button
 				title="Back to project page"
 				class="e-button--red mt-10"
 				url="/"
+				type="pill"
 				:disabled="isWaiting"
-				pill
 			/>
 		</div>
 

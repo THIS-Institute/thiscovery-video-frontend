@@ -41,13 +41,13 @@
 
 			<selected-slot :selection="selection" />
 
-			<e-button
+			<x-button
 				v-if="!isStatusBooked"
 				title="Book appointment"
 				icon="chevron-right"
 				class="e-button--red hidden md:inline-block"
+				type="pill"
 				:disabled="!selection"
-				pill
 				@click="confirmSelection"
 			/>
 		</div>
@@ -71,13 +71,13 @@
 		v-if="!loading && !isStatusBooked"
 		class="sticky bottom-0 bg-white p-5 -mx-5 mt-2 sm:-mx-10 shadow-sticky md:hidden"
 	>
-		<e-button
+		<x-button
 			title="Book appointment"
 			icon="chevron-right"
 			class="e-button--red"
+			type="pill"
 			:disabled="!selection"
 			small
-			pill
 			@click="confirmSelection"
 		/>
 	</div>

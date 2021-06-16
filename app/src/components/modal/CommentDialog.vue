@@ -21,7 +21,7 @@
 				]"
 			/>
 
-			<e-button
+			<x-button
 				title="Delete"
 				icon="close"
 				:class="[
@@ -31,27 +31,28 @@
 				:disabled="!comment"
 				flipped
 				small
+				type="subtle"
 				@click="comment = null"
 			/>
 		</div>
 	</div>
 
 	<div class="flex items-center justify-center space-x-2 mt-5">
-		<e-button
+		<x-button
 			title="Cancel"
 			class="e-button--red-outline"
 			small
-			pill
+			type="pill"
 			@click="$emit('cancel')"
 		/>
 
-		<e-button
+		<x-button
 			title="Save note"
 			icon="check"
 			class="e-button--red"
 			flipped
 			small
-			pill
+			type="pill"
 			@click="$emit('save', comment)"
 		/>
 	</div>
