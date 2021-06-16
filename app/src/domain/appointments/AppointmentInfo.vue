@@ -53,7 +53,8 @@
 			<x-button
 				title="Back to project page"
 				class="e-button--red mt-10"
-				url="/"
+				:url="completionUrl"
+				external
 				type="pill"
 				:disabled="isWaiting"
 			/>
@@ -88,6 +89,7 @@
 			const { message } = useMessages(messages);
 
 			const isWaiting = computed(() => store.state.appointments.isWaiting);
+			const completionUrl = computed(() => store.state.task.completionUrl);
 			const messagePath = computed(() => {
 				const state = props.booked ? 'confirmed' : 'cancelled';
 
@@ -98,7 +100,8 @@
 				message,
 				isWaiting,
 				messagePath,
-			}
+				completionUrl,
+			};
 		},
 	};
 </script>
