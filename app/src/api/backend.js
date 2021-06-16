@@ -70,8 +70,12 @@ BackendClient.prototype.delete = async function (endpoint, requestOptions = {}) 
 
 BackendClient.prototype._request = async function (endpoint, options = {}) {
 	const url = `${this.baseUrl}/${this.VERSION}/${endpoint}`;
-	
+
 	const response = await fetch(url, options);
+
+	if (!response.ok) {
+		throw Error(`${response.status}`);
+	}
 
 	return response.json();
 }
