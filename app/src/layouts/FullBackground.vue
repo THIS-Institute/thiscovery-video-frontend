@@ -23,10 +23,11 @@
 				v-if="hasBack"
 				class="e-container mt-6"
 			>
-				<e-button
+				<x-button
 					title="Back"
 					icon="chevron-left"
 					class="text-red hover:text-black active:text-black"
+					type="subtle"
 					flipped
 					@click="back"
 				/>

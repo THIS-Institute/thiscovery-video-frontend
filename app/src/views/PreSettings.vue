@@ -42,21 +42,21 @@
 										v-text="msgs.content"
 									/>
 
-									<e-button
+									<x-button
 										v-if="hasMicrophone"
 										:title="message(`${domain}.preSettings.continueButtonText`)"
 										icon="chevron-right"
 										class="e-button--red mt-5"
 										:url="{ name: nextRoute }"
-										pill
+										type="pill"
 									/>
 
-									<e-button
+									<x-button
 										v-else
 										title="How to fix this"
 										icon="chevron-right"
 										class="e-button--red mt-5"
-										pill
+										type="pill"
 										@click="troubleShoot"
 									/>
 

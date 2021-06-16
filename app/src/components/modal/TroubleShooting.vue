@@ -20,11 +20,11 @@
 	</div>
 
 	<div class="flex items-center justify-center space-x-4 mt-5">
-		<e-button
+		<x-button
 			title="Close"
 			class="e-button--red-outline"
 			small
-			pill
+			type="pill"
 			@click="toggle"
 		/>
 	</div>

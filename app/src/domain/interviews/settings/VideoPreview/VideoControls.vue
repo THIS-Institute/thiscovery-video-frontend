@@ -1,23 +1,25 @@
 <template>
 	<div class="flex items-end justify-center p-4 space-x-2">
 		<tooltip :text="cameraEnabled ? 'Disable camera' : 'Enable Camera'">
-			<e-button
+			<x-button
 				:icons="[
 					'camera',
 					cameraEnabled ? null : 'camera-strike'
 				]"
 				:class="cameraEnabled ? 'e-button--white' : 'e-button--red'"
+				type="icon"
 				@click="$emit('toggleCamera', cameraEnabled)"
 			/>
 		</tooltip>
 
 		<tooltip :text="microphoneEnabled ? 'Mute microphone' : 'Unmute microphone'">
-			<e-button
+			<x-button
 				:icons="[
 					'audio-base',
 					microphoneEnabled ? 'audio-sound' : 'audio-off'
 				]"
 				:class="microphoneEnabled ? 'e-button--white' : 'e-button--red'"
+				type="icon"
 				@click="$emit('toggleMute', microphoneEnabled)"
 			/>
 		</tooltip>

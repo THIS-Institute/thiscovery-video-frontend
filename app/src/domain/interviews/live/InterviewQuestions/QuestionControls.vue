@@ -14,32 +14,33 @@
 			<hr class="border-opacity-25 border-grey-400">
 
 			<div class="flex items-center justify-between flex-wrap gap-y-2 p-5">
-				<e-button
+				<x-button
 					v-if="(active !== null) && (active === index)"
 					title="Active"
 					icon="check"
 					class="e-button--green"
-					pill
+					type="pill"
 					small
 					@click="onStopAsking"
 				/>
 
-				<e-button
+				<x-button
 					v-else
 					title="Ask this question"
 					class="e-button--red-outline"
 					small
-					pill
+					type="pill"
 					@click="onAskQuestion"
 				/>
 
 				<div class="flex items-center space-x-1">
-					<e-button
+					<x-button
 						v-for="(next, i) in [false, true]"
 						:key="i"
 						:icon="next ? 'chevron-right' : 'chevron-left'"
 						class="e-button--red-outline"
 						:disabled="next ? upperLimit : lowerLimit"
+						type="icon"
 						small
 						@click="onSkip(next)"
 					/>

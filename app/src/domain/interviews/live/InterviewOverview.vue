@@ -34,10 +34,10 @@
 						/>
 					</aside>
 
-					<e-button
+					<x-button
 						title="Continue"
 						class="e-button--red mx-auto mt-6 self-center"
-						pill
+						type="pill"
 						:disabled="isLoading"
 						@click="onContinue"
 					/>
@@ -73,14 +73,14 @@
 				v-text="message('live.landing.cancel')"
 			/>
 
-			<e-button
+			<x-button
 				title="Cancel appointment"
 				icon="close"
 				class="e-button--red-outline mt-2.5"
 				flipped
 				url="/"
 				small
-				pill
+				type="pill"
 			/>
 		</div>
 	</div>

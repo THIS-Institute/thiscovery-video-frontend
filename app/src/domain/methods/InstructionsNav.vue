@@ -1,31 +1,32 @@
 <template>
 	<div class="flex items-center mt-5">
-		<e-button
+		<x-button
 			v-if="!lowerLimit"
 			title="Previous"
 			icon="chevron-left"
 			class="text-red hover:text-black focus:text-black"
+			type="subtle"
 			flipped
 			@click="moveTo(index - 1)"
 		/>
 
 		<div class="pl-2.5 ml-auto">
-			<e-button
+			<x-button
 				v-if="!upperLimit"
 				title="Next"
 				icon="chevron-right"
 				class="e-button--red-outline"
-				pill
+				type="pill"
 				@click="moveTo(index + 1)"
 			/>
 
-			<e-button
+			<x-button
 				v-else
 				title="Continue"
 				icon="chevron-right"
 				class="e-button--red"
 				:url="{ name: nextRoute }"
-				pill
+				type="pill"
 			/>
 		</div>
 	</div>

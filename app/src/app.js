@@ -9,7 +9,7 @@ import { setupThiscoveryResponse } from './store/task/setup';
 import envPlugin from './plugins/environment';
 
 import AppContainer from './domain/app/AppContainer';
-import EButton from './components/Button';
+import XButton from './components/button';
 import Icon from './components/Icon';
 import Placeholder from './components/Placeholder';
 import IconText from './components/IconText';
@@ -54,7 +54,7 @@ app.directive('click-outside', {
 
 
 app.component('AppContainer', AppContainer);
-app.component('EButton', EButton);
+app.component('XButton', XButton);
 app.component('Icon', Icon);
 app.component('Placeholder', Placeholder);
 app.component('IconText', IconText);

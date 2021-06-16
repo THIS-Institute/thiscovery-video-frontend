@@ -4,12 +4,13 @@
 			:text="hidden ? 'Enable camera' : 'Disable Camera'"
 			bottom
 		>
-			<e-button
+			<x-button
 				:icons="[
 					'camera',
 					hidden ? 'camera-strike' : null
 				]"
 				:class="hidden ? 'e-button--red' : 'e-button--white-outline'"
+				type="icon"
 				@click="onToggleCamera"
 			/>
 		</tooltip>
@@ -18,12 +19,13 @@
 			:text="muted ? 'Unmute microphone' : 'Mute microphone'"
 			bottom
 		>
-			<e-button
+			<x-button
 				:icons="[
 					'audio-base',
 					muted ? 'audio-off' : 'audio-sound'
 				]"
 				:class="muted ? 'e-button--red' : 'e-button--white-outline'"
+				type="icon"
 				@click="onToggleMute"
 			/>
 		</tooltip>
@@ -34,10 +36,11 @@
 				:hidden="options"
 				bottom
 			>
-				<e-button
+				<x-button
 					v-click-outside="closeOptions"
 					icon="options"
 					:class="options ? 'e-button--white' : 'e-button--white-outline'"
+					type="icon"
 					@keyup.esc="closeOptions"
 					@click="onToggleOptions"
 				/>
@@ -64,11 +67,12 @@
 
 					<ul class="flex flex-col px-8 py-7 space-y-4">
 						<li>
-							<e-button
+							<x-button
 								title="Join by phone"
 								icon="phone"
 								class="hover:text-red"
 								flipped
+								type="subtle"
 								@click="phone"
 							/>
 						</li>
@@ -77,11 +81,11 @@
 					<hr class="border-opacity-25 border-grey-400">
 
 					<div class="px-8 py-4">
-						<e-button
+						<x-button
 							title="Get help"
 							class="e-button--red-outline"
 							small
-							pill
+							type="pill"
 						/>
 					</div>
 				</div>
