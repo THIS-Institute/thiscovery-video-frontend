@@ -18,10 +18,10 @@
 <script>
 	import { computed } from 'vue';
 
-	import Icon from '@/components/xbutton/Icon.vue';
-	import Time from '@/components/xbutton/Time.vue';
-	import Pill from '@/components/xbutton/Pill.vue';
-	import Subtle from '@/components/xbutton/Subtle.vue';
+	import Icon from '@/components/button/Icon.vue';
+	import Time from '@/components/button/Time.vue';
+	import Pill from '@/components/button/Pill.vue';
+	import Subtle from '@/components/button/Subtle.vue';
 
 	export default {
 		components: {

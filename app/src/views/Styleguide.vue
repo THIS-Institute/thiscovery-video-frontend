@@ -375,15 +375,8 @@
 
 <script>
 	import { reactive, toRefs } from 'vue';
-	import XButton from '@/components/xbutton';
-	import Tooltip from '@/components/Tooltip.vue';
 
 	export default {
-		components: {
-			XButton,
-			Tooltip,
-		},
-
 		setup() {
 			const data = reactive({
 				message: 'This is a new way of doing research',
