@@ -51,11 +51,21 @@
 			/>
 		</div>
 	</section>
+
+	<modal-container :show="state.showConfirmDialog">
+		<confirm-dialog
+			v-if="state.showConfirmDialog"
+			@confirm="onConfirmRetake"
+			@cancel="onCancelRetake"
+		>
+			Are you sure you want to delete your recording and retake?
+		</confirm-dialog>
+	</modal-container>
 </template>
 
 <script>
 	import { useStore } from 'vuex';
-	import { computed } from 'vue';
+	import { computed, reactive } from 'vue';
 	import { useRouter } from 'vue-router';
 	import { ROUTE_APPOINTMENTS } from '@/routeConstants';
 
@@ -66,12 +76,16 @@
 	import SelectedSlot from './SelectedSlot';
 	import BookingStatus from './BookingStatus';
 	import AppointmentInfo from './AppointmentInfo';
+	import ModalContainer from '@/components/modal/ModalContainer';
+	import ConfirmDialog from '@/components/modal/ConfirmDialog';
 
 	export default {
 		components: {
 			SelectedSlot,
 			BookingStatus,
 			AppointmentInfo,
+			ModalContainer,
+			ConfirmDialog,
 		},
 
 		setup() {
@@ -81,6 +95,20 @@
 			const isConfirmed = computed(() => store.state.appointments.isConfirmed);
 			const taskTitle = computed(() => store.state.task.title);
 			const selection = computed(() => store.state.appointments.selection);
+
+			const state = reactive({
+				showConfirmDialog: false,
+			});
+
+			const openConfirmDialog = () => {
+				state.showConfirmDialog = true;
+				store.dispatch('app/openModal');
+			};
+
+			const closeConfirmDialog = () => {
+				state.showConfirmDialog = false;
+				store.dispatch('app/closeModal');
+			};
 
 			const invokeReschedule = () => {
 				store.dispatch('appointments/reschedule');
@@ -107,6 +135,7 @@
 			const { message } = useMessages(messages);
 
 			return {
+				state,
 				message,
 				taskTitle,
 				isWaiting,
