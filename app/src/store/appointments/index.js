@@ -18,6 +18,7 @@ export const appointments = {
 		nextFetchDate: null,
 		isWaiting: false,
 		appointmentId: null,
+		isToday: false,
 	}),
 
 	mutations: {
@@ -60,6 +61,10 @@ export const appointments = {
 		setAppointmentId(state, appointmentId) {
 			state.appointmentId = appointmentId;
 		},
+
+		setIsToday(state, isToday) {
+			state.isToday = isToday;
+		},
 	},
 
 	actions: {
@@ -68,6 +73,7 @@ export const appointments = {
 			commit('updateSelectionTimeslot', appointment.time);
 			commit('updateIsConfirmed', true);
 			commit('setStatus', constants.STATUS_BOOKED);
+			commit('setIsToday', appointment.isToday);
 		},
 
 		reschedule: ({ commit }) => {

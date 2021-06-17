@@ -1,6 +1,6 @@
 import * as constant from './routeConstants';
 
-import { hasAppointmentGuard } from '@/domain/appointments/routeGuards';
+import { hasAppointmentGuard, hasAppointmentTodayGuard } from '@/domain/appointments/routeGuards';
 
 // Tools
 const Styleguide = () => import('./views/Styleguide');
@@ -37,6 +37,7 @@ export const routes = [
 				path: '',
 				name: constant.ROUTE_HOME,
 				component: MethodSelectionView,
+				beforeEnter: [ hasAppointmentTodayGuard ],
 			},
 		],
 	},

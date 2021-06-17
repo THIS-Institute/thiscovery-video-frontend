@@ -1,4 +1,5 @@
 import json
+from datetime import datetime
 from thiscovery.user_response import UserResponseService, ResponseNotFound
 from dynamodb import DynamoDB
 from botocore.exceptions import ClientError
@@ -59,6 +60,11 @@ def lambda_handler(event, context):
             }
         except KeyError:
             appointment = None
+
+    if appointment:
+        appointment_date = datetime.strptime(appointment['time'], '%Y-%m-%dT%H:%M:%S%z').date()
+        today_date = datetime.today().date()
+        appointment['isToday'] = appointment_date == today_date
 
     task = thiscovery_response['interview_task']
 
