@@ -117,6 +117,7 @@
 
 				<modal-container
 					:show="state.showConfirmDialog || state.showCommentDialog"
+					@close="onForceClose"
 				>
 					<!-- Are you sure you want to retake? -->
 					<confirm-dialog
@@ -320,6 +321,11 @@
 				state.showCommentDialog = false;
 				store.dispatch('app/closeModal');
 			};
+
+			const onForceClose = () => {
+				closeConfirmDialog();
+				closeCommentsDialog();
+			};
 			
 			const onConfirmRetake = () => {
 				cleanup();
@@ -378,6 +384,7 @@
 				onSaveExit,
 				onCameraStart,
 				onCameraStop,
+				onForceClose,
 			};
 		},
 	};

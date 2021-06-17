@@ -59,11 +59,19 @@
 			show: Boolean,
 		},
 
-		setup() {
+		emits: [
+			'close',
+		],
+
+		setup(props, { emit }) {
 			const store = useStore();
 			const active = computed(() => store.state.app.modalActive);
 
-			const closeModal = () => store.dispatch('app/closeModal');
+			const closeModal = () => {
+				store.dispatch('app/closeModal');
+				emit('close');
+			};
+
 			useEscKey(closeModal);
 
 			return {
