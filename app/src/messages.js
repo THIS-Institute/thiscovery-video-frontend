@@ -152,7 +152,7 @@ export default Object.freeze({
 	
 		selectedSlot: {
 			title: 'Choose a fixed start',
-			content: 'Appointments have no duration and last as long as you need them to.',
+			content: 'Appointments usually take around 45 minutes.',
 			change: 'You can change or cancel this slot later if you need to.',
 			confirmation: 'Your interview is booked for…',
 		},
