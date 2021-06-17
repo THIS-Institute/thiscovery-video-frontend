@@ -69,11 +69,7 @@ export const user = {
 		},
 
 		getIdentity (state) {
-			if (state.user.name === undefined) {
-				return null;
-			}
-
-			return state.user.name;
+			return state.user[ID_NAMESPACE + 'first_name'];
 		},
 
 		getInitials (state) {
