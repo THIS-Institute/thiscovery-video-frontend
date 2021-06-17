@@ -19,19 +19,10 @@
 		/>
 
 		<main class="relative flex-auto z-site-content">
-			<div
+			<back
 				v-if="hasBack"
-				class="e-container mt-6"
-			>
-				<x-button
-					title="Back"
-					icon="chevron-left"
-					class="text-red hover:text-black active:text-black"
-					type="subtle"
-					flipped
-					@click="back"
-				/>
-			</div>
+				class="mt-6"
+			/>
 
 			<router-view />
 		</main>
@@ -41,15 +32,16 @@
 <script>
 	import { computed } from 'vue';
 	import { useStore } from 'vuex';
-	import { useRouter } from 'vue-router';
 
 	import AppHeader from '@/domain/app/AppHeader';
 	import AppNavigation from '@/domain/app/AppNavigation';
+	import Back from '@/components/Back';
 
 	export default {
 		components: {
 			AppHeader,
 			AppNavigation,
+			Back,
 		},
 
 		props: {
@@ -69,15 +61,12 @@
 
 		setup() {
 			const store = useStore();
-			const router = useRouter();
-			const back = () => window.history.length > 1 ? router.go(-1) : router.push('/');
 
 			const navActive = computed(() => store.state.app.navActive);
 			const nav = computed(() => store.state.app.nav);
 
 			return {
 				navActive,
-				back,
 				nav,
 			};
 		},

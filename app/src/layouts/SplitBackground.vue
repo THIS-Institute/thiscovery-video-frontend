@@ -23,16 +23,7 @@
 		/>
 
 		<main class="relative flex-auto z-site-content">
-			<div class="e-container mt-6">
-				<x-button
-					title="Back"
-					icon="chevron-left"
-					class="text-red hover:text-black active:text-black"
-					type="subtle"
-					flipped
-					@click="back"
-				/>
-			</div>
+			<back class="mt-6" />
 
 			<router-view />
 		</main>
@@ -41,17 +32,18 @@
 
 <script>
 	import { computed, reactive, toRefs } from 'vue';
-	import { useRouter } from 'vue-router';
 	import { useStore } from 'vuex';
 	import { useViewport } from '@/composables/useViewport';
 
 	import AppHeader from '@/domain/app/AppHeader';
 	import AppNavigation from '@/domain/app/AppNavigation';
+	import Back from '@/components/Back';
 
 	export default {
 		components: {
 			AppHeader,
 			AppNavigation,
+			Back,
 		},
 
 		props: {
@@ -62,14 +54,11 @@
 		},
 
 		setup() {
-			const router = useRouter();
 			const store = useStore();
 
 			const state = reactive({
 				offset: null,
 			});
-
-			const back = () => window.history.length > 1 ? router.go(-1) : router.push('/');
 
 			const getCoords = (elem) => {
 				const box = elem.getBoundingClientRect();
@@ -100,7 +89,6 @@
 				...toRefs(state),
 				navActive,
 				profile,
-				back,
 				nav,
 			};
 		},
