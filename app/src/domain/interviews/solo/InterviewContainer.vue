@@ -117,6 +117,7 @@
 
 				<modal-container
 					:show="state.showConfirmDialog || state.showCommentDialog"
+					@close="onCancelRetake && onCancelComments"
 				>
 					<!-- Are you sure you want to retake? -->
 					<confirm-dialog
