@@ -5,7 +5,7 @@
 
 	<div class="flex items-center justify-center space-x-4 mt-5">
 		<x-button
-			title="Cancel"
+			v-bind="negative"
 			class="e-button--red-outline"
 			small
 			type="pill"
@@ -13,8 +13,7 @@
 		/>
 
 		<x-button
-			title="Yes, retake"
-			icon="retake"
+			v-bind="affirmative"
 			class="e-button--red"
 			flipped
 			small
@@ -26,6 +25,23 @@
 
 <script>
 	export default {
+		props: {
+			negative: {
+				type: Object,
+				default: () => ({
+					title: 'Cancel',
+				}),
+			},
+
+			affirmative: {
+				type: Object,
+				default: () => ({
+					title: 'Yes, retake',
+					icon: 'retake',
+				}),
+			},
+		},
+
 		emits: [
 			'confirm',
 			'cancel',
