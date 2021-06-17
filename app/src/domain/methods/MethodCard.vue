@@ -63,9 +63,6 @@
 		<info-bar
 			v-if="tutorial && available"
 			class="mt-10 p-2.5 pt-0"
-			:class-list="{
-				inner: 'xl:max-w-xs xl:mx-auto',
-			}"
 			:title="tutorial.title"
 			:cta="{
 				title: tutorial.cta.title,

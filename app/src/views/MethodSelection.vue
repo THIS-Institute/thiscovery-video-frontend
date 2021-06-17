@@ -13,7 +13,13 @@
 				/>
 			</div>
 
-			<div class="relative grid grid-cols-8 gap-5 mt-7 col-span-12 xl:col-start-2 xl:col-span-8">
+			<div
+				:class="[
+					'relative grid grid-cols-8 gap-5 mt-7 col-span-12',
+					'xl:col-start-2 xl:col-span-9',
+					'2xl:col-start-2 2xl:col-span-8',
+				]"
+			>
 				<transition
 					enter-active-class="transform transition-all ease-out duration-300"
 					enter-from-class="opacity-0 translate-y-4 sm:scale-95"
