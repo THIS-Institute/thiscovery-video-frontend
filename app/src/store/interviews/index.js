@@ -169,8 +169,12 @@ export const interviews = {
 			}
 		},
 
-		getAccessToken: async ({ commit }, data) => {
-			const accessToken = await fetchRoomToken(data);
+		getAccessToken: async ({ commit, rootGetters }, options) => {
+			const accessToken = await fetchRoomToken({
+				room: options.room,
+				identity: rootGetters['user/getIdentity'],
+			});
+
 			commit('setAccessToken', accessToken);
 		},
 

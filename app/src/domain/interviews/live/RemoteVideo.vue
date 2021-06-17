@@ -11,9 +11,9 @@
 		/>
 
 		<p
-			v-if="participant.identity"
+			v-if="participant.identity && name"
 			class="fixed bottom-0 left-0 p-4 text-white z-1"
-			v-text="participant.identity"
+			v-text="name"
 		/>
 	</div>
 
@@ -29,9 +29,9 @@
 			]"
 		>
 			<h1
-				v-if="participant.identity"
+				v-if="participant.identity && name"
 				class="e-h4"
-				v-text="participant.identity"
+				v-text="name"
 			/>
 		</div>
 	</div>
@@ -62,6 +62,7 @@
 			const audioFeed = ref(null);
 			const isMuted = ref(false);
 			const hasVideo = ref(false);
+			const name = ref(null);
 
 			const setRemoteTrack = (publication) => {
 				if (publication.isSubscribed) {
@@ -131,18 +132,27 @@
 				hasVideo.value = true;
 			};
 
+			const getNameFromIdentity = (identity) => {
+				return identity
+					.replace(/^(researcher#)/,"")
+					.replace(/^(participant#)/,"");
+			};
+
 			onMounted(() => {
 				if (props.participant.tracks) {
 					props.participant.tracks.forEach(setRemoteTrack);
 				}
 
 				props.participant.on('trackSubscribed', setMediaTrack);
+
+				name.value = getNameFromIdentity(props.participant.identity);
 			});
 
 			return {
 				hasVideo,
 				videoFeed,
 				audioFeed,
+				name,
 			}
 		},
 	};

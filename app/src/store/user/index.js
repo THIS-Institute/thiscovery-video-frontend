@@ -69,7 +69,15 @@ export const user = {
 		},
 
 		getIdentity (state) {
-			return state.user[ID_NAMESPACE + 'first_name'];
+			let prefix;
+
+			if (state.isInterviewer) {
+				prefix = 'researcher';
+			} else {
+				prefix = 'participant';
+			}
+
+			return `${prefix}#${state.user[ID_NAMESPACE + 'first_name']}`;
 		},
 
 		getInitials (state) {

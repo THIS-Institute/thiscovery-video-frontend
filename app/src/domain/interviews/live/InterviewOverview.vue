@@ -125,7 +125,6 @@
 			};
 
 			const options = {
-				identity: store.getters['user/getIdentity'],
 				room: route.params.id,
 			};
 

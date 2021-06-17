@@ -1,7 +1,8 @@
 import { client } from './backend';
 
-export async function fetchRoomToken (data) {
-	const response = await client.post(`room/token`, data);
+export async function fetchRoomToken (options) {
+	console.log(options)
+	const response = await client.post(`room/token`, options);
 
 	if (response.access_token) {
 		return response.access_token;
