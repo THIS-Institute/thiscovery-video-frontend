@@ -1,6 +1,6 @@
 import os
 import json
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from appointments.utils import AcuityClientFactory
 from appointments.timeslots import Timeslots
@@ -31,7 +31,7 @@ def lambda_handler(event, context):
     if query_parameters and 'offset' in query_parameters:
         date_offset = datetime.strptime(query_parameters['offset'], '%Y-%m-%d')
     else:
-        date_offset = datetime.today()
+        date_offset = datetime.today() - timedelta(days=1)
     
     days = int(os.environ['APPOINTMENT_DEFAULT_DAYS'])
 
