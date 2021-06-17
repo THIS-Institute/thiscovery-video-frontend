@@ -14,8 +14,6 @@ export const hasAppointmentGuard = (to, from, next) => {
 
 export const hasAppointmentTodayGuard = (to, from, next) => {
     const isToday = computed(() => store.state.appointments.isToday);
-
-    console.log(isToday);
     
     if (isToday.value) {
         const appointmentId = computed(() => store.state.appointments.appointmentId);
