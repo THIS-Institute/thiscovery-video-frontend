@@ -47,7 +47,7 @@
 				class="h-full"
 				:booked="isStatusBooked"
 				@reschedule="invokeReschedule"
-				@cancel="invokeCancellation"
+				@cancel="openConfirmDialog"
 			/>
 		</div>
 	</section>
@@ -55,10 +55,13 @@
 	<modal-container :show="state.showConfirmDialog">
 		<confirm-dialog
 			v-if="state.showConfirmDialog"
-			@confirm="onConfirmRetake"
-			@cancel="onCancelRetake"
+			:affirmative="{
+				title: 'Yes, cancel',
+			}"
+			@confirm="confirmCancellation"
+			@cancel="closeConfirmDialog"
 		>
-			Are you sure you want to delete your recording and retake?
+			Are you sure you want to cancel your appointment?
 		</confirm-dialog>
 	</modal-container>
 </template>
@@ -115,16 +118,11 @@
 				router.push({ name: ROUTE_APPOINTMENTS });
 			};
 
-			const invokeCancellation = () => {
-				if (!confirm('Are you sure you want to cancel your appointment?')) {
-					return;
-				}
+			const confirmCancellation = () => {
+				closeConfirmDialog();
 
-				store.dispatch('appointments/cancel')
-					.then(onAppointmentCancelled)
+				store.dispatch('appointments/cancel');
 			};
-
-			const onAppointmentCancelled = () => {};
 
 			const {
 				isStatusReady,
@@ -142,10 +140,12 @@
 				isConfirmed,
 				selection,
 				invokeReschedule,
-				invokeCancellation,
 				isStatusReady,
 				isStatusBooked,
 				isStatusCancelled,
+				openConfirmDialog,
+				closeConfirmDialog,
+				confirmCancellation,
 			};
 		},
 	};
