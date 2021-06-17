@@ -67,7 +67,11 @@
 			const store = useStore();
 			const active = computed(() => store.state.app.modalActive);
 
-			const closeModal = () => emit('close');
+			const closeModal = () => {
+				store.dispatch('app/closeModal');
+				emit('close');
+			};
+
 			useEscKey(closeModal);
 
 			return {
