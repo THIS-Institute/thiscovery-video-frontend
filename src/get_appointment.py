@@ -9,7 +9,7 @@ from api.responses import (
 
 def lambda_handler(event, context):
     try:
-        appointment_id = event['pathParameters']['id']
+        interview_id = event['pathParameters']['id']
     except KeyError:
         return ApiGatewayErrorResponse(
             exception=ResponseException.EXCEPTION_MISSING_PARAM,
@@ -19,22 +19,23 @@ def lambda_handler(event, context):
     dynamodb = DynamoDB().client()
 
     response = dynamodb.get_item(Key={
-        'pk': f'APPOINTMENT#{appointment_id}',
-        'sk': f'APPOINTMENT#{appointment_id}',
+        'pk': f'INTERVIEW#{interview_id}',
+        'sk': f'INTERVIEW#{interview_id}',
     })
 
     try:
-        appointment = response['Item']
+        interview = response['Item']
+        appointment_id = interview['appointment_id']
     except KeyError:
         return ApiGatewayErrorResponse(
             exception=ResponseException.EXCEPTION_NOT_FOUND,
-            message='Appointment not found',
+            message='Interview not found',
             http_code=404
         ).response()
 
     try:
         thiscovery_tasks = TaskService()
-        task = thiscovery_tasks.get(appointment['task_id'])
+        task = thiscovery_tasks.get(interview['task_id'])
     except (TaskNotFound, KeyError):
         return ApiGatewayErrorResponse(
             exception=ResponseException.EXCEPTION_NOT_FOUND,
@@ -43,13 +44,13 @@ def lambda_handler(event, context):
         ).response()
 
     response_data = {
-        'interviewId': appointment['interview_id'],
+        'interviewId': interview['interview_id'],
         'appointment': {
-            'id': appointment['appointment_id'],
-            'time': appointment['appointment_time'],
+            'id': appointment_id,
+            'time': interview['appointment_time'],
         },
         'task': {
-            'id': appointment['task_id'],
+            'id': interview['task_id'],
             'title': task['name'],
             'completionUrl': task['completion_url'],
         },

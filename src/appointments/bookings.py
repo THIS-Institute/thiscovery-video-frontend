@@ -89,8 +89,8 @@ class Bookings:
                 <p><b>Hello {first_name},</b></p>
                 <p>This is a test email, that provides interview room links to support testing.</p>
                 <p style="margin-bottom: 20px">(If testing both links yourself, don't open them both in the same browser session).</p>
-                <p><b>Interviewee's link:</b> {base_url}/live/{appointment_id}</p>
-                <p><b>Interviewer's link:</b> {base_url}/live/{appointment_id}?isInterviewer</p>
+                <p><b>Interviewee's link:</b> {base_url}/live/{interview_id}</p>
+                <p><b>Interviewer's link:</b> {base_url}/live/{interview_id}?isInterviewer</p>
             </body>
         </html>
         """
