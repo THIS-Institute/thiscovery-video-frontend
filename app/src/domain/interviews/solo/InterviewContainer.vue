@@ -152,7 +152,7 @@
 </template>
 
 <script>
-	import { computed, ref, reactive, provide, watch } from 'vue';
+	import { computed, ref, reactive, onMounted, provide, watch } from 'vue';
 	import { useStore } from 'vuex';
 	import { useRouter } from 'vue-router';
 	import { ROUTE_HOME } from '@/routeConstants';
@@ -217,6 +217,11 @@
 				showConfirmDialog: false,
 				showCommentDialog: false,
 				comments: null,
+				questionStartedAt: null,
+				questionEndedAt: null,
+				responseStartedAt: null,
+				responseEndedAt: null,
+				retakeCount: 0,
 			});
 
 			const { userGivenName } = useUser();
@@ -266,9 +271,12 @@
 				};
 			});
 
-			const onRecorderStart = () => {};
+			const onRecorderStart = () => {
+				state.responseStartedAt = getTimeStringNow();
+			};
 
 			const onRecorderStop = () => {
+				state.responseEndedAt = getTimeStringNow();
 				setMode(MODE_REVIEWING);
 			};
 
@@ -282,24 +290,34 @@
 
 			const onNextQuestion = async () => {
 				isUploading.value = true;
+				state.questionEndedAt = getTimeStringNow();
 
 				const options = {
-					playbackURL: playbackURL.value,
+					interviewId: store.state.interviews.id,
 					anonUserId: store.state.user.anonUserId,
+					anonUserTaskId: store.state.user.anonUserTaskId,
 					taskId: store.state.task.id,
 					questionId: activeSection.value.questions[readQuestion.value].id,
+					questionStartedAt: state.questionStartedAt,
+					questionEndedAt: state.questionEndedAt,
+					responseStartedAt: state.responseStartedAt,
+					responseEndedAt: state.responseEndedAt,
+					retakeCount: state.retakeCount,
 				};
 
-				await processAnswer(options)
+				await processAnswer(playbackURL.value, options)
 					.then(onAnswerProccessed);
 			};
 
 			const onAnswerProccessed = () => {
+				state.retakeCount = 0;
 				isUploading.value = false;
 				state.comments = null;
 				cleanup();
 				nextQuestion();
 				setMode(MODE_RECORDING);
+
+				state.questionStartedAt = getTimeStringNow();
 			};
 
 			const openConfirmDialog = () => {
@@ -331,6 +349,8 @@
 				cleanup();
 				setMode(MODE_RECORDING);
 				closeConfirmDialog();
+
+				state.retakeCount++;
 			};
 
 			const onCancelRetake = () => {
@@ -357,6 +377,14 @@
 			const onCameraStop = () => {
 				stopVideoTracks();
 			}
+
+			const getTimeStringNow = () => {
+				return (new Date()).toISOString();
+			}
+
+			onMounted(() => {
+				state.questionStartedAt = getTimeStringNow();
+			})
 
 			return {
 				state,

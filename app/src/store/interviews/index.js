@@ -17,6 +17,7 @@ export const interviews = {
 	namespaced: true,
 
 	state: () => ({
+		id: null,
 		token: null,
 		activeVideoInput: null,
 		activeAudioInput: null,
@@ -32,6 +33,10 @@ export const interviews = {
 	}),
 
 	mutations: {
+		setId: (state, id) => {
+			state.id = id;
+		},
+
 		setAvailableVideoInput: (state, data) => {
 			state.availableVideoInput = data.devices;
 		},

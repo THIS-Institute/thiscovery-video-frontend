@@ -4,6 +4,7 @@ import uuid
 import boto3
 from api.responses import ApiGatewayResponse
 from dynamodb import DynamoDB
+from events import Event, EventBridge
 
 def guess_extension(content_type):
     content_type_map = {
@@ -21,9 +22,16 @@ def guess_extension(content_type):
 def lambda_handler(event, context):
     request = json.loads(event['body'])
 
+    interview_id = request['interviewId']
     anon_user_id = request['anonUserId']
+    anon_user_task_id = request['anonUserTaskId']
     task_id = request['taskId']
     question_id = request['questionId']
+    question_started_at = request['questionStartedAt']
+    question_ended_at = request['questionEndedAt']
+    response_started_at = request['responseStartedAt']
+    response_ended_at = request['responseEndedAt']
+    retake_count = request['retakeCount']
 
     uid = uuid.uuid4()
     uuid_string = str(uid)
@@ -82,6 +90,23 @@ def lambda_handler(event, context):
         Params=params,
         ExpiresIn=900
     )
+
+    event = Event(
+        source='thiscovery_video',
+        detail_type='interview_question_completed',
+        detail={
+            'interview_id': interview_id,
+            'anon_project_specific_user_id': anon_user_id,
+            'anon_user_task_id': anon_user_task_id,
+            'question_started_at': question_started_at,
+            'question_ended_at': question_ended_at,
+            'response_started_at': response_started_at,
+            'response_ended_at': response_ended_at,
+            'retake_count': retake_count,
+        },
+    )
+
+    EventBridge().put_event(event)
 
     response = {
         'videoUploadUrl': presigned_url,

@@ -444,6 +444,8 @@ Resources:
             TableName: !Ref InterviewsTable
         - S3CrudPolicy:
             BucketName: !Ref InterviewAssets
+        - EventBridgePutEventsPolicy:
+            EventBusName: thiscovery-event-bus
       Events:
         BackendApiPOSTv1selfrecordinterviewanswer:
           Type: Api
