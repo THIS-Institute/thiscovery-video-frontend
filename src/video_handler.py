@@ -14,7 +14,6 @@ def lambda_handler(event, context):
 
     s3_source_basename = os.path.splitext(os.path.basename(s3_source_key))[0]
     s3_destination_filename = f'{s3_source_basename}.{OUTPUT_EXTENSION}'
-    s3_destination_dir = 'processed'
 
     s3 = boto3.client('s3')
 
@@ -43,10 +42,14 @@ def lambda_handler(event, context):
     if process.stderr:
         print(process.stderr)
 
+    interview_id = metadata['interview_id']
+
+    destination_key = f'interviews/self-record/{interview_id}/{s3_destination_filename}'
+
     s3.upload_file(
         Filename=temp_file_path,
         Bucket=bucket_name,
-        Key=f'{s3_destination_dir}/{s3_destination_filename}',
+        Key=destination_key,
         ExtraArgs={
             'ContentType': OUTPUT_TYPE,
             'Metadata': metadata,

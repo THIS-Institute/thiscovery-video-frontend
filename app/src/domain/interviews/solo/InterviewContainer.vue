@@ -292,12 +292,15 @@
 				isUploading.value = true;
 				state.questionEndedAt = getTimeStringNow();
 
+				const questionData = activeSection.value.questions[readQuestion.value];
+
 				const options = {
 					interviewId: store.state.interviews.id,
 					anonUserId: store.state.user.anonUserId,
 					anonUserTaskId: store.state.user.anonUserTaskId,
 					taskId: store.state.task.id,
-					questionId: activeSection.value.questions[readQuestion.value].id,
+					questionId: questionData.id,
+					questionSequence: questionData.sequence,
 					questionStartedAt: state.questionStartedAt,
 					questionEndedAt: state.questionEndedAt,
 					responseStartedAt: state.responseStartedAt,
