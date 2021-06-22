@@ -90,14 +90,14 @@ def lambda_handler(event, context):
     return ApiGatewayResponse(data=response).response()
 
 def create_event(event_type, interview_id, anon_user_id, anon_user_task_id):
-        event = Event(
-            source='thiscovery_video',
-            detail_type=event_type,
-            detail={
-                'interview_id': interview_id,
-                'anon_project_specific_user_id': anon_user_id,
-                'anon_user_task_id': anon_user_task_id,
-            },
-        )
+    event = Event(
+        source='thiscovery_video',
+        detail_type=event_type,
+        detail={
+            'interview_id': interview_id,
+            'anon_project_specific_user_id': anon_user_id,
+            'anon_user_task_id': anon_user_task_id,
+        },
+    )
 
-        EventBridge().put_event(event)
+    EventBridge().put_event(event)
