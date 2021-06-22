@@ -28,6 +28,7 @@ export const interviews = {
 		playbackURL: null,
 		selfRecordQuestions: [],
 		interviewerQuestions: [],
+		selfRecordProgress: null,
 	}),
 
 	mutations: {
@@ -77,6 +78,10 @@ export const interviews = {
 
 		setInterviewerQuestions: (state, questions) => {
 			state.interviewerQuestions = questions;
+		},
+
+		setSelfRecordProgress: (state, progress) => {
+			state.selfRecordProgress = progress;
 		},
 	},
 
@@ -200,8 +205,9 @@ export const interviews = {
 				anonUserId: rootState.user.anonUserId,
 			};
 
-			const questions = await createSelfRecord(options);
-			commit('setSelfRecordQuestions', questions.blocks);
+			const response = await createSelfRecord(options);
+			commit('setSelfRecordQuestions', response.interviewQuestions);
+			commit('setSelfRecordProgress', response.progress);
 		},
 
 		linkRoom: async (context, options) => {
