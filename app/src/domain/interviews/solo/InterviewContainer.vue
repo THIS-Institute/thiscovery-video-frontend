@@ -285,7 +285,7 @@
 
 				const options = {
 					playbackURL: playbackURL.value,
-					userId: store.state.user.userId,
+					anonUserId: store.state.user.anonUserId,
 					taskId: store.state.task.id,
 					questionId: activeSection.value.questions[readQuestion.value].id,
 				};

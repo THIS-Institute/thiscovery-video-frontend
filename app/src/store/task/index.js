@@ -39,12 +39,9 @@ export const task = {
 	},
 
 	actions: {
-		initalise: async ({ commit, dispatch, rootState }, responseId) => {
-			const userId = rootState.user.userId;
-
+		initalise: async ({ commit, dispatch }, responseId) => {
 			const task = await getTask({
 				responseId: responseId,
-				userId: userId,
 			});
 
 			if (task) {
@@ -55,6 +52,8 @@ export const task = {
 				}
 
 				commit('setId', task.id);
+				commit('user/setAnonUserId', task.anonUserId, { root: true });
+				commit('user/setAnonUserTaskId', task.anonUserTaskId, { root: true });
 				commit('appointments/setBookingTypeId', task.acuityTypeId, { root: true });
 				commit('setOnDemandAvailable', task.onDemandAvailable);
 				commit('setLiveAvailable', task.liveAvailable);

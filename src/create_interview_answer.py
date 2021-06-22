@@ -21,7 +21,7 @@ def guess_extension(content_type):
 def lambda_handler(event, context):
     request = json.loads(event['body'])
 
-    user_id = request['userId']
+    anon_user_id = request['anonUserId']
     task_id = request['taskId']
     question_id = request['questionId']
 
@@ -32,7 +32,7 @@ def lambda_handler(event, context):
 
     db.update_item(
         Key={
-            'pk': f'USER#{user_id}',
+            'pk': f'USER#{anon_user_id}',
             'sk': f'TASK#{task_id}',
         },
         UpdateExpression='SET #answers = list_append(if_not_exists(#answers, :empty_list), :answer_key)',
@@ -47,11 +47,11 @@ def lambda_handler(event, context):
 
     db.put_item(
         Item={
-            'pk': f'USER#{user_id}',
+            'pk': f'USER#{anon_user_id}',
             'sk': f'ANSWER#{uuid_string}',
             'uuid': uuid_string,
             'task': task_id,
-            'user': user_id,
+            'user': anon_user_id,
             'question_id': question_id,
         }
     )
@@ -71,7 +71,7 @@ def lambda_handler(event, context):
         'Key': object_key,
         'ContentType': content_type,
         'Metadata': {
-            'user_id': user_id,
+            'anon_user_id': anon_user_id,
             'task_id': task_id,
             'question_id': question_id,
         },

@@ -8,6 +8,8 @@ export const user = {
 		isAuthLoading: false,
 		userId: null,
 		user: {},
+		anonUserId: null,
+		anonUserTaskId:  null,
 		isInterviewer: false,
 		authError: null,
 		authAppState: null,
@@ -24,6 +26,14 @@ export const user = {
 
 		setUserId(state, userId) {
 			state.userId = userId;
+		},
+
+		setAnonUserId(state, id) {
+			state.anonUserId = id;
+		},
+
+		setAnonUserTaskId(state, id) {
+			state.anonUserTaskId = id;
 		},
 
 		setUser(state, user) {

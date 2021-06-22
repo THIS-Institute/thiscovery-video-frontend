@@ -166,7 +166,7 @@ export const appointments = {
 					email: rootState.user.user.email,
 					firstName: rootGetters['user/getGivenName'],
 					lastName: rootGetters['user/getFamilyName'],
-					userId: rootState.user.userId,
+					anonUserId: rootState.user.anonUserId,
 					taskId: rootState.task.id,
 				});
 			}

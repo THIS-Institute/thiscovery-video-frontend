@@ -34,14 +34,14 @@ class Bookings:
         if 'id' not in appointment:
             raise BookingError
 
-        user_id = user['userId']
+        anon_user_id = user['anonUserId']
         task_id = user['taskId']
         appointment_id = str(appointment['id'])
         appointment_time = str(appointment['datetime'])
 
         self.db.put_item(
             Item={
-                'pk': f'USER#{user_id}',
+                'pk': f'USER#{anon_user_id}',
                 'sk': f'TASK#{task_id}',
                 'appointment_id': appointment_id,
                 'appointment_time': appointment_time,
@@ -52,8 +52,8 @@ class Bookings:
             Item={
                 'pk': f'APPOINTMENT#{appointment_id}',
                 'sk': 'INFO',
-                'user': f'USER#{user_id}',
-                'user_id': user_id,
+                'user': f'USER#{anon_user_id}',
+                'user_id': anon_user_id,
                 'task': f'TASK#{task_id}',
                 'task_id': task_id,
                 'appointment_id': appointment_id,

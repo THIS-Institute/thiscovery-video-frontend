@@ -20,7 +20,6 @@ def lambda_handler(event, context):
         ).response()
         
     request = json.loads(event['body'])
-    user_id = request['userId']
 
     try:
         user_responses = UserResponseService()
@@ -36,9 +35,11 @@ def lambda_handler(event, context):
     table = DynamoDB().client()
     appointment = None
 
+    anon_user_id = thiscovery_response['anon_project_specific_user_id']
+
     try:
         user_task = table.get_item(Key={
-            'pk': f'USER#{user_id}',
+            'pk': f'USER#{anon_user_id}',
             'sk': f'TASK#{task_id}',
         })
         item = user_task['Item']
@@ -70,6 +71,8 @@ def lambda_handler(event, context):
 
     response = {
         'id': task_id,
+        'anonUserId': anon_user_id,
+        'anonUserTaskId': thiscovery_response['anon_user_task_id'],
         'acuityTypeId': task['appointment_type_id'],
         'onDemandAvailable': task['on_demand_available'],
         'liveAvailable': task['live_available'],
