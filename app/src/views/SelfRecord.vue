@@ -43,7 +43,7 @@
 				return questions.value.length > 0;
 			});
 
-			store.dispatch('interviews/getSelfRecordQuestions');
+			store.dispatch('interviews/startSelfRecord');
 
 			return {
 				hasQuestions,

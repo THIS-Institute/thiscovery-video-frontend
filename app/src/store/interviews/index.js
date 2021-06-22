@@ -10,6 +10,7 @@ import {
 import {
 	fetchRoomToken,
 	linkInterviewRoom,
+	createSelfRecord,
 } from '@/api/interviews';
 
 export const interviews = {
@@ -191,6 +192,16 @@ export const interviews = {
 			if (response.questions !== undefined) {
 				commit('setInterviewerQuestions', response.questions);
 			}
+		},
+
+		startSelfRecord: async ({ commit, rootState }) => {
+			const options = {
+				taskId: rootState.task.id,
+				anonUserId: rootState.user.anonUserId,
+			};
+
+			const questions = await createSelfRecord(options);
+			commit('setSelfRecordQuestions', questions.blocks);
 		},
 
 		linkRoom: async (context, options) => {

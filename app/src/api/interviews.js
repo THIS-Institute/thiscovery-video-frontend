@@ -28,6 +28,15 @@ export async function putAnswerVideo (presignedUrl, blob) {
 	return response;
 }
 
+export async function createSelfRecord (options) {
+	const response = await client.post(`start-self-record`, {
+		taskId: options.taskId,
+		anonUserId: options.anonUserId,
+	})
+
+	return response;
+}
+
 export async function linkInterviewRoom (options) {
 	const response = await client.post(`room/link`, {
 		roomSid: options.roomSid,
