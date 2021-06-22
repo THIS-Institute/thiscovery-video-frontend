@@ -33,13 +33,14 @@ def lambda_handler(event, context):
     status_callback = parse_qs(event['body'])
     status_callback = normalise_dict(status_callback)
 
-    print(status_callback)
-
     if status_callback['StatusCallbackEvent'] == 'composition-available':
         dispatch(status_callback, 'twilio_composition_available')
 
     if status_callback['StatusCallbackEvent'] == 'composition-failed':
         dispatch(status_callback, 'twilio_composition_failure')
+
+    if status_callback['StatusCallbackEvent'] == 'room-ended':
+        dispatch(status_callback, 'twilio_room_ended')
 
     return {
         'statusCode': 200,
