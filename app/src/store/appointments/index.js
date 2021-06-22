@@ -167,6 +167,7 @@ export const appointments = {
 					firstName: rootGetters['user/getGivenName'],
 					lastName: rootGetters['user/getFamilyName'],
 					anonUserId: rootState.user.anonUserId,
+					anonUserTaskId: rootState.user.anonUserTaskId,
 					taskId: rootState.task.id,
 				});
 			}

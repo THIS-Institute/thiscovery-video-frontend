@@ -1,4 +1,5 @@
 import os
+import uuid
 from .exceptions import BookingError, InvalidTimeslot, AppointmentNotFound
 from .acuity import AcuityError
 from dynamodb import DynamoDB
@@ -35,7 +36,9 @@ class Bookings:
             raise BookingError
 
         anon_user_id = user['anonUserId']
+        anon_user_task_id = user['anonUserTaskId']
         task_id = user['taskId']
+        interview_id = str(uuid.uuid4())
         appointment_id = str(appointment['id'])
         appointment_time = str(appointment['datetime'])
 
@@ -45,6 +48,8 @@ class Bookings:
                 'sk': f'TASK#{task_id}',
                 'appointment_id': appointment_id,
                 'appointment_time': appointment_time,
+                'interview_id': interview_id,
+                'track': 'live',
             }
         )
 
@@ -56,6 +61,8 @@ class Bookings:
                 'user_id': anon_user_id,
                 'task': f'TASK#{task_id}',
                 'task_id': task_id,
+                'interview_id': interview_id,
+                'anon_user_task_id': anon_user_task_id,
                 'appointment_id': appointment_id,
                 'appointment_time': appointment_time,
             }
@@ -64,6 +71,9 @@ class Bookings:
         self.create_event(
             event_type='interview_booked',
             appointment=appointment,
+            interview_id=interview_id,
+            anon_user_id=anon_user_id,
+            anon_user_task_id=anon_user_task_id,
         )
 
         base_url = os.environ['APP_BASE_URL']
@@ -124,8 +134,7 @@ class Bookings:
             'sk': 'INFO',
         })
 
-        user = appointment_info['Item']['user']
-        task = appointment_info['Item']['task']
+        item = appointment_info['Item']
 
         self.db.update_item(
             Key={
@@ -139,7 +148,7 @@ class Bookings:
         )
 
         self.db.update_item(
-            Key={ 'pk': user, 'sk': task },
+            Key={ 'pk': item['user'], 'sk': item['task'] },
             UpdateExpression='SET appointment_time = :t',
             ExpressionAttributeValues={
                 ':t': appointment_time,
@@ -149,6 +158,9 @@ class Bookings:
         self.create_event(
             event_type='interview_rescheduled',
             appointment=appointment,
+            interview_id=item['iterview_id'],
+            anon_user_id=item['user'],
+            anon_user_task_id=item['anon_user_task_id'],
         )
 
         return appointment
@@ -169,11 +181,10 @@ class Bookings:
             'sk': 'INFO',
         })
 
-        user = appointment_info['Item']['user']
-        task = appointment_info['Item']['task']
+        item = appointment_info['Item']
 
         self.db.update_item(
-            Key={ 'pk': user, 'sk': task },
+            Key={ 'pk': item['user'], 'sk': item['task'] },
             UpdateExpression='REMOVE appointment_id, appointment_time',
         )
 
@@ -185,11 +196,14 @@ class Bookings:
         self.create_event(
             event_type='interview_cancelled',
             appointment=cancellation,
+            interview_id=item['iterview_id'],
+            anon_user_id=item['user'],
+            anon_user_task_id=item['anon_user_task_id'],
         )
 
         return cancellation
 
-    def create_event(self, event_type, appointment):
+    def create_event(self, event_type, appointment, interview_id, anon_user_id, anon_user_task_id):
         appointment_id = str(appointment['id'])
         app_base_url = os.environ['APP_BASE_URL']
     
@@ -197,6 +211,9 @@ class Bookings:
             source='thiscovery_video',
             detail_type=event_type,
             detail={
+                'interview_id': interview_id,
+                'anon_project_specific_user_id': anon_user_id,
+                'anon_user_task_id': anon_user_task_id,
                 'appointment_datetime': appointment['datetime'],
                 'calendar_name': appointment['calendar'],
                 'calendar_id': appointment['calendarID'],
