@@ -203,10 +203,11 @@ export const interviews = {
 			const options = {
 				taskId: rootState.task.id,
 				anonUserId: rootState.user.anonUserId,
+				anonUserTaskId: rootState.user.anonUserTaskId,
 			};
 
 			const response = await createSelfRecord(options);
-			commit('setSelfRecordQuestions', response.interviewQuestions);
+			commit('setSelfRecordQuestions', response.interviewQuestions.blocks);
 			commit('setSelfRecordProgress', response.progress);
 		},
 

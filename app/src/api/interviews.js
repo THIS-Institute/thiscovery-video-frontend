@@ -32,6 +32,7 @@ export async function createSelfRecord (options) {
 	const response = await client.post(`start-self-record`, {
 		taskId: options.taskId,
 		anonUserId: options.anonUserId,
+		anonUserTaskId: options.anonUserTaskId,
 	})
 
 	return response;
