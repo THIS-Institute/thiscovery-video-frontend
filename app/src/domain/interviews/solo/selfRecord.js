@@ -9,7 +9,7 @@ export async function processAnswer(options) {
     console.log(`Binary blob filesize: ~${Math.round(blob.size/1e+6)} MB`);
 
     const data = {
-        'userId': options.userId,
+        'anonUserId': options.anonUserId,
         'taskId': options.taskId,
         'questionId': options.questionId,
         'contentType': blob.type,
