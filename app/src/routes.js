@@ -1,6 +1,7 @@
 import * as constant from './routeConstants';
 
 import { hasAppointmentGuard, hasAppointmentTodayGuard } from '@/domain/appointments/routeGuards';
+import { hasRoomTokenGuard } from '@/domain/interviews/routeGuards';
 
 // Tools
 const Styleguide = () => import('./views/Styleguide');
@@ -142,6 +143,7 @@ export const routes = [
 		path: '/live/:id/room',
 		component: LiveRoomView,
 		name: constant.ROUTE_LIVE_ROOM,
+		beforeEnter: [ hasRoomTokenGuard ],
 	},
 	{
 		path: '/live',
