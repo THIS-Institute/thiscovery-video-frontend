@@ -20,7 +20,7 @@ def lambda_handler(event, context):
 
     response = dynamodb.get_item(Key={
         'pk': f'APPOINTMENT#{appointment_id}',
-        'sk': 'INFO',
+        'sk': f'APPOINTMENT#{appointment_id}',
     })
 
     try:
@@ -43,6 +43,7 @@ def lambda_handler(event, context):
         ).response()
 
     response_data = {
+        'interviewId': appointment['interview_id'],
         'appointment': {
             'id': appointment['appointment_id'],
             'time': appointment['appointment_time'],

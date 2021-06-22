@@ -1,7 +1,6 @@
 import { client } from './backend';
 
 export async function fetchRoomToken (options) {
-	console.log(options)
 	const response = await client.post(`room/token`, options);
 
 	if (response.access_token) {
@@ -30,9 +29,7 @@ export async function putAnswerVideo (presignedUrl, blob) {
 
 export async function createSelfRecord (options) {
 	const response = await client.post(`start-self-record`, {
-		taskId: options.taskId,
-		anonUserId: options.anonUserId,
-		anonUserTaskId: options.anonUserTaskId,
+		...options,
 	})
 
 	return response;
@@ -40,8 +37,7 @@ export async function createSelfRecord (options) {
 
 export async function linkInterviewRoom (options) {
 	const response = await client.post(`room/link`, {
-		roomSid: options.roomSid,
-		appointmentId: options.appointmentId,
+		...options,
 	})
 
 	return response;

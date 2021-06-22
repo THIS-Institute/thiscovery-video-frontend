@@ -3,6 +3,7 @@ from datetime import datetime
 from thiscovery.user_response import UserResponseService, ResponseNotFound
 from dynamodb import DynamoDB
 from botocore.exceptions import ClientError
+from boto3.dynamodb.conditions import Key
 
 from api.responses import (
     ApiGatewayResponse,
@@ -18,8 +19,6 @@ def lambda_handler(event, context):
             exception=ResponseException.EXCEPTION_MISSING_PARAM,
             message='response id is required',
         ).response()
-        
-    request = json.loads(event['body'])
 
     try:
         user_responses = UserResponseService()
@@ -33,27 +32,30 @@ def lambda_handler(event, context):
 
     task_id = thiscovery_response['interview_task_id']
     table = DynamoDB().client()
+    
+    user_interview = None
     appointment = None
+    interview_id = None
 
     anon_user_id = thiscovery_response['anon_project_specific_user_id']
 
-    try:
-        user_task = table.get_item(Key={
-            'pk': f'USER#{anon_user_id}',
-            'sk': f'TASK#{task_id}',
-        })
-        item = user_task['Item']
-    except ClientError as error:
-        if error.response['Error']['Code'] == 'ResourceNotFoundException':
-            user_task = None
-        else:
-            raise
-    except KeyError:
-        user_task = None
-    except:
-        raise
+    gsi_pk = Key('GSI1PK').eq(f'USER#{anon_user_id}')
+    gsi_sk = Key('GSI1SK').eq(f'TASK#{task_id}')
+
+    response = table.query(
+        IndexName='GSI1',
+        KeyConditionExpression=gsi_pk & gsi_sk,
+    )
+
+    if response['Count'] > 0:
+        item = response['Items'][0]
     
-    if user_task:
+    if user_interview:
+        try:
+            interview_id = item['interview_id']
+        except KeyError:
+            interview_id = None
+
         try:
             appointment = {
                 'id': item['appointment_id'],
@@ -71,6 +73,7 @@ def lambda_handler(event, context):
 
     response = {
         'id': task_id,
+        'interviewId': interview_id,
         'anonUserId': anon_user_id,
         'anonUserTaskId': thiscovery_response['anon_user_task_id'],
         'acuityTypeId': task['appointment_type_id'],

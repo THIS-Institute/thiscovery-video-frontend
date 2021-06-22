@@ -51,6 +51,10 @@ export const task = {
 					dispatch('appointments/initExisting', task.appointment, { root: true });
 				}
 
+				if (task.interviewId) {
+					commit('interviews/setId', task.interviewId, { root: true });
+				}
+
 				commit('setId', task.id);
 				commit('user/setAnonUserId', task.anonUserId, { root: true });
 				commit('user/setAnonUserTaskId', task.anonUserTaskId, { root: true });

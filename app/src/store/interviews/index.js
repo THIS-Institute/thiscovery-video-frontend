@@ -170,6 +170,8 @@ export const interviews = {
 
 		getAppointment: async ({ commit, dispatch }, data) => {
 			const appointment = await fetchAppointment(data.room);
+
+			commit('setId', appointment.interviewId);
 			
 			dispatch('appointments/initExisting', appointment.appointment, { root: true});
 
@@ -206,12 +208,15 @@ export const interviews = {
 
 		startSelfRecord: async ({ commit, rootState }) => {
 			const options = {
+				interviewId: rootState.interviews.id,
 				taskId: rootState.task.id,
 				anonUserId: rootState.user.anonUserId,
 				anonUserTaskId: rootState.user.anonUserTaskId,
 			};
 
 			const response = await createSelfRecord(options);
+
+			commit('setId', response.interviewId);
 			commit('setSelfRecordQuestions', response.interviewQuestions.blocks);
 			commit('setSelfRecordProgress', response.progress);
 		},

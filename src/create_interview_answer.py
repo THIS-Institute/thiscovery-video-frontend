@@ -40,8 +40,8 @@ def lambda_handler(event, context):
 
     db.update_item(
         Key={
-            'pk': f'USER#{anon_user_id}',
-            'sk': f'TASK#{task_id}',
+            'pk': f'INTERVIEW#{interview_id}',
+            'sk': f'INTERVIEW#{interview_id}',
         },
         UpdateExpression='SET #answers = list_append(if_not_exists(#answers, :empty_list), :answer_key)',
         ExpressionAttributeNames={
@@ -55,7 +55,7 @@ def lambda_handler(event, context):
 
     db.put_item(
         Item={
-            'pk': f'USER#{anon_user_id}',
+            'pk': f'INTERVIEW#{interview_id}',
             'sk': f'ANSWER#{uuid_string}',
             'uuid': uuid_string,
             'task': task_id,

@@ -44,24 +44,24 @@ class Bookings:
 
         self.db.put_item(
             Item={
-                'pk': f'USER#{anon_user_id}',
-                'sk': f'TASK#{task_id}',
+                'pk': f'INTERVIEW#{interview_id}',
+                'sk': f'INTERVIEW#{interview_id}',
+                'GSI1PK': f'USER#{anon_user_id}',
+                'GSI1SK': f'TASK#{task_id}',
                 'appointment_id': appointment_id,
                 'appointment_time': appointment_time,
-                'interview_id': interview_id,
-                'track': 'live',
             }
         )
 
         self.db.put_item(
             Item={
                 'pk': f'APPOINTMENT#{appointment_id}',
-                'sk': 'INFO',
-                'user': f'USER#{anon_user_id}',
-                'user_id': anon_user_id,
-                'task': f'TASK#{task_id}',
-                'task_id': task_id,
+                'sk': f'APPOINTMENT#{appointment_id}',
+                'GSI1PK': f'INTERVIEW#{interview_id}',
+                'GSI1SK': f'APPOINTMENT#{appointment_id}',
                 'interview_id': interview_id,
+                'user_id': anon_user_id,
+                'task_id': task_id,
                 'anon_user_task_id': anon_user_task_id,
                 'appointment_id': appointment_id,
                 'appointment_time': appointment_time,
@@ -131,7 +131,7 @@ class Bookings:
 
         appointment_info = self.db.get_item(Key={
             'pk': f'APPOINTMENT#{appointment_id}',
-            'sk': 'INFO',
+            'sk': f'APPOINTMENT#{appointment_id}',
         })
 
         item = appointment_info['Item']
@@ -139,7 +139,7 @@ class Bookings:
         self.db.update_item(
             Key={
                 'pk': f'APPOINTMENT#{appointment_id}',
-                'sk': 'INFO',
+                'sk': f'APPOINTMENT#{appointment_id}',
             },
             UpdateExpression='SET appointment_time = :t',
             ExpressionAttributeValues={
@@ -147,8 +147,12 @@ class Bookings:
             },
         )
 
+        interview_id = item['interview_id']
+        pk = f'INTERVIEW#{interview_id}'
+        sk = f'INTERVIEW#{interview_id}'
+
         self.db.update_item(
-            Key={ 'pk': item['user'], 'sk': item['task'] },
+            Key={ 'pk': pk, 'sk': sk },
             UpdateExpression='SET appointment_time = :t',
             ExpressionAttributeValues={
                 ':t': appointment_time,
@@ -158,7 +162,7 @@ class Bookings:
         self.create_event(
             event_type='interview_rescheduled',
             appointment=appointment,
-            interview_id=item['interview_id'],
+            interview_id=interview_id,
             anon_user_id=item['user_id'],
             anon_user_task_id=item['anon_user_task_id'],
         )
@@ -178,25 +182,29 @@ class Bookings:
 
         appointment_info = self.db.get_item(Key={
             'pk': f'APPOINTMENT#{appointment_id}',
-            'sk': 'INFO',
+            'sk': f'APPOINTMENT#{appointment_id}',
         })
 
         item = appointment_info['Item']
 
+        interview_id = item['interview_id']
+        pk = f'INTERVIEW#{interview_id}'
+        sk = f'INTERVIEW#{interview_id}'
+
         self.db.update_item(
-            Key={ 'pk': item['user'], 'sk': item['task'] },
+            Key={ 'pk': pk, 'sk': sk },
             UpdateExpression='REMOVE appointment_id, appointment_time',
         )
 
         self.db.delete_item(Key={
             'pk': f'APPOINTMENT#{appointment_id}',
-            'sk': 'INFO',
+            'sk': f'APPOINTMENT#{appointment_id}',
         })
 
         self.create_event(
             event_type='interview_cancelled',
             appointment=cancellation,
-            interview_id=item['interview_id'],
+            interview_id=interview_id,
             anon_user_id=item['user_id'],
             anon_user_task_id=item['anon_user_task_id'],
         )
