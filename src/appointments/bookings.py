@@ -48,6 +48,10 @@ class Bookings:
                 'sk': f'INTERVIEW#{interview_id}',
                 'GSI1PK': f'USER#{anon_user_id}',
                 'GSI1SK': f'TASK#{task_id}',
+                'interview_id': interview_id,
+                'user_id': anon_user_id,
+                'task_id': task_id,
+                'anon_user_task_id': anon_user_task_id,
                 'appointment_id': appointment_id,
                 'appointment_time': appointment_time,
             }
@@ -99,7 +103,10 @@ class Bookings:
             HtmlBody=html_body,
         )
 
-        return appointment
+        return {
+            'interview_id': interview_id,
+            'appointment': appointment,
+        }
 
     def reschedule(self, appointment_id, appointment_type_id, appointment_time):
         time_string = appointment_time.strftime('%Y-%m-%dT%H:%M:%S%z')
@@ -167,7 +174,10 @@ class Bookings:
             anon_user_task_id=item['anon_user_task_id'],
         )
 
-        return appointment
+        return {
+            'interview_id': interview_id,
+            'appointment': appointment,
+        }
 
     def cancel(self, appointment_id):
         cancellation = self.acuity.cancel_appointment(

@@ -221,8 +221,11 @@ export const interviews = {
 			commit('setSelfRecordProgress', response.progress);
 		},
 
-		linkRoom: async (context, options) => {
-			await linkInterviewRoom(options);
+		linkRoom: async ({ state }, roomSid) => {
+			await linkInterviewRoom({
+				roomSid: roomSid,
+				interviewId: state.id,
+			});
 		},
 	},
 

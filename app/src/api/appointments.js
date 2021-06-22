@@ -50,7 +50,7 @@ export async function fetchNextAppointmentDate (appointmentTypeId, date) {
 export async function createAppointmentBooking (data) {
 	const response = await client.post('appointments', data);
 	
-	if (typeof response.id === 'undefined') {
+	if (typeof response.appointment.id === 'undefined') {
 		throw new AppointmentError('Failed to create appointment');
 	}
 

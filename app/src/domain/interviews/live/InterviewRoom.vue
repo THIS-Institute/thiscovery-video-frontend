@@ -190,10 +190,7 @@
 				room.value.localParticipant.on('trackPublicationFailed', onTrackPublicationFailed);
 
 				if (!isInterviewer.value) {
-					store.dispatch('interviews/linkRoom', {
-						roomSid: room.value.sid,
-						appointmentId: route.params.id,
-					})
+					store.dispatch('interviews/linkRoom', room.value.sid)
 				}
 
 				console.log(`Successfully joined a Room: ${room.value}`);

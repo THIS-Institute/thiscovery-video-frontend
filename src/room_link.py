@@ -11,24 +11,23 @@ def lambda_handler(event, context):
 
     try:
         room_sid = request['roomSid']
-        appointment_id = request['appointmentId']
+        interview_id = request['interviewId']
     except KeyError:
         return ApiGatewayErrorResponse(
             exception=ResponseException.EXCEPTION_MISSING_PARAM,
             message='Missing parameters',
         ).response()
 
-    dynamo = DynamoDB().client()
+    table = DynamoDB().client()
 
-    dynamo.update_item(
-            Key={
-                'pk': f'APPOINTMENT#{appointment_id}',
-                'sk': 'INFO',
-            },
-            UpdateExpression='SET room_sid = :sid',
-            ExpressionAttributeValues={
-                ':sid': room_sid,
-            },
-        )
+    table.put_item(
+        Item={
+            'pk': f'ROOM#{room_sid}',
+            'sk': f'ROOM#{room_sid}',
+            'GSI1PK': f'INTERVIEW#{interview_id}',
+            'GSI1SK': f'ROOM#{room_sid}',
+            'sid': room_sid,
+        }
+    )
 
     return ApiGatewayResponse(data={'message': 'ok'}).response()

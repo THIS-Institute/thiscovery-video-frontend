@@ -51,7 +51,7 @@ def lambda_handler(event, context):
     bookings = Bookings(acuity_client=acuity)
 
     try:
-        appointment = bookings.reschedule(
+        response = bookings.reschedule(
             appointment_id=appointment_id,
             appointment_time=appointment_time,
             appointment_type_id=appointment_type_id,
@@ -74,4 +74,9 @@ def lambda_handler(event, context):
     except:
         raise
 
-    return ApiGatewayResponse(data=appointment).response()
+    response = {
+        'interviewId': response['interview_id'],
+        'appointment': response['appointment'],
+    }
+
+    return ApiGatewayResponse(data=response).response()

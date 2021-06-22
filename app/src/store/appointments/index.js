@@ -151,16 +151,16 @@ export const appointments = {
 		confirmSelectedSlot: async ({ state, commit, rootState, rootGetters }) => {
 			commit('setWaiting', true);
 
-			let appointment = null;
+			let response = null;
 
 			if (state.appointmentId) {
-				appointment = await rescheduleAppointmentBooking({
+				response = await rescheduleAppointmentBooking({
 					appointmentId: state.appointmentId,
 					appointmentTypeId: state.bookingTypeId,
 					time: state.selection,
 				});
 			} else {
-				appointment = await createAppointmentBooking({
+				response = await createAppointmentBooking({
 					appointmentTypeId: state.bookingTypeId,
 					time: state.selection,
 					email: rootState.user.user.email,
@@ -172,12 +172,15 @@ export const appointments = {
 				});
 			}
 
+			const appointment = response.appointment;
+
 			if (typeof appointment.id !== 'undefined' && appointment.id) {
 				commit('setAppointmentId', appointment.id);
 				commit('updateIsConfirmed', true);
 				commit('setStatus', constants.STATUS_BOOKED);
 			}
 
+			commit('interviews/setId', response.interviewId, { root: true });
 			commit('setWaiting', false);
 		},
 

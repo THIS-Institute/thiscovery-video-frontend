@@ -39,7 +39,7 @@ def lambda_handler(event, context):
     bookings = Bookings(acuity_client=acuity)
 
     try:
-        appointment = bookings.create(
+        response = bookings.create(
             appointment_type_id=appointment_type_id,
             appointment_time=appointment_time,
             user=request,
@@ -57,7 +57,12 @@ def lambda_handler(event, context):
     except:
         raise
 
+    response = {
+        'interviewId': response['interview_id'],
+        'appointment': response['appointment'],
+    }
+
     return ApiGatewayResponse(
-        data=appointment,
+        data=response,
         http_code=201,
     ).response()

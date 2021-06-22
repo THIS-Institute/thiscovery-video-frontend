@@ -49,8 +49,7 @@ def lambda_handler(event, context):
 
     if response['Count'] > 0:
         item = response['Items'][0]
-    
-    if user_interview:
+        
         try:
             interview_id = item['interview_id']
         except KeyError:
