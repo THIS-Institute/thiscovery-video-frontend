@@ -491,6 +491,39 @@ Resources:
           SECRETS_NAMESPACE: !Sub /${EnvironmentTagName}/
           THISCOVERY_API_BASE_URL: !Ref EnvConfigthiscourlAsString
 
+  StartSelfRecord:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: Interviews-StartSelfRecord
+      Description: !Sub
+        - Stack ${StackTagName} Environment ${EnvironmentTagName} Function ${ResourceName}
+        - ResourceName: StartSelfRecord
+      CodeUri: src
+      Handler: start_interview.lambda_handler
+      Runtime: python3.8
+      MemorySize: 1024
+      Timeout: 5
+      Tracing: Active
+      Policies:
+        - AWSXrayWriteOnlyAccess
+        - DynamoDBCrudPolicy:
+            TableName: !Ref InterviewsTable
+        - AWSSecretsManagerGetSecretValuePolicy:
+            SecretArn: !Sub arn:${AWS::Partition}:secretsmanager:${AWS::Region}:${AWS::AccountId}:secret:/${EnvironmentTagName}/*
+      Environment:
+        Variables:
+          TABLE_NAME: !Ref InterviewsTable
+          TABLE_ARN: !GetAtt InterviewsTable.Arn
+          SECRETS_NAMESPACE: !Sub /${EnvironmentTagName}/
+          THISCOVERY_API_BASE_URL: !Ref EnvConfigthiscourlAsString
+      Events:
+        BackendApiPOSTv1startselfrecord:
+          Type: Api
+          Properties:
+            Path: /v1/start-self-record
+            Method: POST
+            RestApiId: !Ref BackendApi
+
   GetSelfRecordQuestions:
     Type: AWS::Serverless::Function
     Properties:
@@ -518,35 +551,6 @@ Resources:
           Properties:
             Path: /v1/self-record-questions/{taskId}
             Method: GET
-            RestApiId: !Ref BackendApi
-
-  StartSelfRecord:
-    Type: AWS::Serverless::Function
-    Properties:
-      FunctionName: Interviews-StartSelfRecord
-      Description: !Sub
-        - Stack ${StackTagName} Environment ${EnvironmentTagName} Function ${ResourceName}
-        - ResourceName: StartSelfRecord
-      CodeUri: src
-      Handler: start_interview.lambda_handler
-      Runtime: python3.8
-      MemorySize: 1024
-      Timeout: 5
-      Tracing: Active
-      Policies:
-        - AWSXrayWriteOnlyAccess
-        - AWSSecretsManagerGetSecretValuePolicy:
-            SecretArn: !Sub arn:${AWS::Partition}:secretsmanager:${AWS::Region}:${AWS::AccountId}:secret:/${EnvironmentTagName}/*
-      Environment:
-        Variables:
-          SECRETS_NAMESPACE: !Sub /${EnvironmentTagName}/
-          THISCOVERY_API_BASE_URL: !Ref EnvConfigthiscourlAsString
-      Events:
-        BackendApiPOSTv1startselfrecord:
-          Type: Api
-          Properties:
-            Path: /v1/start-self-record
-            Method: POST
             RestApiId: !Ref BackendApi
 
   GetInterviewersQuestions:
