@@ -57,9 +57,9 @@ def lambda_handler(event, context):
         Item={
             'pk': f'INTERVIEW#{interview_id}',
             'sk': f'ANSWER#{uuid_string}',
-            'uuid': uuid_string,
-            'task': task_id,
-            'user': anon_user_id,
+            'answer_id': uuid_string,
+            'task_id': task_id,
+            'user_id': anon_user_id,
             'question_id': question_id,
         }
     )
@@ -79,7 +79,9 @@ def lambda_handler(event, context):
         'Key': object_key,
         'ContentType': content_type,
         'Metadata': {
+            'interview_id': interview_id,
             'anon_user_id': anon_user_id,
+            'anon_user_task_id': anon_user_task_id,
             'task_id': task_id,
             'question_id': question_id,
         },
