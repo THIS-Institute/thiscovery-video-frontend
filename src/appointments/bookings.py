@@ -158,8 +158,8 @@ class Bookings:
         self.create_event(
             event_type='interview_rescheduled',
             appointment=appointment,
-            interview_id=item['iterview_id'],
-            anon_user_id=item['user'],
+            interview_id=item['interview_id'],
+            anon_user_id=item['user_id'],
             anon_user_task_id=item['anon_user_task_id'],
         )
 
@@ -196,8 +196,8 @@ class Bookings:
         self.create_event(
             event_type='interview_cancelled',
             appointment=cancellation,
-            interview_id=item['iterview_id'],
-            anon_user_id=item['user'],
+            interview_id=item['interview_id'],
+            anon_user_id=item['user_id'],
             anon_user_task_id=item['anon_user_task_id'],
         )
 
