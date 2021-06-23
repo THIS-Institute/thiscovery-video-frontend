@@ -32,8 +32,7 @@ def lambda_handler(event, context):
 
     task_id = thiscovery_response['interview_task_id']
     table = DynamoDB().client()
-    
-    user_interview = None
+
     appointment = None
     interview_id = None
 
