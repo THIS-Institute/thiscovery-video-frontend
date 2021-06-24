@@ -14,12 +14,16 @@ export const hasAppointmentGuard = (to, from, next) => {
 
 export const hasAppointmentTodayGuard = (to, from, next) => {
     const isToday = computed(() => store.state.appointments.isToday);
-    
-    if (isToday.value) {
-        const appointmentId = computed(() => store.state.appointments.appointmentId);
 
+    if (!isToday.value) {
+        return next();
+    }
+
+    const interviewId = computed(() => store.state.interviews.id);
+
+    if (interviewId.value) {
         return next({ name: ROUTE_LIVE_LANDING, params: {
-            id: appointmentId.value,
+            id: interviewId.value,
         }});
     }
 
