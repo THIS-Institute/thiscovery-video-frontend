@@ -44,7 +44,8 @@ def lambda_handler(event, context):
         print(process.stderr)
 
     interview_id = metadata['interview_id']
-    destination_key = f'interviews/self-record/{interview_id}/{s3_destination_filename}'
+    sequence = metadata['sequence']
+    destination_key = f'interviews/self-record/{interview_id}/{sequence}_{s3_destination_filename}'
 
     s3.upload_file(
         Filename=temp_file_path,
@@ -69,7 +70,7 @@ def lambda_handler(event, context):
             'anon_project_specific_user_id': metadata['anon_user_id'],
             'anon_user_task_id': metadata['anon_user_task_id'],
             'question_id': metadata['question_id'],
-            'question_sequence_no': metadata['sequence'],
+            'question_sequence_no': sequence,
             's3_uri': url,
         },
     )
