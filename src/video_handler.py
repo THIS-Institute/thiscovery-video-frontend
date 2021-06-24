@@ -3,6 +3,7 @@ import os
 import subprocess
 import shlex
 import boto3
+from events import Event, EventBridge
 
 OUTPUT_EXTENSION = 'mp4'
 OUTPUT_TYPE = 'video/mp4'
@@ -43,7 +44,6 @@ def lambda_handler(event, context):
         print(process.stderr)
 
     interview_id = metadata['interview_id']
-
     destination_key = f'interviews/self-record/{interview_id}/{s3_destination_filename}'
 
     s3.upload_file(
@@ -57,6 +57,24 @@ def lambda_handler(event, context):
     )
 
     os.remove(temp_file_path)
+
+    url = f'https://{bucket_name}.s3.eu-west-1.amazonaws.com/{destination_key}'
+
+    event = Event(
+        source='thiscovery_video',
+        detail_type='interview_file_uploaded',
+        detail={
+            'interview_type': 'on-demand',
+            'interview_id': interview_id,
+            'anon_project_specific_user_id': metadata['anon_user_id'],
+            'anon_user_task_id': metadata['anon_user_task_id'],
+            'question_id': metadata['question_id'],
+            'question_sequence_no': metadata['sequence'],
+            's3_uri': url,
+        },
+    )
+
+    EventBridge().put_event(event)
 
     return {
         'statusCode': 200,
