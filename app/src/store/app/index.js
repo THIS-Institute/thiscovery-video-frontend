@@ -5,6 +5,7 @@ export const app = {
 		loading: false,
 		modalActive: false,
 		navActive: false,
+		routerHistory: [],
 	}),
 
 	mutations: {
@@ -23,6 +24,14 @@ export const app = {
 		setLoading(state, loading) {
 			state.loading = loading;
 		},
+
+		cutHistory(state) {
+			state.routerHistory.splice(-1, 1);
+		},
+
+		setHistory(state, from) {
+			state.routerHistory.push(from);
+		},
 	},
 
 	actions: {
@@ -32,6 +41,16 @@ export const app = {
 
 		closeModal: ({ commit }) => {
 			commit('setModalActive', false);
+		},
+	},
+
+	getters: {
+		getPreviousRoute (state) {
+			const historyLength = state.routerHistory.length;
+
+			if (historyLength === 0) return null;
+
+			return state.routerHistory[historyLength - 1];
 		},
 	},
 }

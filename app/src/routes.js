@@ -174,6 +174,7 @@ export const routes = [
 	 */
 	{
 		path: '/auth-return',
+		name: constant.ROUTE_AUTH_RETURN,
 		component: AuthReturn,
 	},
 

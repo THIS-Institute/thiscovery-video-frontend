@@ -9,3 +9,4 @@ export const ROUTE_LIVE_SETTINGS = 'live_settings';
 export const ROUTE_LIVE_HOWTO = 'live_tutorial';
 export const ROUTE_LIVE_ROOM = 'live_room';
 export const ROUTE_NO_TASK = 'no_task';
+export const ROUTE_AUTH_RETURN = 'auth_return';
