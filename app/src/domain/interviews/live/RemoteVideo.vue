@@ -43,7 +43,7 @@
 </template>
 
 <script>
-	import { ref, onMounted } from 'vue';
+	import { computed, ref, onMounted } from 'vue';
 
 	export default {
 		props: {
@@ -51,6 +51,11 @@
 				type: Object,
 				required: true,
 			},
+
+			currentSpeaker: {
+				type: String,
+				default: null,
+			}
 		},
 
 		emits: [
@@ -148,11 +153,20 @@
 				name.value = getNameFromIdentity(props.participant.identity);
 			});
 
+			const isSpeaking = computed(() => {
+				if (props.currentSpeaker === null) {
+					return false;
+				}
+
+				return props.currentSpeaker === props.participant.sid;
+			});
+
 			return {
 				hasVideo,
 				videoFeed,
 				audioFeed,
 				name,
+				isSpeaking,
 			}
 		},
 	};
