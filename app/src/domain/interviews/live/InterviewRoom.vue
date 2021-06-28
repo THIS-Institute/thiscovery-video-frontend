@@ -6,6 +6,7 @@
 					v-for="participant in remoteParticipants"
 					:key="participant.sid"
 					:participant="participant"
+					:current-speaker="speakingParticipant"
 					@question-received="onQuestionReceived"
 				/>
 			</div>
@@ -140,6 +141,7 @@
 			const hasInterviewerQuestions = computed(() => store.getters['interviews/hasInterviewerQuestions']);
 			const interviewerQuestions = computed(() => store.state.interviews.interviewerQuestions);
 			const remoteQuestion = ref(null);
+			const speakingParticipant = ref(null);
 
 			const onBeforeUnload = (event) => {
 				event.preventDefault();
@@ -186,19 +188,17 @@
 				
 				room.value.on('participantConnected', initParticipant);
 				room.value.on('participantDisconnected', onParticipantDisconnect);
+				room.value.on('dominantSpeakerChanged', onSpeakerChange);
 				room.value.localParticipant.on('trackPublished', onTrackPublished);
 				room.value.localParticipant.on('trackPublicationFailed', onTrackPublicationFailed);
 
 				if (!isInterviewer.value) {
 					store.dispatch('interviews/linkRoom', room.value.sid)
 				}
-
-				console.log(`Successfully joined a Room: ${room.value}`);
 			};
 
 			const initParticipant = (participant) => {
 				remoteParticipants[participant.sid] = participant;
-				console.log(`Connected to ${participant.identity}`);
 			};
 
 			const participantCount = computed(() => Object.keys(remoteParticipants).length);
@@ -207,8 +207,20 @@
 				if (remoteParticipants[participant.sid] !== undefined) {
 					delete remoteParticipants[participant.sid];
 				}
-				
-				console.log(`Participant disconnected: ${participant.identity}`);
+			};
+
+			const onSpeakerChange = (participant) => {
+				if (participant === null) {
+					speakingParticipant.value = null;
+					return;
+				}
+
+				if ('sid' in participant) {
+					speakingParticipant.value = participant.sid;
+					return;
+				}
+
+				speakingParticipant.value = null;
 			};
 
 			const onConnectError = (error) => {
@@ -267,7 +279,7 @@
 
 			const onQuestionReceived = (question) => {
 				remoteQuestion.value = question;
-			}
+			};
 
 			const onLeave = () => {
 				if (room.value) {
@@ -279,7 +291,7 @@
 				if(completionUrl) {
 					window.location.href = completionUrl;
 				}
-			}
+			};
 			
 			return {
 				hasLocalFeed,
@@ -296,6 +308,7 @@
 				onQuestionReceived,
 				remoteQuestion,
 				onLeave,
+				speakingParticipant,
 			}
 		},
 	};
