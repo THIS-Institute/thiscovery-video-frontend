@@ -19,7 +19,7 @@
 			]"
 		>
 			<icon
-				:name="error ? 'close' : 'check'"
+				name="check"
 				size="w-5 h-5"
 			/>
 		</div>
