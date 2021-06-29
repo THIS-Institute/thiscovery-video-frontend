@@ -1,7 +1,7 @@
 <template>
 	<div class="flex items-end justify-center p-4 space-x-2">
 		<template v-if="!isReviewing">
-			<tooltip text="Watch answer">
+			<tooltip text="Play back">
 				<x-button
 					icon="play"
 					class="e-button--white"

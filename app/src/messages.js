@@ -4,7 +4,7 @@ const userInterviewPaths = Object.freeze({
 	live: {
 		icon: 'camera',
 		title: 'Live interview',
-		content: 'Book an online meeting with a member of the online research team',
+		content: 'Book an online meeting with a member of the research team',
 		items: [
 			'Speak directly with a reasearcher',
 			'At a time that suits you',
@@ -73,7 +73,7 @@ const selfRecordInstructions = Object.freeze([
 const liveInterviewInstructions = Object.freeze([
 	{
 		title: 'Book your appointment with a researcher',
-		content: 'Nullam quis risus eget urna mollis ornare vel eu leo. Macenas faucibus mollis interdum',
+		content: 'Select a time that best suits you.',
 		img: {
 			src: '/static/img/tutorial/placeholder.jpg',
 			alt: 'Placeholder image',
@@ -81,7 +81,7 @@ const liveInterviewInstructions = Object.freeze([
 	},
 	{
 		title: 'Join on the day of your interview',
-		content: 'Doloremque tenetur nobis quas optio! Assumenda esse iure, dolorum porro ex eum doloribus itaque fugit soluta architecto quae.',
+		content: 'You\'ll be able to disable your camera or microphone if necessary.',
 		img: {
 			src: '/static/img/tutorial/placeholder.jpg',
 			alt: 'Placeholder image',
@@ -89,7 +89,7 @@ const liveInterviewInstructions = Object.freeze([
 	},
 	{
 		title: 'You\'ll speak directly to a researcher',
-		content: 'Repellendus suscipit in quam recusandae architecto illum mollitia molestias, excepturi dolore sunt, hic totam ab quod id ut numquam ad quibusdam.',
+		content: 'They may have a series of questions which will be visible on screen.',
 		img: {
 			src: '/static/img/tutorial/placeholder.jpg',
 			alt: 'Placeholder image',
@@ -111,14 +111,14 @@ export default Object.freeze({
 		methodOverview: {
 			instructions: liveInterviewInstructions,
 		},
-		
+
 		appointments: {
 			title: 'Book a live interview',
 			content: 'Pick from the available dates and times',
 			info: {
 				cancelled: {
 					title: 'Book another appointment',
-					content: 'Changed your mind? Please book your appointment below.',
+					content: 'Changed your mind? No problem, please book your appointment below.',
 				},
 				confirmed: {
 					title: 'What happens next?',
@@ -154,7 +154,7 @@ export default Object.freeze({
 			title: 'Choose a fixed start',
 			content: 'Appointments have no fixed duration and last as long as you need them to. Appointments usually take around 45 minutes.',
 			change: 'You can change or cancel this slot later if you need to.',
-			confirmation: 'Your interview is booked for…',
+			confirmation: 'Your interview is booked for:',
 		},
 
 		preSettings: {
@@ -166,7 +166,6 @@ export default Object.freeze({
 		title: 'All set to begin?',
 		fix: 'Fixing camera and microphone issues',
 		content: 'You can disable your camera using the controls above if you would like to. Access to your microphone is required.',
-		lorem: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Minus voluptates deleniti, et voluptatem modi atque esse ipsa ex nostrum corporis eveniet repudiandae animi blanditiis quae. Necessitatibus nemo a doloribus perferendis.',
 		cta: {
 			title: 'Join live interview',
 			url: {
