@@ -4,12 +4,12 @@
 			<div class="col-span-12 xl:col-start-2">
 				<h1
 					class="e-h2"
-					v-text="`Appointment ${ isConfirmed ? 'confirmed' : 'cancelled' }`"
+					v-text="message(`live.bookingStatus.title.${ isConfirmed ? 'success' : 'cancelled'}`)"
 				/>
 
 				<p
 					class="mt-2"
-					v-text="'Donec ullamcorper nulla non metus auctor fringilla.'"
+					v-text="message(`live.bookingStatus.content.${ isConfirmed ? 'success' : 'cancelled'}`)"
 				/>
 			</div>
 

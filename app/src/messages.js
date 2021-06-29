@@ -145,9 +145,17 @@ export default Object.freeze({
 		},
 
 		bookingStatus: {
-			success: 'Appointment confirmed',
-			cancelled: 'Appointment cancelled',
-			failed: 'Something went wrong',
+			title: {
+				success: 'Appointment confirmed',
+				cancelled: 'Appointment cancelled',
+				failed: 'Something went wrong',
+			},
+
+			content: {
+				success: 'You\'ll receive a confirmation email shortly',
+				cancelled: 'You have successfully cancelled your appointment',
+				failed: 'Please check back later',
+			},
 		},
 	
 		selectedSlot: {
@@ -209,5 +217,5 @@ export default Object.freeze({
 				},
 			},
 		},
-	}
+	},
 });

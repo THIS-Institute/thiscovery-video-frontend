@@ -24,7 +24,7 @@
 			/>
 
 			<booking-status
-				:message="message(`live.bookingStatus.${ isConfirmed ? 'success' : 'cancelled'}`)"
+				:message="message(`live.bookingStatus.title.${ isConfirmed ? 'success' : 'cancelled'}`)"
 				:error="!isConfirmed"
 			/>
 
