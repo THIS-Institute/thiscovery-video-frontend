@@ -42,6 +42,7 @@
 						title="Book an appointment"
 						icon="calendar"
 						class="text-red hover:text-black focus:text-black"
+						:class="isWaiting ? 'cursor-not-allowed' : 'cursor-pointer'"
 						flipped
 						type="subtle"
 						:disabled="isWaiting"
