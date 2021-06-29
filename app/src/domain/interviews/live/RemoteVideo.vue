@@ -10,10 +10,12 @@
 			class="absolute inset-0 w-full h-full object-cover max-h-screen"
 		/>
 
-		<p
+		<user-identity
 			v-if="participant.identity && name"
-			class="fixed bottom-0 left-0 p-4 text-white z-1"
-			v-text="name"
+			class="fixed bottom-0 left-0 z-1"
+			:name="name"
+			:is-muted="isMuted"
+			:is-speaking="isSpeaking"
 		/>
 	</div>
 
@@ -44,8 +46,13 @@
 
 <script>
 	import { computed, ref, onMounted } from 'vue';
+	import UserIdentity from '@/domain/interviews/live/UserIdentity';
 
 	export default {
+		components: {
+			UserIdentity,
+		},
+
 		props: {
 			participant: {
 				type: Object,
@@ -166,6 +173,7 @@
 				videoFeed,
 				audioFeed,
 				name,
+				isMuted,
 				isSpeaking,
 			}
 		},
