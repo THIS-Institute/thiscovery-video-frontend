@@ -2,6 +2,7 @@
 	<div class="flex items-center space-x-2.5 p-4 text-white">
 		<icon
 			v-if="isMuted"
+			class="text-red"
 			:names="[
 				'microphone',
 				'microphone-strike',
