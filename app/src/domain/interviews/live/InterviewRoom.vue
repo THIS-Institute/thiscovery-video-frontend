@@ -241,6 +241,7 @@
 
 			const settings = {
 				name: route.params.id,
+				dominantSpeaker: true,
 			};
 
 			if (accessToken) {
