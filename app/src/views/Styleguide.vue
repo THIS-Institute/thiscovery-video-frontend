@@ -325,12 +325,20 @@
 					<icon :names="['camera', 'camera-strike']" />
 				</div>
 
-				<div>
+				<!-- <div>
 					<icon :names="['audio-base', 'audio-sound']" />
 				</div>
 
 				<div>
 					<icon :names="['audio-base', 'audio-off']" />
+				</div> -->
+
+				<div>
+					<icon name="microphone" />
+				</div>
+
+				<div>
+					<icon :names="['microphone', 'microphone-strike']" />
 				</div>
 			</div>
 		</div>

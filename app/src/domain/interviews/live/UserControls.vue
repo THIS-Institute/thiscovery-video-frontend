@@ -21,8 +21,8 @@
 		>
 			<x-button
 				:icons="[
-					'audio-base',
-					muted ? 'audio-off' : 'audio-sound'
+					'microphone',
+					muted ? 'microphone-strike' : null,
 				]"
 				:class="muted ? 'e-button--red' : 'e-button--white-outline'"
 				type="icon"

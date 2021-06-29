@@ -15,8 +15,8 @@
 		<tooltip :text="microphoneEnabled ? 'Mute microphone' : 'Unmute microphone'">
 			<x-button
 				:icons="[
-					'audio-base',
-					microphoneEnabled ? 'audio-sound' : 'audio-off'
+					'microphone',
+					microphoneEnabled ? null : 'microphone-strike',
 				]"
 				:class="microphoneEnabled ? 'e-button--white' : 'e-button--red'"
 				type="icon"
