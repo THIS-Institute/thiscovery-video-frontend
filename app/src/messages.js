@@ -117,8 +117,8 @@ export default Object.freeze({
 			content: 'Pick from the available dates and times',
 			info: {
 				cancelled: {
-					title: 'Changed your mind? Please book your appointment below.',
-					content: 'Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Fusce dapibus, tellus ac cursus commodo, tortor mauris.',
+					title: 'Book another appointment',
+					content: 'Changed your mind? Please book your appointment below.',
 				},
 				confirmed: {
 					title: 'What happens next?',
