@@ -93,30 +93,24 @@
 			class="e-button--red-outline"
 			small
 			type="pill"
-			@click="toggle"
+			@click="$emit('close')"
 		/>
 	</div>
 </template>
 
 <script>
-	import { useStore } from 'vuex';
-
 	import messages from '@/messages';
 	import { useMessages } from '@/composables/useMessages';
 
 	export default {
+		emits: [
+			'close',
+		],
+
 		setup() {
 			const { message } = useMessages(messages);
-			const store = useStore();
-
-			const active = store.state.app.modalActive;
-
-			const toggle = () => {
-				if (active) store.commit('app/toggleModal');
-			};
 
 			return {
-				toggle,
 				message,
 			};
 		},

@@ -43,7 +43,7 @@
 									/>
 
 									<x-button
-										v-if="hasMicrophone"
+										v-if="!hasError"
 										:title="message(`${domain}.preSettings.continueButtonText`)"
 										icon="chevron-right"
 										class="e-button--red mt-5"
@@ -66,7 +66,7 @@
 								</div>
 
 								<devices
-									v-if="!hasCamera || !hasMicrophone"
+									v-if="hasError"
 									class="mt-5"
 								/>
 							</div>
@@ -90,6 +90,7 @@
 	import { useStore } from 'vuex';
 	import { useUser } from '@/auth/useUser';
 	import { useDevices } from '@/domain/interviews/settings/useDevices';
+	import { reactive, computed } from 'vue';
 
 	import VideoPreview from '@/domain/interviews/settings/VideoPreview';
 	import InfoBar from '@/components/InfoBar';
@@ -135,12 +136,20 @@
 				return props.domain === 'live';
 			}
 
+			const state = reactive({
+				hasMicrophone,
+				hasCamera,
+			});
+
+			const hasError = computed(() => !(state.hasMicrophone && state.hasCamera));
+
 			return {
 				message,
 				hasCamera,
 				hasMicrophone,
 				userGivenName,
 				msgs,
+				hasError,
 				troubleShoot,
 				isLive,
 			};
