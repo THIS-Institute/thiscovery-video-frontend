@@ -146,7 +146,7 @@ module.exports = {
 
 				'doctor': ratio(191, 526),
 				'doctor-wave': ratio(234, 565),
-				'paramedic': ratio(355, 344),
+				'paramedic': ratio(256, 251),
 				'nurse': ratio(344, 526),
 				'clipboard': ratio(286, 526),
 				'surgeon': ratio(281, 526),

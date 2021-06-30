@@ -1,7 +1,7 @@
 <template>
 	<section class="e-container my-12 md:my-18 xl:my-24">
 		<div class="relative grid grid-cols-12 gap-5">
-			<div class="hidden col-span-2 items-end relative transform translate-y-24 xl:flex">
+			<div class="hidden col-span-3 items-end relative transform translate-y-24 -translate-x-12 xl:flex">
 				<placeholder ratio="pt-clipboard">
 					<img
 						src="/static/img/decorations/clipboard.svg"
