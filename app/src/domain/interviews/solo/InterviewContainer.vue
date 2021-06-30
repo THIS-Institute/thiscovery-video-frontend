@@ -116,7 +116,6 @@
 				</div>
 
 				<modal-container
-					:show="state.showConfirmDialog || state.showCommentDialog || state.showTroubleshoot"
 					wrapper-class="max-w-xl"
 					@close="onForceClose"
 				>
