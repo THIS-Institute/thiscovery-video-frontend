@@ -1,5 +1,7 @@
 <template>
 	<div class="flex items-center space-x-2.5 p-4 text-white">
+		<recording-indicator />
+
 		<icon
 			v-if="isMuted"
 			class="text-red"
@@ -20,10 +22,12 @@
 
 <script>
 	import AudioWave from '@/components/AudioWave';
+	import RecordingIndicator from '@/components/RecordingIndicator';
 
 	export default {
 		components: {
 			AudioWave,
+			RecordingIndicator,
 		},
 
 		props: {

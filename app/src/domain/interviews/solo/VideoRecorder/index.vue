@@ -69,7 +69,7 @@
 
 	import VideoPlaceholder from './VideoPlaceholder';
 	import RecorderControls from './RecorderControls';
-	import RecordingIndicator from './RecordingIndicator';
+	import RecordingIndicator from '@/components/RecordingIndicator';
 	import RecordingCountdown from './RecordingCountdown';
 	import InlineControls from './InlineControls';
 
