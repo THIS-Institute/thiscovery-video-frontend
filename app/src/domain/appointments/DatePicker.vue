@@ -32,6 +32,11 @@
 					:disabled="(forward ? upperLimit : lowerLimit) || isWaiting"
 					@click="moveSnapshot(forward)"
 				>
+					<span
+						class="sr-only"
+						v-text="forward ? 'Next day' : 'Previous day'"
+					/>
+
 					<icon :name="forward ? 'chevron-right' : 'chevron-left'" />
 				</button>
 			</div>
