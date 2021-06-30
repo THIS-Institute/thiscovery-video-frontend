@@ -21,12 +21,12 @@
 							:class="[
 								'flex flex-col p-2.5 w-full',
 								{
-									'pb-16': !isLive,
+									'pb-16': !isLive(),
 								},
 							]"
 						>
 							<div class="rounded-lg overflow-hidden">
-								<video-preview />
+								<video-preview :forced-microphone="!isLive()" />
 							</div>
 
 							<div class="max-w-86 mx-auto">
@@ -83,7 +83,7 @@
 							</div>
 
 							<info-bar
-								v-if="isLive"
+								v-if="isLive()"
 								class="mt-12"
 								title="Having trouble?"
 								:cta="{

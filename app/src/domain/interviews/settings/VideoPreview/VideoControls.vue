@@ -13,7 +13,10 @@
 			/>
 		</tooltip>
 
-		<tooltip :text="microphoneEnabled ? 'Mute microphone' : 'Unmute microphone'">
+		<tooltip
+			v-if="!forcedMicrophone"
+			:text="microphoneEnabled ? 'Mute microphone' : 'Unmute microphone'"
+		>
 			<x-button
 				:icons="[
 					'microphone',
@@ -44,7 +47,9 @@
 			userName: {
 				type: String,
 				default: null,
-			}
+			},
+
+			forcedMicrophone: Boolean,
 		},
 
 		emits: [

@@ -13,6 +13,7 @@
 		/>
 
 		<video-controls
+			:forced-microphone="forcedMicrophone"
 			:camera-enabled="cameraEnabled"
 			:microphone-enabled="microphoneEnabled"
 			@toggle-camera="onToggleCamera"
@@ -36,6 +37,10 @@
 			LocalVideo,
 			VideoPlaceholder,
 			VideoControls,
+		},
+
+		props: {
+			forcedMicrophone: Boolean,
 		},
 
 		setup() {
