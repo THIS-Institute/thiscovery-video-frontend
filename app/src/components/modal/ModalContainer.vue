@@ -32,6 +32,7 @@
 					'fixed inset-0 w-full h-full z-site-modal',
 					'pointer-events-none',
 				]"
+				role="dialog"
 			>
 				<div
 					class="pointer-events-auto bg-white rounded-lg p-5 md:p-12"
