@@ -130,7 +130,7 @@ export default Object.freeze({
 		joinByPhone: {
 			title: 'Join by phone',
 			number: {
-				title: 'Enter this PIN when prompted:',
+				title: 'Call this number:',
 				value: '+44 20 3956 7834',
 			},
 			pin: {
@@ -193,13 +193,6 @@ export default Object.freeze({
 				enabled: false
 			}
 		},
-		infoBar: {
-			title: 'Having trouble?',
-			cta: {
-				title: 'Join by phone',
-				url: '#',
-			}
-		}
 	},
 
 	selfRecord: {

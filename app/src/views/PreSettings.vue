@@ -21,7 +21,7 @@
 							:class="[
 								'flex flex-col p-2.5 w-full',
 								{
-									'pb-16': !isLive(),
+									'pb-16': !isLive,
 								},
 							]"
 						>
@@ -57,12 +57,21 @@
 										icon="chevron-right"
 										class="e-button--red mt-5"
 										type="pill"
-										@click="openTroubleshoot"
+										@click="showTroubleshoot = true"
 									/>
 
-									<modal-container wrapper-class="max-w-xl">
+									<modal-container
+										wrapper-class="max-w-xl"
+										@close="onForceClose"
+									>
 										<trouble-shooting
-											@close="closeTroubleshoot"
+											v-if="showTroubleshoot"
+											@close="onForceClose"
+										/>
+
+										<join-by-phone
+											v-if="showPhone"
+											@close="onForceClose"
 										/>
 									</modal-container>
 								</div>
@@ -74,9 +83,14 @@
 							</div>
 
 							<info-bar
-								v-if="isLive() && copy.infoBar"
+								v-if="isLive"
 								class="mt-12"
-								v-bind="copy.infoBar"
+								title="Having trouble?"
+								:cta="{
+									title: 'Join by phone',
+								}"
+								modal
+								@open-modal="showPhone = true"
 							/>
 						</div>
 					</div>
@@ -92,13 +106,14 @@
 	import { useStore } from 'vuex';
 	import { useUser } from '@/auth/useUser';
 	import { useDevices } from '@/domain/interviews/settings/useDevices';
-	import { reactive, computed } from 'vue';
+	import { reactive, toRefs, watch, computed } from 'vue';
 
 	import VideoPreview from '@/domain/interviews/settings/VideoPreview';
 	import InfoBar from '@/components/InfoBar';
 	import Devices from '@/components/Devices';
 	import ModalContainer from '@/components/modal/ModalContainer';
 	import TroubleShooting from '@/components/modal/TroubleShooting';
+	import JoinByPhone from '@/components/modal/JoinByPhone';
 
 	export default {
 		components: {
@@ -107,6 +122,7 @@
 			Devices,
 			ModalContainer,
 			TroubleShooting,
+			JoinByPhone,
 		},
 
 		props: {
@@ -129,9 +145,6 @@
 			store.dispatch('interviews/updateMediaDevices');
 			const { hasMicrophone, hasCamera } = useDevices();
 
-			const openTroubleshoot = () => store.commit('app/toggleModal');
-			const closeTroubleshoot = () => store.dispatch('app/closeModal');
-
 			const isLive = () => props.domain === 'live';
 
 			const state = reactive({
@@ -146,15 +159,31 @@
 				infoBar: message('preSettings.infoBar'),
 			}));
 
+			const modals = reactive({
+				showTroubleshoot: false,
+				showPhone: false,
+			});
+
+			watch(modals, () => {
+				const isset = Object.keys(modals).every((k) => !modals[k]);
+
+				if (!isset) store.dispatch('app/openModal');
+			});
+
+			const onForceClose = () => {
+				store.dispatch('app/closeModal');
+				Object.keys(modals).forEach(v => modals[v] = false);
+			};
+
 			return {
+				...toRefs(modals),
 				copy,
 				message,
 				hasCamera,
 				hasMicrophone,
 				userGivenName,
 				hasError,
-				closeTroubleshoot,
-				openTroubleshoot,
+				onForceClose,
 				isLive,
 			};
 		},

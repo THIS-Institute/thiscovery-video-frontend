@@ -34,7 +34,7 @@
 								flipped
 								small
 								type="pill"
-								@click="onLeave"
+								@click="showConfirmDialog = true"
 							/>
 
 							<interview-timer
@@ -42,8 +42,30 @@
 							/>
 						</div>
 
-						<modal-container>
-							<join-by-phone />
+						<modal-container
+							wrapper-class="max-w-xl"
+							@close="onForceClose"
+						>
+							<confirm-dialog
+								v-if="showConfirmDialog"
+								:affirmative="{
+									title: 'Yes, leave',
+								}"
+								@confirm="onLeave"
+								@cancel="onForceClose"
+							>
+								Are you sure you want to leave?
+							</confirm-dialog>
+
+							<join-by-phone
+								v-if="showPhone"
+								@close="onForceClose"
+							/>
+
+							<trouble-shooting
+								v-if="showTroubleshoot"
+								@close="onForceClose"
+							/>
 						</modal-container>
 
 						<div
@@ -55,6 +77,8 @@
 							<user-controls
 								@toggle-camera="onToggleCamera"
 								@toggle-mute="onToggleMute"
+								@open-troubleshoot="showTroubleshoot = true"
+								@open-join-by-phone="showPhone = true"
 							/>
 
 							<div class="rounded-r-lg overflow-hidden w-36">
@@ -98,6 +122,9 @@
 <script>
 	import {
 		ref,
+		watch,
+		toRefs,
+		reactive,
 		computed,
 		shallowRef,
 		shallowReactive,
@@ -113,7 +140,9 @@
 	import UserControls from './UserControls';
 	import InterviewTimer from './InterviewTimer';
 	import ModalContainer from '@/components/modal/ModalContainer';
+	import ConfirmDialog from '@/components/modal/ConfirmDialog';
 	import JoinByPhone from '@/components/modal/JoinByPhone';
+	import TroubleShooting from '@/components/modal/TroubleShooting';
 	import InterviewQuestions from './InterviewQuestions';
 
 	export default {
@@ -124,7 +153,9 @@
 			UserControls,
 			InterviewTimer,
 			ModalContainer,
+			ConfirmDialog,
 			JoinByPhone,
+			TroubleShooting,
 			InterviewQuestions,
 		},
 
@@ -282,6 +313,23 @@
 				remoteQuestion.value = question;
 			};
 
+			const modals = reactive({
+				showConfirmDialog: false,
+				showPhone: false,
+				showTroubleshoot: false,
+			});
+
+			watch(modals, () => {
+				const isset = Object.keys(modals).every((k) => !modals[k]);
+
+				if (!isset) store.dispatch('app/openModal');
+			});
+
+			const onForceClose = () => {
+				store.dispatch('app/closeModal');
+				Object.keys(modals).forEach(v => modals[v] = false);
+			};
+
 			const onLeave = () => {
 				if (room.value) {
 					room.value.disconnect();
@@ -295,6 +343,7 @@
 			};
 			
 			return {
+				...toRefs(modals),
 				hasLocalFeed,
 				localParticipant,
 				participantCount,
@@ -309,6 +358,7 @@
 				onQuestionReceived,
 				remoteQuestion,
 				onLeave,
+				onForceClose,
 				speakingParticipant,
 			}
 		},

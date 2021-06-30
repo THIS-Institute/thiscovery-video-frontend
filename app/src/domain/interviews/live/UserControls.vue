@@ -73,7 +73,7 @@
 								class="hover:text-red"
 								flipped
 								type="subtle"
-								@click="phone"
+								@click="$emit('openJoinByPhone')"
 							/>
 						</li>
 					</ul>
@@ -86,37 +86,24 @@
 							class="e-button--red-outline"
 							small
 							type="pill"
-							@click="openTroubleshoot"
+							@click="$emit('openTroubleshoot')"
 						/>
 					</div>
 				</div>
 			</transition>
-
-			<modal-container wrapper-class="max-w-xl">
-				<trouble-shooting
-					@close="closeTroubleshoot"
-				/>
-			</modal-container>
 		</div>
 	</div>
 </template>
 
 <script>
 	import { reactive, toRefs } from 'vue';
-	import { useStore } from 'vuex';
-
-	import ModalContainer from '@/components/modal/ModalContainer';
-	import TroubleShooting from '@/components/modal/TroubleShooting';
 
 	export default {
-		components: {
-			ModalContainer,
-			TroubleShooting,
-		},
-
 		emits: [
 			'toggleCamera',
 			'toggleMute',
+			'openTroubleshoot',
+			'openJoinByPhone',
 		],
 
 		setup(props, { emit }) {
@@ -126,16 +113,11 @@
 				options: false,
 			});
 
-			const store = useStore();
-			const phone = () => store.commit('app/toggleModal');
-
 			const onToggleOptions = () => {
 				state.options = !state.options;
 			};
 
 			const closeOptions = () => state.options = false;
-			const openTroubleshoot = () => store.commit('app/toggleModal');
-			const closeTroubleshoot = () => store.dispatch('app/closeModal');
 
 			const onToggleCamera = () => {
 				state.hidden = !state.hidden;
@@ -151,12 +133,9 @@
 
 			return {
 				...toRefs(state),
-				phone,
 				onToggleMute,
 				onToggleCamera,
 				onToggleOptions,
-				openTroubleshoot,
-				closeTroubleshoot,
 				closeOptions,
 				logger,
 			};
