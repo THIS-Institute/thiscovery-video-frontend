@@ -55,8 +55,6 @@
 				type: String,
 				default: null,
 			},
-
-			show: Boolean,
 		},
 
 		emits: [
