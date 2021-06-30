@@ -172,7 +172,7 @@ export default Object.freeze({
 
 	preSettings: {
 		title: 'All set to begin?',
-		content: 'You can disable your camera using the controls above if you would like to. Access to your microphone is required.',
+		content: 'You can disable your camera using the controls above if you would like to. Access to your microphone is required. You can save and exit at any point during the interview and return later to complete the questions at your convenience.',
 		error: {
 			title: 'Something isn\'t right…',
 			content: 'Your camera or microphone seem to be unavailable, please resolve before continuing.',
