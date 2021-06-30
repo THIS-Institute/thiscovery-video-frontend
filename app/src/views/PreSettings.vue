@@ -33,17 +33,17 @@
 								<div class="flex flex-col items-center mt-12">
 									<h2
 										class="e-h3 text-center"
-										v-text="msgs.title"
+										v-text="copy.title"
 									/>
 
 									<p
-										v-if="msgs.content"
+										v-if="copy.content"
 										class="text-sm text-center mt-1.5"
-										v-text="msgs.content"
+										v-text="copy.content"
 									/>
 
 									<x-button
-										v-if="hasMicrophone"
+										v-if="!hasError"
 										:title="message(`${domain}.preSettings.continueButtonText`)"
 										icon="chevron-right"
 										class="e-button--red mt-5"
@@ -57,24 +57,26 @@
 										icon="chevron-right"
 										class="e-button--red mt-5"
 										type="pill"
-										@click="troubleShoot"
+										@click="openTroubleshoot"
 									/>
 
 									<modal-container wrapper-class="max-w-xl">
-										<trouble-shooting />
+										<trouble-shooting
+											@close="closeTroubleshoot"
+										/>
 									</modal-container>
 								</div>
 
 								<devices
-									v-if="!hasCamera || !hasMicrophone"
+									v-if="hasError"
 									class="mt-5"
 								/>
 							</div>
 
 							<info-bar
-								v-if="isLive() && msgs.infoBar"
+								v-if="isLive() && copy.infoBar"
 								class="mt-12"
-								v-bind="msgs.infoBar"
+								v-bind="copy.infoBar"
 							/>
 						</div>
 					</div>
@@ -90,6 +92,7 @@
 	import { useStore } from 'vuex';
 	import { useUser } from '@/auth/useUser';
 	import { useDevices } from '@/domain/interviews/settings/useDevices';
+	import { reactive, computed } from 'vue';
 
 	import VideoPreview from '@/domain/interviews/settings/VideoPreview';
 	import InfoBar from '@/components/InfoBar';
@@ -122,26 +125,36 @@
 			const store = useStore();
 			const { message } = useMessages(messages);
 			const { userGivenName } = useUser();
-			
-			const msgs = message(`preSettings`);
 
 			store.dispatch('interviews/updateMediaDevices');
-			
-			const troubleShoot = () => store.commit('app/toggleModal');
-
 			const { hasMicrophone, hasCamera } = useDevices();
 
-			const isLive = () => {
-				return props.domain === 'live';
-			}
+			const openTroubleshoot = () => store.commit('app/toggleModal');
+			const closeTroubleshoot = () => store.dispatch('app/closeModal');
+
+			const isLive = () => props.domain === 'live';
+
+			const state = reactive({
+				hasMicrophone,
+				hasCamera,
+			});
+
+			const hasError = computed(() => !(state.hasMicrophone && state.hasCamera));
+			const copy = computed(() => ({
+				title: message(`preSettings.${hasError.value ? 'error.title' : 'title'}`),
+				content: message(`preSettings.${hasError.value ? 'error.content' : 'content'}`),
+				infoBar: message('preSettings.infoBar'),
+			}));
 
 			return {
+				copy,
 				message,
 				hasCamera,
 				hasMicrophone,
 				userGivenName,
-				msgs,
-				troubleShoot,
+				hasError,
+				closeTroubleshoot,
+				openTroubleshoot,
 				isLive,
 			};
 		},

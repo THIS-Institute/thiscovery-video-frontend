@@ -116,7 +116,7 @@
 				</div>
 
 				<modal-container
-					:show="state.showConfirmDialog || state.showCommentDialog"
+					wrapper-class="max-w-xl"
 					@close="onForceClose"
 				>
 					<!-- Are you sure you want to retake? -->
@@ -135,6 +135,11 @@
 						@save="onAddedComments"
 						@cancel="onCancelComments"
 					/>
+
+					<trouble-shooting
+						v-if="state.showTroubleshoot"
+						@close="closeTroubleshoot"
+					/>
 				</modal-container>
 
 				<info-bar
@@ -143,8 +148,9 @@
 					title="Having trouble recording?"
 					:cta="{
 						title: 'See how to fix this',
-						url: '#',
 					}"
+					modal
+					@open-modal="openTroubleshoot"
 				/>
 			</div>
 		</section>
@@ -169,6 +175,7 @@
 	import ModalContainer from '@/components/modal/ModalContainer';
 	import ConfirmDialog from '@/components/modal/ConfirmDialog';
 	import CommentDialog from '@/components/modal/CommentDialog';
+	import TroubleShooting from '@/components/modal/TroubleShooting';
 
 	export default {
 		components: {
@@ -179,6 +186,7 @@
 			VideoRecorder,
 			VideoPlayer,
 			CommentDialog,
+			TroubleShooting,
 		},
 
 		props: {
@@ -216,6 +224,7 @@
 				mode: MODE_RECORDING,
 				showConfirmDialog: false,
 				showCommentDialog: false,
+				showTroubleshoot: false,
 				comments: null,
 				questionStartedAt: null,
 				questionEndedAt: null,
@@ -333,6 +342,11 @@
 				store.dispatch('app/openModal');
 			};
 
+			const openTroubleshoot = () => {
+				state.showTroubleshoot = true;
+				store.dispatch('app/openModal');
+			};
+
 			const closeConfirmDialog = () => {
 				state.showConfirmDialog = false;
 				store.dispatch('app/closeModal');
@@ -343,9 +357,15 @@
 				store.dispatch('app/closeModal');
 			};
 
+			const closeTroubleshoot = () => {
+				state.showTroubleshoot = false;
+				store.dispatch('app/closeModal');
+			};
+
 			const onForceClose = () => {
 				closeConfirmDialog();
 				closeCommentsDialog();
+				closeTroubleshoot();
 			};
 			
 			const onConfirmRetake = () => {
@@ -408,6 +428,8 @@
 				onNextQuestion,
 				openConfirmDialog,
 				openCommentsDialog,
+				openTroubleshoot,
+				closeTroubleshoot,
 				onConfirmRetake,
 				onCancelRetake,
 				onCancelComments,

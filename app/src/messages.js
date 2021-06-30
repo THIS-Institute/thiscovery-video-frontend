@@ -172,8 +172,11 @@ export default Object.freeze({
 
 	preSettings: {
 		title: 'All set to begin?',
-		fix: 'Fixing camera and microphone issues',
 		content: 'You can disable your camera using the controls above if you would like to. Access to your microphone is required.',
+		error: {
+			title: 'Something isn\'t right…',
+			content: 'Your camera or microphone seem to be unavailable, please resolve before continuing.',
+		},
 		cta: {
 			title: 'Join live interview',
 			url: {
@@ -217,5 +220,45 @@ export default Object.freeze({
 				},
 			},
 		},
+	},
+
+	troubleShoot: {
+		title: 'Fixing camera and microphone issues',
+		items: [
+			{
+				title: 'If you\'re not using additional peripherals:',
+				suggestions: [
+					'Make sure the computer has a mic/webcam. Most current laptops have a webcam and mic, but desktops usually don\'t.',
+					'Check the computer settings to make sure the camera and sound settings are correct.',
+					'For the mic, check if the input sensitivity is too low or too high which could cause issues.',
+					'For PCs/Windows, check the drivers to see if they are installed and updated.',
+					'For Macs, make sure your operating system is updated.',
+					'Restart the computer.',
+				],
+			},
+			{
+				title: 'If you are using peripherals (such as a headset or external camera):',
+				suggestions: [
+					'Check the computer settings to make sure the camera and sound settings are using the correct source.',
+					'If there are multiple devices plugged in, there\'s a chance the webcam also has a built in mic and the settings are set to the default input and not to the one you require.',
+					'Check the input sensitivity of your mic to ensure it is not too low or too high which could cause issues.',
+					'Check the settings in the application to make sure the correct peripherals are selected.',
+					'Also check to see if anything is muted in either the application or computer settings.',
+					'Check the sound level as it can reset for peripherals back down to 0 when plugged in.',
+					'If you are using a headset/mic, there may be physical buttons on the device that also mute sound output, mic input and overall sound control. (This will vary by device.)',
+					'Unplug the peripheral/s and plug them back in.',
+					'Try another port on the computer if available.',
+					'Refresh your browser.',
+				],
+			},
+			{
+				title: 'If you are using a smartphone:',
+				suggestions: [
+					'Ensure you have given your browser permissions to use your microphone and camera.',
+					'If you are using an in-app browser, try switching to the safari or chrome app.',
+					'Refresh your browser.',
+				],
+			},
+		],
 	},
 });
