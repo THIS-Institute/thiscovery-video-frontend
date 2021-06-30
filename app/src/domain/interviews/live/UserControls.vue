@@ -86,10 +86,17 @@
 							class="e-button--red-outline"
 							small
 							type="pill"
+							@click="openTroubleshoot"
 						/>
 					</div>
 				</div>
 			</transition>
+
+			<modal-container wrapper-class="max-w-xl">
+				<trouble-shooting
+					@close="closeTroubleshoot"
+				/>
+			</modal-container>
 		</div>
 	</div>
 </template>
@@ -98,7 +105,15 @@
 	import { reactive, toRefs } from 'vue';
 	import { useStore } from 'vuex';
 
+	import ModalContainer from '@/components/modal/ModalContainer';
+	import TroubleShooting from '@/components/modal/TroubleShooting';
+
 	export default {
+		components: {
+			ModalContainer,
+			TroubleShooting,
+		},
+
 		emits: [
 			'toggleCamera',
 			'toggleMute',
@@ -119,6 +134,8 @@
 			};
 
 			const closeOptions = () => state.options = false;
+			const openTroubleshoot = () => store.commit('app/toggleModal');
+			const closeTroubleshoot = () => store.dispatch('app/closeModal');
 
 			const onToggleCamera = () => {
 				state.hidden = !state.hidden;
@@ -138,6 +155,8 @@
 				onToggleMute,
 				onToggleCamera,
 				onToggleOptions,
+				openTroubleshoot,
+				closeTroubleshoot,
 				closeOptions,
 				logger,
 			};
