@@ -11,6 +11,7 @@
 						options.hidden ? 'camera-strike' : null
 					]"
 					:class="options.hidden ? 'e-button--red' : 'e-button--white'"
+					:sr-only="options.hidden ? 'Show camera' : 'Hide Camera'"
 					type="icon"
 					@click="handleToggleCamera"
 				/>
@@ -23,6 +24,7 @@
 				<x-button
 					:icon="options.paused ? 'play' : 'pause'"
 					:class="options.paused ? 'e-button--red' : 'e-button--white'"
+					:sr-only="options.paused ? 'Resume' : 'Pause'"
 					type="icon"
 					@click="handleTogglePause"
 				/>

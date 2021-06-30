@@ -13,6 +13,12 @@
 			...cDisabled,
 		}"
 	>
+		<span
+			v-if="srOnly"
+			class="sr-only"
+			v-text="srOnly"
+		/>
+
 		<icon
 			v-if="icon || icons"
 			:name="icon"
@@ -38,6 +44,11 @@
 			},
 
 			icon: {
+				type: String,
+				default: null,
+			},
+
+			srOnly: {
 				type: String,
 				default: null,
 			},

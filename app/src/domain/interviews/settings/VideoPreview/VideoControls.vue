@@ -7,6 +7,7 @@
 					cameraEnabled ? null : 'camera-strike'
 				]"
 				:class="cameraEnabled ? 'e-button--white' : 'e-button--red'"
+				:sr-only="cameraEnabled ? 'Disable camera' : 'Enable Camera'"
 				type="icon"
 				@click="$emit('toggleCamera', cameraEnabled)"
 			/>
@@ -19,6 +20,7 @@
 					microphoneEnabled ? null : 'microphone-strike',
 				]"
 				:class="microphoneEnabled ? 'e-button--white' : 'e-button--red'"
+				:sr-only="microphoneEnabled ? 'Mute microphone' : 'Unmute microphone'"
 				type="icon"
 				@click="$emit('toggleMute', microphoneEnabled)"
 			/>

@@ -5,6 +5,7 @@
 				<x-button
 					icon="play"
 					class="e-button--white"
+					sr-only="Play back"
 					type="icon"
 					@click="$emit('watchAnswer')"
 				/>
@@ -14,6 +15,7 @@
 				<x-button
 					icon="scribe"
 					class="e-button--white"
+					sr-only="Add comments"
 					type="icon"
 					@click="$emit('addComments')"
 				/>
@@ -26,6 +28,7 @@
 					:icon="isPlaying ? 'pause' : 'play'"
 					class="e-button--white"
 					:disabled="!canPlay"
+					:sr-only="isPlaying ? 'Pause' : 'Play'"
 					type="icon"
 					@click="$emit('togglePlayback')"
 				/>
@@ -35,6 +38,7 @@
 				<x-button
 					icon="stop"
 					class="e-button--white"
+					sr-only="Stop"
 					type="icon"
 					@click="$emit('stop')"
 				/>
