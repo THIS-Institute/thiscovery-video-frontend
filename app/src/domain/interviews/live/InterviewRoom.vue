@@ -1,7 +1,7 @@
 <template>
 	<div class="flex flex-col min-h-screen h-full bg-grey-400">
 		<main class="flex items-center justify-center flex-auto z-site-content">
-			<div v-if="participantCount">
+			<template v-if="participantCount">
 				<remote-video
 					v-for="participant in remoteParticipants"
 					:key="participant.sid"
@@ -9,7 +9,7 @@
 					:current-speaker="speakingParticipant"
 					@question-received="onQuestionReceived"
 				/>
-			</div>
+			</template>
 
 			<template v-else>
 				<transition
@@ -37,9 +37,7 @@
 								@click="showConfirmDialog = true"
 							/>
 
-							<interview-timer
-								v-if="participantCount && isInterviewer"
-							/>
+							<interview-timer v-if="participantCount && isInterviewer" />
 						</div>
 
 						<modal-container
