@@ -64,6 +64,18 @@
 			</div>
 		</section>
 
+		<modal-container wrapper-class="max-w-xl">
+			<confirm-dialog
+				:affirmative="{
+					title: 'Yes, cancel',
+				}"
+				@confirm="cancelInterview"
+				@cancel="closeConfirmDialog"
+			>
+				Are you sure you want to cancel your appointment?
+			</confirm-dialog>
+		</modal-container>
+
 		<div
 			v-if="!isLoading && !isError && !isInterviewer"
 			class="flex flex-col items-center text-center mt-12"
@@ -78,9 +90,9 @@
 				icon="close"
 				class="e-button--red-outline mt-2.5"
 				flipped
-				url="/"
 				small
 				type="pill"
+				@click="openConfirmDialog"
 			/>
 		</div>
 	</div>
@@ -95,10 +107,17 @@
 	import messages from '@/messages';
 	import { useMessages } from '@/composables/useMessages';
 	import { useDates } from '@/domain/appointments/useDates';
+
 	import LoadingSpinner from '@/components/LoadingSpinner';
+	import ModalContainer from '@/components/modal/ModalContainer';
+	import ConfirmDialog from '@/components/modal/ConfirmDialog';
 
 	export default {
-		components: { LoadingSpinner },
+		components: {
+			LoadingSpinner,
+			ModalContainer,
+			ConfirmDialog,
+		},
 
 		setup() {
 			const isLoading = ref(true);
@@ -154,6 +173,14 @@
 				return `${asFormattedDate(datetime)}, ${asFormattedTime(datetime)}`;
 			});
 
+			const openConfirmDialog = () => store.dispatch('app/openModal');
+			const closeConfirmDialog = () => store.dispatch('app/closeModal');
+
+			const cancelInterview = () => {
+				// TODO: Add appointment cancel & redirect functionality
+				console.log('Cancel!');
+			};
+
 			return {
 				isLoading,
 				isError,
@@ -162,6 +189,9 @@
 				appointmentTitle,
 				appointmentDate,
 				isInterviewer,
+				openConfirmDialog,
+				closeConfirmDialog,
+				cancelInterview,
 			}
 		},
 	};
