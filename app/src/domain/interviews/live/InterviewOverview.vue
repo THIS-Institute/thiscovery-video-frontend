@@ -1,5 +1,5 @@
 <template>
-	<div class="col-span-12 sm:col-span-8 sm:col-start-3 lg:col-span-4 lg:col-start-5">
+	<div class="col-span-12 sm:col-span-8 sm:col-start-3 lg:col-span-6 lg:col-start-4 xl:col-span-4 xl:col-start-5">
 		<section class="relative bg-white rounded-lg">
 			<div
 				class="flex flex-col px-5 md:px-11.25 py-6 md:py-10"
