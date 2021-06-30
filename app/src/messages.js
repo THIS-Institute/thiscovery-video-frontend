@@ -31,7 +31,7 @@ const userInterviewPaths = Object.freeze({
 			'Read and respond at your leisure',
 			'Pause and resume on any device',
 		],
-		ctaTitle: 'Record responses',
+		ctaTitle: 'Record your responses',
 		ctaRoute: route.ROUTE_SELF_SETTINGS,
 		tutorial: {
 			title: 'Want to know more?',
