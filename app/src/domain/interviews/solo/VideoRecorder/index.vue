@@ -4,12 +4,12 @@
 		class="bg-grey-400"
 	>
 		<video-placeholder
-			v-show="!showVideo"
+			v-show="!userSettings.cameraEnabled"
 			:name="userName"
 		/>
 
 		<video
-			v-show="showVideo"
+			v-show="userSettings.cameraEnabled"
 			ref="videoElementRef"
 			class="transform -scale-x-100 transition-opacity duration-200"
 			:class="{
@@ -49,7 +49,7 @@
 
 		<inline-controls
 			:state="state"
-			@toggle-camera="handleToggleCamera"
+			@toggle-camera="onToggleCamera"
 			@toggle-pause="handleTogglePaused"
 		/>
 	</placeholder>
@@ -63,7 +63,7 @@
 </template>
 
 <script>
-	import { reactive, ref, inject, onMounted, onBeforeUnmount } from 'vue';
+	import { reactive, inject, onMounted, onBeforeUnmount, computed } from 'vue';
 	import { useStore } from 'vuex';
 	import { statuses, useRecordingState } from './useRecordingState';
 
@@ -114,6 +114,8 @@
 			const setupLocalVideo = inject('setupLocalVideo');
 			const destroyMediaStream = inject('destroyMediaStream');
 
+			const userSettings = computed(() => store.getters['app/getSettings']);
+
 			onMounted(() => {
 				setupLocalVideo();
 			});
@@ -127,8 +129,6 @@
 				isRecording,
 				isCountdown,
 			} = useRecordingState(state);
-
-			const showVideo = ref(true);
 
 			const handleStartRecording = () => {
 				state.status = statuses.COUNTDOWN;
@@ -153,10 +153,9 @@
 				emit('started');
 			};
 
-			const handleToggleCamera = () => {
-				showVideo.value = !showVideo.value;
-
-				(showVideo.value) ? emit('startCamera') : emit('stopCamera');
+			const onToggleCamera = () => {
+				store.commit('app/toggleCamera');
+				(userSettings.value.cameraEnabled) ? emit('startCamera') : emit('stopCamera');
 			};
 
 			const handleTogglePaused = (isPaused) => {
@@ -173,6 +172,7 @@
 
 			return {
 				state,
+				userSettings,
 				videoElementRef,
 				isReady,
 				isRecording,
@@ -181,8 +181,7 @@
 				handleStopRecording,
 				handelCancelCountdown,
 				onCountdownFinish,
-				showVideo,
-				handleToggleCamera,
+				onToggleCamera,
 				handleTogglePaused,
 			}
 		},
