@@ -2,7 +2,7 @@
 	<header
 		:class="[
 			'flex items-center h-24 z-site-header',
-			$props.navActive ? 'fixed inset-x-0' : 'relative',
+			$props.navActive ? 'sticky top-0 inset-x-0' : 'relative',
 		]"
 	>
 		<div class="e-container w-full flex items-center justify-between">
@@ -30,26 +30,45 @@
 				</nav>
 			</div>
 
-			<span
+			<a
 				v-if="hasUser"
-				class="bg-white rounded-full border-2 border-red p-1 pr-5 hidden lg:block"
+				:component="$env('parentDomain') ? 'a' : 'div'"
+				:href="$env('parentDomain') ? `${ $env('parentDomain') }/my-tasks` : null"
+				:class="[
+					'group',
+					'p-1 pr-5',
+					'bg-white rounded-full',
+					'border-2 border-red',
+					'hidden lg:block',
+					'focus:ring-2 focus:ring-blue focus:outline-none',
+					{
+						'transition-colors duration-200 hover:bg-red': $env('parentDomain'),
+					},
+				]"
 			>
-				<div class="flex items-center justify-between space-x-3.5">
+				<span class="flex items-center justify-between space-x-3.5">
 					<span
 						:class="[
 							'inline-flex items-center justify-center',
 							'w-8 h-8 text-sm',
 							'rounded-full bg-red text-white',
+							'transition-colors duration-200',
+							{
+								'group-hover:bg-white group-hover:text-red': $env('parentDomain'),
+							},
 						]"
 						v-text="userIntials"
 					/>
 
 					<span
-						class="text-red"
+						class="transition-colors duration-200 text-red"
+						:class="{
+							'group-hover:text-white': $env('parentDomain'),
+						}"
 						v-text="userGivenName"
 					/>
-				</div>
-			</span>
+				</span>
+			</a>
 
 			<button
 				:class="[
