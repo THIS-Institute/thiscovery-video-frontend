@@ -20,6 +20,7 @@
 
 		<div
 			:class="[
+				'flex flex-col items-start',
 				'col-span-10 space-y-5',
 				'md:col-span-4 md:mt-10',
 				'xl:max-w-83',

@@ -171,6 +171,7 @@ module.exports = {
 				'11.25': relative(45),
 				'17': relative(68),
 				'18': relative(72),
+				'42': relative(168),
 
 				gutter: relative(20),
 				margin: relative(60),

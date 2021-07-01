@@ -4,12 +4,18 @@
 			:class="[
 				'grid grid-cols-2 items-center justify-around',
 				'border border-grey-200 rounded-lg',
-				'text-sm xs:text-lg',
+				'text-sm md:text-base xl:text-lg',
 			]"
 		>
-			<div class="flex items-center justify-center space-x-2 px-4 py-5">
+			<div
+				:class="[
+					'flex items-center justify-center',
+					'space-x-2 px-4 py-5',
+					'xl:justify-start xl:w-42 xl:px-7',
+				]"
+			>
 				<icon
-					class="text-red"
+					class="text-red flex-shrink-0"
 					name="calendar"
 				/>
 
@@ -19,9 +25,16 @@
 				/>
 			</div>
 
-			<div class="flex items-center justify-center space-x-2 px-6 py-5 border-l border-grey-200">
+			<div
+				:class="[
+					'flex items-center justify-center',
+					'space-x-2 px-4 py-5',
+					'border-l border-grey-200',
+					'xl:justify-start xl:w-42 xl:px-10',
+				]"
+			>
 				<icon
-					class="text-red"
+					class="text-red flex-shrink-0"
 					name="clock"
 				/>
 
