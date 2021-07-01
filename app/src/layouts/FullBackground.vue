@@ -13,10 +13,17 @@
 			:nav-active="navActive"
 		/>
 
-		<app-navigation
-			v-if="navActive && hasNav"
-			:nav="nav"
-		/>
+		<transition
+			enter-active-class="transition-opacity ease-out duration-300"
+			leave-active-class="transition-opacity ease-in duration-200"
+			enter-from-class="opacity-0"
+			leave-to-class="opacity-0"
+		>
+			<app-navigation
+				v-if="navActive && hasNav"
+				:nav="nav"
+			/>
+		</transition>
 
 		<main class="relative flex-auto z-site-content">
 			<back

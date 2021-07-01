@@ -16,11 +16,18 @@
 			:profile="profile"
 		/>
 
-		<app-navigation
-			v-if="navActive"
-			:nav="nav"
-			:profile="profile"
-		/>
+		<transition
+			enter-active-class="transition-opacity ease-out duration-300"
+			leave-active-class="transition-opacity ease-in duration-200"
+			enter-from-class="opacity-0"
+			leave-to-class="opacity-0"
+		>
+			<app-navigation
+				v-if="navActive"
+				:nav="nav"
+				:profile="profile"
+			/>
+		</transition>
 
 		<main class="relative flex-auto z-site-content">
 			<back class="mt-6" />
