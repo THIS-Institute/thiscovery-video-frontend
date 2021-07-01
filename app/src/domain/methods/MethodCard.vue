@@ -19,7 +19,7 @@
 
 			<p
 				class="mt-5"
-				v-text="content"
+				v-text="!available && error ? error : content"
 			/>
 
 			<ul
@@ -91,6 +91,11 @@
 			icon: {
 				type: String,
 				default: 'camera',
+			},
+
+			error: {
+				type: String,
+				default: null,
 			},
 
 			content: {
