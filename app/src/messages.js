@@ -48,7 +48,7 @@ const selfRecordInstructions = Object.freeze([
 		title: 'You\'ll be asked a series of questions',
 		content: 'We are interested in learning about your views and experiences.',
 		img: {
-			src: '/static/img/tutorial/placeholder.jpg',
+			src: '/static/img/tutorial/self-record/asked-questions.png',
 			alt: 'Placeholder image',
 		},
 	},
@@ -56,7 +56,7 @@ const selfRecordInstructions = Object.freeze([
 		title: 'You can record answers in your own time',
 		content: 'Audio recording is required but you can disable your camera.',
 		img: {
-			src: '/static/img/tutorial/placeholder.jpg',
+			src: '/static/img/tutorial/self-record/record-in-your-own-time.png',
 			alt: 'Placeholder image',
 		},
 	},
@@ -64,7 +64,7 @@ const selfRecordInstructions = Object.freeze([
 		title: 'Review the recording before it is sent',
 		content: 'You can play it back, type comments, or start again.',
 		img: {
-			src: '/static/img/tutorial/placeholder.jpg',
+			src: '/static/img/tutorial/self-record/review-recording.png',
 			alt: 'Placeholder image',
 		},
 	}
@@ -75,7 +75,7 @@ const liveInterviewInstructions = Object.freeze([
 		title: 'Book your appointment with a researcher',
 		content: 'Select a time that best suits you.',
 		img: {
-			src: '/static/img/tutorial/placeholder.jpg',
+			src: '/static/img/tutorial/live/book-your-appointment.png',
 			alt: 'Placeholder image',
 		},
 	},
@@ -83,7 +83,7 @@ const liveInterviewInstructions = Object.freeze([
 		title: 'Join on the day of your interview',
 		content: 'You\'ll be able to disable your camera or microphone if necessary.',
 		img: {
-			src: '/static/img/tutorial/placeholder.jpg',
+			src: '/static/img/tutorial/live/join-on-day-of-interview.png',
 			alt: 'Placeholder image',
 		},
 	},
@@ -91,7 +91,7 @@ const liveInterviewInstructions = Object.freeze([
 		title: 'You\'ll speak directly to a researcher',
 		content: 'They may have a series of questions which will be visible on screen.',
 		img: {
-			src: '/static/img/tutorial/placeholder.jpg',
+			src: '/static/img/tutorial/live/speak-directly-to-researcher.png',
 			alt: 'Placeholder image',
 		},
 	}
