@@ -84,8 +84,22 @@
 									ratio="pt-3/4"
 									class="bg-black-25"
 								>
+									<icon
+										v-if="!userSettings.cameraEnabled"
+										:class="[
+											'top-1/2 left-1/2',
+											'opacity-75',
+											'transform -translate-x-1/2 -translate-y-1/2',
+										]"
+										:names="[
+											'camera',
+											'camera-strike',
+										]"
+										size="w-1/4 h-1/4"
+									/>
+
 									<local-video
-										v-if="hasLocalFeed"
+										v-else-if="hasLocalFeed"
 										:participant="localParticipant"
 									/>
 								</placeholder>
@@ -171,6 +185,7 @@
 			const interviewerQuestions = computed(() => store.state.interviews.interviewerQuestions);
 			const remoteQuestion = ref(null);
 			const speakingParticipant = ref(null);
+			const userSettings = computed(() => store.getters['app/getSettings']);
 
 			const onBeforeUnload = (event) => {
 				event.preventDefault();
@@ -358,6 +373,7 @@
 				onLeave,
 				onForceClose,
 				speakingParticipant,
+				userSettings,
 			}
 		},
 	};

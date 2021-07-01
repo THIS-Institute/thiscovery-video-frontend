@@ -3,19 +3,17 @@
 		ratio="pt-3/4"
 		class="bg-grey-400"
 	>
+		<local-video v-if="userSettings.cameraEnabled" />
+
 		<video-placeholder
-			v-if="!cameraEnabled"
+			v-else
 			:user-name="userIntials"
-		/>
-		
-		<local-video
-			v-if="cameraEnabled"
 		/>
 
 		<video-controls
 			:forced-microphone="forcedMicrophone"
-			:camera-enabled="cameraEnabled"
-			:microphone-enabled="microphoneEnabled"
+			:camera-enabled="userSettings.cameraEnabled"
+			:microphone-enabled="userSettings.microphoneEnabled"
 			@toggle-camera="onToggleCamera"
 			@toggle-mute="onToggleMute"
 		/>
@@ -23,8 +21,9 @@
 </template>
 
 <script>
-	import { reactive, toRefs } from 'vue';
 	import { useUser } from '@/auth/useUser';
+	import { useStore } from 'vuex';
+	import { computed } from 'vue';
 
 	import LocalVideo from './LocalVideo';
 	import VideoPlaceholder from './VideoPlaceholder';
@@ -44,23 +43,16 @@
 		},
 
 		setup() {
-			const state = reactive({
-				cameraEnabled: true,
-				microphoneEnabled: true,
-			});
+			const store = useStore();
 
 			const { userIntials } = useUser();
+			const userSettings = computed(() => store.getters['app/getSettings']);
 
-			const onToggleCamera = (status) => {
-				state.cameraEnabled = !status;
-			};
-
-			const onToggleMute = (status) => {
-				state.microphoneEnabled = !status;
-			};
+			const onToggleCamera = () => store.commit('app/toggleCamera');
+			const onToggleMute = () => store.commit('app/toggleMicrophone');
 
 			return {
-				...toRefs(state),
+				userSettings,
 				onToggleCamera,
 				onToggleMute,
 				userIntials,

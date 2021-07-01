@@ -6,6 +6,10 @@ export const app = {
 		modalActive: false,
 		navActive: false,
 		routerHistory: [],
+		settings: {
+			cameraEnabled: true,
+			microphoneEnabled: true,
+		},
 	}),
 
 	mutations: {
@@ -32,6 +36,14 @@ export const app = {
 		setHistory(state, from) {
 			state.routerHistory.push(from);
 		},
+
+		toggleCamera(state) {
+			state.settings.cameraEnabled = !state.settings.cameraEnabled;
+		},
+
+		toggleMicrophone(state) {
+			state.settings.microphoneEnabled = !state.settings.microphoneEnabled;
+		},
 	},
 
 	actions: {
@@ -51,6 +63,10 @@ export const app = {
 			if (historyLength === 0) return null;
 
 			return state.routerHistory[historyLength - 1];
+		},
+
+		getSettings(state) {
+			return state.settings;
 		},
 	},
 }

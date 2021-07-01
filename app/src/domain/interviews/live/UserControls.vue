@@ -1,30 +1,30 @@
 <template>
 	<div class="flex items-center space-x-1 px-5 py-4 z-1">
 		<tooltip
-			:text="hidden ? 'Enable camera' : 'Disable Camera'"
+			:text="userSettings.cameraEnabled ? 'Disable camera' : 'Enable Camera'"
 			bottom
 		>
 			<x-button
 				:icons="[
 					'camera',
-					hidden ? 'camera-strike' : null
+					userSettings.cameraEnabled ? null : 'camera-strike',
 				]"
-				:class="hidden ? 'e-button--red' : 'e-button--white-outline'"
+				:class="userSettings.cameraEnabled ? 'e-button--white-outline' : 'e-button--red'"
 				type="icon"
 				@click="onToggleCamera"
 			/>
 		</tooltip>
 
 		<tooltip
-			:text="muted ? 'Unmute microphone' : 'Mute microphone'"
+			:text="userSettings.microphoneEnabled ? 'Mute microphone' : 'Unmute microphone'"
 			bottom
 		>
 			<x-button
 				:icons="[
 					'microphone',
-					muted ? 'microphone-strike' : null,
+					userSettings.microphoneEnabled ? null : 'microphone-strike',
 				]"
-				:class="muted ? 'e-button--red' : 'e-button--white-outline'"
+				:class="userSettings.microphoneEnabled ? 'e-button--white-outline' : 'e-button--red'"
 				type="icon"
 				@click="onToggleMute"
 			/>
@@ -37,11 +37,10 @@
 				bottom
 			>
 				<x-button
-					v-click-outside="closeOptions"
 					icon="options"
 					:class="options ? 'e-button--white' : 'e-button--white-outline'"
 					type="icon"
-					@keyup.esc="closeOptions"
+					@keyup.esc="onToggleOptions"
 					@click="onToggleOptions"
 				/>
 			</tooltip>
@@ -96,7 +95,8 @@
 </template>
 
 <script>
-	import { reactive, toRefs } from 'vue';
+	import { ref, computed } from 'vue';
+	import { useStore } from 'vuex';
 
 	export default {
 		emits: [
@@ -107,37 +107,29 @@
 		],
 
 		setup(props, { emit }) {
-			const state = reactive({
-				muted: false,
-				hidden: false,
-				options: false,
-			});
+			const store = useStore();
 
-			const onToggleOptions = () => {
-				state.options = !state.options;
-			};
-
-			const closeOptions = () => state.options = false;
-
-			const onToggleCamera = () => {
-				state.hidden = !state.hidden;
-				emit('toggleCamera', state.hidden);
-			};
+			const options = ref(false);
+			const userSettings = computed(() => store.getters['app/getSettings']);
 
 			const onToggleMute = () => {
-				state.muted = !state.muted;
-				emit('toggleMute', state.muted);
+				store.commit('app/toggleMicrophone');
+				emit('toggleMute', userSettings.value.microphoneEnabled);
 			};
 
-			const logger = (string) => console.log(string);
+			const onToggleCamera = () => {
+				store.commit('app/toggleCamera');
+				emit('toggleCamera', userSettings.value.cameraEnabled);
+			};
+
+			const onToggleOptions = () => options.value = !options.value;
 
 			return {
-				...toRefs(state),
+				options,
+				userSettings,
 				onToggleMute,
 				onToggleCamera,
 				onToggleOptions,
-				closeOptions,
-				logger,
 			};
 		},
 	};
