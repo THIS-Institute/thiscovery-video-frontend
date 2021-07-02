@@ -32,8 +32,7 @@
 
 			<a
 				v-if="hasUser"
-				:component="$env('parentDomain') ? 'a' : 'div'"
-				:href="$env('parentDomain') ? `${ $env('parentDomain') }/my-tasks` : null"
+				:href="`${ $env('parentDomain') }/my-tasks`"
 				:class="[
 					'group',
 					'p-1 pr-5',
@@ -41,9 +40,7 @@
 					'border-2 border-red',
 					'hidden lg:block',
 					'focus:ring-2 focus:ring-blue focus:outline-none',
-					{
-						'transition-colors duration-200 hover:bg-red': $env('parentDomain'),
-					},
+					'transition-colors duration-200 hover:bg-red',
 				]"
 			>
 				<span class="flex items-center justify-between space-x-3.5">
@@ -53,18 +50,13 @@
 							'w-8 h-8 text-sm',
 							'rounded-full bg-red text-white',
 							'transition-colors duration-200',
-							{
-								'group-hover:bg-white group-hover:text-red': $env('parentDomain'),
-							},
+							'group-hover:bg-white group-hover:text-red',
 						]"
 						v-text="userIntials"
 					/>
 
 					<span
-						class="transition-colors duration-200 text-red"
-						:class="{
-							'group-hover:text-white': $env('parentDomain'),
-						}"
+						class="transition-colors duration-200 text-red group-hover:text-white"
 						v-text="userGivenName"
 					/>
 				</span>
