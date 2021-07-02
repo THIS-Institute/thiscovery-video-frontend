@@ -17,7 +17,7 @@ export const router = createRouter({
 			? store.commit('app/cutHistory')
 			: store.commit('app/setHistory', from);
 
-		return savedPosition || { x: 0, y: 0 };
+		return { x: 0, y: 0 };
 	},
 });
 
