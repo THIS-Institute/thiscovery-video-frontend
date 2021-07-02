@@ -7,7 +7,7 @@
 					'rounded-full p-2 w-8 h-8',
 					'bg-aubergine text-white text-sm',
 				]"
-				v-text="toReadableValue(readSection)"
+				v-text="toReadableValue(sectionIndex)"
 			/>
 
 			<transition
@@ -18,9 +18,9 @@
 				mode="out-in"
 			>
 				<h2
-					:key="activeSection.title"
+					:key="section.title"
 					class="e-h3"
-					v-text="activeSection.title"
+					v-text="section.title"
 				/>
 			</transition>
 		</div>
@@ -78,10 +78,10 @@
 					leave-to-class="opacity-0 translate-y-4 sm:scale-95"
 					mode="out-in"
 				>
-					<aside :key="toReadableValue(readQuestion)">
+					<aside :key="toReadableValue(questionIndex)">
 						<question
-							:number="toReadableValue(readQuestion)"
-							v-bind="activeSection.questions[readQuestion]"
+							:number="toReadableValue(questionIndex)"
+							v-bind="section.questions[questionIndex]"
 						/>
 					</aside>
 				</transition>
@@ -251,12 +251,12 @@
 
 			const {
 				toReadableValue,
-				activeQuestion,
+				questionSequenceIndex,
 				totalQuestions,
-				activeSection,
+				section,
 				nextQuestion,
-				readQuestion,
-				readSection,
+				questionIndex,
+				sectionIndex,
 				isComplete,
 			} = useQuestions(props.questions, 0, 0);
 
@@ -270,10 +270,10 @@
 
 			// Percentage progress through all questions
 			const progress = computed(() => {
-				const asPercentage = toReadableValue(activeQuestion.value) / totalQuestions.value;
+				const asPercentage = toReadableValue(questionSequenceIndex.value) / totalQuestions.value;
 
 				return {
-					text: `Question ${toReadableValue(activeQuestion.value)} of ${totalQuestions.value}`,
+					text: `Question ${toReadableValue(questionSequenceIndex.value)} of ${totalQuestions.value}`,
 					style: {
 						transform: `scaleX(${asPercentage.toFixed(2)})`,
 					},
@@ -301,7 +301,7 @@
 				isUploading.value = true;
 				state.questionEndedAt = getTimeStringNow();
 
-				const questionData = activeSection.value.questions[readQuestion.value];
+				const questionData = section.value.questions[questionIndex.value];
 
 				const options = {
 					interviewId: store.state.interviews.id,
@@ -415,10 +415,10 @@
 				toReadableValue,
 				isRecordingMode,
 				isReviewingMode,
-				activeSection,
+				section,
 				nextQuestion,
-				readQuestion,
-				readSection,
+				questionIndex,
+				sectionIndex,
 				progress,
 				onRecorderStart,
 				onRecorderStop,
