@@ -251,6 +251,16 @@
 				state.mode = mode;
 			};
 
+			let initialSectionIndex = 0;
+			let initialQuestionIndex = 0;
+			
+			if (store.getters['interviews/hasInterviewProgress']) {
+				const previousState = store.state.interviews.previousProgress;
+				
+				initialSectionIndex = previousState.section ?? 0;
+				initialQuestionIndex = previousState.question ?? 0;
+			}
+
 			const {
 				toReadableValue,
 				questionSequenceIndex,
@@ -260,7 +270,11 @@
 				questionIndex,
 				sectionIndex,
 				isComplete,
-			} = useQuestions(props.questions, 0, 0);
+			} = useQuestions(
+				props.questions,
+				initialSectionIndex,
+				initialQuestionIndex,
+			);
 
 			watch(isComplete, () => {
 				const completionUrl = store.state.task.completionUrl;

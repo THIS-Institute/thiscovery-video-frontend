@@ -30,7 +30,7 @@ export const interviews = {
 		playbackURL: null,
 		selfRecordQuestions: [],
 		interviewerQuestions: [],
-		selfRecordProgress: null,
+		previousProgress: null,
 	}),
 
 	mutations: {
@@ -87,7 +87,7 @@ export const interviews = {
 		},
 
 		setSelfRecordProgress: (state, progress) => {
-			state.selfRecordProgress = progress;
+			state.previousProgress = progress;
 		},
 	},
 
@@ -217,9 +217,9 @@ export const interviews = {
 
 			const response = await createSelfRecord(options);
 
-			commit('setId', response.interviewId);
-			commit('setSelfRecordQuestions', response.interviewQuestions.blocks);
-			commit('setSelfRecordProgress', response.progress);
+			commit('setId', response.id);
+			commit('setSelfRecordQuestions', response.questions.blocks);
+			commit('setSelfRecordProgress', response.state);
 		},
 
 		linkRoom: async ({ state }, roomSid) => {
@@ -283,6 +283,20 @@ export const interviews = {
 				Array.isArray(state.interviewerQuestions) &&
 				(state.interviewerQuestions.length > 0)
 			);
+		},
+
+		hasInterviewProgress (state) {
+			const progress = state.previousProgress;
+
+			if (progress === null) {
+				return false;
+			}
+
+			if (typeof progress !== 'object') {
+				return false;
+			}
+
+			return true;
 		},
 	},
 };

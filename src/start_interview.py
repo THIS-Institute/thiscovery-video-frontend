@@ -33,7 +33,7 @@ def lambda_handler(event, context):
     survey = thiscovery_questions.get_task_survey()
     questions  = thiscovery_questions.format_as_self_record(survey)
 
-    progress = None
+    interview_state = None
 
     db = DynamoDB().client()
 
@@ -46,8 +46,11 @@ def lambda_handler(event, context):
         if 'Item' in existing_interview:
             item = existing_interview['Item']
 
-            if 'progress' in item:
-                progress = item['progress']
+            if 'interview_state' in item:
+                interview_state = {
+                    'question': int(item['interview_state']['question']),
+                    'section': int(item['interview_state']['section']),
+                }
 
             create_event(
                 event_type='interview_resumed',
@@ -80,9 +83,9 @@ def lambda_handler(event, context):
         )
 
     response = {
-        'interviewId': interview_id,
-        'progress': progress,
-        'interviewQuestions': {
+        'id': interview_id,
+        'state': interview_state,
+        'questions': {
             'blocks': questions,
         },
     }
