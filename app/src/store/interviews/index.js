@@ -11,6 +11,7 @@ import {
 	fetchRoomToken,
 	linkInterviewRoom,
 	createSelfRecord,
+	saveInterview,
 } from '@/api/interviews';
 
 export const interviews = {
@@ -226,6 +227,10 @@ export const interviews = {
 				roomSid: roomSid,
 				interviewId: state.id,
 			});
+		},
+
+		selfRecordSaveExit: async ({ state }, options) => {
+			await saveInterview(state.id, options);
 		},
 	},
 

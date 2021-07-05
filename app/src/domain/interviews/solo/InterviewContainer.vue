@@ -32,6 +32,7 @@
 			flipped
 			small
 			type="pill"
+			:disabled="state.savingExiting"
 			@click="onSaveExit"
 		/>
 	</div>
@@ -231,6 +232,7 @@
 				responseStartedAt: null,
 				responseEndedAt: null,
 				retakeCount: 0,
+				savingExiting: false,
 			});
 
 			const { userGivenName } = useUser();
@@ -389,8 +391,17 @@
 				closeCommentsDialog();
 			};
 
-			const onSaveExit = () => {
+			const onSaveExit = async () => {
+				state.savingExiting = true;
+
+				await store.dispatch('interviews/selfRecordSaveExit', {
+					question: questionIndex.value,
+					section: sectionIndex.value,
+				});
+
 				router.push({ name: ROUTE_HOME });
+
+				state.savingExiting = false;
 			};
 
 			const onCameraStart = () => {

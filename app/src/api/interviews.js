@@ -35,6 +35,14 @@ export async function createSelfRecord (options) {
 	return response;
 }
 
+export async function saveInterview (id, options) {
+	const response = await client.post(`save-interview/${id}`, {
+		...options,
+	})
+ 
+	return response;
+}
+
 export async function linkInterviewRoom (options) {
 	const response = await client.post(`room/link`, {
 		...options,

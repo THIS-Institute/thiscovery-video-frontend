@@ -89,6 +89,14 @@ Resources:
                 uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${CreateInterviewAnswer.Arn}/invocations
               responses: {}
 
+          /v1/save-interview/{id}:
+            post:
+              x-amazon-apigateway-integration:
+                httpMethod: POST
+                type: aws_proxy
+                uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${SaveInterview.Arn}/invocations
+              responses: {}
+
           /v1/task/{key}:
             post:
               x-amazon-apigateway-integration:
@@ -459,6 +467,37 @@ Resources:
           TABLE_ARN: !GetAtt InterviewsTable.Arn
           BUCKET_NAME: !Ref InterviewAssets
           BUCKET_ARN: !GetAtt InterviewAssets.Arn
+
+  SaveInterview:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: Interviews-SaveInterview
+      Description: !Sub
+        - Stack ${StackTagName} Environment ${EnvironmentTagName} Function ${ResourceName}
+        - ResourceName: SaveInterview
+      CodeUri: src
+      Handler: save_interview.lambda_handler
+      Runtime: python3.8
+      MemorySize: 1024
+      Timeout: 10
+      Tracing: Active
+      Policies:
+        - AWSXrayWriteOnlyAccess
+        - DynamoDBCrudPolicy:
+            TableName: !Ref InterviewsTable
+        - EventBridgePutEventsPolicy:
+            EventBusName: thiscovery-event-bus
+      Events:
+        BackendApiPOSTv1saveinterview:
+          Type: Api
+          Properties:
+            Path: /v1/save-interview/{id}
+            Method: POST
+            RestApiId: !Ref BackendApi
+      Environment:
+        Variables:
+          TABLE_NAME: !Ref InterviewsTable
+          TABLE_ARN: !GetAtt InterviewsTable.Arn
 
   GetTask:
     Type: AWS::Serverless::Function
