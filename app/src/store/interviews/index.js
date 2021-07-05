@@ -12,6 +12,7 @@ import {
 	linkInterviewRoom,
 	createSelfRecord,
 	saveInterview,
+	completeInterview,
 } from '@/api/interviews';
 
 export const interviews = {
@@ -231,6 +232,10 @@ export const interviews = {
 
 		selfRecordSaveExit: async ({ state }, options) => {
 			await saveInterview(state.id, options);
+		},
+
+		selfRecordComplete: async ({ state }) => {
+			await completeInterview(state.id);
 		},
 	},
 

@@ -276,8 +276,10 @@
 				initialQuestionIndex,
 			);
 
-			watch(isComplete, () => {
+			watch(isComplete, async () => {
 				const completionUrl = store.state.task.completionUrl;
+
+				await store.dispatch('interviews/selfRecordComplete');
 
 				if(isComplete.value && completionUrl) {
 					window.location.href = completionUrl;

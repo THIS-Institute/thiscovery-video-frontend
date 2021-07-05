@@ -43,6 +43,12 @@ export async function saveInterview (id, options) {
 	return response;
 }
 
+export async function completeInterview (id) {
+	const response = await client.post(`complete-interview/${id}`);
+ 
+	return response;
+}
+
 export async function linkInterviewRoom (options) {
 	const response = await client.post(`room/link`, {
 		...options,

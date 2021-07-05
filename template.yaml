@@ -97,6 +97,14 @@ Resources:
                 uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${SaveInterview.Arn}/invocations
               responses: {}
 
+          /v1/complete-interview/{id}:
+            post:
+              x-amazon-apigateway-integration:
+                httpMethod: POST
+                type: aws_proxy
+                uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${CompleteInterview.Arn}/invocations
+              responses: {}
+
           /v1/task/{key}:
             post:
               x-amazon-apigateway-integration:
@@ -492,6 +500,37 @@ Resources:
           Type: Api
           Properties:
             Path: /v1/save-interview/{id}
+            Method: POST
+            RestApiId: !Ref BackendApi
+      Environment:
+        Variables:
+          TABLE_NAME: !Ref InterviewsTable
+          TABLE_ARN: !GetAtt InterviewsTable.Arn
+
+  CompleteInterview:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: Interviews-CompleteInterview
+      Description: !Sub
+        - Stack ${StackTagName} Environment ${EnvironmentTagName} Function ${ResourceName}
+        - ResourceName: CompleteInterview
+      CodeUri: src
+      Handler: complete_interview.lambda_handler
+      Runtime: python3.8
+      MemorySize: 1024
+      Timeout: 10
+      Tracing: Active
+      Policies:
+        - AWSXrayWriteOnlyAccess
+        - DynamoDBCrudPolicy:
+            TableName: !Ref InterviewsTable
+        - EventBridgePutEventsPolicy:
+            EventBusName: thiscovery-event-bus
+      Events:
+        BackendApiPOSTv1completeinterview:
+          Type: Api
+          Properties:
+            Path: /v1/complete-interview/{id}
             Method: POST
             RestApiId: !Ref BackendApi
       Environment:
