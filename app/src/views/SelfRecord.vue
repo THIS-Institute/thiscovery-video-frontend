@@ -9,7 +9,7 @@
 				]"
 			>
 				<interview-container
-					v-if="hasQuestions"
+					v-if="ready && hasQuestions"
 					:questions="questions"
 				/>
 
@@ -20,7 +20,7 @@
 </template>
 
 <script>
-	import { computed } from 'vue';
+	import { computed, ref } from 'vue';
 	import { useStore } from 'vuex';
 
 	import InterviewContainer from '@/domain/interviews/solo/InterviewContainer';
@@ -34,6 +34,7 @@
 
 		setup() {
 			const store = useStore();
+			const ready = ref(false);
 
 			const questions = computed(() => {
 				return store.state.interviews.selfRecordQuestions;
@@ -43,9 +44,11 @@
 				return questions.value.length > 0;
 			});
 
-			store.dispatch('interviews/startSelfRecord');
+			store.dispatch('interviews/startSelfRecord')
+				.then(() => ready.value = true);
 
 			return {
+				ready,
 				hasQuestions,
 				questions,
 			};
