@@ -1044,7 +1044,7 @@ Resources:
           - Action:
               - s3:GetObject
             Effect: Allow
-            Resource: !Sub ${InterviewAssets.Arn}
+            Resource: !Sub ${InterviewAssets.Arn}/*
             Principal: 
               AWS: !Sub
                 - arn:aws:iam::${ThiscoveryAccount}:root
