@@ -1034,6 +1034,22 @@ Resources:
     Properties:
       BucketName: !Sub interview-assets-${AWS::AccountId}
 
+  ThiscoveryS3AccessPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref InterviewAssets
+      PolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Action:
+              - s3:GetObject
+            Effect: Allow
+            Resource: !Sub ${InterviewAssets.Arn}
+            Principal: 
+              AWS: !Sub
+                - arn:aws:iam::${ThiscoveryAccount}:root
+                - { ThiscoveryAccount: !Ref EnvConfigThiscoveryAccount }
+
   InterviewsTable:
     Type: AWS::DynamoDB::Table
     Properties:
@@ -1081,6 +1097,9 @@ Parameters:
   SourceVersion:
     Type: String
     Description: Source version for deployment (injected by Stackery at deployment time)
+  EnvConfigThiscoveryAccount:
+    Type: AWS::SSM::Parameter::Value<String>
+    Default: /<EnvironmentName>/thiscovery-account
   EnvConfigAppointmentsDefaultDaysAsString:
     Type: AWS::SSM::Parameter::Value<String>
     Default: /<EnvironmentName>/appointments/default-days
@@ -1114,6 +1133,7 @@ Parameters:
 
 Metadata:
   EnvConfigParameters:
+    EnvConfigThiscoveryAccount: thiscovery-account
     EnvConfigAppointmentsDefaultDaysAsString: appointments.default-days
     EnvConfigAppointmentsStartHourAsString: appointments.start-hour
     EnvConfigAppointmentsEndHourAsString: appointments.end-hour
