@@ -372,7 +372,7 @@
 
 			<icon-text
 				class="e-h3"
-				text="Live interview"
+				text="Online call"
 				:icon="{
 					name: 'camera',
 				}"

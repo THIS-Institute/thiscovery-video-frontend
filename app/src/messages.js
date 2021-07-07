@@ -3,8 +3,8 @@ import * as route from './routeConstants';
 const userInterviewPaths = Object.freeze({
 	live: {
 		icon: 'camera',
-		title: 'Live interview',
-		content: 'Book an online meeting with a member of the research team',
+		title: 'Online call',
+		content: 'Book an appointment with a member of the research team',
 		items: [
 			'Speak directly with a reasearcher',
 			'At a time that suits you',
@@ -16,7 +16,7 @@ const userInterviewPaths = Object.freeze({
 		tutorial: {
 			title: 'Want to know more?',
 			cta: {
-				title: 'See how a live interview works',
+				title: 'See how an online call works',
 				route: route.ROUTE_LIVE_HOWTO,
 			}
 		},
@@ -105,7 +105,7 @@ export default Object.freeze({
 	},
 
 	live: {
-		title: 'Live interview',
+		title: 'Online call',
 		icon: 'camera',
 
 		methodOverview: {
@@ -113,7 +113,7 @@ export default Object.freeze({
 		},
 
 		appointments: {
-			title: 'Book a live interview',
+			title: 'Book an online call',
 			content: 'Pick from the available dates and times',
 			info: {
 				cancelled: {
@@ -166,7 +166,7 @@ export default Object.freeze({
 		},
 
 		preSettings: {
-			continueButtonText: 'Join live interview',
+			continueButtonText: 'Join online call',
 		}
 	},
 
@@ -178,7 +178,7 @@ export default Object.freeze({
 			content: 'Your camera or microphone seem to be unavailable, please resolve before continuing.',
 		},
 		cta: {
-			title: 'Join live interview',
+			title: 'Join online call',
 			url: {
 				name: route.ROUTE_LIVE_ROOM
 			}

@@ -32,7 +32,7 @@
 					name: 'camera',
 					size: 'w-6 h-6',
 				}"
-				text="Live Interview"
+				:text="message('live.title')"
 			/>
 
 			<h2
