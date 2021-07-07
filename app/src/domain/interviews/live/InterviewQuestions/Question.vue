@@ -47,7 +47,7 @@
 			<p
 				:key="question.title"
 				class="mt-7 text-black"
-				v-text="question.title"
+				v-html="question.title"
 			/>
 		</transition>
 	</div>
