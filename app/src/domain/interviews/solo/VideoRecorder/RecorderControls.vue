@@ -1,10 +1,9 @@
 <template>
 	<div
 		:class="[
-			'relative z-10',
+			'relative bg-grey-400 z-10',
 			'flex flex-wrap items-center justify-between',
-			'min-h-controls',
-			'gap-y-5 p-5 shadow-md',
+			'min-h-controls gap-y-5 p-5 shadow-md',
 		]"
 	>
 		<x-button

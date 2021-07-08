@@ -1,5 +1,11 @@
 <template>
-	<div class="flex flex-wrap items-center justify-between min-h-controls gap-y-5 px-5 my-5">
+	<div
+		:class="[
+			'relative bg-grey-400 z-10',
+			'flex flex-wrap items-center justify-between',
+			'min-h-controls gap-y-5 p-5 shadow-md',
+		]"
+	>
 		<x-button
 			v-if="!isReviewing"
 			title="Retake"
@@ -27,7 +33,7 @@
 		<video-scrubber
 			v-if="isReviewing"
 			ref="scrubber"
-			class="w-full"
+			class="w-full my-2.25"
 			@scrub="$emit('scrub', $event)"
 		/>
 	</div>
