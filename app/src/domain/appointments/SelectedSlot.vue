@@ -82,6 +82,7 @@
 
 		<add-to-calendar
 			class="mt-2.5"
+			:selection="selection"
 		/>
 	</div>
 </template>
