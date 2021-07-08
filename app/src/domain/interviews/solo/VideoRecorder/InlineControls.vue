@@ -3,15 +3,15 @@
 		<template v-if="isReady || isRecording">
 			<tooltip
 				v-if="isReady"
-				:text="userSettings.cameraEnabled ? 'Hide camera' : 'Show Camera'"
+				:text="userSettings.video ? 'Hide camera' : 'Show Camera'"
 			>
 				<x-button
 					:icons="[
 						'camera',
-						userSettings.cameraEnabled ? null : 'camera-strike',
+						userSettings.video ? null : 'camera-strike',
 					]"
-					:class="userSettings.cameraEnabled ? 'e-button--white' : 'e-button--red'"
-					:sr-only="userSettings.cameraEnabled ? 'Hide camera' : 'Show Camera'"
+					:class="userSettings.video ? 'e-button--white' : 'e-button--red'"
+					:sr-only="userSettings.video ? 'Hide camera' : 'Show Camera'"
 					type="icon"
 					@click="$emit('toggleCamera')"
 				/>

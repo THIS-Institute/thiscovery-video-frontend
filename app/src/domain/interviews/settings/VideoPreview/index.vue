@@ -3,7 +3,7 @@
 		ratio="pt-3/4"
 		class="bg-grey-400"
 	>
-		<local-video v-if="userSettings.cameraEnabled" />
+		<local-video v-if="userSettings.video" />
 
 		<video-placeholder
 			v-else
@@ -12,8 +12,8 @@
 
 		<video-controls
 			:forced-microphone="forcedMicrophone"
-			:camera-enabled="userSettings.cameraEnabled"
-			:microphone-enabled="userSettings.microphoneEnabled"
+			:camera-enabled="userSettings.video"
+			:microphone-enabled="userSettings.audio"
 			@toggle-camera="onToggleCamera"
 			@toggle-mute="onToggleMute"
 		/>

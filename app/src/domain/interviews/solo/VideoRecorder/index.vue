@@ -4,12 +4,12 @@
 		class="bg-grey-400"
 	>
 		<video-placeholder
-			v-show="!userSettings.cameraEnabled"
+			v-show="!userSettings.video"
 			:name="userName"
 		/>
 
 		<video
-			v-show="userSettings.cameraEnabled"
+			v-show="userSettings.video"
 			ref="videoElementRef"
 			class="transform -scale-x-100 transition-opacity duration-200"
 			:class="{
@@ -155,7 +155,7 @@
 
 			const onToggleCamera = () => {
 				store.commit('app/toggleCamera');
-				(userSettings.value.cameraEnabled) ? emit('startCamera') : emit('stopCamera');
+				(userSettings.value.video) ? emit('startCamera') : emit('stopCamera');
 			};
 
 			const handleTogglePaused = (isPaused) => {

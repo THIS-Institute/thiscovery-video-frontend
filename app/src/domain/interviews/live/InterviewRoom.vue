@@ -85,7 +85,7 @@
 									class="bg-black-25"
 								>
 									<icon
-										v-if="!userSettings.cameraEnabled"
+										v-if="!userSettings.video"
 										:class="[
 											'top-1/2 left-1/2',
 											'opacity-75',

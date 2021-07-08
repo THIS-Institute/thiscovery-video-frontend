@@ -7,8 +7,8 @@ export const app = {
 		navActive: false,
 		routerHistory: [],
 		settings: {
-			cameraEnabled: true,
-			microphoneEnabled: true,
+			audio: true,
+			video: true,
 		},
 	}),
 
@@ -38,11 +38,11 @@ export const app = {
 		},
 
 		toggleCamera(state) {
-			state.settings.cameraEnabled = !state.settings.cameraEnabled;
+			state.settings.video = !state.settings.video;
 		},
 
 		toggleMicrophone(state) {
-			state.settings.microphoneEnabled = !state.settings.microphoneEnabled;
+			state.settings.audio = !state.settings.audio;
 		},
 	},
 

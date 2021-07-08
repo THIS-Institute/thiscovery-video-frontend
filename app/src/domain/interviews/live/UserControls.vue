@@ -1,30 +1,30 @@
 <template>
 	<div class="flex items-center space-x-1 px-5 py-4 z-1">
 		<tooltip
-			:text="userSettings.cameraEnabled ? 'Disable camera' : 'Enable Camera'"
+			:text="userSettings.video ? 'Disable camera' : 'Enable Camera'"
 			bottom
 		>
 			<x-button
 				:icons="[
 					'camera',
-					userSettings.cameraEnabled ? null : 'camera-strike',
+					userSettings.video ? null : 'camera-strike',
 				]"
-				:class="userSettings.cameraEnabled ? 'e-button--white-outline' : 'e-button--red'"
+				:class="userSettings.video ? 'e-button--white-outline' : 'e-button--red'"
 				type="icon"
 				@click="onToggleCamera"
 			/>
 		</tooltip>
 
 		<tooltip
-			:text="userSettings.microphoneEnabled ? 'Mute microphone' : 'Unmute microphone'"
+			:text="userSettings.audio ? 'Mute microphone' : 'Unmute microphone'"
 			bottom
 		>
 			<x-button
 				:icons="[
 					'microphone',
-					userSettings.microphoneEnabled ? null : 'microphone-strike',
+					userSettings.audio ? null : 'microphone-strike',
 				]"
-				:class="userSettings.microphoneEnabled ? 'e-button--white-outline' : 'e-button--red'"
+				:class="userSettings.audio ? 'e-button--white-outline' : 'e-button--red'"
 				type="icon"
 				@click="onToggleMute"
 			/>
@@ -114,12 +114,12 @@
 
 			const onToggleMute = () => {
 				store.commit('app/toggleMicrophone');
-				emit('toggleMute', userSettings.value.microphoneEnabled);
+				emit('toggleMute', userSettings.value.audio);
 			};
 
 			const onToggleCamera = () => {
 				store.commit('app/toggleCamera');
-				emit('toggleCamera', userSettings.value.cameraEnabled);
+				emit('toggleCamera', userSettings.value.video);
 			};
 
 			const onToggleOptions = () => options.value = !options.value;
