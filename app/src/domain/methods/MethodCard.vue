@@ -19,7 +19,7 @@
 
 			<p
 				class="mt-5"
-				v-text="!available && error ? error : content"
+				v-text="available ? content : errorMessage"
 			/>
 
 			<ul
@@ -75,6 +75,9 @@
 </template>
 
 <script>
+	import messages from '@/messages';
+	import { useMessages } from '@/composables/useMessages';
+
 	import InfoBar from '@/components/InfoBar';
 
 	export default {
@@ -124,6 +127,18 @@
 			},
 
 			available: Boolean,
+		},
+
+		setup(props) {
+			const { message } = useMessages(messages);
+
+			const errorMessage = props.error
+				? props.error
+				: message('browserError.unsupported');
+
+			return {
+				errorMessage,
+			};
 		},
 	};
 </script>

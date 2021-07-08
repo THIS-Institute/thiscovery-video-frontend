@@ -104,6 +104,10 @@ export default Object.freeze({
 		paths: userInterviewPaths,
 	},
 
+	browserError: {
+		unsupported: 'It seems the browser you are currently using doesn\'t support certain features needed to use this option. Please try another browser, or explore the other options available.',
+	},
+
 	live: {
 		title: 'Online call',
 		icon: 'camera',
