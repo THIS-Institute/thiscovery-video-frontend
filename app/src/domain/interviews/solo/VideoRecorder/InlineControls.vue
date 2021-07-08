@@ -3,28 +3,28 @@
 		<template v-if="isReady || isRecording">
 			<tooltip
 				v-if="isReady"
-				:text="options.hidden ? 'Show camera' : 'Hide Camera'"
+				:text="userSettings.video ? 'Hide camera' : 'Show Camera'"
 			>
 				<x-button
 					:icons="[
 						'camera',
-						options.hidden ? 'camera-strike' : null
+						userSettings.video ? null : 'camera-strike',
 					]"
-					:class="options.hidden ? 'e-button--red' : 'e-button--white'"
-					:sr-only="options.hidden ? 'Show camera' : 'Hide Camera'"
+					:class="userSettings.video ? 'e-button--white' : 'e-button--red'"
+					:sr-only="userSettings.video ? 'Hide camera' : 'Show Camera'"
 					type="icon"
-					@click="handleToggleCamera"
+					@click="$emit('toggleCamera')"
 				/>
 			</tooltip>
 
 			<tooltip
 				v-if="isRecording"
-				:text="options.paused ? 'Resume' : 'Pause'"
+				:text="paused ? 'Resume' : 'Pause'"
 			>
 				<x-button
-					:icon="options.paused ? 'play' : 'pause'"
-					:class="options.paused ? 'e-button--red' : 'e-button--white'"
-					:sr-only="options.paused ? 'Resume' : 'Pause'"
+					:icon="paused ? 'play' : 'pause'"
+					:class="paused ? 'e-button--red' : 'e-button--white'"
+					:sr-only="paused ? 'Resume' : 'Pause'"
 					type="icon"
 					@click="handleTogglePause"
 				/>
@@ -34,7 +34,8 @@
 </template>
 
 <script>
-	import { reactive } from 'vue';
+	import { ref, computed } from 'vue';
+	import { useStore } from 'vuex';
 	import { useRecordingState } from './useRecordingState';
 
 	export default {
@@ -51,10 +52,8 @@
 		],
 
 		setup(props, { emit }) {
-			const options = reactive({
-				hidden: false,
-				paused: false,
-			});
+			const store = useStore();
+			const userSettings = computed(() => store.getters['app/getSettings']);
 
 			const {
 				isReady,
@@ -62,23 +61,20 @@
 				isRecording,
 			} = useRecordingState(props.state);
 
-			const handleToggleCamera = () => {
-				emit('toggleCamera');
-				options.hidden = !options.hidden;
-			};
+			const paused = ref(false);
 
 			const handleTogglePause = () => {
-				options.paused = !options.paused;
+				paused.value = !paused.value;
 
-				emit('togglePause', options.paused);
+				emit('togglePause', paused.value);
 			};
 
 			return {
-				options,
+				userSettings,
+				paused,
 				isReady,
 				isCountdown,
 				isRecording,
-				handleToggleCamera,
 				handleTogglePause,
 			}
 		},

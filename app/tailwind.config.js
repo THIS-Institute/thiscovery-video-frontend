@@ -164,6 +164,7 @@ module.exports = {
 				'1/2em': '.5em',
 				'1/3em': '.33em',
 				'1.5': relative(6),
+				'2.25': relative(9),
 				'2.5': relative(10),
 				'3.5': relative(14),
 				'4.5': relative(18),

@@ -34,21 +34,13 @@
 <script>
 	export default {
 		props: {
-			cameraEnabled: {
-				type: Boolean,
-				required: true,
-			},
-
-			microphoneEnabled: {
-				type: Boolean,
-				required: true,
-			},
-
 			userName: {
 				type: String,
 				default: null,
 			},
 
+			cameraEnabled: Boolean,
+			microphoneEnabled: Boolean,
 			forcedMicrophone: Boolean,
 		},
 

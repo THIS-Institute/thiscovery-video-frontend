@@ -4,16 +4,16 @@ import {
 	provide,
 } from 'vue';
 
+import { useStore } from 'vuex';
+
 export function useMedia() {
+	const store = useStore();
+
 	const videoElementRef = ref(null);
 	const stream = shallowReactive({});
 	const recorder = shallowReactive({});
 	const playbackURL = ref(null);
-
-	const constraints = {
-		audio: true,
-		video: true,
-	}
+	const constraints = store.getters['app/getSettings'];
 
 	const setupMediaStream = async (mediaStream) => {
 		stream.value = mediaStream;
