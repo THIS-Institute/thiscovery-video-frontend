@@ -1,7 +1,7 @@
 <template>
 	<component
 		:is="type"
-		class="inline-flex items-center leading-reduced transition-all duration-300 focus:outline-none"
+		class="inline-flex items-center leading-snug transition-all duration-300 focus:outline-none"
 		v-bind="{
 			title,
 			srOnly,
