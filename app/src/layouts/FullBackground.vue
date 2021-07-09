@@ -39,8 +39,9 @@
 						title="Leave interview"
 						class="e-button--red"
 						type="pill"
-						@click="openModal(modals.leave)"
+						@click="openModal(modals.leave, leaveCallbacks)"
 					/>
+
 					<x-button
 						title="Retake"
 						class="e-button--red-outline"
@@ -104,10 +105,16 @@
 			const navActive = computed(() => store.state.app.navActive);
 			const nav = computed(() => store.state.app.nav);
 
-			const openModal = (option) => store.commit('app/setModal', option);
+			const openModal = (options, callbacks) => store.dispatch('app/openModal', { ...options, callbacks });
+
+			const onLeave = () => console.log('leave');
+			const leaveCallbacks = {
+				confirm: () => onLeave(),
+			};
 
 			return {
 				modals,
+				leaveCallbacks,
 				openModal,
 				navActive,
 				nav,

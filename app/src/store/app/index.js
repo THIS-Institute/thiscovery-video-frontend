@@ -3,10 +3,7 @@ export const app = {
 
 	state: () => ({
 		loading: false,
-		modal: {
-			type: null,
-			value: null,
-		},
+		modal: {},
 		navActive: false,
 		routerHistory: [],
 		settings: {
@@ -46,11 +43,12 @@ export const app = {
 	},
 
 	actions: {
+		openModal: ({ commit }, payload) => {
+			commit('setModal', payload);
+		},
+
 		closeModal: ({ commit }) => {
-			commit('setModal', {
-				type: null,
-				value: null,
-			});
+			commit('setModal', {});
 		},
 	},
 

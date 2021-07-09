@@ -43,7 +43,7 @@
 			class="e-button--red-outline"
 			small
 			type="pill"
-			@click="$emit('cancel')"
+			@click="$emit('close')"
 		/>
 
 		<x-button
@@ -71,7 +71,7 @@
 
 		emits: [
 			'save',
-			'cancel',
+			'close',
 		],
 
 		setup(props) {

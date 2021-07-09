@@ -41,6 +41,8 @@
 					<component
 						:is="modal.type"
 						v-bind="modal.value"
+						v-on="modal.callbacks ? modal.callbacks : {}"
+						@close="closeModal"
 					/>
 				</div>
 			</div>
