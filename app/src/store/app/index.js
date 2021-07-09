@@ -3,7 +3,10 @@ export const app = {
 
 	state: () => ({
 		loading: false,
-		modalActive: false,
+		modal: {
+			type: null,
+			value: null,
+		},
 		navActive: false,
 		routerHistory: [],
 		settings: {
@@ -17,12 +20,8 @@ export const app = {
 			state.navActive = !state.navActive;
 		},
 
-		toggleModal(state) {
-			state.modalActive = !state.modalActive;
-		},
-
-		setModalActive(state, active) {
-			state.modalActive = active;
+		setModal(state, options) {
+			state.modal = options;
 		},
 
 		setLoading(state, loading) {
@@ -47,12 +46,11 @@ export const app = {
 	},
 
 	actions: {
-		openModal: ({ commit }) => {
-			commit('setModalActive', true);
-		},
-
 		closeModal: ({ commit }) => {
-			commit('setModalActive', false);
+			commit('setModal', {
+				type: null,
+				value: null,
+			});
 		},
 	},
 

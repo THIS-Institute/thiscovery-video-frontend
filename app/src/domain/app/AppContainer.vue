@@ -1,6 +1,8 @@
 <template>
 	<router-view />
 
+	<modal-container />
+
 	<div
 		v-if="isAppLoading"
 		class="relative h-screen"

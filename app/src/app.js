@@ -14,6 +14,7 @@ import Icon from './components/Icon';
 import Placeholder from './components/Placeholder';
 import IconText from './components/IconText';
 import Tooltip from './components/Tooltip';
+import ModalContainer from './components/modal/ModalContainer';
 
 const RootComponent = {};
 
@@ -59,6 +60,7 @@ app.component('Icon', Icon);
 app.component('Placeholder', Placeholder);
 app.component('IconText', IconText);
 app.component('Tooltip', Tooltip);
+app.component('ModalContainer', ModalContainer);
 
 app.use(envPlugin);
 app.use(store);
