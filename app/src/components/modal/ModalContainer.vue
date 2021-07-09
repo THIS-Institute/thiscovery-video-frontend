@@ -59,6 +59,7 @@
 	import Phone from './JoinByPhone.vue';
 	import Comment from './CommentDialog.vue';
 	import Troubleshoot from './TroubleShooting.vue';
+	import Calendar from './CalendarDialog.vue';
 
 	export default {
 		components: {
@@ -66,6 +67,7 @@
 			Phone,
 			Comment,
 			Troubleshoot,
+			Calendar,
 		},
 
 		props: {
