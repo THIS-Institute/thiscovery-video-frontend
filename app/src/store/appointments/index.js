@@ -168,6 +168,7 @@ export const appointments = {
 					lastName: rootGetters['user/getFamilyName'],
 					anonUserId: rootState.user.anonUserId,
 					anonUserTaskId: rootState.user.anonUserTaskId,
+					projectTaskId: rootState.user.projectTaskId,
 					taskId: rootState.task.id,
 				});
 			}

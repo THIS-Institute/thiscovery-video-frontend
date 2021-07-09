@@ -69,6 +69,7 @@ def lambda_handler(event, context):
             'interview_id': interview_id,
             'anon_project_specific_user_id': metadata['anon_user_id'],
             'anon_user_task_id': metadata['anon_user_task_id'],
+            'project_task_id': metadata['project_task_id'],
             'question_id': metadata['question_id'],
             'question_sequence_no': sequence,
             's3_uri': url,

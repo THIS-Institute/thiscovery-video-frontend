@@ -37,6 +37,7 @@ class Bookings:
 
         anon_user_id = user['anonUserId']
         anon_user_task_id = user['anonUserTaskId']
+        project_task_id = user['projectTaskId']
         task_id = user['taskId']
         interview_id = str(uuid.uuid4())
         appointment_id = str(appointment['id'])
@@ -52,6 +53,7 @@ class Bookings:
                 'user_id': anon_user_id,
                 'task_id': task_id,
                 'anon_user_task_id': anon_user_task_id,
+                'project_task_id': project_task_id,
                 'appointment_id': appointment_id,
                 'appointment_time': appointment_time,
             }
@@ -67,6 +69,7 @@ class Bookings:
                 'user_id': anon_user_id,
                 'task_id': task_id,
                 'anon_user_task_id': anon_user_task_id,
+                'project_task_id': project_task_id,
                 'appointment_id': appointment_id,
                 'appointment_time': appointment_time,
             }
@@ -78,6 +81,7 @@ class Bookings:
             interview_id=interview_id,
             anon_user_id=anon_user_id,
             anon_user_task_id=anon_user_task_id,
+            project_task_id=project_task_id,
         )
 
         base_url = os.environ['APP_BASE_URL']
@@ -172,6 +176,7 @@ class Bookings:
             interview_id=interview_id,
             anon_user_id=item['user_id'],
             anon_user_task_id=item['anon_user_task_id'],
+            project_task_id=item['project_task_id'],
         )
 
         return {
@@ -217,11 +222,13 @@ class Bookings:
             interview_id=interview_id,
             anon_user_id=item['user_id'],
             anon_user_task_id=item['anon_user_task_id'],
+            project_task_id=item['project_task_id'],
         )
 
         return cancellation
 
-    def create_event(self, event_type, appointment, interview_id, anon_user_id, anon_user_task_id):
+    def create_event(self, event_type, appointment, interview_id,
+        anon_user_id, anon_user_task_id, project_task_id):
         appointment_id = str(appointment['id'])
         app_base_url = os.environ['APP_BASE_URL']
     
@@ -232,6 +239,7 @@ class Bookings:
                 'interview_id': interview_id,
                 'anon_project_specific_user_id': anon_user_id,
                 'anon_user_task_id': anon_user_task_id,
+                'project_task_id': project_task_id,
                 'appointment_datetime': appointment['datetime'],
                 'calendar_name': appointment['calendar'],
                 'calendar_id': appointment['calendarID'],
@@ -240,6 +248,7 @@ class Bookings:
                 'appointment_id': appointment['id'],
                 'appointment_duration': appointment['duration'],
                 'appointment_timezone': appointment['timezone'],
+                'calendar_timezone': appointment['calendarTimezone'],
                 'interview_room_url': f'{app_base_url}/live/{appointment_id}',
             },
         )

@@ -74,6 +74,7 @@ def lambda_handler(event, context):
         'interviewId': interview_id,
         'anonUserId': anon_user_id,
         'anonUserTaskId': thiscovery_response['anon_user_task_id'],
+        'projectTaskId': thiscovery_response['project_task_id'],
         'acuityTypeId': task['appointment_type_id'],
         'onDemandAvailable': task['on_demand_available'],
         'liveAvailable': task['live_available'],

@@ -38,6 +38,7 @@ def lambda_handler(event, context):
         interview_id=interview_id,
         anon_user_id=interview_item['user_id'],
         anon_user_task_id=interview_item['anon_user_task_id'],
+        project_task_id=interview_item['project_task_id'],
     )
 
     response = {
@@ -46,7 +47,7 @@ def lambda_handler(event, context):
 
     return ApiGatewayResponse(data=response).response()
 
-def create_event(event_type, interview_id, anon_user_id, anon_user_task_id):
+def create_event(event_type, interview_id, anon_user_id, anon_user_task_id, project_task_id):
     event = Event(
         source='thiscovery_video',
         detail_type=event_type,
@@ -54,6 +55,7 @@ def create_event(event_type, interview_id, anon_user_id, anon_user_task_id):
             'interview_id': interview_id,
             'anon_project_specific_user_id': anon_user_id,
             'anon_user_task_id': anon_user_task_id,
+            'project_task_id': project_task_id,
         },
     )
 

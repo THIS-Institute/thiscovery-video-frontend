@@ -40,13 +40,23 @@ class Acuity:
 
     @decodes_response
     def create_appointment(self, appointment_time,
-        appointment_type_id, email, first_name, last_name):
+        appointment_type_id, email, first_name, last_name,
+        anon_user_task_id, anon_project_specific_user_id):
+
+        user_metadata = UserMetadata(
+            anon_user_task_id,
+            anon_project_specific_user_id,
+        )
+
+        fields = user_metadata.acuity_fields()
+
         data = {
             'datetime': appointment_time,
             'appointmentTypeID': appointment_type_id,
             'firstName': first_name,
             'lastName': last_name,
             'email': email,
+            'fields': fields,
         }
 
         return self.post(endpoint='appointments', json=data)
@@ -101,3 +111,39 @@ class AcuityError(Exception):
             return response_info['error']
 
         return response_info
+
+class UserMetadata():
+    FORM_METADATA_ID = 1606751
+    FORM_AUT_ID = 8861964
+    FORM_APSU_ID = 8941105
+
+    def __init__ (self, anon_user_task_id, anon_project_specific_user_id):
+        self.anon_user_task_id = anon_user_task_id
+        self.anon_project_specific_user_id = anon_project_specific_user_id
+
+    def acuity_fields(self):
+        anon_user_task_id = self.meta_key_value(
+            id=self.FORM_AUT_ID,
+            value=self.anon_user_task_id
+        )
+
+        anon_project_specific_user_id = self.meta_key_value(
+            id=self.FORM_APSU_ID,
+            value=self.anon_project_specific_user_id
+        )
+
+        return [
+            self.meta_key_value(
+                id=self.FORM_METADATA_ID,
+                value=[
+                    anon_user_task_id,
+                    anon_project_specific_user_id,
+                ],
+            ),
+        ]
+
+    def meta_key_value(self, id, value):
+        return {
+            'id': id,
+            'value': value,
+        }

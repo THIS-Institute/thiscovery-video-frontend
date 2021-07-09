@@ -57,4 +57,3 @@ def lambda_handler(event, context):
     }
 
     return ApiGatewayResponse(data=response_data).response()
-

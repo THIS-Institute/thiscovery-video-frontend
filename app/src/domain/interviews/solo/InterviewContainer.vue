@@ -325,6 +325,7 @@
 					interviewId: store.state.interviews.id,
 					anonUserId: store.state.user.anonUserId,
 					anonUserTaskId: store.state.user.anonUserTaskId,
+					projectTaskId: store.state.user.projectTaskId,
 					taskId: store.state.task.id,
 					questionId: questionData.id,
 					questionSequence: questionData.sequence,

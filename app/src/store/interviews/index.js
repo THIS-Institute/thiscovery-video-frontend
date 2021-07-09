@@ -214,6 +214,7 @@ export const interviews = {
 				taskId: rootState.task.id,
 				anonUserId: rootState.user.anonUserId,
 				anonUserTaskId: rootState.user.anonUserTaskId,
+				projectTaskId: rootState.user.projectTaskId,
 			};
 
 			const response = await createSelfRecord(options);

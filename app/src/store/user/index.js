@@ -10,6 +10,7 @@ export const user = {
 		user: {},
 		anonUserId: null,
 		anonUserTaskId:  null,
+		projectTaskId: null,
 		isInterviewer: false,
 		authError: null,
 		authAppState: null,
@@ -34,6 +35,10 @@ export const user = {
 
 		setAnonUserTaskId(state, id) {
 			state.anonUserTaskId = id;
+		},
+
+		setProjectTaskId(state, id) {
+			state.projectTaskId = id;
 		},
 
 		setUser(state, user) {

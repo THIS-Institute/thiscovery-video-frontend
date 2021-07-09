@@ -58,6 +58,7 @@ export const task = {
 				commit('setId', task.id);
 				commit('user/setAnonUserId', task.anonUserId, { root: true });
 				commit('user/setAnonUserTaskId', task.anonUserTaskId, { root: true });
+				commit('user/setProjectTaskId', task.projectTaskId, { root: true });
 				commit('appointments/setBookingTypeId', task.acuityTypeId, { root: true });
 				commit('setOnDemandAvailable', task.onDemandAvailable);
 				commit('setLiveAvailable', task.liveAvailable);

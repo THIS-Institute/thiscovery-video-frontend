@@ -25,6 +25,7 @@ def lambda_handler(event, context):
     interview_id = request['interviewId']
     anon_user_id = request['anonUserId']
     anon_user_task_id = request['anonUserTaskId']
+    project_task_id = request['projectTaskId']
     task_id = request['taskId']
     question_id = request['questionId']
     question_seq = request['questionSequence']
@@ -84,6 +85,7 @@ def lambda_handler(event, context):
             'interview_id': interview_id,
             'anon_user_id': anon_user_id,
             'anon_user_task_id': anon_user_task_id,
+            'project_task_id': project_task_id,
             'task_id': task_id,
             'question_id': question_id,
             'sequence': question_seq,
@@ -103,6 +105,7 @@ def lambda_handler(event, context):
             'interview_id': interview_id,
             'anon_project_specific_user_id': anon_user_id,
             'anon_user_task_id': anon_user_task_id,
+            'project_task_id': project_task_id,
             'question_started_at': question_started_at,
             'question_ended_at': question_ended_at,
             'response_started_at': response_started_at,

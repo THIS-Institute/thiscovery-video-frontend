@@ -39,6 +39,7 @@ def lambda_handler(event, context):
     interview_id = interview['interview_id']
     anon_user_id = interview['user_id']
     anon_user_task_id = interview['anon_user_task_id']
+    project_task_id = interview['project_task_id']
 
     uri = f'https://video.twilio.com{composition_url}'
     response = client.request('GET', uri)
@@ -65,6 +66,7 @@ def lambda_handler(event, context):
                 'interview_id': interview_id,
                 'anon_user_id': anon_user_id,
                 'anon_user_task_id': anon_user_task_id,
+                'project_task_id': project_task_id,
                 'twilio_room_sid': room_sid,
             },
         },
@@ -85,6 +87,7 @@ def lambda_handler(event, context):
             'interview_id': interview_id,
             'anon_project_specific_user_id': anon_user_id,
             'anon_user_task_id': anon_user_task_id,
+            'project_task_id': project_task_id,
             's3_uri': url,
         },
     )
