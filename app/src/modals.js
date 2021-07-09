@@ -44,21 +44,4 @@ export default Object.freeze({
 		type: 'Troubleshoot',
 		value: null,
 	},
-
-	calendar: {
-		type: 'Calendar',
-		value: {
-			types: [
-				{
-					name: 'Apple',
-				},
-				{
-					name: 'Google',
-				},
-				{
-					name: 'Outlook',
-				},
-			],
-		},
-	},
 });

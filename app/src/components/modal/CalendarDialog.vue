@@ -1,5 +1,5 @@
 <template>
-	<pre v-text="types" />
+	<pre v-text="selection" />
 
 	<div class="flex items-center justify-center space-x-4 mt-5">
 		<x-button
@@ -15,8 +15,8 @@
 <script>
 	export default {
 		props: {
-			types: {
-				type: Array,
+			selection: {
+				type: String,
 				required: true,
 			},
 		},

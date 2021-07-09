@@ -12,7 +12,6 @@
 
 <script>
 	import { useStore } from 'vuex';
-	import modals from '@/modals';
 
 	export default {
 		props: {
@@ -22,10 +21,17 @@
 			},
 		},
 
-		setup() {
+		setup(props) {
 			const store = useStore();
 
-			const openCalendar = () => store.dispatch('app/openModal', modals.calendar);
+			const openCalendar = () => {
+				store.dispatch('app/openModal', {
+					type: 'calendar',
+					value: {
+						selection: props.selection,
+					},
+				});
+			};
 
 			return {
 				openCalendar,
