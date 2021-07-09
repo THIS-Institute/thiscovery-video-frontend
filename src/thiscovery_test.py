@@ -42,13 +42,6 @@ def interview_questions(event, context):
                 "block_name": "Introductory questions",
                 "questions": [
                     {
-                        "question_id": "QID5",
-                        "question_name": "Q5",
-                        "sequence_no": "5",
-                        "question_text": "<a href=\"https://player.vimeo.com/video/403648880\" target=\"_blank\">Please watch this video</a>",
-                        "question_description": "<p>Please take a minute to reflect on how you feel and/or things you are grateful for this morning.</p>"
-                    },
-                    {
                         "question_id": "QID1",
                         "question_name": "Q1",
                         "sequence_no": "1",
@@ -81,7 +74,14 @@ def interview_questions(event, context):
                         "sequence_no": "4",
                         "question_text": "<h3>Would you recommend thiscovery to a friend?</h3>",
                         "question_description": "<p>If you enjoyed using thiscovery, why not spread the word?</p>"
-                    }
+                    },
+                    {
+                        "question_id": "QID5",
+                        "question_name": "Q5",
+                        "sequence_no": "5",
+                        "question_text": "<a href=\"https://player.vimeo.com/video/403648880\" target=\"_blank\">Please watch this video</a>",
+                        "question_description": "<p>Please take a minute to reflect on how you feel and/or things you are grateful for this morning.</p>"
+                    },
                 ]
             }
         ],
