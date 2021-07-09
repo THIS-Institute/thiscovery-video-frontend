@@ -59,7 +59,7 @@
 </template>
 
 <script>
-	import { reactive, toRefs } from 'vue';
+	import { ref } from 'vue';
 
 	export default {
 		props: {
@@ -75,12 +75,10 @@
 		],
 
 		setup(props) {
-			const state = reactive({
-				comment: props.comments,
-			});
+			const comment = ref(props.comments);
 
 			return {
-				...toRefs(state),
+				comment,
 			};
 		},
 	};

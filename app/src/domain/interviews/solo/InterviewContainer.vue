@@ -111,37 +111,10 @@
 						v-if="isReviewingMode() && playbackURL"
 						:video-playback-url="playbackURL"
 						@progress-question="onNextQuestion"
-						@retake="openConfirmDialog"
-						@add-comments="openCommentsDialog"
+						@retake="openModal(modals.retake, retakeCallbacks)"
+						@add-comments="openModal(commentOptions, commentCallbacks)"
 					/>
 				</div>
-
-				<modal-container
-					wrapper-class="max-w-xl"
-					@close="onForceClose"
-				>
-					<!-- Are you sure you want to retake? -->
-					<confirm-dialog
-						v-if="state.showConfirmDialog"
-						@confirm="onConfirmRetake"
-						@cancel="onCancelRetake"
-					>
-						Are you sure you want to delete your recording and retake?
-					</confirm-dialog>
-
-					<!-- Add a comment -->
-					<comment-dialog
-						v-if="state.showCommentDialog"
-						:comments="state.comments"
-						@save="onAddedComments"
-						@cancel="onCancelComments"
-					/>
-
-					<trouble-shooting
-						v-if="state.showTroubleshoot"
-						@close="closeTroubleshoot"
-					/>
-				</modal-container>
 
 				<info-bar
 					v-if="isRecordingMode() || isReviewingMode()"
@@ -151,7 +124,7 @@
 						title: 'See how to fix this',
 					}"
 					modal
-					@open-modal="openTroubleshoot"
+					@open-modal="openModal(modals.troubleshoot)"
 				/>
 			</div>
 		</section>
@@ -172,22 +145,16 @@
 	import VideoRecorder from './VideoRecorder';
 	import VideoPlayer from './VideoPlayer';
 
+	import modals from '@/modals';
+
 	import InfoBar from '@/components/InfoBar';
-	import ModalContainer from '@/components/modal/ModalContainer';
-	import ConfirmDialog from '@/components/modal/ConfirmDialog';
-	import CommentDialog from '@/components/modal/CommentDialog';
-	import TroubleShooting from '@/components/modal/TroubleShooting';
 
 	export default {
 		components: {
 			Question,
 			InfoBar,
-			ModalContainer,
-			ConfirmDialog,
 			VideoRecorder,
 			VideoPlayer,
-			CommentDialog,
-			TroubleShooting,
 		},
 
 		props: {
@@ -223,10 +190,6 @@
 
 			const state = reactive({
 				mode: MODE_RECORDING,
-				showConfirmDialog: false,
-				showCommentDialog: false,
-				showTroubleshoot: false,
-				comments: null,
 				questionStartedAt: null,
 				questionEndedAt: null,
 				responseStartedAt: null,
@@ -343,7 +306,7 @@
 			const onAnswerProccessed = () => {
 				state.retakeCount = 0;
 				isUploading.value = false;
-				state.comments = null;
+				commentOptions.value.comments = null;
 				cleanup();
 				nextQuestion();
 				setMode(MODE_RECORDING);
@@ -351,61 +314,32 @@
 				state.questionStartedAt = getTimeStringNow();
 			};
 
-			const openConfirmDialog = () => {
-				state.showConfirmDialog = true;
-				store.dispatch('app/openModal');
+			const retakeCallbacks = {
+				confirm: () => {
+					cleanup();
+					setMode(MODE_RECORDING);
+					commentOptions.value.comments = null;
+					store.dispatch('app/closeModal');
+					state.retakeCount++;
+				},
 			};
 
-			const openCommentsDialog = () => {
-				state.showCommentDialog = true;
-				store.dispatch('app/openModal');
+			const commentOptions = {
+				type: 'Comment',
+				value: {
+					comments: null,
+				},
 			};
 
-			const openTroubleshoot = () => {
-				state.showTroubleshoot = true;
-				store.dispatch('app/openModal');
+			const commentCallbacks = {
+				save: (comments) => {
+					commentOptions.value.comments = comments;
+					store.dispatch('app/closeModal');
+				},
 			};
 
-			const closeConfirmDialog = () => {
-				state.showConfirmDialog = false;
-				store.dispatch('app/closeModal');
-			};
-
-			const closeCommentsDialog = () => {
-				state.showCommentDialog = false;
-				store.dispatch('app/closeModal');
-			};
-
-			const closeTroubleshoot = () => {
-				state.showTroubleshoot = false;
-				store.dispatch('app/closeModal');
-			};
-
-			const onForceClose = () => {
-				closeConfirmDialog();
-				closeCommentsDialog();
-				closeTroubleshoot();
-			};
-			
-			const onConfirmRetake = () => {
-				cleanup();
-				setMode(MODE_RECORDING);
-				closeConfirmDialog();
-
-				state.retakeCount++;
-			};
-
-			const onCancelRetake = () => {
-				closeConfirmDialog();
-			};
-
-			const onAddedComments = (comments) => {
-				state.comments = comments;
-				closeCommentsDialog();
-			};
-
-			const onCancelComments = () => {
-				closeCommentsDialog();
+			const openModal = (options, callbacks) => {
+				store.dispatch('app/openModal', { ...options, callbacks });
 			};
 
 			const onSaveExit = async () => {
@@ -454,18 +388,15 @@
 				onRecorderResume,
 				playbackURL,
 				onNextQuestion,
-				openConfirmDialog,
-				openCommentsDialog,
-				openTroubleshoot,
-				closeTroubleshoot,
-				onConfirmRetake,
-				onCancelRetake,
-				onCancelComments,
-				onAddedComments,
 				onSaveExit,
 				onCameraStart,
 				onCameraStop,
-				onForceClose,
+
+				modals,
+				retakeCallbacks,
+				commentCallbacks,
+				commentOptions,
+				openModal,
 			};
 		},
 	};
