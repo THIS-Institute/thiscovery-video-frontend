@@ -28,7 +28,7 @@ def lambda_handler(event, context):
         'sk': pk,
     })
 
-    if 'Item' not in existing_room:
+    if 'Item' in existing_room:
         return ApiGatewayResponse(data={'message': 'ok'}).response()
 
     table.put_item(
