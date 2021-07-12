@@ -30,6 +30,8 @@ class Bookings:
             email=user['email'],
             first_name=user['firstName'],
             last_name=user['lastName'],
+            anon_user_task_id=user['anonUserId'],
+            anon_project_specific_user_id=user['anonUserTaskId'],
         )
 
         if 'id' not in appointment:

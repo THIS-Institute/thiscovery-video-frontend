@@ -113,7 +113,6 @@ class AcuityError(Exception):
         return response_info
 
 class UserMetadata():
-    FORM_METADATA_ID = 1606751
     FORM_AUT_ID = 8861964
     FORM_APSU_ID = 8941105
 
@@ -133,13 +132,8 @@ class UserMetadata():
         )
 
         return [
-            self.meta_key_value(
-                id=self.FORM_METADATA_ID,
-                value=[
-                    anon_user_task_id,
-                    anon_project_specific_user_id,
-                ],
-            ),
+            anon_user_task_id,
+            anon_project_specific_user_id,
         ]
 
     def meta_key_value(self, id, value):

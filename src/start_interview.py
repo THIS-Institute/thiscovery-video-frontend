@@ -73,6 +73,7 @@ def lambda_handler(event, context):
                 'user_id': anon_user_id,
                 'task_id': task_id,
                 'anon_user_task_id': anon_user_task_id,
+                'project_task_id': project_task_id,
                 'track': 'SELF_RECORD',
             }
         )
