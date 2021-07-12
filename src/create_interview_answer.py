@@ -28,6 +28,7 @@ def lambda_handler(event, context):
     project_task_id = request['projectTaskId']
     task_id = request['taskId']
     question_id = request['questionId']
+    question_name = request['questionName']
     question_seq = request['questionSequence']
     question_started_at = request['questionStartedAt']
     question_ended_at = request['questionEndedAt']
@@ -88,6 +89,7 @@ def lambda_handler(event, context):
             'project_task_id': project_task_id,
             'task_id': task_id,
             'question_id': question_id,
+            'question_name': question_name,
             'sequence': question_seq,
         },
     }
@@ -111,6 +113,9 @@ def lambda_handler(event, context):
             'response_started_at': response_started_at,
             'response_ended_at': response_ended_at,
             'retake_count': retake_count,
+            'question_id': question_id,
+            'question_sequence_no': question_seq,
+            'question_name': question_name,
         },
     )
 

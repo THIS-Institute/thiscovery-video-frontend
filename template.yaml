@@ -218,6 +218,8 @@ Resources:
             TableName: !Ref InterviewsTable
         - AWSSecretsManagerGetSecretValuePolicy:
             SecretArn: !Sub arn:${AWS::Partition}:secretsmanager:${AWS::Region}:${AWS::AccountId}:secret:/${EnvironmentTagName}/*
+        - EventBridgePutEventsPolicy:
+            EventBusName: thiscovery-event-bus
       Events:
         BackendApiPOSTv1roomlink:
           Type: Api

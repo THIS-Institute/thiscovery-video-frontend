@@ -291,6 +291,7 @@
 					projectTaskId: store.state.user.projectTaskId,
 					taskId: store.state.task.id,
 					questionId: questionData.id,
+					questionName: questionData.name,
 					questionSequence: questionData.sequence,
 					questionStartedAt: state.questionStartedAt,
 					questionEndedAt: state.questionEndedAt,

@@ -59,7 +59,7 @@ def lambda_handler(event, context):
 
     os.remove(temp_file_path)
 
-    url = f'https://{bucket_name}.s3.eu-west-1.amazonaws.com/{destination_key}'
+    url = f's3://{bucket_name}/{destination_key}'
 
     event = Event(
         source='thiscovery_video',

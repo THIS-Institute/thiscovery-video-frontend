@@ -74,10 +74,7 @@ def lambda_handler(event, context):
 
     os.remove(temp_file)
 
-    # TODO: enable deletes
-    # client.video.compositions(detail['CompositionSid']).delete()
-
-    url = f'https://{destination_bucket}.s3.eu-west-1.amazonaws.com/{destination_key}'
+    url = f's3://{destination_bucket}/{destination_key}'
 
     event = Event(
         source='thiscovery_video',
@@ -93,6 +90,8 @@ def lambda_handler(event, context):
     )
 
     EventBridge().put_event(event)
+
+    client.video.compositions(detail['CompositionSid']).delete()
 
     return {
         'statusCode': 200,
