@@ -39,6 +39,10 @@ class Acuity:
         return self.post(endpoint='availability/check-times', json=data)
 
     @decodes_response
+    def get_appointment(self, appointment_id):
+        return self.get(endpoint=f'appointments/{appointment_id}')
+
+    @decodes_response
     def create_appointment(self, appointment_time,
         appointment_type_id, email, first_name, last_name,
         anon_user_task_id, anon_project_specific_user_id):

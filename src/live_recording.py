@@ -6,6 +6,7 @@ from secrets import SecretsManager
 from twilio.rest import Client
 from dynamodb import DynamoDB
 from events import Event, EventBridge
+from appointments.utils import AcuityClientFactory
 
 def lambda_handler(event, context):
     detail = event['detail']
@@ -40,6 +41,11 @@ def lambda_handler(event, context):
     anon_user_id = interview['user_id']
     anon_user_task_id = interview['anon_user_task_id']
     project_task_id = interview['project_task_id']
+    appointment_id = interview['appointment_id']
+
+    acuity = AcuityClientFactory.create_client()
+
+    appointment = acuity.get_appointment(appointment_id)
 
     uri = f'https://video.twilio.com{composition_url}'
     response = client.request('GET', uri)
@@ -86,6 +92,12 @@ def lambda_handler(event, context):
             'anon_user_task_id': anon_user_task_id,
             'project_task_id': project_task_id,
             's3_uri': url,
+            'appointment_id': appointment['id'],
+            'appointment_datetime': appointment['datetime'],
+            'calendar_id': appointment['calendarID'],
+            'calendar_name': appointment['calendar'],
+            'appointment_type_id': appointment['appointmentTypeID'],
+            'appointment_type': appointment['type'],
         },
     )
 

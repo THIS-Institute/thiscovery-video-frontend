@@ -743,6 +743,7 @@ Resources:
           BUCKET_ARN: !GetAtt InterviewAssets.Arn
           TABLE_NAME: !Ref InterviewsTable
           TABLE_ARN: !GetAtt InterviewsTable.Arn
+          ACUITY_BASE_URI: !Ref EnvConfigAcuityBaseUriAsString
       Events:
         EventRule:
           Type: EventBridgeRule
