@@ -7,7 +7,7 @@
 			leave-to-class="opacity-0"
 		>
 			<span
-				v-if="active"
+				v-if="modal.type"
 				:class="[
 					'fixed inset-0 w-full h-full',
 					'bg-black bg-opacity-40 z-site-modal',
@@ -26,7 +26,7 @@
 			appear
 		>
 			<div
-				v-if="active"
+				v-if="modal.type"
 				:class="[
 					'flex items-center justify-center',
 					'fixed inset-0 w-full h-full z-site-modal',
@@ -35,10 +35,15 @@
 				role="dialog"
 			>
 				<div
-					class="pointer-events-auto bg-white rounded-lg p-5 md:p-12"
+					class="pointer-events-auto bg-white rounded-lg p-5 w-full md:p-12"
 					:class="$props.wrapperClass"
 				>
-					<slot />
+					<component
+						:is="modal.type"
+						v-bind="modal.value"
+						v-on="modal.callbacks ? modal.callbacks : {}"
+						@close="closeModal"
+					/>
 				</div>
 			</div>
 		</transition>
@@ -50,32 +55,39 @@
 	import { useStore } from 'vuex';
 	import { useEscKey } from '@/composables/useKeyboard';
 
+	import Confirm from './ConfirmDialog.vue';
+	import Phone from './JoinByPhone.vue';
+	import Comment from './CommentDialog.vue';
+	import Troubleshoot from './TroubleShooting.vue';
+	import Calendar from './CalendarDialog.vue';
+
 	export default {
+		components: {
+			Confirm,
+			Phone,
+			Comment,
+			Troubleshoot,
+			Calendar,
+		},
+
 		props: {
 			wrapperClass: {
 				type: String,
-				default: null,
+				default: 'max-w-xl',
 			},
 		},
 
-		emits: [
-			'close',
-		],
-
-		setup(props, { emit }) {
+		setup() {
 			const store = useStore();
-			const active = computed(() => store.state.app.modalActive);
+			const modal = computed(() => store.state.app.modal);
 
-			const closeModal = () => {
-				store.dispatch('app/closeModal');
-				emit('close');
-			};
+			const closeModal = () => store.dispatch('app/closeModal');
 
 			useEscKey(closeModal);
 
 			return {
 				closeModal,
-				active,
+				modal,
 			};
 		},
 	};

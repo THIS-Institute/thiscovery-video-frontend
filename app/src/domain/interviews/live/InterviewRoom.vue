@@ -34,37 +34,11 @@
 								flipped
 								small
 								type="pill"
-								@click="showConfirmDialog = true"
+								@click="openModal(modals.leave, leaveCallbacks)"
 							/>
 
 							<interview-timer v-if="participantCount && isInterviewer" />
 						</div>
-
-						<modal-container
-							wrapper-class="max-w-xl"
-							@close="onForceClose"
-						>
-							<confirm-dialog
-								v-if="showConfirmDialog"
-								:affirmative="{
-									title: 'Yes, leave',
-								}"
-								@confirm="onLeave"
-								@cancel="onForceClose"
-							>
-								Are you sure you want to leave?
-							</confirm-dialog>
-
-							<join-by-phone
-								v-if="showPhone"
-								@close="onForceClose"
-							/>
-
-							<trouble-shooting
-								v-if="showTroubleshoot"
-								@close="onForceClose"
-							/>
-						</modal-container>
 
 						<div
 							:class="[
@@ -75,8 +49,8 @@
 							<user-controls
 								@toggle-camera="onToggleCamera"
 								@toggle-mute="onToggleMute"
-								@open-troubleshoot="showTroubleshoot = true"
-								@open-join-by-phone="showPhone = true"
+								@open-troubleshoot="openModal(modals.troubleshoot)"
+								@open-join-by-phone="openModal(modals.phone)"
 							/>
 
 							<div class="rounded-r-lg overflow-hidden w-36">
@@ -134,9 +108,6 @@
 <script>
 	import {
 		ref,
-		watch,
-		toRefs,
-		reactive,
 		computed,
 		shallowRef,
 		shallowReactive,
@@ -151,11 +122,9 @@
 	import OnlyCaller from './OnlyCaller';
 	import UserControls from './UserControls';
 	import InterviewTimer from './InterviewTimer';
-	import ModalContainer from '@/components/modal/ModalContainer';
-	import ConfirmDialog from '@/components/modal/ConfirmDialog';
-	import JoinByPhone from '@/components/modal/JoinByPhone';
-	import TroubleShooting from '@/components/modal/TroubleShooting';
 	import InterviewQuestions from './InterviewQuestions';
+
+	import modals from '@/modals';
 
 	export default {
 		components: {
@@ -164,10 +133,6 @@
 			OnlyCaller,
 			UserControls,
 			InterviewTimer,
-			ModalContainer,
-			ConfirmDialog,
-			JoinByPhone,
-			TroubleShooting,
 			InterviewQuestions,
 		},
 
@@ -326,37 +291,25 @@
 				remoteQuestion.value = question;
 			};
 
-			const modals = reactive({
-				showConfirmDialog: false,
-				showPhone: false,
-				showTroubleshoot: false,
-			});
+			const leaveCallbacks = {
+				confirm: () => {
+					if (room.value) {
+						room.value.disconnect();
+					}
 
-			watch(modals, () => {
-				const isset = Object.keys(modals).every((k) => !modals[k]);
+					const completionUrl = store.state.task.completionUrl;
 
-				if (!isset) store.dispatch('app/openModal');
-			});
-
-			const onForceClose = () => {
-				store.dispatch('app/closeModal');
-				Object.keys(modals).forEach(v => modals[v] = false);
+					if(completionUrl) {
+						window.location.href = completionUrl;
+					}
+				},
 			};
 
-			const onLeave = () => {
-				if (room.value) {
-					room.value.disconnect();
-				}
-
-				const completionUrl = store.state.task.completionUrl;
-
-				if(completionUrl) {
-					window.location.href = completionUrl;
-				}
+			const openModal = (options, callbacks) => {
+				store.dispatch('app/openModal', { ...options, callbacks });
 			};
-			
+
 			return {
-				...toRefs(modals),
 				hasLocalFeed,
 				localParticipant,
 				participantCount,
@@ -370,10 +323,11 @@
 				onInterviewStopAsking,
 				onQuestionReceived,
 				remoteQuestion,
-				onLeave,
-				onForceClose,
 				speakingParticipant,
 				userSettings,
+				leaveCallbacks,
+				openModal,
+				modals,
 			}
 		},
 	};

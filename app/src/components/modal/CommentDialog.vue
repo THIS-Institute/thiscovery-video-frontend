@@ -43,7 +43,7 @@
 			class="e-button--red-outline"
 			small
 			type="pill"
-			@click="$emit('cancel')"
+			@click="$emit('close')"
 		/>
 
 		<x-button
@@ -59,7 +59,7 @@
 </template>
 
 <script>
-	import { reactive, toRefs } from 'vue';
+	import { ref } from 'vue';
 
 	export default {
 		props: {
@@ -71,16 +71,14 @@
 
 		emits: [
 			'save',
-			'cancel',
+			'close',
 		],
 
 		setup(props) {
-			const state = reactive({
-				comment: props.comments,
-			});
+			const comment = ref(props.comments);
 
 			return {
-				...toRefs(state),
+				comment,
 			};
 		},
 	};

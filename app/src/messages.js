@@ -171,7 +171,14 @@ export default Object.freeze({
 
 		preSettings: {
 			continueButtonText: 'Join online call',
-		}
+		},
+
+		calendar: {
+			title: 'Thiscovery online call',
+			details: 'An online call to discuss a series of questions with a remote interviewer',
+			location: 'Remote',
+			select: 'Select your preferred calendar option from the list below',
+		},
 	},
 
 	preSettings: {

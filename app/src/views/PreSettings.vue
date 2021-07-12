@@ -57,23 +57,8 @@
 										icon="chevron-right"
 										class="e-button--red mt-5"
 										type="pill"
-										@click="showTroubleshoot = true"
+										@click="openModal(modals.troubleshoot)"
 									/>
-
-									<modal-container
-										wrapper-class="max-w-xl"
-										@close="onForceClose"
-									>
-										<trouble-shooting
-											v-if="showTroubleshoot"
-											@close="onForceClose"
-										/>
-
-										<join-by-phone
-											v-if="showPhone"
-											@close="onForceClose"
-										/>
-									</modal-container>
 								</div>
 
 								<devices
@@ -90,7 +75,7 @@
 									title: 'Join by phone',
 								}"
 								modal
-								@open-modal="showPhone = true"
+								@open-modal="openModal(modals.phone)"
 							/>
 						</div>
 					</div>
@@ -101,28 +86,25 @@
 </template>
 
 <script>
+	import { useStore } from 'vuex';
+	import { reactive, computed } from 'vue';
+
 	import messages from '@/messages';
 	import { useMessages } from '@/composables/useMessages';
-	import { useStore } from 'vuex';
 	import { useUser } from '@/auth/useUser';
 	import { useDevices } from '@/domain/interviews/settings/useDevices';
-	import { reactive, toRefs, watch, computed } from 'vue';
+
+	import modals from '@/modals';
 
 	import VideoPreview from '@/domain/interviews/settings/VideoPreview';
 	import InfoBar from '@/components/InfoBar';
 	import Devices from '@/components/Devices';
-	import ModalContainer from '@/components/modal/ModalContainer';
-	import TroubleShooting from '@/components/modal/TroubleShooting';
-	import JoinByPhone from '@/components/modal/JoinByPhone';
 
 	export default {
 		components: {
 			VideoPreview,
 			InfoBar,
 			Devices,
-			ModalContainer,
-			TroubleShooting,
-			JoinByPhone,
 		},
 
 		props: {
@@ -141,11 +123,9 @@
 			const store = useStore();
 			const { message } = useMessages(messages);
 			const { userGivenName } = useUser();
-
-			store.dispatch('interviews/updateMediaDevices');
 			const { hasMicrophone, hasCamera } = useDevices();
 
-			const isLive = () => props.domain === 'live';
+			store.dispatch('interviews/updateMediaDevices');
 
 			const state = reactive({
 				hasMicrophone,
@@ -153,37 +133,26 @@
 			});
 
 			const hasError = computed(() => !(state.hasMicrophone && state.hasCamera));
+
 			const copy = computed(() => ({
 				title: message(`preSettings.${hasError.value ? 'error.title' : 'title'}`),
 				content: message(`preSettings.${hasError.value ? 'error.content' : 'content'}`),
 				infoBar: message('preSettings.infoBar'),
 			}));
 
-			const modals = reactive({
-				showTroubleshoot: false,
-				showPhone: false,
-			});
+			const isLive = () => props.domain === 'live';
 
-			watch(modals, () => {
-				const isset = Object.keys(modals).every((k) => !modals[k]);
-
-				if (!isset) store.dispatch('app/openModal');
-			});
-
-			const onForceClose = () => {
-				store.dispatch('app/closeModal');
-				Object.keys(modals).forEach(v => modals[v] = false);
-			};
+			const openModal = (options) => store.dispatch('app/openModal', options);
 
 			return {
-				...toRefs(modals),
 				copy,
 				message,
 				hasCamera,
 				hasMicrophone,
 				userGivenName,
 				hasError,
-				onForceClose,
+				modals,
+				openModal,
 				isLive,
 			};
 		},

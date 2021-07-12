@@ -1,7 +1,8 @@
 <template>
-	<h1	class="e-h3 max-w-sm text-center">
-		<slot />
-	</h1>
+	<h1
+		class="e-h3 text-center"
+		v-text="title"
+	/>
 
 	<div class="flex items-center justify-center space-x-4 mt-5">
 		<x-button
@@ -9,7 +10,7 @@
 			class="e-button--red-outline"
 			small
 			type="pill"
-			@click="$emit('cancel')"
+			@click="$emit('close')"
 		/>
 
 		<x-button
@@ -40,11 +41,16 @@
 					icon: 'retake',
 				}),
 			},
+
+			title: {
+				type: String,
+				required: true,
+			},
 		},
 
 		emits: [
+			'close',
 			'confirm',
-			'cancel',
 		],
 	};
 </script>

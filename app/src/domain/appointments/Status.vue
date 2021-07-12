@@ -58,24 +58,11 @@
 			/>
 		</div>
 	</section>
-
-	<modal-container>
-		<confirm-dialog
-			v-if="state.showConfirmDialog"
-			:affirmative="{
-				title: 'Yes, cancel',
-			}"
-			@confirm="confirmCancellation"
-			@cancel="closeConfirmDialog"
-		>
-			Are you sure you want to cancel your appointment?
-		</confirm-dialog>
-	</modal-container>
 </template>
 
 <script>
 	import { useStore } from 'vuex';
-	import { computed, reactive } from 'vue';
+	import { computed } from 'vue';
 	import { useRouter } from 'vue-router';
 	import { ROUTE_APPOINTMENTS } from '@/routeConstants';
 
@@ -83,19 +70,17 @@
 	import { useMessages } from '@/composables/useMessages';
 	import { useAppointmentStatus } from './useAppointmentStatus';
 
+	import modals from '@/modals';
+
 	import SelectedSlot from './SelectedSlot';
 	import BookingStatus from './BookingStatus';
 	import AppointmentInfo from './AppointmentInfo';
-	import ModalContainer from '@/components/modal/ModalContainer';
-	import ConfirmDialog from '@/components/modal/ConfirmDialog';
 
 	export default {
 		components: {
 			SelectedSlot,
 			BookingStatus,
 			AppointmentInfo,
-			ModalContainer,
-			ConfirmDialog,
 		},
 
 		setup() {
@@ -106,29 +91,20 @@
 			const taskTitle = computed(() => store.state.task.title);
 			const selection = computed(() => store.state.appointments.selection);
 
-			const state = reactive({
-				showConfirmDialog: false,
-			});
-
 			const openConfirmDialog = () => {
-				state.showConfirmDialog = true;
-				store.dispatch('app/openModal');
-			};
+				const callbacks = {
+					confirm: () => {
+						store.dispatch('appointments/cancel');
+						store.dispatch('app/closeModal');
+					},
+				};
 
-			const closeConfirmDialog = () => {
-				state.showConfirmDialog = false;
-				store.dispatch('app/closeModal');
+				store.dispatch('app/openModal', { ...modals.cancel, callbacks });
 			};
 
 			const invokeReschedule = () => {
 				store.dispatch('appointments/reschedule');
 				router.push({ name: ROUTE_APPOINTMENTS });
-			};
-
-			const confirmCancellation = () => {
-				closeConfirmDialog();
-
-				store.dispatch('appointments/cancel');
 			};
 
 			const {
@@ -140,7 +116,6 @@
 			const { message } = useMessages(messages);
 
 			return {
-				state,
 				message,
 				taskTitle,
 				isWaiting,
@@ -151,8 +126,6 @@
 				isStatusBooked,
 				isStatusCancelled,
 				openConfirmDialog,
-				closeConfirmDialog,
-				confirmCancellation,
 			};
 		},
 	};

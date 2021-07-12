@@ -79,6 +79,11 @@
 			class="font-bold mt-1"
 			v-text="`${asFormattedDate(selection)}, ${asFormattedTime(selection)}`"
 		/>
+
+		<add-to-calendar
+			class="mt-2.5"
+			:selection="selection"
+		/>
 	</div>
 </template>
 
@@ -88,7 +93,13 @@
 	import { useDates } from './useDates';
 	import { useAppointmentStatus } from './useAppointmentStatus';
 
+	import AddToCalendar from '@/components/AddToCalendar.vue';
+
 	export default {
+		components: {
+			AddToCalendar,
+		},
+
 		props: {
 			selection: {
 				type: String,
