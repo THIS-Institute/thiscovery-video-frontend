@@ -378,11 +378,52 @@
 				}"
 			/>
 		</div>
+
+		<div class="flex flex-col space-y-4 mt-10 items-start">
+			<button
+				@click="openModal(modals.phone)"
+			>
+				Phone
+			</button>
+
+			<button
+				@click="openModal(modals.retake)"
+			>
+				Retake
+			</button>
+
+			<button
+				@click="openModal(modals.cancel)"
+			>
+				Cancel
+			</button>
+
+			<button
+				@click="openModal(modals.leave)"
+			>
+				Leave
+			</button>
+
+			<button
+				@click="openModal(modals.comment)"
+			>
+				Comment
+			</button>
+
+			<button
+				@click="openModal(modals.troubleshoot)"
+			>
+				troubleshoot
+			</button>
+		</div>
 	</div>
 </template>
 
 <script>
 	import { reactive, toRefs } from 'vue';
+	import { useStore } from 'vuex';
+
+	import modals from '@/modals';
 
 	export default {
 		setup() {
@@ -416,8 +457,16 @@
 				],
 			});
 
+			const store = useStore();
+
+			const openModal = (options, callbacks) => {
+				store.dispatch('app/openModal', { ...options, callbacks });
+			};
+
 			return {
 				...toRefs(data),
+				openModal,
+				modals,
 			};
 		},
 	};

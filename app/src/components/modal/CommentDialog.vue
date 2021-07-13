@@ -15,7 +15,7 @@
 				rows="4"
 				cols="40"
 				:class="[
-					'rounded-md p-7',
+					'rounded-md p-7 w-full',
 					'border border-black border-opacity-20',
 					'focus:outline-none focus:border-grey-400',
 				]"
