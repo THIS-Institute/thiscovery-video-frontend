@@ -8,7 +8,7 @@ def lambda_handler(event, context):
     gather = Gather(num_digits=4, action=action)
 
     gather.say(
-        message='Hello, welcome to Thiscovery. To continue, please enter your room pin, followed by the hash key.',
+        message='Hello, welcome to Thiscovery. To continue, please enter your online call pin, followed by the hash key.',
         voice='Polly.Amy',
         language='en-GB',
     )
@@ -16,6 +16,9 @@ def lambda_handler(event, context):
     response.append(gather)
 
     return {
+        'headers': {
+            'Content-Type': 'text/xml',
+        },
         'statusCode': 200,
         'body': str(response)
     }

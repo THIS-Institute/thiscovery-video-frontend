@@ -1,10 +1,12 @@
 import json
+from urllib.parse import parse_qs
 from twilio.twiml.voice_response import VoiceResponse, Say
 
 def lambda_handler(event, context):
-    request = json.loads(event['body'])
+    phone_callback = parse_qs(event['body'])
+    phone_callback = normalise_dict(phone_callback)
 
-    digits = request['Digits']
+    digits = phone_callback['Digits']
 
     response = VoiceResponse()
 
@@ -15,6 +17,25 @@ def lambda_handler(event, context):
     response.append(say)
 
     return {
+        'headers': {
+            'Content-Type': 'text/xml',
+        },
         'statusCode': 200,
         'body': str(response)
     }
+
+def normalise_dict(dict):
+    normalised_dict = {}
+
+    for key in dict:
+        if len(dict[key]) > 1:
+            normalised_dict[key] = dict[key]
+            continue
+
+        if len(dict[key]) > 0:
+            normalised_dict[key] = dict[key][0]
+            continue
+            
+        normalised_dict[key] = None
+
+    return normalised_dict
