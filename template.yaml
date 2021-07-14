@@ -137,6 +137,22 @@ Resources:
                 uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${GetInterviewersQuestions.Arn}/invocations
               responses: {}
 
+          /v1/phone/answer:
+            post:
+              x-amazon-apigateway-integration:
+                httpMethod: POST
+                type: aws_proxy
+                uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${PhoneAnswer.Arn}/invocations
+              responses: {}
+
+          /v1/phone/connect-room:
+            post:
+              x-amazon-apigateway-integration:
+                httpMethod: POST
+                type: aws_proxy
+                uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${PhoneConnectRoom.Arn}/invocations
+              responses: {}
+
           /thiscovery/v1/user-interview-tasks/{id}:
             get:
               x-amazon-apigateway-integration:
@@ -754,6 +770,84 @@ Resources:
                 - thiscovery_video
               detail-type:
                 - twilio_composition_available
+
+  PhoneAnswer:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: Interviews-PhoneAnswer
+      Description: !Sub
+        - Stack ${StackTagName} Environment ${EnvironmentTagName} Function ${ResourceName}
+        - ResourceName: PhoneAnswer
+      CodeUri: functions/phone
+      Handler: answer_phone.lambda_handler
+      Runtime: python3.8
+      MemorySize: 2048
+      Timeout: 60
+      Tracing: Active
+      Policies:
+        - AWSXrayWriteOnlyAccess
+        - S3CrudPolicy:
+            BucketName: !Ref InterviewAssets
+        - DynamoDBCrudPolicy:
+            TableName: !Ref InterviewsTable
+        - EventBridgePutEventsPolicy:
+            EventBusName: thiscovery-event-bus
+        - AWSSecretsManagerGetSecretValuePolicy:
+            SecretArn: !Sub arn:${AWS::Partition}:secretsmanager:${AWS::Region}:${AWS::AccountId}:secret:/${EnvironmentTagName}/*
+      Environment:
+        Variables:
+          SECRETS_NAMESPACE: !Sub /${EnvironmentTagName}/
+          BUCKET_NAME: !Ref InterviewAssets
+          BUCKET_ARN: !GetAtt InterviewAssets.Arn
+          TABLE_NAME: !Ref InterviewsTable
+          TABLE_ARN: !GetAtt InterviewsTable.Arn
+          ACUITY_BASE_URI: !Ref EnvConfigAcuityBaseUriAsString
+      Events:
+        BackendApiPOSTv1TwilioEvent:
+          Type: Api
+          Properties:
+            Path: /v1/phone/answer
+            Method: POST
+            RestApiId: !Ref BackendApi
+
+  PhoneConnectRoom:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: Interviews-PhoneConnectRoom
+      Description: !Sub
+        - Stack ${StackTagName} Environment ${EnvironmentTagName} Function ${ResourceName}
+        - ResourceName: PhoneConnectRoom
+      CodeUri: functions/phone
+      Handler: connect_room.lambda_handler
+      Runtime: python3.8
+      MemorySize: 2048
+      Timeout: 60
+      Tracing: Active
+      Policies:
+        - AWSXrayWriteOnlyAccess
+        - S3CrudPolicy:
+            BucketName: !Ref InterviewAssets
+        - DynamoDBCrudPolicy:
+            TableName: !Ref InterviewsTable
+        - EventBridgePutEventsPolicy:
+            EventBusName: thiscovery-event-bus
+        - AWSSecretsManagerGetSecretValuePolicy:
+            SecretArn: !Sub arn:${AWS::Partition}:secretsmanager:${AWS::Region}:${AWS::AccountId}:secret:/${EnvironmentTagName}/*
+      Environment:
+        Variables:
+          SECRETS_NAMESPACE: !Sub /${EnvironmentTagName}/
+          BUCKET_NAME: !Ref InterviewAssets
+          BUCKET_ARN: !GetAtt InterviewAssets.Arn
+          TABLE_NAME: !Ref InterviewsTable
+          TABLE_ARN: !GetAtt InterviewsTable.Arn
+          ACUITY_BASE_URI: !Ref EnvConfigAcuityBaseUriAsString
+      Events:
+        BackendApiPOSTv1TwilioEvent:
+          Type: Api
+          Properties:
+            Path: /v1/phone/connect-room
+            Method: POST
+            RestApiId: !Ref BackendApi
   
   MockUserTask:
     Type: AWS::Serverless::Function
